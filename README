@@ -1,0 +1,13 @@
+Hi Guys,
+
+Here are some links to help you get started with GitHub.
+First make a user account on github. You can change the avatar on gravatar if you care.
+Then you need to make a RSA public key and put it on github:
+http://help.github.com/linux-key-setup/
+
+After that you can use the reference to do most things
+http://gitref.org/
+
+The basic concept is that make a change to a file. You then commit the file and push it to the repo.
+The repo is the place online that all the files are stored.
+You need to pull changes from the repo to see what everyone else has done.
