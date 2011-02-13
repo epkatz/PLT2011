@@ -5,6 +5,9 @@ First make a user account on github. You can change the avatar on gravatar if yo
 Then you need to make a RSA public key and put it on github:
 http://help.github.com/linux-key-setup/
 
+Then execute:
+git clone git@github.com:username/reponame.git
+
 After that you can use the reference to do most things
 http://gitref.org/
 
