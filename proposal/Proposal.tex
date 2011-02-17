@@ -1,0 +1,65 @@
+\documentclass[12pt]{article}
+
+\usepackage{listings}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{caption}
+
+\lstset{language=Java,captionpos=t,tabsize=4,frame=no,keywordstyle=\color{blue},
+   commentstyle=\color{gray},stringstyle=\color{red},numbers=left,numberstyle=\scriptsize,
+   numbersep=5pt,breaklines=true,showstringspaces=false,basicstyle=\footnotesize,emph={label}}
+   
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{darkgray}{\parbox[c][0.3cm]{\textwidth}{#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+
+\title{
+{\bf Fantasy League Advanced\\
+Imperative Language (FLAIL)}\\
+{\small A Project Proposal for {\it COMS W4115: Programming Language \& Translators}}
+}
+
+\author{
+	Stephanie Aligbe\\
+	\texttt{\small{sna2111@columbia.edu}}
+	\and
+	Elliot Katz\\
+	\texttt{\small{epk2102@columbia.edu}}
+	\and
+	Tam Le\\
+	\texttt{\small{tvl2102@columbia.edu}}
+	\and
+	Dillen Roggensinger\\
+	\texttt{\small{der2127@columbia.edu}}
+	\and
+	Anuj Sampathkumaran\\
+	\texttt{\small{as4046@columbia.edu}}
+}
+
+\date{February 23, 2011}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We present FLAIL, a new programming language designed to facilitate the creation of fantasy league games and simulations. 
+\begin{center}
+
+\end{center}
+\end{abstract}
+
+\section{Introduction}
+FLAIL is an imperative, object-oriented programming language.
+
+\section{Features \& Syntax}
+
+\section{Sample Code}
+\begin{lstlisting}[language=Java]
+public class Application {
+   public static void main(String[] args) {
+      System.out.println("Hello World!");
+   }
+}
+\end{lstlisting}
+
+\end{document}
