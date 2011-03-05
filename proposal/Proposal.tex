@@ -1,3 +1,5 @@
+%%This is a very basic article template.
+%%There is just one section and two subsections.
 \documentclass[12pt]{article}
 
 \usepackage{listings}
@@ -8,27 +10,27 @@
 \usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
 
 \lstset{
-	language=Java,
-	basicstyle=\footnotesize\ttfamily,
-	numbers=left,
-	numberstyle=\tiny,
-	%stepnumber=2,
-	numbersep=10pt,
-	tabsize=4,
-	extendedchars=true,
-	breaklines=true,
-	keywordstyle= \footnotesize,
-	commentstyle=\color{gray},
-	frame=no,
-	stringstyle=\color{white}\ttfamily,
-	showspaces=false,
-	showtabs=false,
-	xleftmargin=17pt,
-	framexleftmargin=17pt,
-	framexrightmargin=5pt,
-	framexbottommargin=4pt,
-	%backgroundcolor=\color{lightgray},
-	showstringspaces=false
+  language=Java,
+  basicstyle=\footnotesize\ttfamily,
+  numbers=left,
+  numberstyle=\tiny,
+  %stepnumber=2,
+  numbersep=10pt,
+  tabsize=4,
+  extendedchars=true,
+  breaklines=true,
+  keywordstyle= \footnotesize,
+  commentstyle=\color{gray},
+  frame=no,
+  stringstyle=\color{white}\ttfamily,
+  showspaces=false,
+  showtabs=false,
+  xleftmargin=17pt,
+  framexleftmargin=17pt,
+  framexrightmargin=5pt,
+  framexbottommargin=4pt,
+  %backgroundcolor=\color{lightgray},
+  showstringspaces=false
 }
 
 \lstloadlanguages{
@@ -40,29 +42,29 @@
 \captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize}}
 
 \title{
-{\bf Fantasy League Object Oriented\\
-Development (FLOOD)}\\
+\textbf{Fantasy League Object Oriented Development}\\
+\textbf{(FLOOD)}\\
 {\small A Project Proposal for {\it COMS W4115: Programming Language \& Translators}}\\
-\large{\textbf{Team 9}}\\
+{\large \textbf{Team 9}}\\
 \large{\textbf{is}}
 %\tiny{So Fine}
 }
 
 \author{
-	Stephanie Aligbe\\
-	\texttt{\small{sna2111@columbia.edu}}
-	\and
-	Elliot Katz\\
-	\texttt{\small{epk2102@columbia.edu}}
-	\and
-	Tam Le\\
-	\texttt{\small{tvl2102@columbia.edu}}
-	\and
-	Dillen Roggensinger\\
-	\texttt{\small{der2127@columbia.edu}}
-	\and
-	Anuj Sampathkumaran\\
-	\texttt{\small{as4046@columbia.edu}}
+  Stephanie Aligbe\\
+  \texttt{\small{sna2111@columbia.edu}}
+  \and
+  Elliot Katz\\
+  \texttt{\small{epk2102@columbia.edu}}
+  \and
+  Tam Le\\
+  \texttt{\small{tvl2102@columbia.edu}}
+  \and
+  Dillen Roggensinger\\
+  \texttt{\small{der2127@columbia.edu}}
+  \and
+  Anuj Sampathkumaran\\
+  \texttt{\small{as4046@columbia.edu}}
 }
 
 \date{February 23, 2011}
@@ -98,7 +100,7 @@ A FLOOD program can:
 \item Establish Rules for play using the existing libraries or overriding them.
 \item Rules can be shared with different programmers and can be extended.
 \item Define features of the league such as draft and trade functions.
-\item Connect the league to a database of the user’s choice.
+\item Connect the league to a database of the user's choice.
 \item Trigger the build for the front end GUI and deploy the program to users.
 \item Allows programmers different degrees of customization.
 \end{itemize}
@@ -168,11 +170,11 @@ leagueObject1.Rules.createDraftPattern()
 loop Player(i).turn to end, return in alternate hops //any algorithm of the programmer's choice
 leagueObject1.Rules.setInitialMoney = 2000 
 leagueObject1.Rules.createActions
-	Action goal(10)
-	Action redCard(-10)
+  Action goal(10)
+  Action redCard(-10)
 
 Rules.evaluateWinner(RemainingResources + totalPoints * 200) //programmer determines what formula is be used 
-openDatabase(“file path or tcp/ip to any network connection to the server”)
+openDatabase(file path or tcp/ip to any network connection to the server)
 
 build()
 \end{lstlisting}
