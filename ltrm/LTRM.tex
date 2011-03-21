@@ -203,14 +203,15 @@ Flood.launchGui(blDraft, mybl);
 
 \begin{doublespace}
 The final part of the code launches the GUI and adds both the League and the Draft. Hiding the GUI is one of the main features of \textbf{FLOOD}. There is no need to program any part of the user-interface. The GUI will know how to hook into the \textbf{FLOOD} classes and connect the buttons on the interface to the actions defined by the programmer. The output will be a GUI window which will control the flow of the program. The flow of the program will depend upon the user. For instance, the only way to update the scores of the Users is by adding player-action files to the program. Player-Action files would contain new statistics such as:
+\begin{center}
+\begin{tabular}{ l l }
+LeBron James & 7 Rebound \\
+Lebron James & 4 Assist \\
+Carmelo Anthony & 5 Steal \\
+Carmelo Anthony & 25 Point Scored
+\end{tabular}
+\end{center}
 \end{doublespace}
-
-\begin{lstlisting}[language=Java,label=some-code,caption=Sample Player statistics]
-LeBron James		7 Rebound
-Lebron James		4 Assist
-Carmelo Anthony		5 Steal
-Carmelo Anthony		25 Point Scored
-\end{lstlisting}
 
 \begin{doublespace}
 This is everything needed to run a simple \textbf{FLOOD} program. This basketball league would mirror equivalent leagues in Yahoo Sports or ESPN Fantasy sans network connectivity.  
@@ -227,7 +228,7 @@ Class User:
 	get int points;
 	get str name, handle;
 	setget int maxSize;
-	List <Players> teamAthletes;
+	list <Players> teamAthletes;
 
 	addPlayer(Player athlete);
 	removePlayer(Player athlete);
@@ -397,7 +398,7 @@ else {
 If this condition is not met, then the statement or statements enclosed in body of the else condition will be executed i.e. decrement the value of the variables, `centers' and `forwards.'
 \end{doublespace}
 
-\section{Essential FLOOD Classes}
+\section{Base Classes}
 
 \begin{doublespace}
 The \textbf{FLOOD} language has 5 base classes necessary for the creation of a fantasy league. They are described individually below in detail.
@@ -407,12 +408,13 @@ The \textbf{FLOOD} language has 5 base classes necessary for the creation of a f
 \textbf{\underline{Action}}
 \\
 Action is a class that encapsulates an event in a league along with an associated point value. These actions are then put into the league in order to distribute points among the users depending on how their players perform. For example, for a basketball fantasy league will have an actions as follows:
+\begin{center}
+\begin{tabular}{ l c l }
+''Field Goal Attempt'' & \\<=\\> & -0.45 \\
+''Field Goal Made'' & \\<=\\> & 1.0
+\end{tabular}
+\end{center}
 \end{doublespace}
-
-\begin{lstlisting}[language=Java,label=some-code,caption=Action]
-''Field Goal Attempt''	<=>		-0.45
-''Field Goal Made''		<=>		1.0
-\end{lstlisting}
 
 \begin{doublespace}
 which state that any player that performs that action will have the corresponding value added to the player's team. The base class has two instance variables as seen above with respective getters and setters but can be expanded as necessary.
