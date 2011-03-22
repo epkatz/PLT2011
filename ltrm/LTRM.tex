@@ -18,7 +18,7 @@
 
 \lstset{
   language=Java,
-  basicstyle=\footnotesize\ttfamily,
+  basicstyle=\ttfamily,
   numbers=left,
   numberstyle=\tiny,
   %stepnumber=2,
@@ -29,7 +29,7 @@
   keywordstyle= \footnotesize,
   commentstyle=\color{gray},
   frame=no,
-  stringstyle=\color{white}\ttfamily,
+  stringstyle=\ttfamily,
   showspaces=false,
   showtabs=false,
   xleftmargin=17pt,
@@ -97,7 +97,7 @@ The popularity of fantasy sports has exploded in recent years. A 2007 study by t
 
 The FSTA study also estimated the spending habits and overall economic impact of fantasy sports players. Consumers engaging in this ever growing hobby spent \$800 million directly on fantasy sports products and an additional \$3 billion worth of related media products (such as DirecTV's NFL Sunday Ticket and satellite radio's coverage of MLB). Moreover, the growing popularity of fantasy sports is not restricted to North America alone. A recent 2008 study by a European-based market research company estimated the number of fantasy sports players in Britain range between 5.5 and 7.5 million and vary in age between 16-64, of which 80 percent participated in fantasy soccer.
 
-Thus, the \textbf{FLOOD} programming language is targeted to address a specific problem domain: the creation of fantasy gaming league applications. From the ground up, the language is designed to make it as straitforward as possible for programmers to create fantasy gaming applications. This task will entail defining a league and its type (sports, financial markets, election polling etc.), establish the rules of governance, enumerate the users/teams and individual league players, and set various other control parameters. 
+Thus, the \textbf{FLOOD} programming language is targeted to address a specific problem domain: the creation of fantasy gaming league applications. From the ground up, the language is designed to make it as straitforward as possible for programmers to create fantasy gaming applications. This task will entail defining a league and its type (sports, financial markets, election polls, etc.), establish the rules of governance, enumerate the users/teams and individual league players, and set various other control parameters. 
 
 In this sense, \textbf{FLOOD} is very much a ``high-level" and ``domain-specific" language. Such as \textbf{R} and \textbf{S} are languages designed specifically to perform statistics calculations, \textbf{SQL} for relational database queries, and \textbf{Mathematica} and \textbf{Maxima} for symbolic mathematics, \textbf{FLOOD} is dedicated to solving the particular problem of fantasy gaming. Given the ubiquity of fantasy sports as a recreational hobby for millions of people, the creation of a domain-specific language to attack this problem in a clear and concise native programming etymology, as opposed to the application of a general purpose language such as \textbf{C} and \textbf{Java}, is a challenging and worthwhile undertaking.
 \end{doublespace}
@@ -105,47 +105,47 @@ In this sense, \textbf{FLOOD} is very much a ``high-level" and ``domain-specific
 \chapter{A Quick Tutorial}
 
 \begin{doublespace}
-The goal of this tutorial is to jump into the \textbf{FLOOD} language by creating a simple fantasy league. We won't concern ourselves with implementation details just yet. The language itself is meant to be simple yet sufficiently extensible, however the tutorial will not delve into the various features that make this possible. 
+The goal of this tutorial is to jump into the \textbf{FLOOD} language by creating a simple fantasy league. We won't concern ourselves with implementation details just yet. The language is meant to be simple yet sufficiently extensible but this tutorial will not delve into the various features which make it possible. 
 
-Experienced Java programmers will be familiar with most of the syntax since it is a subset of the popular C-like syntax. In certain instances we have opted to use Python syntax for improved readability. Where possible we compare or contrast a specific feature with Java, C++, or Python which comprise the main influences of \textbf{FLOOD}. 
+Experienced Java programmers will be familiar with most of the syntax since it is a subset of the popular C-like syntax. In certain instances we have opted to use Python syntax for improved readability. Where possible we compare or contrast a specific feature with Java, C++, and Python which are the main influences of \textbf{FLOOD}. 
 
-Some examples that aren't strictly necessary for the sample program are included to clarify points of possible confusion. These are noted when used. Additionally, we repeat portions of the \textbf{FLOOD} standard library for ease of reading. The full library is included in the \textit{Reference Manual}. Please be aware of the distinction made between programmer, the person actually writing a \textbf{FLOOD} program (most likely yourself if you are reading this), and \textit{User}, the end-user of the application. Additionally, \textit{Player} refers to a player of the fantasy league, whether this is an actual person as in the case of a quarterback in football or a non-human thing as is the case with \textit{AAPL} (Apple) in the stock market.
+Some examples which aren't strictly necessary for the sample program are included to clarify points of possible confusion. These are noted when used. Additionally, we repeat portions of the \textbf{FLOOD} standard library for ease of reading. The full library is included in the \textit{Reference Manual}. Please be aware of the distinction made between programmer, the person actually writing a \textbf{FLOOD} program (most likely yourself if you are reading this), and \textit{User}, the end-user of the application. Additionally, \textit{Player} refers to a player of the fantasy league, whether this is an actual person as in the case of a quarterback in football or a non-human entitity as is the case with \textit{AAPL} (Apple) in the stock market.
 \end{doublespace}
 
 \section{Getting Started - The ``Hello World" Program}
 
 \begin{doublespace}
-\textbf{FLOOD} has a very specific application domain. It's goal is to create fantasy leagues therefore the ability to print to console is fruitless. However, the GUI will have a message box where messages can be displayed to the User. \textbf{FLOOD} hides the details of the user-interface so that the programmer can concentrate on the rules of their specific fantasy league. While the first simple program may seem more complicated than a Java ``hello world" example, most programs generally will not be any more elaborate than this case.
+\textbf{FLOOD} has a very specific application domain. It's goal is to create fantasy leagues and thus the ability to print to console is fruitless. However, the GUI will have a message box where messages can be displayed to the \textit{User}. \textbf{FLOOD} hides the details of the user-interface so the programmer can concentrate on the rules of their specific fantasy league. While the first simple program may seem more complicated than the simple Java ``hello world" example, most programs generally will not be any more elaborate than this case.
 
-Since \textbf{FLOOD} is built on top of Java byte-code, the programmer will not need to worry about system compatibility issues. Heeding the eternal wisdom of Kernighan and Ritchie, we also must point out that compilation will only succeed if the programmer hasn't botched anything such as missing characters, misspelling keywords or some other mistake that can cause errors in compilation. 
+Since \textbf{FLOOD} is built on top of Java byte-code, the programmer will not need to worry about system compatibility issues. Heeding the eternal wisdom of Kernighan \& Ritchie, we also point out that compilation will only succeed if the programmer hasn't botched anything, such as missing characters, misspelled keywords, or some other mistake that can cause an error in compilation. 
 
-Let's start by showing what the ``main" class would look like. In keeping with the theme of fantasy leagues the function \textit{main} has been replaced by the equivalent \textit{play}. 
+Let's start by showing what the ``main" class would look like. In keeping with the theme of fantasy leagues, the function \textit{main} has been replaced by the equivalent \textit{play}. 
 \end{doublespace}
 
 \begin{lstlisting}[language=Java,label=some-code,caption=BasketballPlay.fld]
 class BasketballPlay:
 	public play() {
-		League myfbl = new League (''Happy League'');
+		League myfbl = new League ("Happy League");
 		mybl.setMaxUsers(10);
 		mybl.setMinUsers(4);
 
-		mybl.addUser(new User(''Eli''));
-		mybl.addUser(new User(''Dillen''));
-		mybl.addUser(new User(''Anuj''));
-		mybl.addUser(new User(''Tam''));
-		mybl.addUser(new User(''Steph''));
+		mybl.addUser(new User("Eli"));
+		mybl.addUser(new User("Dillen"));
+		mybl.addUser(new User("Anuj"));
+		mybl.addUser(new User("Tam"));
+		mybl.addUser(new User("Steph"));
 
-		mybl.addAction(new Action(''Field Goal Attempt'', -0.45);
-		mybl.addAction(new Action(''Field Goal Made'', 1.0);
-		mybl.addAction(new Action(''Free Throw Attempt'', -0.75);
-		mybl.addAction(new Action(''Free Throw Made'', 1.0);
-		mybl.addAction(new Action(''3-Point Shot Made'', 3.0);
-		mybl.addAction(new Action(''Point Scored'', 0.5);
-		mybl.addAction(new Action(''Rebound'', 1.5);
-		mybl.addAction(new Action(''Assist'', 2.0);
-		mybl.addAction(new Action(''Steal'', 3.0);
-		mybl.addAction(new Action(''Turnover'', -2.0);
-		mybl.addAction(new Action(''Blocked Shot'', 3.0);
+		mybl.addAction(new Action("Field Goal Attempt", -0.45);
+		mybl.addAction(new Action("Field Goal Made", 1.0);
+		mybl.addAction(new Action("Free Throw Attempt", -0.75);
+		mybl.addAction(new Action("Free Throw Made", 1.0);
+		mybl.addAction(new Action("3-Point Shot Made", 3.0);
+		mybl.addAction(new Action("Point Scored", 0.5);
+		mybl.addAction(new Action("Rebound", 1.5);
+		mybl.addAction(new Action("Assist", 2.0);
+		mybl.addAction(new Action("Steal", 3.0);
+		mybl.addAction(new Action("Turnover", -2.0);
+		mybl.addAction(new Action("Blocked Shot", 3.0);
 
 		SnakeDraft blDraft = new SnakeDraft(mybl);
 
@@ -154,21 +154,22 @@ class BasketballPlay:
 \end{lstlisting}
 
 \begin{doublespace}
-At first glance this appears to be very close to a Java program. Let's point out a couple of differences. First, note the convention for \textbf{FLOOD} files is to name them with the \textit{.fld} extension. Secondly, each file must contain one and only one class---as oppose to Java, there is no ability to nest classes.
+At first glance this appears to be very similar to a Java program. However, there are a couple of key differences. First, note the convention is to name \textbf{FLOOD} files with the \textit{.fld} extension. Secondly, each file must contain one and only one class---as oppose to Java, there is no ability to nest classes.
 
 Classes are defined using the semicolon. Since there is no question of scope within a file, code below the class definition is considered part of the class. Code above the class definition is an error. Import statement must immediately follow the class definition. Instance variables can be placed anywhere below the class definition outside of method blocks.
 
-Java uses the \textit{main} method as the beginning of execution. In keeping with the theme of fantasy leagues, the \textit{play} method is used as the equivalent of \textit{main}. Every \textbf{FLOOD} program must have a \textit{play} method. \textbf{FLOOD} convention dictates that the class containing \textit{play} be named after the type of league being designed. For instance, in this example the type of league can clearly be inferred to be related to basketball.
+Java uses the \textit{main} method as the beginning of execution. In keeping with the theme of fantasy leagues, the \textit{play} method is used as the equivalent of \textit{main}. Every \textbf{FLOOD} program must have a \textit{play} method. \textbf{FLOOD} convention dictates the class containing \textit{play} be named after the type of league being designed. For instance, in this example the type of league can clearly be inferred to be related to basketball:
 \end{doublespace}
 
-\begin{lstlisting}[language=Java,label=some-code,caption=A basketball league]
-League myfbl = new League (''Happy League'')
-mybl.setMaxUsers(10);
-mybl.setMinUsers(4);
+\begin{lstlisting}[language=Java,label=some-code,caption=BasketballPlay.fld]
+class BasketballPlay:
+	public play() {
+	 ...
+	}
 \end{lstlisting}
 
 \begin{doublespace}
-Every \textbf{FLOOD} program must instantiate a League object. The League object contains most of the other objects needed for the \textbf{FLOOD} program including User, Player and Action lists. Lists will be discussed in later sections but for now they can be thought of as Java LinkedLists (although there are some subtle differences). For the minimum program we could have left the max and min user setting at their respective default value but as an example we set them above. The League object will later be passed to the GUI however it provides the first example of extension within \textbf{FLOOD}. We could have written a new class that extends League to add functionality such as divisions within the league. For now the basic League object will suffice to create our first program.
+Every \textbf{FLOOD} program must instantiate a League object. The League object contains most of the other objects needed for the \textbf{FLOOD} program including User, Player and Action lists. Lists will be discussed in later sections but for now they can be thought of as Java LinkedLists (although there are subtle differences). For the minimum program we could have left the max and min user setting at their respective default value but as an example we set them above. The League object will later be passed to the GUI however it provides the first example of extension within \textbf{FLOOD}. We could have written a new class that extends League to add functionality such as divisions within the league. For now the basic League object will suffice to create our first program.
 
 A method in \textbf{FLOOD} is similar to a method in Java or function in C++. We call a method on an object by using the object's name followed by a period followed by the method of that object with an optional argument list in between mandatory parenthesis.
 \end{doublespace}
@@ -182,7 +183,7 @@ In this example we are calling \textit{setMaxUsers} on our \textit{mybl} object.
 \end{doublespace}
 
 \begin{lstlisting}[language=Java,label=some-code,caption=Adding a User]
-mybl.addUser(new User(''Eli''));
+mybl.addUser(new User("Eli"));
 \end{lstlisting}
 
 \begin{doublespace}
@@ -190,7 +191,7 @@ We then begin adding users to the league. Once again we use this as an illustrat
 \end{doublespace}
 
 \begin{lstlisting}[language=Java,label=some-code,caption=Adding an Action]
-mybl.addAction(new Action(''Field Goal Attempt'', -0.45);
+mybl.addAction(new Action("Field Goal Attempt", -0.45);
 \end{lstlisting}
 
 \begin{doublespace}
@@ -273,19 +274,19 @@ private bool evaluate(User u, Player p) {
 		}
 		
 		for person in u.teamAthletes {
-			if (person.position == ''center'')
+			if (person.position == "center")
 				centers = centers + 1;
-			if (person.position == ''guard'')
+			if (person.position == "guard")
 				guards = guards - centers;
-			if (person.position == ''forward'')
+			if (person.position == "forward")
 				forwards = forwards / 2;
-			if (person.position == ''mid'')
+			if (person.position == "mid")
 				mid++;
-			if (centers == 3 and p.position == ''center'')
+			if (centers == 3 and p.position == "center")
 				return false;
-			if (forwards == 5 and p.position == ''forward'')
+			if (forwards == 5 and p.position == "forward")
 				return false;
-			if (guards == 5 and p.position == ''guard'')
+			if (guards == 5 and p.position == "guard")
 				return false;
 		
 			return true;
@@ -340,17 +341,17 @@ private bool evaluate(User u, Player p) {
 		}
 		
 		for person in u.teamAthletes {
-			if (person.position == ''center'')
+			if (person.position == "center")
 				centers++;
-			if (person.position == ''guard'')
+			if (person.position == "guard")
 				guards++;
-			if (person.position == ''forward'')
+			if (person.position == "forward")
 				forwards++;
-			if (centers == 3 and p.position == ''center'')
+			if (centers == 3 and p.position == "center")
 				return false;
-			if (forwards==5 and p.position == ''forward'')
+			if (forwards==5 and p.position == "forward")
 				return false;
-			if (guards == 5 and p.position == ''guard'')
+			if (guards == 5 and p.position == "guard")
 				return false;
 		
 			return true;
@@ -372,7 +373,7 @@ Here, \textit{u.teamAthletes} is a list of \textit{person} and typically, the us
 \end{doublespace}
 
 \begin{lstlisting}[language=Java,label=some-code,caption=While loop]
-if (person.position == ''center'')
+if (person.position == "center")
 	centers++;
 else
 	centers --;
@@ -384,7 +385,7 @@ parenthesis pair can be used as follows:
 \end{doublespace}
 
 \begin{lstlisting}[language=Java,label=some-code,caption=While loop]
-if (person.position == ''center'') {
+if (person.position == "center") {
 	centers++;
 	forwards ++;
 }
@@ -410,30 +411,48 @@ The \textbf{FLOOD} language has 5 base classes necessary for the creation of a f
 Action is a class that encapsulates an event in a league along with an associated point value. These actions are then put into the league in order to distribute points among the users depending on how their players perform. For example, for a basketball fantasy league will have an actions as follows:
 \begin{center}
 \begin{tabular}{ l c l }
-''Field Goal Attempt'' & \\<=\\> & -0.45 \\
-''Field Goal Made'' & \\<=\\> & 1.0
+"Field Goal Attempt" & <=> & -0.45 \\
+"Field Goal Made" & <=> & 1.0
 \end{tabular}
 \end{center}
-\end{doublespace}
 
-\begin{doublespace}
 which state that any player that performs that action will have the corresponding value added to the player's team. The base class has two instance variables as seen above with respective getters and setters but can be expanded as necessary.
+
+\begin{tabular}{ l p{11cm} }
+Variables & \\
+action & The action a player can make while playing. \\
+points & The corresponding number of points awarded to a player doing the action in the League. \\
+Functions: & \\
+Action(str a, int p) & This is the default constructor for the Action class. It takes a string and integer as input and sets them as the string representation of the action and the point value associated with that action.
+\end{tabular}
 
 \textbf{\underline{Player}}
 \\
-A Player is a unit tradable entity in the league. For example, Michael Jordan is a Player in the Basketball league. This base class provides a set of data structures that entirely define a unit player.  Effectively, this base class provides a group of setters that allows the player name and position attributes set for each Player object.
+A Player is a unit tradable entity in the league. For example Michael Jordan is a Player in the Basketball league. This base class provides a set of data structures that entirely define a unit player.  Effectively, this base class provides a group of setters that allows the player name and position attributes set for each Player object. These setters and getters are not defined explicitly but rather automatically provided by the setget types of the variables.
+
+\begin{tabular}{ l p{11cm} }
+Variables: & \\
+name & The name of the player. \\
+position & The position the player plays. \\
+Functions: & \\
+Player(str Name, str Position) & This is the default constructor for the League class. It takes twos strings as input and sets it as the name of the player as well as his/her position.
+\end{tabular}
 
 \textbf{\underline{User}}
 \\
 A User is a person who play the fantasy league. Each user has a name, points and a list of Players associated with it. The list of Players is considered to be the User's team. There are a set of functions that can be used to add and remove players from a particular users team:
-\end{doublespace}
 
-\begin{lstlisting}[language=Java,label=some-code,caption=Action]
-addPlayer(Player athlete);
-removePlayer(Player athlete);
-\end{lstlisting}
-
-\begin{doublespace}
+\begin{tabular}{ l p{11cm} }
+Variables: & \\
+points & Integer total point value of all the actions of the players on the team \\
+name & The team name \\
+list <Players> teamAthletes & List of players on the user's team \\
+Functions: & \\
+Player(str name) & This is the default constructor for the Player class. It takes a string as input and sets it as the name of the user. \\
+addPlayer(Player athlete) & This function adds a player to the user's team \\
+removePlayer(Player athlete) & This function removes a player from the user's team
+\end{tabular}
+\\\\
 which can be used in the following manner:
 \end{doublespace}
 
@@ -495,17 +514,17 @@ private bool evalutate(User u, Player p) {
 		}
 		
 		for person in u.teamAthletes {
-			if (person.position == ''center'')
+			if (person.position == "center")
 				centers++;
-			if(person.position == ''guard'')
+			if(person.position == "guard")
 				guards++;
-			if(person.position == ''forward'')
+			if(person.position == "forward")
 				forwards++;
-			if(centers==3 and p.position == ''center'')
+			if(centers==3 and p.position == "center")
 				return false;
-			if(forwards==5 and p.position == ''forward'')
+			if(forwards==5 and p.position == "forward")
 				return false;
-			if(guards == 5 and p.position == ''guard'')
+			if(guards == 5 and p.position == "guard")
 				return false;
 				
 			return true;
@@ -516,18 +535,67 @@ private bool evalutate(User u, Player p) {
 }
 \end{lstlisting}
 
+\begin{tabular}{ l p{5cm} }
+Variables: & \\
+game & Reference to the a League object. Used to get the Players and Users \\
+Functions: & \\
+Draft(League Game) & This is the default constructor for the Player class. It takes a League as input and stores it for use with other functions. \\
+dropPlayer(User, Player) & This function drops a player from a user's team \\
+playersLeft() & This functions returns a list of Players Left in Free Agent. \\
+draftFunction(int turn) & This function returns the number of the user's turn who's turn it is to pick their next player. \\
+pickPlayer(User u, Player p) & This function adds a player to a user's team 
+\\
+trade(User u1, Player p1, User u2, Player p2) & This function trades two players between two different users.
+\end{tabular}
+
 \begin{doublespace}
 \textbf{\underline{League}}
 \\
 The League class is the pivot of all the base classes. It provides a set of variables and functions that are needed to comprehensively define any fantasy league in \textbf{FLOOD}. The variables and functions in this class are as follows:
 
+\begin{tabular}{ l p{10cm} }
+name & Name of the league (Basketball) \\
+maxSize & Maximum number of players per user \\
+maxUser & Maximum number of Users allowed in the league \\
+minUser & Minimum number of teams \\
+list<User> & The list which stores all the Users registered with the league. \\
+list<Player> & Complete list of players in the league \\
+list<Action> & Every possible action (point scoring) in the league. \\
 
+League(str Name) & This is the default constructor for the League class. It takes a String  as input and sets it as the name of the League. \\
+addAction(Action a) & This function takes Action objects as input and adds it to the calling League object. \\		
+addUser(User u) & This function takes a User object as input parameter and add adds it User objects to the League object. \\
+addPlayer(Player p) & This function is used to add Player objects to the calling League object. \\
+setMinUser(int MinUser) & There needs to be a programmer defined minimum number of users for the League to run. This function is a setter which sets value for a league. \\
+int getMinUser() & To get the Minimum number of users set for a League object, the programmer can make use of this getter. \\
+loadPlayers(str textfile) & There's a Player list associated with each league. This list contains all the tradeable objects of the league. For example, for a Basketball League, this list would comprise of all the players that the User can operate and choose from. (Michael Jordan, LeBron James, Kobe Bryant, Steve Nash). For a league of 	Elections, the player list would comprise of election candidates (Sarah Palin, Mitt Romney). The loadPlayers function loads this list of Players from the file passed as input parameter to the function.
+\end{tabular}
+\end{doublespace}
+
+\section{Functions and Arguments - Call by Value}
+
+\begin{doublespace}
+As in countless other programming languages, FLOOD employs the concept of a function (also referred to as a method, subroutine, or procedure), a logical grouping of code within the larger program which carries out a specific task and is relatively independent of the rest of the code base. The idea of a function is analogous to the notion of the â€œblack boxâ€� when discussing the concept of encapsulation in object oriented programming. For a well-designed function, the particulars of â€œhowâ€� a the function performs its task(s) is not of critical importance and just knowing â€œwhatâ€� it does suffices. Functions can be â€œcalledâ€� or â€œexecutedâ€� any number of times and, depending on the access level of the function (public or private), perhaps anywhere else within the program, including from within other functions.
+\end{doublespace}
+
+\section{Classes and Objects}
+
+\begin{doublespace}
+Being an object oriented language, programming in FLOOD involves working with Classes and their Objects. A Class is the basic building block of the FLOOD. An object is an instance of a class. The class decides the behaviour and is essentially the template of the objects of that class. Classes in FLOOD need to begin with a capital letter, and are generally Nouns whereas objects of a Class need not begin with a capital letter. 
+\end{doublespace}
+
+\begin{doublespace}
+For example, in the above code, Player is a Class and athlete is an object of Player.  Classes are declared by the keyword â€œClassâ€� followed by the name of the class the user wishes to assign. Objects are instantiated in the following manner by invoking either the default constructor of the Class or any other overloaded constructor:
+\end{doublespace}
+
+\begin{doublespace}
+Now, the object athlete is now an instance of the class Player.  Now this object, athlete shares the same set of attributes as other objects of Class Player, although, might differ in the contents of those attributes.
 \end{doublespace}
 
 \section{Scope}
 
 \begin{doublespace}
-\textbf{FLOOD} scope modifiers provide the ability to limit access to methods and fields as is warranted by the program. It enables encapsulation of data within classes and the ability to hide the data from outside access. \textbf{FLOOD} also provide novel approaches using \textit{set}, \textit{get}, and \textit{setget}. These modifiers default to private but generate setters and getters respective to their names.  Public scope exposes a method or field to all outside access, and private scope completely hides a method or field from all outside access.
+FLOOD scope modifiers provide the ability to limit access to methods and fields as is warranted by the program. It enables encapsulation of data within classes and the ability to hide the data from outside access. FLOOD also provide novel approaches using set, get, and setget. These modifiers default to private but generate setters and getters respective to their names.  Public scope exposes a method or field to all outside access, and private scope completely hides a method or field from all outside access.Variables defined without modifiers exist and can only be accessed solely within the code block they are initially defined. For example, if an int is defined inside of a for loop, the int would only exist withing the curly braces surrounding the looped code and does not exist outside of it.
 \end{doublespace}
 
 \chapter{Reference Manual}
@@ -535,31 +603,102 @@ The League class is the pivot of all the base classes. It provides a set of vari
 \section{Introduction}
 
 \begin{doublespace}
+The following is a brief Reference Manual for the FLOOD language. The reference manual is based on the K\&R C manual which has for the most part inspired Java, the language FLOOD is based on. In certain instances, where there was no distinction between FLOOD and C, the C reference manual definition was used. Additionally, certain explanations were adapted from the Oracle (formerly Sun) online collection of tutorials. 
+
+Many parts of the manual should be familiar to the seasoned programmer. We were able to use FLOOD to experiment with ideas that have been born from our collective programming experience. The grammar will be used in the implementation of our compiler in the next step of the FLOOD project. The aim is to stay true to the this reference manual as much as possible, deviating only for extreme technical issues. 
 \end{doublespace}
 
 \section{Lexical Conventions}
 
+\begin{doublespace}
+The first phase in the interpretation of the source files is to do a low-level lexical transformation transforming every line to a series of tokens to be compiled in a later stage.
+\end{doublespace}
+
 \subsection{Tokens}
+
+\begin{doublespace}
+There are 5 different types of tokens that exist: identifiers, keywords, string literals, operators and separators. White space is inherently ignored and is merely used as a means making code legible and will be removed accordingly before the source is tokenized, with the exception of certain instances of newlines as well as the separation of certain adjacent identifiers, keywords and constants.
+\end{doublespace}
 
 \subsection{Comments}
 
+\begin{doublespace}
+The sequence of characters initially starting with /* and ending with */ disqualify any of the surrounded characters from the lexical tokenization. Comments do not nest or occur within literals. There are no single-line comments however a single-line comment can be simulated using the above sequence on a single-line.
+\end{doublespace}
+
 \subsection{Identifiers}
+
+\begin{doublespace}
+An identifier is a sequence of characters and digits beginning with a character. Underscore is also considered a letter. The language is case sensitive, but only the first 15 characters are significant in the unique representation of the identifier.
+\end{doublespace}
 
 \subsection{Keywords}
 
-\subsection{Constants}
+\begin{doublespace}
+The following words are reserved as keywords and may not be used as identifiers:
+\end{doublespace}
+
+\subsection{Function Generation}
+
+\begin{doublespace}
+Certain keywords will trigger function generation for commonly used functions. For instance, declaring an instance variable as setget will generate default setters and getters as well as declare that instance variable private.
+\end{doublespace}
+
+\subsection{String Literals}
+
+\begin{doublespace}
+A character constant is a sequence of one or more characters enclosed in double quotes, as in â€œ:...â€�. Character constants do not contain the â€˜ character or newlines in order to represent them but rather use different escape characters. They are the following:
+\end{doublespace}
 
 \section{Syntax Notation}
 
 \subsection{Expressions}
 
+\subsubsection{Primary Expression}
+\subsubsection{Postfix Expressions}
+\subsubsection{Unary Expression}
+\subsubsection{Multiplicative Expression}
+\subsubsection{Additive Expression}
+\subsubsection{Relational Expression}
+\subsubsection{Equality Expression}
+\subsubsection{Logical or Expression}
+\subsubsection{Assignment Expression}
+\subsubsection{Comma Expression}
+
 \subsection{Declarations}
+
+\subsubsection{Type Specifiers}
+\subsubsection{Object Specifiers}
+\subsubsection{Declarators}
+\subsubsection{Initialization}
+
+\begin{doublespace}
+\end{doublespace}
 
 \subsection{Statements}
 
+\subsubsection{Expression Statement}
+\subsubsection{Compound Statement}
+\subsubsection{Selection Statement}
+\subsubsection{Iteration Statement}
+\subsubsection{Jump Statement}
+
+\begin{doublespace}
+\end{doublespace}
+
 \subsection{Scope and Linkage}
 
+\subsubsection{Lexical Scope}
+\subsubsection{Linkage}
+
+\begin{doublespace}
+\end{doublespace}
+
+
 \section{Object Orientated Programming}
+
+\begin{doublespace}
+\end{doublespace}
 
 \begin{doublespace}
 \textbf{FLOOD} is an objected oriented programming (OOP) language by design so in order to become an adept coder, a fundamental understanding of OOP concepts is necessary. To get started, in this section we review the four basic tenets of OOP:
@@ -652,26 +791,20 @@ Sample plymorphism code...
 
 \section{Grammar}
 
-\chapter{Standard Library}
+\begin{doublespace}
+Below is a recapitulation of the grammar that was given throughout the earlier part of this Reference Manual.  The grammar has undefined terminal symbols integer-constant, character-constant, floating-constant, identifier, and string; the bold style words and symbols are terminals given literally. This grammar can be transformed mechanically into input acceptable for an automatic parser-generator. 
+\end{doublespace}
 
-\section{Football}
-
+%\chapter{Standard Library}
+%\section{Football}
 %\section{Baseball}
-
-\section{Basketball}
-
+%\section{Basketball}
 %\section{Hockey}
-%
 %\section{Soccer}
-
-\section{Rugby}
-
-\section{Financial Markets}
-
+%\section{Rugby}
+%\section{Financial Markets}
 %\section{Film Box Office}
-%
 %\section{Music Rating}
-%
 %\section{Political Elections/Polls}
 
 \end{document}
