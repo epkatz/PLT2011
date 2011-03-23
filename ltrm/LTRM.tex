@@ -381,7 +381,7 @@ private bool evaluate(User u, Player p)
 				forwards++;
 			if (centers == 3 and p.position == "center")
 				return false;
-			if (forwards==5 and p.position == "forward")
+			if (forwards == 5 and p.position == "forward")
 				return false;
 			if (guards == 5 and p.position == "guard")
 				return false;
@@ -408,7 +408,7 @@ Here, \texttt{u.teamAthletes} is a list of \texttt{person} and typically the use
 if (person.position == "center")
 	centers++;
 else
-	centers --;
+	centers--;
 \end{lstlisting}
 
 \begin{doublespace}
@@ -642,15 +642,15 @@ private bool evalutate(User u, Player p)
 		{
 			if (person.position == "center")
 				centers++;
-			if(person.position == "guard")
+			if (person.position == "guard")
 				guards++;
-			if(person.position == "forward")
+			if (person.position == "forward")
 				forwards++;
-			if(centers==3 and p.position == "center")
+			if (centers == 3 and p.position == "center")
 				return false;
-			if(forwards==5 and p.position == "forward")
+			if (forwards == 5 and p.position == "forward")
 				return false;
-			if(guards == 5 and p.position == "guard")
+			if (guards == 5 and p.position == "guard")
 				return false;
 				
 			return true;
