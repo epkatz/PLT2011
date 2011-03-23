@@ -6,7 +6,10 @@
 \usepackage{caption}
 \usepackage{courier}
 \usepackage{setspace}
-\usepackage{indentfirst}
+%\usepackage{indentfirst}
+\usepackage{verbatim}
+\usepackage{alltt}
+
 \usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
 
 %\singlespacing
@@ -23,7 +26,7 @@
   numberstyle=\tiny,
   %stepnumber=2,
   numbersep=10pt,
-  tabsize=4,
+  tabsize=3,
   extendedchars=true,
   breaklines=true,
   keywordstyle= \footnotesize,
@@ -105,7 +108,7 @@ In this sense, \textbf{FLOOD} is very much a ``high-level" and ``domain-specific
 \chapter{A Quick Tutorial}
 
 \begin{doublespace}
-The goal of this tutorial is to jump into the \textbf{FLOOD} language by creating a simple fantasy league. We won't concern ourselves with implementation details just yet. The language is meant to be simple yet sufficiently extensible but this tutorial will not delve into the various features which make it possible. 
+The goal of this tutorial is to jump into the \textbf{FLOOD} language by creating a simple fantasy league. We won't concern ourselves with implementation details just yet. The language is meant to be simple yet sufficiently extensible but the tutorial will not delve into the various features that make this possible. 
 
 Experienced Java programmers will be familiar with most of the syntax since it is a subset of the popular C-like syntax. In certain instances we have opted to use Python syntax for improved readability. Where possible we compare or contrast a specific feature with Java, C++, and Python which are the main influences of \textbf{FLOOD}. 
 
@@ -119,13 +122,14 @@ Some examples which aren't strictly necessary for the sample program are include
 
 Since \textbf{FLOOD} is built on top of Java byte-code, the programmer will not need to worry about system compatibility issues. Heeding the eternal wisdom of Kernighan \& Ritchie, we also point out that compilation will only succeed if the programmer hasn't botched anything, such as missing characters, misspelled keywords, or some other mistake that can cause an error in compilation. 
 
-Let's start by showing what the ``main" class would look like. In keeping with the theme of fantasy leagues, the function \textit{main} has been replaced by the equivalent \textit{play}. 
+Let's start by showing what the ``main" class would look like. In keeping with the theme of fantasy leagues, the function \texttt{main} has been replaced by the equivalent \texttt{play}. 
 \end{doublespace}
 
 \begin{lstlisting}[language=Java,label=some-code,caption=BasketballPlay.fld]
 class BasketballPlay:
-	public play() {
-		League myfbl = new League ("Happy League");
+	public play()
+	{
+		League myfbl = new League("Happy League");
 		mybl.setMaxUsers(10);
 		mybl.setMinUsers(4);
 
@@ -154,48 +158,53 @@ class BasketballPlay:
 \end{lstlisting}
 
 \begin{doublespace}
-At first glance this appears to be very similar to a Java program. However, there are a couple of key differences. First, note the convention is to name \textbf{FLOOD} files with the \textit{.fld} extension. Secondly, each file must contain one and only one class---as oppose to Java, there is no ability to nest classes.
+At first glance this code example appears to be very similar to a Java program. However, upon further inspection there are notable differences. First, note the convention is to name \textbf{FLOOD} files with the \textit{.fld} extension. Secondly, each file must contain one and only one class---as oppose to Java, there is no ability to nest classes.
 
-Classes are defined using the semicolon. Since there is no question of scope within a file, code below the class definition is considered part of the class. Code above the class definition is an error. Import statement must immediately follow the class definition. Instance variables can be placed anywhere below the class definition outside of method blocks.
+Additionally, classes are defined using the semicolon. Since there is no question of scope within a file, code below the class definition is considered part of the class. Code above the class definition is an error. Import statement must immediately follow the class definition. Instance variables can be placed anywhere below the class definition outside of method blocks.
 
-Java uses the \textit{main} method as the beginning of execution. In keeping with the theme of fantasy leagues, the \textit{play} method is used as the equivalent of \textit{main}. Every \textbf{FLOOD} program must have a \textit{play} method. \textbf{FLOOD} convention dictates the class containing \textit{play} be named after the type of league being designed. For instance, in this example the type of league can clearly be inferred to be related to basketball:
+Java uses the \texttt{main} method as the beginning of execution. In keeping with the theme of fantasy leagues, the \texttt{play} method is used instead as the equivalent of \texttt{main}. Every \textbf{FLOOD} program must have a \texttt{play} method. \textbf{FLOOD} convention dictates the class containing \texttt{play} be named after the type of league being designed. For instance, in this example the type of league can clearly be inferred to be related to basketball:
 \end{doublespace}
 
 \begin{lstlisting}[language=Java,label=some-code,caption=BasketballPlay.fld]
 class BasketballPlay:
-	public play() {
-	 ...
+	public play()
+	{
+		League myfbl = new League ("Happy League");
+		mybl.setMaxUsers(10);
+		mybl.setMinUsers(4);
+		...
+		...
 	}
 \end{lstlisting}
 
 \begin{doublespace}
-Every \textbf{FLOOD} program must instantiate a League object. The League object contains most of the other objects needed for the \textbf{FLOOD} program including User, Player and Action lists. Lists will be discussed in later sections but for now they can be thought of as Java LinkedLists (although there are subtle differences). For the minimum program we could have left the max and min user setting at their respective default value but as an example we set them above. The League object will later be passed to the GUI however it provides the first example of extension within \textbf{FLOOD}. We could have written a new class that extends League to add functionality such as divisions within the league. For now the basic League object will suffice to create our first program.
+Every \textbf{FLOOD} program must also instantiate a \texttt{League} object. The \texttt{League} object contains most of the other objects needed for the \textbf{FLOOD} program including \texttt{User}, \texttt{Player} and \texttt{Action} lists. Lists will be discussed in later sections but for now they can be thought of as Java LinkedLists (although there are subtle differences). For the minimum program we could have left the max and min user setting at their respective default value but as an example we set them above. The \texttt{League} object will later be passed to the GUI, however, here it provides the first example of extensibility within \textbf{FLOOD}. We could have written a new class that extends League to add functionality such as divisions within the league. For now the basic \texttt{League} object will suffice to create our first program.
 
 A method in \textbf{FLOOD} is similar to a method in Java or function in C++. We call a method on an object by using the object's name followed by a period followed by the method of that object with an optional argument list in between mandatory parenthesis.
 \end{doublespace}
 
-\begin{lstlisting}[language=Java,label=some-code,caption=Setting maximum users]
+\begin{lstlisting}[language=Java,label=some-code,caption=Setting the maximum number of users]
 mybl.setMaxUsers(10);
 \end{lstlisting}
 
 \begin{doublespace}
-In this example we are calling \textit{setMaxUsers} on our \textit{mybl} object. The \textit{mybl} object is an instantiation of the League class. The method \textit{setMaxUsers} has been defined to take an argument of type int. We pass the value to 10 to the method which performs some action internally. In this case, it sets the maximum number of user in the league to 10.
+In this example we are calling \texttt{setMaxUsers} on our \texttt{mybl} object. The \texttt{mybl} object is an instantiation of the \texttt{League} class. The method \texttt{setMaxUsers} has been defined to take an argument of type \texttt{int}. We pass the value to 10 to the method which performs some action internally. In this case, it sets the maximum number of user in the league to 10.
 \end{doublespace}
 
-\begin{lstlisting}[language=Java,label=some-code,caption=Adding a User]
+\begin{lstlisting}[language=Java,label=some-code,caption=Adding a new User]
 mybl.addUser(new User("Eli"));
 \end{lstlisting}
 
 \begin{doublespace}
-We then begin adding users to the league. Once again we use this as an illustration of what can be added. We add five Users and give each names. It would have been possible to leave this portion of later in the program.
+We then begin adding users to the league. Once again we use this as an illustration of what can be added. We add five \texttt{User} and give each names. It would have been possible to leave this portion for later in the program.
 \end{doublespace}
 
-\begin{lstlisting}[language=Java,label=some-code,caption=Adding an Action]
+\begin{lstlisting}[language=Java,label=some-code,caption=Adding a new Action]
 mybl.addAction(new Action("Field Goal Attempt", -0.45);
 \end{lstlisting}
 
 \begin{doublespace}
-Actions are added to the league using the \textit{addAction} method. Actions consist of any event that is associated with a point value, positive or negative, which are part of the evaluation of the strength of a User (or team). The actions will be associated with a file uploaded each time-period which will contain player-action statistics. The statistics will be translated via this list of actions to points added to each User. The league will then know while Users are ``winning" and rank them. 
+Actions are added to the league using the \texttt{addAction} method. Actions consist of any event that is associated with a point value, positive or negative, which are part of the evaluation of the strength of a \texttt{User}. The actions will be associated with a file uploaded each time-period which will contain player-action statistics. The statistics will be translated via this list of actions to points added to each \texttt{User}. The league will then know which \textit{Users} are ``winning" and rank them. 
 \end{doublespace}
 
 \begin{lstlisting}[language=Java,label=some-code,caption=Launching the GUI]
@@ -203,25 +212,24 @@ Flood.launchGui(blDraft, mybl);
 \end{lstlisting}
 
 \begin{doublespace}
-The final part of the code launches the GUI and adds both the League and the Draft. Hiding the GUI is one of the main features of \textbf{FLOOD}. There is no need to program any part of the user-interface. The GUI will know how to hook into the \textbf{FLOOD} classes and connect the buttons on the interface to the actions defined by the programmer. The output will be a GUI window which will control the flow of the program. The flow of the program will depend upon the user. For instance, the only way to update the scores of the Users is by adding player-action files to the program. Player-Action files would contain new statistics such as:
+The final part of the code launches the GUI and adds both the \texttt{League} and the \texttt{Draft}. Hiding the GUI is one of the main features of \textbf{FLOOD}. There is no need to program any part of the user-interface. The GUI will know how to hook into the \textbf{FLOOD} classes and connect the buttons on the interface to the actions defined by the programmer. The output will be a GUI window which will control the flow of the program. The flow of the program will depend upon the user. For instance, the only way to update the scores of the \textit{Users} is by adding player-action files to the program. Player-Action files would contain new statistics such as:
 \begin{center}
+\begin{singlespace}
 \begin{tabular}{ l l }
 LeBron James & 7 Rebound \\
 Lebron James & 4 Assist \\
 Carmelo Anthony & 5 Steal \\
 Carmelo Anthony & 25 Point Scored
 \end{tabular}
+\end{singlespace}
 \end{center}
-\end{doublespace}
-
-\begin{doublespace}
-This is everything needed to run a simple \textbf{FLOOD} program. This basketball league would mirror equivalent leagues in Yahoo Sports or ESPN Fantasy sans network connectivity.  
+This is everything needed to run a simple \textbf{FLOOD} program. This basketball league will mirror equivalent leagues in \textit{Yahoo! Sports} or \textit{ESPN Fantasy} without network connectivity.  
 \end{doublespace}
 
 \section{Variables \& Arithmetic Expressions}
 
 \begin{doublespace}
-Just as any robust programming language requires a comprehensive computational model, \textbf{FLOOD} provides the user with a set of arithmetic expressions and variable types to work on. To use a variable and work on it, it requires to be declared at or before first usage. A declaration defines the properties of the variables. A declaration is of the form, type name followed by the list of variables to be declared as that type. This list needs to be comma separated such as:
+Just as any robust programming language requires a comprehensive computational model, \textbf{FLOOD} provides the user with a set of arithmetic expressions and variable types to work with. To use a variable and work on it, it requires to be declared at or before first usage. A declaration defines the properties of the variables. A declaration is of the form type name followed by the list of variables to be declared as that type. This list needs to be comma separated such as:
 \end{doublespace}
 
 \begin{lstlisting}[language=Java,label=some-code,caption=User.fld]
@@ -229,51 +237,69 @@ Class User:
 	get int points;
 	get str name, handle;
 	setget int maxSize;
-	list <Players> teamAthletes;
+	list<Players> teamAthletes;
 
-	addPlayer(Player athlete);
-	removePlayer(Player athlete);
+	addPlayer(Player athlete)
+	{
+		...
+	}
+	
+	removePlayer(Player athlete)
+	{
+		....
+	}
 \end{lstlisting}
 
 \begin{doublespace}
-Here, the variables ``name" and ``handle" are both declared as type ``str" (string). Notice that here, the variables are declared at the very beginning.  Alternatively, like mentioned earlier, variables can be declared as and when needed. For example:
+Here, the variables \texttt{name} and \texttt{handle} are both declared as type \texttt{str} (string). Notice that the variables are declared at the very beginning.  Alternatively, as mentioned earlier, variables can be declared as and when needed. For example:
 \end{doublespace}
 
 \begin{lstlisting}[language=Java,label=some-code,caption=SnakeDraft.fld]
 Class SnakeDraft is Draft:
 	private League game;
 
-	public draftFunction(int turn) {
-		return turn \% game.teams.length();
+	public draftFunction(int turn)
+	{
+		return turn % game.teams.length();
 	}
 
 	/* Limit of 8 players per team, and there must be at least 1 center, 2 guards and 2 forwards per team. */
-	public bool pickPlayer(User team, Player athlete) {
+	public bool pickPlayer(User team, Player athlete)
+	{
 		int centers = 0, guards = 0, forwards = 0, total = team.teamAthletes.size();
-		if (total < 8) {
-			if (total < 4) {
+		
+		if (total < 8)
+		{
+			if (total < 4)
+			{
 				team.addPlayer(athlete);
 				return true;
 			}
+		}
 	}
 \end{lstlisting}
 
 \begin{doublespace}
-Here, the integer variables centers, guards, fowards and total are declared right when they are needed. This obviates the need to keep going back to the beginning of the code to declare variables, making declarations much more convenient.
+Here, the integer variables \texttt{centers}, \texttt{guards}, \texttt{fowards} and total are declared right when they are needed. This as-needed method obviates the need to keep going back to the beginning of the code to declare variables, making declarations much more convenient.
 
-FLOOD offers the set of arithmetic expressions required to create a comprehensive fantasy league of the users choice. This set comprises of the standard  addition, subtraction, multiplication and division operators. 
+\textbf{FLOOD} offers the set of arithmetic expressions required to create a comprehensive fantasy league of the user's choice. This set comprises of the standard addition, subtraction, multiplication, and division operators. 
 \end{doublespace}
 
-\begin{lstlisting}[language=Java,label=some-code,caption=SnakeDraft.fld]
+\begin{lstlisting}[language=Java,label=some-code,caption=Arithmetic expressions]
 /* Limit of 8 players per team, and there must be at least 1 center, 2 guards and 2 forwards per team. */
-private bool evaluate(User u, Player p) {
+private bool evaluate(User u, Player p)
+{
 	int centers = 0, guards = 0, forwards = 0, total = u.teamAthletes.size();
-	if (total < 8) {
-		if (total < 4) {
+	
+	if (total < 8)
+	{
+		if (total < 4)
+		{
 			return true;
 		}
 		
-		for person in u.teamAthletes {
+		for person in u.teamAthletes
+		{
 			if (person.position == "center")
 				centers = centers + 1;
 			if (person.position == "guard")
@@ -306,11 +332,12 @@ This code snippet provides a glimpse of the arithmetic capabilities of \textbf{F
 \begin{doublespace}
 Creating a fantasy league in \textbf{FLOOD} can range from simple computations to complex algorithms involved in drafts. To facilitate the latter, the programmer has the choice of using loops to make life easier.
 
-The syntax for the while loop follows the standard convention:
+The syntax for the \textit{while} loop follows the standard convention:
 \end{doublespace}
 
 \begin{lstlisting}[language=Java,label=some-code,caption=While loop]
-while (total < 4) {
+while (total < 4)
+{
 	centers = centers + 1;
 	guards = guards - centers;
 	forwards = forwards / 2;
@@ -319,28 +346,33 @@ while (total < 4) {
 \end{lstlisting}
 
 \begin{doublespace}
-The while loop operates as follows: The condition in parentheses is tested. If it is true (total is less than 4), the body of the loop (the three statements enclosed in braces) is executed. Then the condition is checked again, and if true, the body is executed again. When the test becomes false (total equals or exceeds 4) the loop ends, and execution continues at the statement that follows the loop. The body of a while can be one or more statements enclosed in braces, as above, or a single statement without braces, as in
+The \textit{while} loop operates as follows: The condition in parentheses is tested. If it is true (total is less than 4), the body of the loop (the four statements enclosed in braces) is executed. Then the condition is checked again, and if true, the body is executed again. When the test becomes false (total equals or exceeds 4) the loop ends, and execution continues at the statement that follows the loop. The body of a \textit{while} can be one or more statements enclosed in braces, as above, or a single statement without braces, such as:
 \end{doublespace}
 
-\begin{lstlisting}[language=Java,label=some-code,caption=While loop]
+\begin{lstlisting}[language=Java,label=some-code,caption=Single statement while loop]
 while (total < 4)
 	centers = centers + 1;
 \end{lstlisting}
 
 \begin{doublespace}
-The for statement is a loop, a generalization of the while. \textbf{FLOOD} provides a easy to use for loop syntax that allows the user to iterate through any list, for example:
+The \textit{for} statement is a loop and is a generalization of the \textit{while}. \textbf{FLOOD} provides a easy to use \textit{for} loop syntax that allows the user to iterate through any list, for example:
 \end{doublespace}
 
-\begin{lstlisting}[language=Java,label=some-code,caption=While loop]
+\begin{lstlisting}[language=Java,label=some-code,caption=For loop]
 /* Limit of 8 players per team, and there must be at least 1 center, 2 guards and 2 forwards per team. */
-private bool evaluate(User u, Player p) {
-	int centers = 0, guards = 0,forwards = 0, total = u.teamAthletes.size();
-	if (total < 8) {
-		if (total < 4) {
+private bool evaluate(User u, Player p)
+{
+	int centers = 0, guards = 0, forwards = 0, total = u.teamAthletes.size();
+	
+	if (total < 8)
+	{
+		if (total < 4)
+		{
 			return true;
 		}
 		
-		for person in u.teamAthletes {
+		for person in u.teamAthletes
+		{
 			if (person.position == "center")
 				centers++;
 			if (person.position == "guard")
@@ -363,16 +395,16 @@ private bool evaluate(User u, Player p) {
 \end{lstlisting}
 
 \begin{doublespace}
-Here, \textit{u.teamAthletes} is a list of \textit{person} and typically, the user may need to iterate through this list. This \textit{for} loop allows the user to iterate through this list conveniently without having to manually find out the length of the list or worry about the starting position of the list.
+Here, \texttt{u.teamAthletes} is a list of \texttt{person} and typically the user may need to iterate through this list. The \textit{for} loop allows the user to iterate through this list conveniently without having to manually find out the length of the list or worry about the starting position of the list.
 \end{doublespace}
 
 \section{Conditionals}
 
 \begin{doublespace}
-\textbf{FLOOD} provides the programmer with a conditional in the form of the `if' expression that is defined as follows:
+\textbf{FLOOD} provides the programmer with a conditional in the form of the \textit{if} expression that is defined as follows:
 \end{doublespace}
 
-\begin{lstlisting}[language=Java,label=some-code,caption=While loop]
+\begin{lstlisting}[language=Java,label=some-code,caption=if conditional]
 if (person.position == "center")
 	centers++;
 else
@@ -380,89 +412,177 @@ else
 \end{lstlisting}
 
 \begin{doublespace}
-Here, the program checks the condition enclosed in the bracket. If this condition is met, in this case, if the person's position is ``center," then the program executes the next statement. In order to include multiple statements to be executed in case the condition is met, the `\{..\}'
+Here, the program checks the condition enclosed in the bracket. If this condition is met, in this case, if the person's position is \texttt{center}, then the program executes the next statement. In order to include multiple statements to be executed in case the condition is met, the `\{..\}'
 parenthesis pair can be used as follows:
 \end{doublespace}
 
-\begin{lstlisting}[language=Java,label=some-code,caption=While loop]
-if (person.position == "center") {
+\begin{lstlisting}[language=Java,label=some-code,caption=Bracketed conditionals]
+if (person.position == "center")
+{
 	centers++;
-	forwards ++;
+	forwards++;
 }
-else {
-	centers --;
-	forwards --;
+else
+{
+	centers--;
+	forwards--;
 }
 \end{lstlisting}
 
 \begin{doublespace}
-If this condition is not met, then the statement or statements enclosed in body of the else condition will be executed i.e. decrement the value of the variables, `centers' and `forwards.'
+If this condition is not met, then the statement or statements enclosed in the body of the else condition will be executed, i.e. decrement the value of the variables \texttt{centers} and \texttt{forwards}.
 \end{doublespace}
 
-\section{Base Classes}
+\section{Functions, Arguments and Call by Value}
 
 \begin{doublespace}
-The \textbf{FLOOD} language has 5 base classes necessary for the creation of a fantasy league. They are described individually below in detail.
+As in countless other programming languages, \textbf{FLOOD} employs the concept of a function (also referred to as a \textit{method}, \textit{subroutine}, or \textit{procedure}), a logical grouping of code within the larger program which carries out a specific task and is relatively independent of the rest of the code base. The idea of a function is analogous to the notion of the \textit{black box} when discussing the concept of encapsulation in object oriented programming. 
+
+For a well-designed function, the particulars of ``how" a the function performs its task(s) is not of critical importance and just knowing ``what" it does suffices. Functions can be ``called" or ``executed" any number of times and, depending on the access level of the function (\texttt{public} or \texttt{private}), perhaps anywhere else within the program, including from within other functions.
 \end{doublespace}
 
+\begin{lstlisting}[language=Java,label=some-code,caption=Syntax of a FLOOD function]
+private bool evaluate(User user, Player player)
+{
+	...
+}
+\end{lstlisting}
+
 \begin{doublespace}
-\textbf{\underline{Action}}
-\\
-Action is a class that encapsulates an event in a league along with an associated point value. These actions are then put into the league in order to distribute points among the users depending on how their players perform. For example, for a basketball fantasy league will have an actions as follows:
+And similar to Java and C, all function arguments in \textbf{FLOOD} are passed ``by value." In other words, the called function is passed the values of its arguments in temporary variables instead of the originals. This method stands in contrast to the pass ``by reference" in which the function has access to the original argument as opposed to a local copy. Hence, in \textbf{FLOOD}, the called function can not and does not directly chances the variable in the calling function, but only its private, temporary copy.
+\end{doublespace}
+
+\section{Classes and Objects}
+
+\begin{doublespace}
+Being an object oriented language, programming in \textbf{FLOOD} involves working with classes and objects. A class is the basic building block of \textbf{FLOOD}. An object is an instance of a class. The class decides the behavior and is essentially the template of the objects of that class. Classes in \textbf{FLOOD} need to begin with a capital letter, and are generally nouns whereas objects of a class need not begin with a capital letter. 
+\end{doublespace}
+
+\begin{lstlisting}[language=Java,label=some-code,caption=Typical definition of a class in FLOOD]
+Class User:
+	get int points;
+	get str name;
+	list<Players> teamAthletes;
+
+	addPlayer(Player athlete) {...}
+	removePlayer(Player athlete) {...}
+\end{lstlisting}
+
+\begin{doublespace}
+For example, in the above code, \texttt{User} is a class and athlete is an object of \texttt{Player}.  Classes are declared by the keyword \texttt{Class} followed by the name of the class the user wishes to assign. Objects are instantiated in the following manner by invoking either the default constructor of the class or any other overloaded constructor:
+\end{doublespace}
+
+\begin{lstlisting}[language=Java,label=some-code,caption=Object instatiantion]
+Player athlete = new Player();
+\end{lstlisting}
+
+\begin{doublespace}
+Now, the object athlete is now an instance of the class \texttt{Player}.  Now this object, athlete shares the same set of attributes as other objects of class \texttt{Player}, although, it might differ in the contents of those attributes.
+\end{doublespace}
+
+\section{Scope}
+
+\begin{doublespace}
+\textbf{FLOOD} scope modifiers provide the ability to limit access to methods and fields as is warranted by the program. It enables encapsulation of data within classes and the ability to hide the data from outside access. \textbf{FLOOD} also provide novel approaches using \texttt{set}, \texttt{get}, and \texttt{setget}. These modifiers default to private but generate setters and getters respective to their names.  Public scope exposes a method or field to all outside access, and private scope completely hides a method or field from all outside access. Variables defined without modifiers exist and can only be accessed solely within the code block they are initially defined. For example, if an int is defined inside of a for loop, the int would only exist within the curly braces surrounding the looped code and does not exist outside of it.
+\end{doublespace}
+
+\section{FLOOD Base Classes}
+
+\begin{doublespace}
+The \textbf{FLOOD} language has 5 base classes necessary for the creation of a fantasy league. They are described here in detail.
+\end{doublespace}
+
+\subsection{Action}
+\begin{doublespace}
+\texttt{Action} is a class that encapsulates an event in a league along with an associated point value. These actions are then put into the league in order to distribute points among the users depending on how their players perform. For example, a basketball fantasy league will have the following actions along with its associated point values:
 \begin{center}
 \begin{tabular}{ l c l }
-"Field Goal Attempt" & <=> & -0.45 \\
-"Field Goal Made" & <=> & 1.0
+``Field Goal Attempt" & $\Rightarrow$ & -0.45 \\
+``Field Goal Made" & $\Rightarrow$ & 1.0
 \end{tabular}
 \end{center}
+Thus, any player performing these actions will have the corresponding value added to the player's team. The base class has two instance variables as seen above with respective getters and setters but can be expanded as necessary.
 
-which state that any player that performs that action will have the corresponding value added to the player's team. The base class has two instance variables as seen above with respective getters and setters but can be expanded as necessary.
-
-\begin{tabular}{ l p{11cm} }
-Variables & \\
-action & The action a player can make while playing. \\
-points & The corresponding number of points awarded to a player doing the action in the League. \\
-Functions: & \\
-Action(str a, int p) & This is the default constructor for the Action class. It takes a string and integer as input and sets them as the string representation of the action and the point value associated with that action.
-\end{tabular}
-
-\textbf{\underline{Player}}
+\begin{flushleft}
+\begin{onehalfspace}
+\begin{tabular}{ l | p{12cm} }
+\hline
+\textbf{Variables} & \\
+\hline
+\textit{action} & The action a player can make while playing. \\
 \\
-A Player is a unit tradable entity in the league. For example Michael Jordan is a Player in the Basketball league. This base class provides a set of data structures that entirely define a unit player.  Effectively, this base class provides a group of setters that allows the player name and position attributes set for each Player object. These setters and getters are not defined explicitly but rather automatically provided by the setget types of the variables.
-
-\begin{tabular}{ l p{11cm} }
-Variables: & \\
-name & The name of the player. \\
-position & The position the player plays. \\
-Functions: & \\
-Player(str Name, str Position) & This is the default constructor for the League class. It takes twos strings as input and sets it as the name of the player as well as his/her position.
-\end{tabular}
-
-\textbf{\underline{User}}
+\textit{points} & The corresponding number of points awarded to a player doing the action in the League. \\
 \\
-A User is a person who play the fantasy league. Each user has a name, points and a list of Players associated with it. The list of Players is considered to be the User's team. There are a set of functions that can be used to add and remove players from a particular users team:
-
-\begin{tabular}{ l p{11cm} }
-Variables: & \\
-points & Integer total point value of all the actions of the players on the team \\
-name & The team name \\
-list <Players> teamAthletes & List of players on the user's team \\
-Functions: & \\
-Player(str name) & This is the default constructor for the Player class. It takes a string as input and sets it as the name of the user. \\
-addPlayer(Player athlete) & This function adds a player to the user's team \\
-removePlayer(Player athlete) & This function removes a player from the user's team
+\hline
+\textbf{Functions} & \\
+\hline
+\textit{Action(str a, int p)} & This is the default constructor for the \texttt{Action} class. It takes a string and integer as input and sets them as the string representation of the action and the point value associated with that action. \\
+\hline
 \end{tabular}
-\\\\
+\end{onehalfspace}
+\end{flushleft}
+
+\subsection{Player}
+A \texttt{Player} is a unit tradable entity in the league. For example Michael Jordan is a \texttt{Player} in the Basketball league. This base class provides a set of data structures that entirely define a unit player, providing a group of setters/getters that allows the player name and position attributes to be set for each \texttt{Player} object. These setters and getters are not defined explicitly but rather automatically provided by the \texttt{setget} types of the variables.
+
+\begin{flushleft}
+\begin{onehalfspace}
+\begin{tabular}{ l | p{10cm} }
+\hline
+\textbf{Variables} & \\
+\hline
+\textit{name} & The name of the player. \\
+\\
+\textit{position} & The position the player plays. \\
+\\
+\hline
+\textbf{Functions} & \\
+\hline
+\textit{Player(str Name, str Position)} & This is the default constructor for the \texttt{League} class. It takes two strings as input and sets it as the name of the player as well as his or her position. \\
+\hline
+\end{tabular}
+\end{onehalfspace}
+\end{flushleft}
+
+\subsection{User}
+A \texttt{User} is a person who play the fantasy league. Each \texttt{User} has a name, points and a list of \textit{Players} associated with it. The list of \textit{Players} is considered to be the User's team. There are a set of functions that can be used to add and remove players from a particular users team:
+
+\begin{flushleft}
+\begin{onehalfspace}
+\begin{tabular}{ p{5.5cm} | p{10cm} }
+\hline
+\textbf{Variables} & \\
+\hline
+\textit{points} & Integer total point value of all the actions of the players on the team. \\
+\\
+\textit{name} & The team name. \\
+\\
+\textit{list$<$Players$>$ teamAthletes} & List of players on the user's team. \\
+\\
+\hline
+\textbf{Functions} & \\
+\hline
+\textit{Player(str name)} & This is the default constructor for the \texttt{Player} class. It takes a string as input and sets it as the name of the user. \\
+\\
+\textit{addPlayer(Player athlete)} & This function adds a player to the user's team \\
+\\
+\textit{removePlayer(Player athlete)} & This function removes a player from the user's team. \\
+\hline
+\end{tabular}
+\end{onehalfspace}
+\end{flushleft}
 which can be used in the following manner:
 \end{doublespace}
 
-\begin{lstlisting}[language=Java,label=some-code,caption=Action]
+\begin{lstlisting}[language=Java,label=some-code,caption=Adding a Player]
 /* Add a player to a team if possible* /
-public bool pickPlayer(User u, Player p) {
+public bool pickPlayer(User u, Player p)
+{
 	bool addition;
 	addition = evalutate(u,p);
 	
-	if (addition) {
+	if (addition)
+	{
 		u.addPlayer(p);
 		return true;
 	}
@@ -472,31 +592,33 @@ public bool pickPlayer(User u, Player p) {
 \end{lstlisting}
 
 \begin{doublespace}
-In the above code snippet, an object of class Player, p, is added to an object of class User, u, using the function addPlayer provided by the User class. Similarly, the removePlayer function can be used to remove Player objects from a User object.
+In the above code snippet, an object of class \texttt{Player}, \texttt{p}, is added to an object of class \texttt{User}, \texttt{u}, using the function \texttt{addPlayer} provided by the \texttt{User} class. Similarly, the \texttt{removePlayer} function can be used to remove \texttt{Player} objects from a \texttt{User} object.
 
-\textbf{\underline{Draft}}
-\\
-A Draft is a class that specifies different rules and regulations regarding the addition, trade or drop of a Player from a User's team. The base class provides a very broad implementation that applies minimal restrictions but is fully expandable. Its methods include the following:
+\subsection{Draft}
+A \texttt{Draft} is a class that specifies different rules and regulations regarding the addition, trade or drop of a \texttt{Player} from a user's team. The base class provides a very broad implementation that applies minimal restrictions but is fully expandable. Its methods include the following:
 \end{doublespace}
 
-\begin{lstlisting}[language=Java,label=some-code,caption=Action]
-public int draftFunction(int turn)
-public bool pickPlayer(User u, Player p)
-public bool trade(User u1, Player p1, User u2, Player p2)
-public dropPlayer(User, Player)
-public playersLeft()
+\begin{lstlisting}[language=Java,label=some-code,caption=Draft methods]
+public int draftFunction(int turn);
+public bool pickPlayer(User u, Player p);
+public bool trade(User u1, Player p1, User u2, Player p2);
+public dropPlayer(User, Player);
+public playersLeft();
 \end{lstlisting}
 
 \begin{doublespace}
 For example, when creating a draft for a basketball league, it is necessary that every team has at least 1 center, 2 forwards and 2 guards. Below is a possible function to enforce this, setting the max number of players per team to be 8. The evaluate function is a private method used to say if a team can afford to take the player trying to be drafted without violating the constraints concerning the number of each type of specific player.
 \end{doublespace}
 
-\begin{lstlisting}[language=Java,label=some-code,caption=Action]
+\begin{lstlisting}[language=Java,label=some-code,caption=Picking a Player]
 /* Add a player to a team if possible */
-public bool pickPlayer(User u, Player p) {
+public bool pickPlayer(User u, Player p)
+{
 	bool addition;
 	addition = evaluate(u,p);
-	if (addition) {
+	
+	if (addition)
+	{
 		u.addPlayer(p);
 		return true;
 	}
@@ -505,15 +627,19 @@ public bool pickPlayer(User u, Player p) {
 }
 
 /* Limit of 8 players per team, and there must be at least 1 center, 2 guards and 2 forwards per team. */
-private bool evalutate(User u, Player p) {
+private bool evalutate(User u, Player p)
+{
 	int centers = 0, guards = 0,forwards = 0, total = u.teamAthletes.size();
 	
-	if (total < 8) {
-		if (total < 4) {
+	if (total < 8)
+	{
+		if (total < 4)
+		{
 			return true;
 		}
 		
-		for person in u.teamAthletes {
+		for person in u.teamAthletes
+		{
 			if (person.position == "center")
 				centers++;
 			if(person.position == "guard")
@@ -535,67 +661,86 @@ private bool evalutate(User u, Player p) {
 }
 \end{lstlisting}
 
-\begin{tabular}{ l p{5cm} }
-Variables: & \\
-game & Reference to the a League object. Used to get the Players and Users \\
-Functions: & \\
-Draft(League Game) & This is the default constructor for the Player class. It takes a League as input and stores it for use with other functions. \\
-dropPlayer(User, Player) & This function drops a player from a user's team \\
-playersLeft() & This functions returns a list of Players Left in Free Agent. \\
-draftFunction(int turn) & This function returns the number of the user's turn who's turn it is to pick their next player. \\
-pickPlayer(User u, Player p) & This function adds a player to a user's team 
+\begin{flushleft}
+\begin{onehalfspace}
+\begin{tabular}[pos]{ l | p{10.5cm} }
+\hline
+\textbf{Variables} & \\
+\hline
+\textit{game} & Reference to the \texttt{League} object. Used to get the \textit{Players} and \textit{Users}. \\
 \\
-trade(User u1, Player p1, User u2, Player p2) & This function trades two players between two different users.
-\end{tabular}
-
-\begin{doublespace}
-\textbf{\underline{League}}
+\hline
+\textbf{Functions} & \\
+\hline
+\textit{Draft(League game)} & This is the default constructor for the \texttt{Draft} class. It takes a \texttt{League} object as input and stores it for use with other functions. \\
 \\
-The League class is the pivot of all the base classes. It provides a set of variables and functions that are needed to comprehensively define any fantasy league in \textbf{FLOOD}. The variables and functions in this class are as follows:
-
-\begin{tabular}{ l p{10cm} }
-name & Name of the league (Basketball) \\
-maxSize & Maximum number of players per user \\
-maxUser & Maximum number of Users allowed in the league \\
-minUser & Minimum number of teams \\
-list<User> & The list which stores all the Users registered with the league. \\
-list<Player> & Complete list of players in the league \\
-list<Action> & Every possible action (point scoring) in the league. \\
-
-League(str Name) & This is the default constructor for the League class. It takes a String  as input and sets it as the name of the League. \\
-addAction(Action a) & This function takes Action objects as input and adds it to the calling League object. \\		
-addUser(User u) & This function takes a User object as input parameter and add adds it User objects to the League object. \\
-addPlayer(Player p) & This function is used to add Player objects to the calling League object. \\
-setMinUser(int MinUser) & There needs to be a programmer defined minimum number of users for the League to run. This function is a setter which sets value for a league. \\
-int getMinUser() & To get the Minimum number of users set for a League object, the programmer can make use of this getter. \\
-loadPlayers(str textfile) & There's a Player list associated with each league. This list contains all the tradeable objects of the league. For example, for a Basketball League, this list would comprise of all the players that the User can operate and choose from. (Michael Jordan, LeBron James, Kobe Bryant, Steve Nash). For a league of 	Elections, the player list would comprise of election candidates (Sarah Palin, Mitt Romney). The loadPlayers function loads this list of Players from the file passed as input parameter to the function.
+\textit{dropPlayer(User, Player)} & This function drops a player from a user's team \\
+\\
+\textit{playersLeft()} & This functions returns a list of Players left in free agency. \\
+\\
+\textit{draftFunction(int turn)} & This function returns the number of the user who's turn it is to pick the next player. \\
+\\
+\textit{pickPlayer(User u, Player p)} & This function adds a player to a user's team \\
+\\
+\textit{trade(User u1, Player p1,} \\ \textit{User u2, Player p2)} & This function trades two players between two different users.
+\\
+\hline
 \end{tabular}
-\end{doublespace}
+\end{onehalfspace}
+\end{flushleft}
 
-\section{Functions and Arguments - Call by Value}
-
+\subsection{League}
 \begin{doublespace}
-As in countless other programming languages, FLOOD employs the concept of a function (also referred to as a method, subroutine, or procedure), a logical grouping of code within the larger program which carries out a specific task and is relatively independent of the rest of the code base. The idea of a function is analogous to the notion of the â€œblack boxâ€� when discussing the concept of encapsulation in object oriented programming. For a well-designed function, the particulars of â€œhowâ€� a the function performs its task(s) is not of critical importance and just knowing â€œwhatâ€� it does suffices. Functions can be â€œcalledâ€� or â€œexecutedâ€� any number of times and, depending on the access level of the function (public or private), perhaps anywhere else within the program, including from within other functions.
-\end{doublespace}
+The \texttt{League} class is the pivot of all the base classes. It provides a set of variables and functions that are needed to comprehensively define any fantasy league in \textbf{FLOOD}. The variables and functions in this class are as follows:
 
-\section{Classes and Objects}
+\begin{flushleft}
+\begin{onehalfspace}
+\begin{tabular}{ l | p{12cm} }
+\hline
+\textbf{Variables} & \\
+\hline
+\textit{name} & Name of the league (Basketball). \\
+\\
+\textit{maxSize} & Maximum number of players per user. \\
+\\
+\textit{maxUser} & Maximum number of Users allowed in the league. \\
+\\
+\textit{minUser} & Minimum number of teams. \\
+\\
+\textit{list$<$User$>$} & The list which stores all the Users registered with the league. \\
+\\
+\textit{list$<$Player$>$} & Complete list of players in the league. \\
+\\
+\textit{list$<$Action$>$} & Every possible action (point scoring) in the league. \\
+\\
+\hline
+\textbf{Functions} & \\
+\hline
+\textit{League(str Name)} & This is the default constructor for the \texttt{League} class. It takes a String  as input and sets it as the name of the League. \\
+\\
+\textit{addAction(Action a)} & This function takes \texttt{Action} objects as input and adds it to the calling \texttt{League} object. \\	
+\\
+\textit{addUser(User u)} & This function takes a \texttt{User} object as input parameter and add adds it \texttt{User} objects to the \texttt{League} object. \\
+\\
+\textit{addPlayer(Player p)} & This function is used to add \texttt{Player} objects to the calling \texttt{League} object. \\
+\\
+\end{tabular}
+\end{onehalfspace}
+\end{flushleft}
 
-\begin{doublespace}
-Being an object oriented language, programming in FLOOD involves working with Classes and their Objects. A Class is the basic building block of the FLOOD. An object is an instance of a class. The class decides the behaviour and is essentially the template of the objects of that class. Classes in FLOOD need to begin with a capital letter, and are generally Nouns whereas objects of a Class need not begin with a capital letter. 
-\end{doublespace}
-
-\begin{doublespace}
-For example, in the above code, Player is a Class and athlete is an object of Player.  Classes are declared by the keyword â€œClassâ€� followed by the name of the class the user wishes to assign. Objects are instantiated in the following manner by invoking either the default constructor of the Class or any other overloaded constructor:
-\end{doublespace}
-
-\begin{doublespace}
-Now, the object athlete is now an instance of the class Player.  Now this object, athlete shares the same set of attributes as other objects of Class Player, although, might differ in the contents of those attributes.
-\end{doublespace}
-
-\section{Scope}
-
-\begin{doublespace}
-FLOOD scope modifiers provide the ability to limit access to methods and fields as is warranted by the program. It enables encapsulation of data within classes and the ability to hide the data from outside access. FLOOD also provide novel approaches using set, get, and setget. These modifiers default to private but generate setters and getters respective to their names.  Public scope exposes a method or field to all outside access, and private scope completely hides a method or field from all outside access.Variables defined without modifiers exist and can only be accessed solely within the code block they are initially defined. For example, if an int is defined inside of a for loop, the int would only exist withing the curly braces surrounding the looped code and does not exist outside of it.
+\begin{flushleft}
+\begin{onehalfspace}
+\begin{tabular}[pos]{ l | p{11cm} }
+\\
+\textit{setMinUser(int MinUser)} & There needs to be a programmer defined minimum number of users for the \texttt{League} to run. This function is a setter which sets value for a league. \\
+\\
+\textit{int getMinUser()} & To get the minimum number of users set for a \texttt{League} object, the programmer can make use of this getter. \\
+\\
+\textit{loadPlayers(str textfile)} & There's a \texttt{Player} list associated with each league. This list contains all the tradable objects of the league. For example, for a Basketball League, this list would comprise of all the players that the User can operate and choose from. (Michael Jordan, LeBron James, Kobe Bryant, Steve Nash). For a league of Elections, the player list would comprise of election candidates (Sarah Palin, Mitt Romney). The \texttt{loadPlayers} function loads this list of Players from the file passed as input parameter to the function. \\
+\hline
+\end{tabular}
+\end{onehalfspace}
+\end{flushleft}
 \end{doublespace}
 
 \chapter{Reference Manual}
@@ -603,9 +748,9 @@ FLOOD scope modifiers provide the ability to limit access to methods and fields 
 \section{Introduction}
 
 \begin{doublespace}
-The following is a brief Reference Manual for the FLOOD language. The reference manual is based on the K\&R C manual which has for the most part inspired Java, the language FLOOD is based on. In certain instances, where there was no distinction between FLOOD and C, the C reference manual definition was used. Additionally, certain explanations were adapted from the Oracle (formerly Sun) online collection of tutorials. 
+The following is a brief Reference Manual for the \textbf{FLOOD} language. The reference manual is based on the K\&R C manual which has for the most part inspired Java, the language \textbf{FLOOD} is based on. In certain instances, where there was no distinction between \textbf{FLOOD} and C, the C reference manual definition was used. Additionally, certain explanations were adapted from the Oracle (formerly Sun) online collection of tutorials. 
 
-Many parts of the manual should be familiar to the seasoned programmer. We were able to use FLOOD to experiment with ideas that have been born from our collective programming experience. The grammar will be used in the implementation of our compiler in the next step of the FLOOD project. The aim is to stay true to the this reference manual as much as possible, deviating only for extreme technical issues. 
+Many parts of the manual should be familiar to the seasoned programmer. We were able to use \textbf{FLOOD} to experiment with ideas that have been born from our collective programming experience. The grammar will be used in the implementation of our compiler in the next step of the \textbf{FLOOD} project. The aim is to stay true to the this reference manual as much as possible, deviating only for extreme technical issues. 
 \end{doublespace}
 
 \section{Lexical Conventions}
@@ -638,16 +783,38 @@ An identifier is a sequence of characters and digits beginning with a character.
 The following words are reserved as keywords and may not be used as identifiers:
 \end{doublespace}
 
+\begin{center}
+\begin{onehalfspace}
+\begin{tabular}{ | l | l | l | l | l | l | }
+\hline
+\texttt{if} & \texttt{public} & \texttt{set} & \texttt{int} & \texttt{new} & \texttt{true} \\
+\hline
+\texttt{else} & \texttt{private} & \texttt{get} & \texttt{str} & \texttt{is} & \texttt{false} \\
+\hline
+\texttt{for} & \texttt{class} & \texttt{setget} & \texttt{flt} & \texttt{return} & \\
+\hline
+\texttt{in} & \texttt{void} & \texttt{while} & \texttt{bool} & \texttt{list} & \\
+\hline
+\end{tabular}
+\end{onehalfspace}
+\end{center}
+
 \subsection{Function Generation}
 
 \begin{doublespace}
-Certain keywords will trigger function generation for commonly used functions. For instance, declaring an instance variable as setget will generate default setters and getters as well as declare that instance variable private.
+Certain keywords will trigger function generation for commonly used functions. For instance, declaring an instance variable as \texttt{setget} will generate default setters and getters as well as declare that instance variable \texttt{private}.
 \end{doublespace}
 
 \subsection{String Literals}
 
 \begin{doublespace}
-A character constant is a sequence of one or more characters enclosed in double quotes, as in â€œ:...â€�. Character constants do not contain the â€˜ character or newlines in order to represent them but rather use different escape characters. They are the following:
+A character constant is a sequence of one or more characters enclosed in double quotes, as in ``..." Character constants do not contain the ` character or newlines in order to represent them but rather use different escape characters. They are the following:
+\begin{flushleft}
+\begin{tabular}{ l l l l l l }
+newline & NL & \textbackslash n & backslash & \textbackslash & \textbackslash\textbackslash \\
+horizontal tab & HT & \textbackslash t & double quote & `` & \textbackslash"
+\end{tabular}
+\end{flushleft}
 \end{doublespace}
 
 \section{Syntax Notation}
@@ -655,45 +822,463 @@ A character constant is a sequence of one or more characters enclosed in double 
 \subsection{Expressions}
 
 \subsubsection{Primary Expression}
+
+Identifiers, constants, strings, or expressions in parentheses.
+\begin{alltt}
+            \textit{identifier}
+            \textit{constant}
+            \textit{string}
+            \textit{( expression )}
+\end{alltt}
+
 \subsubsection{Postfix Expressions}
-\subsubsection{Unary Expression}
-\subsubsection{Multiplicative Expression}
-\subsubsection{Additive Expression}
-\subsubsection{Relational Expression}
-\subsubsection{Equality Expression}
-\subsubsection{Logical or Expression}
-\subsubsection{Assignment Expression}
-\subsubsection{Comma Expression}
 
-\subsection{Declarations}
-
-\subsubsection{Type Specifiers}
-\subsubsection{Object Specifiers}
-\subsubsection{Declarators}
-\subsubsection{Initialization}
+Operators in postfix expression group left to right.
+\begin{alltt}
+         \textit{postfix-expression:}
+              \textit{primary-expression}
+              \textit{list<type-specifier>}
+              \textit{list<postfix-expression>}
+              \textit{postfix-expression ( argument-expression-list )}
+              \textit{postfix-expression ++}
+              \textit{postfix-expression --}
+         \textit{primary-expression:}
+              \textit{identifier}
+              \textit{constant}
+              \textit{( expression )}
+         \textit{argument-expression-list:}
+              \textit{assignment-expression}
+              \textit{argument-expression-list , assignment-expression}
+\end{alltt}
 
 \begin{doublespace}
+\begin{flushleft}
+\textbf{Function Calls}
+\end{flushleft}
+
+A function call is a postfix expression, followed by parentheses constraining a possibly empty, comma-separated list of assignment expressions, which are the arguments. The function declaration must include an access type (public or private and a return type before the identifier for the function. \textbf{FLOOD} allows the omitting of the void keyword without error. Omitting a return type automatically defaults to void.
+\begin{alltt}
+         \textit{type-specifier dataType foo()}
+\end{alltt}
+
+An argument is an expression passed by a function call and a parameter is an input object received by a function definition and described by a function declaration. All arguments are passed by value. The function call fails if the number of arguments does not match the number of parameters, or the type of the arguments does not match the type of the parameters. The order of evaluations of arguments is from left to right, and recursive calls to any function are allowed.
+\begin{flushleft}
+\textbf{Postfix Incrementation}
+\end{flushleft}
+
+A postfix expression followed by a `++' or a `--' operator is another postfix expression. The value of the expression is the value of the operand. After the value is noted the operand is incremented (�++�) or decremented (�--�) by 1 and assigned back to the expression. Note there is no Prefix Incrementation in \textbf{FLOOD}.
+\end{doublespace}
+
+\subsubsection{Unary Expression}
+
+Expressions with unary operators group right-to-left
+\begin{alltt}
+         \textit{unary-expression:}
+              \textit{postfix-expression}
+              \textit{unary-operator unary-expression}
+         \textit{unary-operator:} one of
+              \textit{-}   \textit{!}
+\end{alltt}
+\begin{doublespace}
+\textit{Unary Minus Operator}
+
+The operand of the unary - operator must have arithmetic type and the result is the negative of the operand.\\
+\\
+\textit{Logical Negation}
+
+The operand of the ! operator must be of boolean type. The result is of the boolean type and has the value true if the operand is false, and the value false if the operand is true.
+\end{doublespace}
+
+\subsubsection{Multiplicative Expression}
+
+The multiplicative operators *, /, and \% group left;-to-right.
+\begin{alltt}
+         \textit{multiplicative-expression:}
+              \textit{unary-expression}
+              \textit{multiplicative-expression * unary-expression}
+              \textit{multiplicative-expression / unary-expression}
+              \textit{multiplicative-expression % unary-expression}
+\end{alltt}
+\begin{doublespace}
+The operands of * and / must have arithmetic type and the operands of \% must have integral type. The usual arithmetic conversions are performed on the operands, and predict the type of the result.
+The binary * operator denotes multiplication, the binary / operator denotes division, and the \% operator denotes the remainder of the division of the first operand by the second. If the second operand in either / or \% is 0, the result is undefined. 
+\end{doublespace}
+
+\subsubsection{Additive Expression}
+
+The additive operators + and - group left-to-right. The operands should be of arithmetic type, with  one exception.
+\begin{alltt}
+         \textit{additive-expression:}
+              \textit{multiplicative-expression}
+              \textit{additive-expression + multiplicative-expression}
+              \textit{string-expression + string-expression}
+              \textit{additive-expression - multiplicative-expression}
+         \textit{string-expression:}
+              \textit{string-expression}
+              \textit{string-literal}
+\end{alltt}
+
+\begin{doublespace}
+The result of the + operator is the sum of the operands. A string may also be added to another string. In this manner, concatenation is performed, where the result is a string containing the first operand and then the second beginning at the end of the first.
+
+The result of the - operator is the difference of the operands. A string may not be subtracted from another string.
+\end{doublespace}
+
+\subsubsection{Relational Expression}
+
+The relational operators group left -to-right and returns booleans.
+\begin{alltt}
+         \textit{relational-expression:}
+              \textit{additive-expression}
+              \textit{relational-expression < additive-expression}
+              \textit{relational-expression > additive-expression}
+              \textit{relational-expression <= additive-expression}
+              \textit{relational-expression >= additive-expression}
+\end{alltt}
+
+\subsubsection{Equality Expression}
+\begin{alltt}
+         \textit{equality-expression:}
+              \textit{relational-expression}
+              \textit{equality-expression == relational expression}
+              \textit{equality-expression != relational-expression}
+\end{alltt}
+\begin{doublespace}
+The equal to (==) and the not equal to (!=) operators are analogous to the relational operators except with lower precedence. (i.e. a$<$b == c$<$d is true whenever a$<$b and c$<$d have the same truth value)
+\end{doublespace}
+
+\subsubsection{Logical \textit{and} Expression}
+\begin{alltt}
+         \textit{logical-and-expression:}
+              \textit{equality-expression}
+              \textit{logical-and-expression} \textbf{and} \textit{equality-expression}
+\end{alltt}
+\begin{doublespace}
+The \textbf{and} operator groups left-to-right and returns true if both operands compared are true, and false otherwise.
+\end{doublespace}
+
+\subsubsection{Logical \textit{or} Expression}
+\begin{alltt}
+         \textit{logical-or-expression:}
+              \textit{logical-and-expression}
+              \textit{logical-or-expression} \textbf{or} \textit{logical-and-expression}
+\end{alltt}
+\begin{doublespace}
+The \textbf{or} operator groups left-to-right and returns true if either operand compared is true, and false otherwise.
+\end{doublespace}
+
+\subsubsection{Assignment Expression}
+All assignment operators group right to left.
+\begin{alltt}
+         \textit{assignment-expression:}
+              \textit{logical-or-expression}
+              \textit{unary-expression assignment-operator assignment-expression}
+         \textit{assignment-operator:} one of
+              \textit{=     *=     /=     %=     +=     -=}
+\end{alltt}
+\begin{doublespace}
+All require that the left operand be a modifiable expression. The type of an assignment expression is that of its left operand, and the value is the value stored in the left operand after the assignment has taken place.
+\end{doublespace}
+
+
+\subsubsection{Comma Expression}
+All assignment operators group right to left.
+\begin{alltt}
+         \textit{expression:}
+              \textit{assignment-expression}
+              \textit{expression , assignment-expression}
+\end{alltt}
+\begin{doublespace}
+Comma expressions are used in lists of function arguments and lists of initializers in a parenthetical grouping that is evaluated left-to-right.
+\end{doublespace}
+
+\subsection{Declarations}
+\begin{doublespace}
+Declarations specify the interpretation given to each identifier; they do not necessarily reserve storage associated with the identifier. Declarations that reserve storage are called definitions. Declarations have the form:
+\begin{singlespace}
+\begin{alltt}
+         \textit{declaration:}
+              \textit{declaration-specifiers init-declarator-list;}
+\end{alltt}
+\end{singlespace}
+The declaration in the init-declarator-list contain the identifiers being declared; the declaration-specifiers consist of a sequence of type and storage class specifiers.
+\begin{singlespace}
+\begin{alltt}
+         \textit{declaration-specifiers:}
+              \textit{class-specifier declaration-specifiers}
+              \textit{type-specifier declaration-specifiers}
+         \textit{init-declarator-list:}
+              \textit{init-declarator}
+              \textit{init-declarator-list , init-declarator}
+         \textit{init-declarator:}
+              \textit{declarator}
+              \textit{declarator = initializer}
+\end{alltt}
+\end{singlespace}
+Declarators contain the names being declared. A declaration must have at least one declarator and empty declarations are not permitted.
+\end{doublespace}
+
+\subsubsection{Type Specifiers}
+\begin{alltt}
+         \textit{type-specifier:}
+              \textbf{void}
+              \textbf{int}
+              \textbf{flt}
+              \textbf{str}
+              \textbf{list<}type-specifier\textbf{>}
+              object-specfier
+\end{alltt}
+\begin{doublespace}
+
+Exactly one specifier may be given in a declaration. If the type-specifier is missing from a declaration, the declaration will result in an error.
+
+All global variables (as well as function and class declarations) must also also be qualified, to indicate the access level of the objects being declared.
+\end{doublespace}
+\begin{alltt}
+         \textit{type-qualifier:}
+              \textbf{public}
+              \textbf{private}
+              \textbf{set}
+              \textbf{get}
+              \textbf{setget}
+\end{alltt}
+\begin{doublespace}
+
+Type qualifiers may appear with any type or object specifier. A \textbf{\texttt{public}} variable or function can be accessed by classes other than the class in which it was declared, while a \textbf{\texttt{private}} one cannot. A \textbf{\texttt{set}} variable is declared as private and then a setter function is automatically generated for the variable. A \textbf{\texttt{get}} variable is declared as private and then a getter function is automatically generated for the variable. A \textbf{\texttt{setget}} variable is declared as private and then getter and setter functions are automatically generated for the variable.
+\end{doublespace}
+
+\subsubsection{Object Specifiers}
+An object is an instance of a class. An object declaration has the form:
+\begin{alltt}
+         \textit{object-specifier:}
+              \textit{class-name}
+              \textit{class-name identifier}
+         \textit{class-declaration:}
+              \textit{class class-name: [\textbackslash n, \textbackslash t] class-declaration-list}
+\end{alltt}
+A class-declaration-list is a sequence of declarations for the functionality of the class.
+\begin{alltt}
+         \textit{class-declaration-list:}
+              \textit{class-declaration}
+              \textit{class-declaration-list class-declaration}
+         \textit{class declaration:}
+              \textit{specifier-qualifier-list class-declarator-list;}
+              \textit{}
+         \textit{specifier-qualifier-list:}
+              \textit{type-specifier specifier-qualifier-list}
+              \textit{type-qualifier specifier-qualifier-list}
+         \textit{class-declarator-list:}
+              \textit{declarator}
+              \textit{class-declarator-list, declarator}
+\end{alltt}
+A simple example of a class declaration is
+\begin{lstlisting}[language=Java,label=some-code,caption=Class declaration]
+class  Player: 
+	private int foo;
+	
+	public Player(int f) {
+		foo = f;
+	}
+	
+	public int getFoo() {
+		return foo;
+	}
+\end{lstlisting}
+\begin{doublespace}which consists of a constructor and a single function. Once this declaration is given, the declaration
+\end{doublespace}
+\begin{lstlisting}[language=Java,label=some-code,caption=Object declaration]
+Player p = new Player(10);
+\end{lstlisting}
+\begin{doublespace}
+declares \texttt{p} to be an object of the given type. The keyword new here is used to create a \texttt{Player} object with constructor that must take in one parameter. With these declarations, the expression
+\end{doublespace}
+\begin{lstlisting}[language=Java,label=some-code,caption=Returns foo]
+p.getFoo()
+\end{lstlisting}
+returns the value of \texttt{foo}, which in this case is 10. 
+
+\subsubsection{Declarators}
+Declarators have the syntax:
+\begin{alltt}
+         \textit{declarator:}
+              \textit{identifier}
+              \textit{( declarator )}
+              \textit{declarator ( parameter-type-list )}
+              \textit{declarator ( identifier-list )}
+         \textit{identifier-list:}
+              \textit{identifier}
+              \textit{identifier-list, identifier}
+\end{alltt}
+\begin{doublespace}
+\textit{List Declarators}\\
+A list declaration has the form
+\begin{alltt}
+         \textit{list<type-specifier> identifier}
+\end{alltt}
+A list  may be constructed from any type or object, or even from another list. All lists are mutable and no length need be predefined for it. Here is an example:
+\begin{alltt}
+         \textit{list<int> myList}
+\end{alltt}
+which declares a list of integers.\\
+\\
+\textit{Function Declarators}\\
+A function declaration has the forms
+\begin{singlespace}
+\begin{alltt}
+    \textit{type-qualifier type-specifier identifier ( parameter-type-list )}
+    \textit{type-qualifier type-specifier identifier-list}
+\end{alltt}
+\end{singlespace}
+The syntax of parameters is
+\begin{singlespace}
+\begin{alltt}
+         \textit{parameter-type-list:}
+              \textit{parameter-list}
+              \textit{parameter-list-type , parameter-list}
+         \textit{parameter-list:}
+              \textit{parameter-declaration}
+              \textit{parameter-list , parameter-declaration}
+         \textit{parameter-declaration:}
+              \textit{declaration-specifiers declarator}
+\end{alltt}
+\end{singlespace}
+Here is an example:
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption=foo declaration]
+public int foo (int bar1, flt bar2, str bar3)
+\end{lstlisting}
+\end{singlespace}
+The syntax of identifiers is
+\begin{singlespace}
+\begin{alltt}
+         \textit{identifier-list:}
+              \textit{identifier}
+              \textit{identifier-list , identifier}
+\end{alltt}
+\end{singlespace}
+Here is an example:
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption=foo declaration]
+int foo, foobar, foobarbar;
+\end{lstlisting}
+\end{singlespace}
+\end{doublespace}
+
+\subsubsection{Initialization}
+\begin{doublespace}
+When a variable or object is declared, its init-declarator may specify an initial value for the identifier being declared. The initializer is preceded by =, and is either an expression, or a list of initializers nested in braces.
+\begin{singlespace}
+\begin{alltt}
+         \textit{initializer:}
+              \textit{assignment-expression}
+              \textit{\{ initializer-list \}}
+         \textit{initializer-list:}
+              \textit{initializer}
+              \textit{initializer-list , initializer}
+\end{alltt}
+\end{singlespace}
+The initializer for a list is a brace-enclosed list of initializers for its members. The list is mutable so it members can me added and removed at will.
 \end{doublespace}
 
 \subsection{Statements}
+\begin{doublespace}
+Statements are executed in sequence and only for their effect; they do not have values. They fall into several groups.
+\begin{singlespace}
+\begin{alltt}
+         \textit{statement:}
+              \textit{expression-statement}
+              \textit{compound-statement}
+              \textit{selection-statement}
+              \textit{iteration-statement}
+              \textit{jump-statement}
+\end{alltt}
+\end{singlespace}
+\end{doublespace}
 
 \subsubsection{Expression Statement}
-\subsubsection{Compound Statement}
-\subsubsection{Selection Statement}
-\subsubsection{Iteration Statement}
-\subsubsection{Jump Statement}
-
 \begin{doublespace}
+Expression statements have the form 
+\begin{singlespace}
+\begin{alltt}
+         \textit{expression-statement:}
+              \textit{expression;}
+\end{alltt}
+\end{singlespace}
+Most expression statements are assignments of function calls. All effects from the expression are completed before the next statement is executed. If the expression is missing, the construction is called a null statement; it is often used to supply an empty body to an iteration statement to place a label.
+\end{doublespace}
+
+\subsubsection{Compound Statement}
+\begin{doublespace}
+So that several statements can be used where one is expected, the compound statement exists. The body of a function is a compound statement.
+\begin{singlespace}
+\begin{alltt}
+         \textit{compound-statement:}
+              \textit{\{ declaration-list statement-list \}}
+         \textit{declaration-list:}
+              \textit{declaration}
+              \textit{declaration-list declaration}
+         \textit{statement-list:}
+              \textit{statement}
+              \textit{statement-list statement}
+\end{alltt}
+\end{singlespace}
+If an identifier in the declaration-list was in scope outside the block, the outer declaration is suspended while the program is in the block, after which it resumes its force. An identifier may be declared only once in the same block. Initialization of automatic objects is performed each time the block is entered at the top, and proceeds in the order of the declarators. 
+\end{doublespace}
+
+\subsubsection{Selection Statement}
+\begin{alltt}
+         \textit{selection-statement:}
+              \textit{\textbf{if} (expression) statement}
+              \textit{\textbf{if} (expression) statement \textbf{else} statement}
+\end{alltt}
+\begin{doublespace}
+Both forms of the if statement, the expression, which must have boolean type, is evaluated, including all side effects, and if it evaluated to true, the first sub-statement is executed. In the second form, the second sub-statement is executed if the expression evaluates to false. The else ambiguity is resolved by connecting an else with the last encountered if not yet matched with an else at the same block nesting level.
+\end{doublespace}
+
+\subsubsection{Iteration Statement}
+\begin{alltt}
+         \textit{iteration-statement:}
+              \textit{\textbf{while} (expression) statement}
+              \textit{\textbf{for} (expression; expression; expression) statement}
+              \textit{\textbf{for} identifier \textbf{in list} statement}
+\end{alltt}
+\begin{doublespace}
+In the while statement, the sub-statement is executed repeatedly as long as the value of the expression remains true; the expression must have boolean type. The test of and all side effects from the expression occurs before each execution of the statement.
+
+In the first for statement, the first expression is evaluated once, and thus specifies initialization for the loop. There is no restriction on its type. The second expression must have boolean type; it is evaluated before each iteration, and if it becomes false, the for loop ends. The third expression is evaluated after each iteration, and thus specifies a re-initialization for the loop. There is no restriction on its type. Side-effects from each expression are completed immediately after its evaluation.
+
+In the second for statement, the statement is executed for every value in the list. This list can have any type and then identifier represents each member of the list in order. The loop ends when there are no more items in the list.
+\end{doublespace}
+
+\subsubsection{Jump Statement}
+\begin{alltt}
+         \textit{jump-statement:}
+              \textit{\textbf{return} expression}
+\end{alltt}
+\begin{doublespace}
+A function returns to its caller by the return statement. When return is followed by an expression, the value of the expression is returned to the caller of the function. The expression is converted, as by assignment, to the type returned by the function in which it appears. Functions that return a void type may not have a return statement.
 \end{doublespace}
 
 \subsection{Scope and Linkage}
-
-\subsubsection{Lexical Scope}
-\subsubsection{Linkage}
-
 \begin{doublespace}
-\end{doublespace}
+The entire program does not have to be compiled all at once; the source text may be kept in several files containing translation units and precompiled routines can be loaded from libraries. Communication among the functions of a program may be carried out both through calls and through manipulation of the external database of the league data.
 
+Therefore, there are two kinds of scope to consider: first, the lexical scope of an identifier which is the region of the program text within which the identifier�s characteristics are understood; and second, the scope associated with objects and functions with external linkage, which determines the connections between identifiers in other classes and libraries.\\
+\\
+\textit{Lexical Scope}
+
+Identifiers fall into several name spaces that do not interfere with one another; the same identifier may be used for different purposes, even in the same scope, if the uses are in different name spaces. These items are: variables, objects and functions. Name spaces are governed entirely by the class, i.e. a class has one and only one name space.
+
+The lexical scope of a variable, object or function identifier in an external declaration begins at the end of its declarator and persists to the end of the translation unit in which it appears. The scope of a parameter of a function definition begins at the start of the block defining the function, and persists through the function; the scope of a parameter in a function declaration ends at the end of the declarator. The scope of an identifier declared at the head of a block begins at the end of its declarator, and persists to the end of the block. 
+
+If an identifier is explicitly declared at the head of a block, including the block constituting a function, any declaration of the identifier outside the block is suspended until the end of the block.\\
+\\
+\textit{Linkage}
+
+Within a translation unit, all declarations of the same object or function identifier with internal linkage refer to the same thing; i.e. the object or function is unique to that translation unit. All declarations for the same object or function identifier with external linkage refer to the same thing, and the object or function is shared by the entire program.
+
+The first declaration for an identifier gives the identifier internal linkage if the private specifier is used,  and external linkage if the public specifier is used. The declaration for an identifier within a block (and not in the global scope) may not include a specifier, and thus the identifier has no linkage and is unique to the function. 
+\end{doublespace}
 
 \section{Object Orientated Programming}
 
@@ -720,7 +1305,7 @@ As a concrete example, say a software company has two job openings to fill, the 
 \begin{itemize}
 \item Web Programmer
 \begin{itemize}
-\item Experience programming in a team-based enviornment.
+\item Experience programming in a team-based environment.
 \item Experience with middleware and database programming.
 \item OOP and Design Pattern programming skills.
 \end{itemize}
@@ -742,12 +1327,6 @@ In \textit{Object-Oriented Design with Applications} (Benjamin/Cummings), Grady 
 Booch's definition describes in a well-defined manner the two job descriptions. Each description provides the essential and necessary characteristics of the position while distinguishing from one another.
 \end{doublespace}
 
-\begin{lstlisting}[language=Java,label=some-code,caption=FLOOD Abstraction example]
-Sample abstraction code...
-Sample abstraction code...
-Sample abstraction code...
-\end{lstlisting}
-
 \subsection{Encapsulation}
 
 \begin{doublespace}
@@ -759,52 +1338,177 @@ Hence, an overriding benefit derived from the concept of a black box is that use
 secure in the notion that whatever makes the black box works does so according to design. 
 \end{doublespace}
 
-\begin{lstlisting}[language=Java,label=some-code,caption=FLOOD Encapsulation example]
-Sample encapsulation code...
-Sample encapsulation code...
-Sample encapsulation code...
-\end{lstlisting}
-
 \subsection{Inheritance}
 
 \begin{doublespace}
 The third key concept of OOP is inheritance. In the simplest terms, inheritance refers to how one class inherits the properties and methods of another class. If \textbf{Class A} has methods X(), Y(), and Z(), and \textbf{Class B} is a subclass of \textbf{Class A} (extends), it too will have methods X(), Y() and Z(). \textbf{Class B} is known as the \textit{subclass} (or \textit{derived} class) and \textbf{Class A} is the \textit{superclass} (or \textit{ancestor} class).
 \end{doublespace}
 
-\begin{lstlisting}[language=Java,label=some-code,caption=FLOOD Inheritance example]
-Sample inheritance code...
-Sample inheritance code...
-Sample inheritance code...
-\end{lstlisting}
-
 \subsection{Plymorphism}
 
 \begin{doublespace}
+The final important concept of OOP is polymorphism. Succinctly speaking, polymorphism as a software development paradigm is the ability to define a variable, method, or object that has more than one form. The intent of polymorphism is to implement a methodology of programming in which objects of varying types define a common interface of operations for the user.
 
+Hence, these objects of different types then possess the ability to respond to method, fields, or property calls of the same name, each one according to an appropriate type-specific behavior. It is not necessary for the developer and the program itself to be made aware of \textit{a priori} the exact type of the object and thus, the exact behavior is determined at run-time.
 \end{doublespace}
-
-\begin{lstlisting}[language=Java,label=some-code,caption=FLOOD Plymorphism example]
-Sample plymorphism code...
-Sample plymorphism code...
-Sample plymorphism code...
-\end{lstlisting}
 
 \section{Grammar}
 
 \begin{doublespace}
-Below is a recapitulation of the grammar that was given throughout the earlier part of this Reference Manual.  The grammar has undefined terminal symbols integer-constant, character-constant, floating-constant, identifier, and string; the bold style words and symbols are terminals given literally. This grammar can be transformed mechanically into input acceptable for an automatic parser-generator. 
+Below is a recapitulation of the grammar that was given throughout the earlier part of this \textit{Reference Manual}. It has the exact same content.
+The grammar has undefined terminal symbols integer-constant, character-constant, floating-constant, identifier, and string; the bold style words and symbols are terminals given literally. This grammar can be transformed mechanically into input acceptable for an automatic parser-generator. 
 \end{doublespace}
-
-%\chapter{Standard Library}
-%\section{Football}
-%\section{Baseball}
-%\section{Basketball}
-%\section{Hockey}
-%\section{Soccer}
-%\section{Rugby}
-%\section{Financial Markets}
-%\section{Film Box Office}
-%\section{Music Rating}
-%\section{Political Elections/Polls}
+\begin{alltt}
+     \textit{translation-unit:}
+          \textit{external-declaration}
+          \textit{translation-unit external-declaration}
+     \textit{public-declaration:}
+          \textit{function-definition}
+          \textit{declaration}
+     \textit{private-declaration:}
+          \textit{function-definition}
+          \textit{declaration}
+     \textit{function-definition:}
+          \textit{declaration-specifiers declarator declaration-list
+               compound-statement}
+     \textit{declaration:}
+          \textit{declaration-specifiers init-declarator-list;}
+     \textit{declaration-list:}
+          \textit{declaration}
+          \textit{declaration-list declaration}
+     \textit{declaration-specifiers:}
+          \textit{type-specifier declaration-specifiers}
+          \textit{type-qualifier declaration-specifiers}
+     \textit{type-specifier: one of}
+          \textit{\textbf{void   int   flt   str}}
+     \textit{type-qualifier: one of}
+          \textit{\textbf{public   private   set   get  setget}}
+     \textit{init-declarator-list:}
+          \textit{init-declarator}
+          \textit{init-declarator-list, init-declarator}
+     \textit{init-declarator:}
+          \textit{declarator}
+          \textit{declarator = initializer}
+     \textit{object-specifier:}
+          \textit{class-name identifier}
+     \textit{class-declaration:}
+          \textit{class class-name: [\textbackslash n, \textbackslash t] class-declaration-list}
+     \textit{class-declaration-list:}
+          \textit{class-declaration}
+          \textit{class-declaration-list class-declaration}
+     \textit{class declaration:}
+          \textit{specifier-qualifier-list class-declarator-list;}
+     \textit{specifier-qualifier-list:}
+          \textit{type-specifier specifier-qualifier-list}
+          \textit{type-qualifier specifier-qualifier-list}
+     \textit{class-declarator-list:}
+          \textit{declarator}
+          \textit{class-declarator-list, declarator}
+     \textit{declarator:}
+          \textit{identifier}
+          \textit{( declarator )}
+          \textit{declarator ( parameter-type-list )}
+          \textit{declarator ( identifier-list )}
+     \textit{type-qualifier-list:}
+          \textit{type-qualifier}
+          \textit{type-qualifier-list type-qualifier}
+     \textit{parameter-type-list:}
+          \textit{parameter-list}
+          \textit{parameter-type-list , parameter-list}
+     \textit{parameter-list:}
+          \textit{parameter-declaration}
+          \textit{parameter-list , parameter-declaration}
+     \textit{parameter-declaration:}
+          \textit{declaration-specifiers declarator}
+     \textit{identifier-list:}
+          \textit{identifier}
+     \textit{initializer:}
+          \textit{assignment-expression}
+          \textit{\{ initializer-list \}}
+     \textit{initializer-list:}
+          \textit{initializer}
+          \textit{initializer-list , initializer}
+     \textit{statement:}
+          \textit{expression-statement}
+          \textit{compound-statement}
+          \textit{selection-statement}
+          \textit{iteration-statement}
+          \textit{jump-statement}
+     \textit{expression-statement:}
+          \textit{expression;}
+     \textit{compound-statement:}
+          \textit{\{ declaration-list statement-list \}}
+     \textit{statement-list:}
+          \textit{statement}
+          \textit{statement-list statement}
+     \textit{selection-statement:}
+          \textit{\textbf{if} (expression) statement}
+          \textit{\textbf{if} (expression) statement \textbf{else} statement}
+     \textit{iteration-statement:}
+          \textit{\textbf{while} (expression) statement}
+          \textit{\textbf{for} (expression; expression; expression) statement}
+          \textit{\textbf{for} identifier \textbf{in list} statement}
+     \textit{jump-statement:}
+          \textit{\textbf{return} expression;}
+     \textit{expression:}
+          \textit{assignment-expression}
+          \textit{expression , assignment-expression}
+     \textit{assignment-expression:}
+          \textit{logical-or-expression}
+          \textit{unary-expression assignment-operator assignment-expression}
+     \textit{assignment-operator: one of}
+          \textit{=    *=    /=    %=    +=    -=}
+     \textit{logical-or-expression:}
+          \textit{logical-and-expression}
+          \textit{logical-or-expression \textbf{or} logical-and-expression}
+     \textit{logical-and-expression:}
+          \textit{equality-expression}
+          \textit{logical-and-expression \textbf{and} equality-expression}
+     \textit{equality-expression:}
+          \textit{relational-expression}
+          \textit{equality-expression == relational-expression}
+          \textit{equality-expression != relational-expression}
+     \textit{additive-expression}
+          \textit{relational-expression < additive-expression}
+          \textit{relational-expression > additive-expression}
+          \textit{relational-expression <= additive-expression}
+          \textit{relational-expression >= additive-expression}
+     \textit{additive-expression:}
+          \textit{multiplicative-expression}
+          \textit{additive-expression + multiplicative-expression}
+          \textit{string-expression + string-expression}
+          \textit{additive-expression - multiplicative-expression}
+     \textit{multiplicative-expression:}
+          \textit{multiplicative-expression * cast-expression}
+          \textit{multiplicative-expression / cast-expression}
+          \textit{multiplicative-expression % cast-expression}
+     \textit{string-expression:}
+          \textit{string-expression}
+          \textit{string-literal}
+     \textit{unary-expression:}
+          \textit{postfix expression}
+          \textit{unary-operator cast-expression}
+     \textit{unary operator: one of}
+          \textit{-    !}
+     \textit{postfix-expression:}
+          \textit{primary-expression}
+          \textit{\textbf{list}<type-specifier>}
+          \textit{\textbf{list}<postfix-expression>}
+          \textit{postfix-expression ( argument-expression-list )}
+          \textit{postfix-expression ++}
+          \textit{postfix-expression --}
+     \textit{primary-expression:}
+          \textit{identifier}
+          \textit{constant}
+          \textit{string}
+          \textit{( expression )}
+     \textit{argument-expression-list:}
+          \textit{assignment-expression}
+          \textit{assignment-expression-list , assignment-expression}
+     \textit{constant:}
+          \textit{integer-constant}
+          \textit{character-constant}
+          \textit{floating-constant}
+\end{alltt}
 
 \end{document}
