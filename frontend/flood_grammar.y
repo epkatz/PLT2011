@@ -9,7 +9,8 @@ import java.util.Iterator;
 
 /* YACC Declarations */
 %token EMPTY            /* newline  */
-%token <dval> NUMBER    /* a number */
+%token <ival> INT	/* an integer */
+%token <dval> FLT   	/* a float */
 %token <sval> ID        /* a string */
 %token WP               /* whitespace */
 %token SEMICOLON        /* semicolon */
@@ -30,152 +31,48 @@ import java.util.Iterator;
 %token GREAT            /* > */
 %token OPEN             /* ( */
 %token CLOSE            /* ) */
-%token Quote                /* " */
-%token STRING_CONST   /* String literal constants */
+%token Quote            /* " */
+%token STRING_CONST   	/* String literal constants */
 
 /* Keywords */
-%token Admission        /* Admission keyword        */
-%token Attraction       /* Attraction keyword       */
-%token Capacity         /* Capacity keyword         */
-%token Crowd            /* Crowd keyword            */
-%token Cost             /* Cost keyword             */
-%token Duration         /* Duration keyword         */
-%token Else             /* Else keyword             */
-%token Employees        /* Employees keyword        */
-%token EnergyIncrease   /* EnergyIncrease keyword   */
-%token EnergyLevel      /* EnergyLevel keyword      */
-%token EnergyLost       /* EnergyLost keyword       */
-%token If               /* If keyword               */
-%token In               /* In keyword               */
-%token Iterate          /* Iterate keyword          */
-%token Land             /* Land keyword             */
-%token Location         /* Location keyword         */
-%token <dval> Number   	/* Number keyword           */
-%token Park             /* Park keyword             */
-%token Restaurant       /* Restaurant keyword       */
-%token Return           /* Return keyword           */
-%token Set              /* Set keyword              */
-%token <dval>Size       /* Size keyword             */
-%token SpendLevel       /* SpendLevel keyword       */
-%token SpendingCapacity /* SpendingCapacity keyword */
-%token Start            /* Start keyword            */
-%token Store            /* Store keyword            */
-%token String           /* String keyword           */
-%token ThrillLevel      /* ThrillLevel keyword      */
-%token Until            /* Until keyword            */
-
-/* Functions */
-%token CalculateRevenue /* CalculateRevenue function */
-%token Print            /* Output function           */
-%token Simulate         /* Simulate function         */
-
-/* Duration */
-%token Days             /* Number of days            */
-%token Months           /* Number of months          */
-%token Weeks            /* Number of weeks           */
-%token Years            /* Number of years           */
+%token Action		/* Action keyword */
+%token bool		/* bool keyword */
+%token Class		/* Class keyword */
+%token Draft		/* Draft keyword */
+%token else		/* else keyword */
+%token false		/* false keyword */
+%token <dval> flt	/* flt keyword */
+%token for		/* for keyword */
+%token get		/* get keyword */
+%token if		/* if keyword */
+%token in		/* in keyword */
+%token <ival> int	/* int keyword */
+%token is		/* is keyword */
+%token League		/* League keyword */
+%token list		/* list keyword */
+%token new		/* new keyword */
+%token Player		/* Player keyword */
+%token private		/* private keyword */
+%token public		/* public keyword */
+%token return		/* return keyword */
+%token set		/* set keyword */
+%token setget		/* setget keyword */
+%token str		/* str keyword */
+%token true		/* true keyword */
+%token User		/* User keyword */
+%token void		/* void keyword */
+%token while		/* while keyword */
 
 /* Associativity and precedence */
 %left MINUS PLUS
 %left MUL DIV
 %nonassoc EQUAL NOTEQUAL LESSEQUAL GREATEQUAL ISEQUAL LESS GREAT
 
-%type <sval> attraction_name
-%type <sval> crowd_name
-%type <sval> function_name
-%type <sval> land_name
-%type <sval> park_name
-%type <sval> restaurant_name
-%type <sval> store_name
-%type <sval> variable_name
-%type <sval> crowd_attributes
-%type <sval> crowd_attribute
-%type <sval> crowd_elements
-%type <sval> c1
-%type <sval> c2
-%type <sval> c3
-%type <sval> c4
-%type <sval> park_attributes
-%type <sval> park_attribute
-%type <sval> park_elements
-%type <sval> p1
-%type <sval> p2
-%type <sval> p3
-%type <sval> land_attributes
-%type <sval> land_elements
-%type <sval> land_element
-%type <sval> attraction_definition
-%type <sval> attraction_attributes
-%type <sval> attraction_attribute
-%type <sval> a1
-%type <sval> a2
-%type <sval> a3
-%type <sval> a4
-%type <sval> a5
-%type <sval> restaurant_definition
-%type <sval> restaurant_attributes
-%type <sval> restaurant_attribute
-%type <sval> r1
-%type <sval> r2
-%type <sval> r3
-%type <sval> r4
-%type <sval> r5
-%type <sval> store_definition
-%type <sval> store_attributes
-%type <sval> store_attribute
-%type <sval> s1
-%type <sval> s2
-%type <sval> s3
-%type <sval> s4
-%type <sval> value
-%type <sval> constant
-%type <sval> primitive_type
-%type <sval> data_type
-%type <sval> constant_or_variable
-%type <sval> constant_variable_chain
-%type <sval> simulate
-%type <sval> output
-%type <sval> duration_type
-%type <sval> calculate_revenue
-%type <sval> thrill_functions
-%type <sval> duration_name
-%type <sval> initialization_list
-%type <sval> initialization
-%type <sval> formal_parameters
-%type <sval> function_call
-%type <sval> declaration_list
-%type <sval> declaration
-%type <sval> relational_expression
-%type <sval> arithmetic_expression
-%type <sval> left_side
-%type <sval> right_side
-%type <sval> assignment
-%type <sval> add_attribute
-%type <sval> statement
-%type <sval> statements
-%type <sval> block
-%type <sval> actual_parameters
-%type <sval> return_type
-%type <sval> function
-%type <sval> start
-%type <sval> loop
-%type <sval> condition
-%type <sval> usercode
-%type <sval> functions
-%type <sval> return
-%type <sval> initialize_duration
-%type <sval> crowd_definition
-%type <sval> crowd_definitions
-%type <sval> park_definition
-%type <sval> land_definitions
-%type <sval> land_definition
-%type <sval> definitions
-%type <sval> error_production
-%type <sval> empty;
-%type <sval> STRING_CONST;
+%type <sval> definitions	/* definitions production */
+
 %%
 
-program: definitions usercode { generateThrillProgram($1, $2); System.out.println("Total number of lines in the input: " + (yyline-1)); };
+program: definitions usercode { };
 
 definitions: crowd_definitions park_definition crowd_definitions { $$ = $1 + $2 + $3; } ;
 crowd_definitions: crowd_definitions crowd_definition { $$ += $2; }
