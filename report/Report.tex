@@ -52,7 +52,7 @@
 \textbf{(FLOOD)}\\
 \begin{doublespace}
 \end{doublespace}
-\LARGE{Language Tutorial \& Reference Manual}\\
+\LARGE{Final Report}\\
 {\normalsize \textit{COMS W4115: Programming Language \& Translators}}
 }
 
@@ -75,7 +75,7 @@
 }
 \end{singlespace}
 
-\date{March 23, 2011}
+\date{May 10, 2011}
 
 \maketitle
 
@@ -114,34 +114,34 @@ Let's start by showing what the ``main" class would look like. In keeping with t
 \begin{singlespace}
 \begin{lstlisting}[language=Java,label=some-code,caption=BasketballPlay.fld]
 class BasketballPlay:
-	public play()
-	{
-		League myfbl = new League("Happy League");
-		mybl.setMaxUsers(10);
-		mybl.setMinUsers(4);
+  public play()
+  {
+    League myfbl = new League("Happy League");
+    mybl.setMaxUsers(10);
+    mybl.setMinUsers(4);
 
-		mybl.addUser(new User("Eli"));
-		mybl.addUser(new User("Dillen"));
-		mybl.addUser(new User("Anuj"));
-		mybl.addUser(new User("Tam"));
-		mybl.addUser(new User("Steph"));
+    mybl.addUser(new User("Eli"));
+    mybl.addUser(new User("Dillen"));
+    mybl.addUser(new User("Anuj"));
+    mybl.addUser(new User("Tam"));
+    mybl.addUser(new User("Steph"));
 
-		mybl.addAction(new Action("Field Goal Attempt", -0.45);
-		mybl.addAction(new Action("Field Goal Made", 1.0);
-		mybl.addAction(new Action("Free Throw Attempt", -0.75);
-		mybl.addAction(new Action("Free Throw Made", 1.0);
-		mybl.addAction(new Action("3-Point Shot Made", 3.0);
-		mybl.addAction(new Action("Point Scored", 0.5);
-		mybl.addAction(new Action("Rebound", 1.5);
-		mybl.addAction(new Action("Assist", 2.0);
-		mybl.addAction(new Action("Steal", 3.0);
-		mybl.addAction(new Action("Turnover", -2.0);
-		mybl.addAction(new Action("Blocked Shot", 3.0);
+    mybl.addAction(new Action("Field Goal Attempt", -0.45);
+    mybl.addAction(new Action("Field Goal Made", 1.0);
+    mybl.addAction(new Action("Free Throw Attempt", -0.75);
+    mybl.addAction(new Action("Free Throw Made", 1.0);
+    mybl.addAction(new Action("3-Point Shot Made", 3.0);
+    mybl.addAction(new Action("Point Scored", 0.5);
+    mybl.addAction(new Action("Rebound", 1.5);
+    mybl.addAction(new Action("Assist", 2.0);
+    mybl.addAction(new Action("Steal", 3.0);
+    mybl.addAction(new Action("Turnover", -2.0);
+    mybl.addAction(new Action("Blocked Shot", 3.0);
 
-		SnakeDraft blDraft = new SnakeDraft(mybl);
+    SnakeDraft blDraft = new SnakeDraft(mybl);
 
-		Flood.launchGui(blDraft, mybl);
-	}
+    Flood.launchGui(blDraft, mybl);
+  }
 \end{lstlisting}
 \end{singlespace}
 
@@ -154,14 +154,14 @@ Java uses the \texttt{main} method as the beginning of execution. In keeping wit
 \begin{singlespace}
 \begin{lstlisting}[language=Java,label=some-code,caption=BasketballPlay.fld]
 class BasketballPlay:
-	public play()
-	{
-		League myfbl = new League ("Happy League");
-		mybl.setMaxUsers(10);
-		mybl.setMinUsers(4);
-		...
-		...
-	}
+  public play()
+  {
+    League myfbl = new League ("Happy League");
+    mybl.setMaxUsers(10);
+    mybl.setMinUsers(4);
+    ...
+    ...
+  }
 \end{lstlisting}
 \end{singlespace}
 
@@ -220,20 +220,20 @@ Just as any robust programming language requires a comprehensive computational m
 \begin{singlespace}
 \begin{lstlisting}[language=Java,label=some-code,caption=User.fld]
 Class User:
-	get int points;
-	get str name, handle;
-	setget int maxSize;
-	list<Players> teamAthletes;
+  get int points;
+  get str name, handle;
+  setget int maxSize;
+  list<Players> teamAthletes;
 
-	addPlayer(Player athlete)
-	{
-		...
-	}
-	
-	removePlayer(Player athlete)
-	{
-		....
-	}
+  addPlayer(Player athlete)
+  {
+    ...
+  }
+  
+  removePlayer(Player athlete)
+  {
+    ....
+  }
 \end{lstlisting}
 \end{singlespace}
 
@@ -242,27 +242,27 @@ Here, the variables \texttt{name} and \texttt{handle} are both declared as type 
 \begin{singlespace}
 \begin{lstlisting}[language=Java,label=some-code,caption=SnakeDraft.fld]
 Class SnakeDraft is Draft:
-	private League game;
+  private League game;
 
-	public draftFunction(int turn)
-	{
-		return turn % game.teams.length();
-	}
+  public draftFunction(int turn)
+  {
+    return turn % game.teams.length();
+  }
 
-	/* Limit of 8 players per team, and there must be at least 1 center, 2 guards and 2 forwards per team. */
-	public bool pickPlayer(User team, Player athlete)
-	{
-		int centers = 0, guards = 0, forwards = 0, total = team.teamAthletes.size();
-		
-		if (total < 8)
-		{
-			if (total < 4)
-			{
-				team.addPlayer(athlete);
-				return true;
-			}
-		}
-	}
+  /* Limit of 8 players per team, and there must be at least 1 center, 2 guards and 2 forwards per team. */
+  public bool pickPlayer(User team, Player athlete)
+  {
+    int centers = 0, guards = 0, forwards = 0, total = team.teamAthletes.size();
+    
+    if (total < 8)
+    {
+      if (total < 4)
+      {
+        team.addPlayer(athlete);
+        return true;
+      }
+    }
+  }
 \end{lstlisting}
 \end{singlespace}
 
@@ -275,37 +275,37 @@ Here, the integer variables \texttt{centers}, \texttt{guards}, \texttt{fowards} 
 /* Limit of 8 players per team, and there must be at least 1 center, 2 guards and 2 forwards per team. */
 private bool evaluate(User u, Player p)
 {
-	int centers = 0, guards = 0, forwards = 0, total = u.teamAthletes.size();
-	
-	if (total < 8)
-	{
-		if (total < 4)
-		{
-			return true;
-		}
-		
-		for person in u.teamAthletes
-		{
-			if (person.position == "center")
-				centers = centers + 1;
-			if (person.position == "guard")
-				guards = guards - centers;
-			if (person.position == "forward")
-				forwards = forwards / 2;
-			if (person.position == "mid")
-				mid++;
-			if (centers == 3 and p.position == "center")
-				return false;
-			if (forwards == 5 and p.position == "forward")
-				return false;
-			if (guards == 5 and p.position == "guard")
-				return false;
-		
-			return true;
-		}
-	
-		return false;
-	}
+  int centers = 0, guards = 0, forwards = 0, total = u.teamAthletes.size();
+  
+  if (total < 8)
+  {
+    if (total < 4)
+    {
+      return true;
+    }
+    
+    for person in u.teamAthletes
+    {
+      if (person.position == "center")
+        centers = centers + 1;
+      if (person.position == "guard")
+        guards = guards - centers;
+      if (person.position == "forward")
+        forwards = forwards / 2;
+      if (person.position == "mid")
+        mid++;
+      if (centers == 3 and p.position == "center")
+        return false;
+      if (forwards == 5 and p.position == "forward")
+        return false;
+      if (guards == 5 and p.position == "guard")
+        return false;
+    
+      return true;
+    }
+  
+    return false;
+  }
 }
 \end{lstlisting}
 \end{singlespace}
@@ -322,10 +322,10 @@ The syntax for the \textit{while} loop follows the standard convention:
 \begin{lstlisting}[language=Java,label=some-code,caption=While loop]
 while (total < 4)
 {
-	centers = centers + 1;
-	guards = guards - centers;
-	forwards = forwards / 2;
-	total++;
+  centers = centers + 1;
+  guards = guards - centers;
+  forwards = forwards / 2;
+  total++;
 }
 \end{lstlisting}
 \end{singlespace}
@@ -335,7 +335,7 @@ The \textit{while} loop operates as follows: The condition in parentheses is tes
 \begin{singlespace}
 \begin{lstlisting}[language=Java,label=some-code,caption=Single statement while loop]
 while (total < 4)
-	centers = centers + 1;
+  centers = centers + 1;
 \end{lstlisting}
 \end{singlespace}
 
@@ -346,35 +346,35 @@ The \textit{for} statement is a loop and is a generalization of the \textit{whil
 /* Limit of 8 players per team, and there must be at least 1 center, 2 guards and 2 forwards per team. */
 private bool evaluate(User u, Player p)
 {
-	int centers = 0, guards = 0, forwards = 0, total = u.teamAthletes.size();
-	
-	if (total < 8)
-	{
-		if (total < 4)
-		{
-			return true;
-		}
-		
-		for person in u.teamAthletes
-		{
-			if (person.position == "center")
-				centers++;
-			if (person.position == "guard")
-				guards++;
-			if (person.position == "forward")
-				forwards++;
-			if (centers == 3 and p.position == "center")
-				return false;
-			if (forwards == 5 and p.position == "forward")
-				return false;
-			if (guards == 5 and p.position == "guard")
-				return false;
-		
-			return true;
-		}
-		
-		return false;
-	}
+  int centers = 0, guards = 0, forwards = 0, total = u.teamAthletes.size();
+  
+  if (total < 8)
+  {
+    if (total < 4)
+    {
+      return true;
+    }
+    
+    for person in u.teamAthletes
+    {
+      if (person.position == "center")
+        centers++;
+      if (person.position == "guard")
+        guards++;
+      if (person.position == "forward")
+        forwards++;
+      if (centers == 3 and p.position == "center")
+        return false;
+      if (forwards == 5 and p.position == "forward")
+        return false;
+      if (guards == 5 and p.position == "guard")
+        return false;
+    
+      return true;
+    }
+    
+    return false;
+  }
 }
 \end{lstlisting}
 \end{singlespace}
@@ -388,9 +388,9 @@ Here, \texttt{u.teamAthletes} is a list of \texttt{person} and typically the use
 \begin{singlespace}
 \begin{lstlisting}[language=Java,label=some-code,caption=if conditional]
 if (person.position == "center")
-	centers++;
+  centers++;
 else
-	centers--;
+  centers--;
 \end{lstlisting}
 \end{singlespace}
 
@@ -401,13 +401,13 @@ parenthesis pair can be used as follows:
 \begin{lstlisting}[language=Java,label=some-code,caption=Bracketed conditionals]
 if (person.position == "center")
 {
-	centers++;
-	forwards++;
+  centers++;
+  forwards++;
 }
 else
 {
-	centers--;
-	forwards--;
+  centers--;
+  forwards--;
 }
 \end{lstlisting}
 \end{singlespace}
@@ -424,7 +424,7 @@ For a well-designed function, the particulars of ``how" a the function performs 
 \begin{lstlisting}[language=Java,label=some-code,caption=Syntax of a FLOOD function]
 private bool evaluate(User user, Player player)
 {
-	...
+  ...
 }
 \end{lstlisting}
 \end{singlespace}
@@ -438,12 +438,12 @@ Being an object oriented language, programming in \textbf{FLOOD} involves workin
 \begin{singlespace}
 \begin{lstlisting}[language=Java,label=some-code,caption=Typical definition of a class in FLOOD]
 Class User:
-	get int points;
-	get str name;
-	list<Players> teamAthletes;
+  get int points;
+  get str name;
+  list<Players> teamAthletes;
 
-	addPlayer(Player athlete) {...}
-	removePlayer(Player athlete) {...}
+  addPlayer(Player athlete) {...}
+  removePlayer(Player athlete) {...}
 \end{lstlisting}
 \end{singlespace}
 
@@ -569,16 +569,16 @@ which can be used in the following manner:
 /* Add a player to a team if possible* /
 public bool pickPlayer(User u, Player p)
 {
-	bool addition;
-	addition = evaluate(u,p);
-	
-	if (addition)
-	{
-		u.addPlayer(p);
-		return true;
-	}
-	
-	return false;
+  bool addition;
+  addition = evaluate(u,p);
+  
+  if (addition)
+  {
+    u.addPlayer(p);
+    return true;
+  }
+  
+  return false;
 }
 \end{lstlisting}
 \end{singlespace}
@@ -606,50 +606,50 @@ For example, when creating a draft for a basketball league, it is necessary that
 /* Add a player to a team if possible */
 public bool pickPlayer(User u, Player p)
 {
-	bool addition;
-	addition = evaluate(u,p);
-	
-	if (addition)
-	{
-		u.addPlayer(p);
-		return true;
-	}
-	
-	return false;
+  bool addition;
+  addition = evaluate(u,p);
+  
+  if (addition)
+  {
+    u.addPlayer(p);
+    return true;
+  }
+  
+  return false;
 }
 
 /* Limit of 8 players per team, and there must be at least 1 center, 2 guards and 2 forwards per team. */
 private bool evaluate(User u, Player p)
 {
-	int centers = 0, guards = 0,forwards = 0, total = u.teamAthletes.size();
-	
-	if (total < 8)
-	{
-		if (total < 4)
-		{
-			return true;
-		}
-		
-		for person in u.teamAthletes
-		{
-			if (person.position == "center")
-				centers++;
-			if (person.position == "guard")
-				guards++;
-			if (person.position == "forward")
-				forwards++;
-			if (centers == 3 and p.position == "center")
-				return false;
-			if (forwards == 5 and p.position == "forward")
-				return false;
-			if (guards == 5 and p.position == "guard")
-				return false;
-				
-			return true;
-		}
-		
-		return false;
-	}
+  int centers = 0, guards = 0,forwards = 0, total = u.teamAthletes.size();
+  
+  if (total < 8)
+  {
+    if (total < 4)
+    {
+      return true;
+    }
+    
+    for person in u.teamAthletes
+    {
+      if (person.position == "center")
+        centers++;
+      if (person.position == "guard")
+        guards++;
+      if (person.position == "forward")
+        forwards++;
+      if (centers == 3 and p.position == "center")
+        return false;
+      if (forwards == 5 and p.position == "forward")
+        return false;
+      if (guards == 5 and p.position == "guard")
+        return false;
+        
+      return true;
+    }
+    
+    return false;
+  }
 }
 \end{lstlisting}
 \end{singlespace}
@@ -711,7 +711,7 @@ The \texttt{League} class is the pivot of all the base classes. It provides a se
 \hline
 \textit{League(str Name)} & This is the default constructor for the \texttt{League} class. It takes a String  as input and sets it as the name of the League. \\
 \\
-\textit{addAction(Action a)} & This function takes \texttt{Action} objects as input and adds it to the calling \texttt{League} object. \\	
+\textit{addAction(Action a)} & This function takes \texttt{Action} objects as input and adds it to the calling \texttt{League} object. \\ 
 \\
 \textit{addUser(User u)} & This function takes a \texttt{User} object as input parameter and add adds it \texttt{User} objects to the \texttt{League} object. \\
 \\
@@ -1065,17 +1065,17 @@ A simple example of a class declaration is
 \begin{singlespace}
 \begin{lstlisting}[language=Java,label=some-code,caption=Class declaration]
 class  Player: 
-	private int foo;
-	
-	public Player(int f)
-	{
-		foo = f;
-	}
-	
-	public int getFoo()
-	{
-		return foo;
-	}
+  private int foo;
+  
+  public Player(int f)
+  {
+    foo = f;
+  }
+  
+  public int getFoo()
+  {
+    return foo;
+  }
 \end{lstlisting}
 \end{singlespace}
 
