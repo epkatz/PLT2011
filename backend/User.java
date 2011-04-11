@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 
 public class User {
-    private int points;
+    private double points;
     private String name;
     private ArrayList<Player> teamAthletes;
     
@@ -18,7 +18,7 @@ public class User {
     public void removePlayer(Player athlete){
     	teamAthletes.remove(athlete);
     }
-	public int getPoints() {
+	public double getPoints() {
 		return points;
 	}
 	public String getName() {

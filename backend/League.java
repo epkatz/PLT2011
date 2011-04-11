@@ -44,4 +44,22 @@ public class League {
 	public String getName() {
 		return name;
 	}
+	public int getCurrentNumUsers(){
+		return teams.size();
+	}
+	public int getCurrentNumPlayers(){
+		return teams.size();
+	}
+	public int getCurrentNumActions(){
+		return athletes.size();
+	}
+	public User getTeam(int index){
+		return teams.get(index);
+	}
+	public Player getPlayer(int index){
+		return athletes.get(index);
+	}
+	public Action getAction(int index){
+		return ptsDist.get(index);
+	}
 }
