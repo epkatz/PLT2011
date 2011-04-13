@@ -1,0 +1,11 @@
+/* testing
+dakdj fdgds
+*/
+define_league
+set leagueName("Happy League")
+set maxUser(10)
+set leagueName("Happy League")
+set minUser(11)
+set minUser(12)
+add User("Eli")
+add Action("Field Goal Attempt", 0.5)+

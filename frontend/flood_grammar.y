@@ -14,103 +14,109 @@
 %}
 
 /* YACC Declarations */
-%token EMPTY            /* newline */
-%token <ival> INT       /* an integer */
-%token <dval> FLT       /* a float */
-%token <sval> ID        /* a string */
-%token WP               /* whitespace */
-%token SEMICOLON        /* semicolon */
-%token COMMA            /* comma separator */
-%token COLON            /* colon separator */
-%token OPEN_PARAN       /* { */
-%token CLOSE_PARAN      /* } */
-%token EQUAL            /* = */
-%token NOTEQUAL         /* != */
-%token LESSEQUAL        /* <= */
-%token GREATEQUAL       /* >= */
-%token ISEQUAL          /* == */
 %token PLUS             /* + */
-%token MINUS            /* - */
-%token MUL              /* * */
-%token DIV              /* / */
-%token MODULUS          /* % */
-%token LESS             /* < */
-%token GREAT            /* > */
+%token OPEN_PARAN       /* { */ 
+%token CLOSE_PARAN      /* } */
 %token OPEN             /* ( */
 %token CLOSE            /* ) */
-%token Quote            /* " */
-%token STRING_CONST     /* String literal constants */
+%token <dval> FLT       /* a float */
+%token <ival> INT       /* a integer */
+%token <sval> STRING_CONST     /* String literal constants */
+%token COMMA            /* comma separator */
 
 /* Keywords */
-%token Action           /* Action */
-%token Class            /* Class */
-%token Draft            /* Draft */
-%token League           /* League */
-%token Player           /* Player */
-%token User             /* User */
-%token if               /* if */
-%token else             /* else */
-%token for              /* for */
-%token in               /* in */
-%token while            /* while */
-%token is               /* is */
-%token private          /* private */
-%token public           /* public */
-%token set              /* set */
-%token get              /* get */
-%token setget           /* setget */
-%token return           /* return */
-%token void             /* void */
-%token new              /* new */
-%token true             /* true */
-%token false            /* false */
-%token str              /* str */
-%token bool             /* bool */
-%token <dval> flt       /* flt */
-%token <ival> int       /* int */
-%token list             /* list */
+%token define_league
+%token leagueName
+%token maxUser
+%token minUser
+%token set
+%token add
+%token User
+%token Action
 
 /* Associativity and Precedence */
-%left MINUS PLUS
-%left MUL DIV
-%nonassoc EQUAL NOTEQUAL LESSEQUAL GREATEQUAL ISEQUAL LESS GREAT
+%left PLUS
 
 /* Types */
 %type <sval> definitions
-%type <sval> usercode
+%type <sval> functions
+%type <sval> definitionlist
+%type <sval> definitionproductions
+%type <sval> empty;
 
 %%
 
-program: definitions usercode
+/***************************************************
+* program
+****************************************************/
+program: definitions functions
 {
-  generateFloodProgram();
-  System.out.println("Total number of lines in the input: " + (yyline-1));
+  System.out.println("Line 41");
+  generateFloodProgram($1, $2);
+  System.out.println("Total number of lines in the input: " + (yyline - 1));
 };
 
-definitions: PLUS{} ;
-usercode: PLUS{};
+definitions: define_league definitionlist { $$ = $2; };
+           
+definitionlist: definitionlist definitionproductions {$$=$1+$2;};
+              | empty { $$ = $1; }
+              ;
+
+definitionproductions: set leagueName OPEN STRING_CONST CLOSE { $$ = "myLeague = new League("+$4+");\n"; }
+              | set maxUser OPEN INT CLOSE { $$ = "myLeague.setMaxUser("+$4+");\n"; }
+              | set minUser OPEN INT CLOSE { $$ = "myLeague.setMinUser("+$4+");\n"; }
+              | add User OPEN STRING_CONST CLOSE { $$ = "myLeague.addUser(new User("+$4+"));\n"; }
+              | add Action OPEN STRING_CONST COMMA FLT CLOSE { $$ = "myLeague.addAction(new Action("+$4+", "+$6+"));\n"; }
+              ;
+              
+
+functions: PLUS { $$ = "TBA"; };
+
+empty: ; { $$ = ""; }  
 
 %%
 
+/***************************************************
+* Variables
+****************************************************/
 private Yylex lexer;
 public int yyline = 1;
 public int yycolumn = 0;
+boolean createPositionFile = false;
 
-public void generateFloodProgram()
+/***************************************************
+* generateFloodProgram
+****************************************************/
+public void generateFloodProgram(String definitions, String functions)
 {
-  String classStart = "public class FloodProgram {\n\n";
+  System.out.println("Line 59");
+  
+  String classStart = "public class FloodProgram {\n";
   String classEnd = "\n}";
 
-  String main = "public static void main(String[] args){\n";
+  String main_start = "public static void main(String[] args){\n";
+  String main_end = "\n}";
 
-  FileWriter writer = new FileWriter(new File("FloodProgram.java"));
-  String buffer = classStart + main + classEnd;
-  writer.write(buffer);
-  writer.close();
+  try
+  {
+    System.out.println("Line 67");
+    FileWriter writer = new FileWriter(new File("C:/PLT/FloodProgram.java"));
+    String buffer = classStart + main_start + definitions + functions + main_end + classEnd;
+    writer.write(buffer);
+    writer.close();
+  }
+  catch (IOException e)
+  {
+  }
 }
 
-private int yylex ()
+/***************************************************
+* yylex
+****************************************************/
+private int yylex()
 {
+  System.out.println("Line 83");
+  
   int yyl_return = -1;
   
   try
@@ -126,20 +132,37 @@ private int yylex ()
   return yyl_return;
 }
 
+/***************************************************
+* Parser
+****************************************************/
 public Parser(Reader r, boolean createFile)
 {
+  System.out.println("Line 102");
+
   lexer = new Yylex(r, this);
   this.createPositionFile = createFile;
 }
 
+/***************************************************
+* yyerror
+****************************************************/
+public void yyerror(String error)
+{
+}
+
+/***************************************************
+* main
+****************************************************/
 public static void main(String args[]) throws IOException
 {
+  System.out.println("Line 114");
+
   Parser yyparser;
   boolean createFile = false;
 
   if (args.length < 1)
   {
-    System.out.println("Usage: java Parser <thrill_program.txt>");
+    System.out.println("Usage: java Parser <flood_progam.txt>");
     return;
   }
   else if (args.length == 2)
@@ -152,22 +175,6 @@ public static void main(String args[]) throws IOException
 
   System.out.println("\nCompiling ...\n");
 
-  try
-  {
     yyparser.yyparse();
-    
-    if (yyparser.checkParseErrors())
-    {
-      System.out.println("\nCompilation failed!!\n");
-    }
-    else
-    {
-      System.out.println("\nThrillProgram.java generated successfully.\n");;
-    }
 
-  }
-  catch (ThrillException ex)
-  {
-    System.out.println(ex.getMessage() + "\n");     
-  }
 }
