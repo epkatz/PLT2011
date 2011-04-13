@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -28,9 +29,11 @@ public class GUI {
 	private JTable tradeTable1;
 	private JTable tradeTable2;
 	private JTable dropTable;
+	private int currentTeam;
 	
 	public GUI(League game){
 		this.theLeague=game;
+		currentTeam=0;
 	}
 
 	/**
@@ -44,6 +47,26 @@ public class GUI {
 		frmFloodFantasyLeague.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmFloodFantasyLeague.setSize(new Dimension(700, 400));
 		frmFloodFantasyLeague.setVisible(true);
+		
+		//Populate the home table
+		String[] homeHeader={"Rank","Team","Points"};
+		User[] rankedTeam=theLeague.getRankedUsers();
+		String[][] homeData=new String[rankedTeam.length][3];
+		for(int i=0;i<rankedTeam.length;i++){
+			homeData[i][0]=Integer.toString(i+1);
+			homeData[i][1]=rankedTeam[i].getName();
+			homeData[i][2]=Double.toString(rankedTeam[i].getPoints());
+		}
+		
+		//Populate the add table
+		String[] addHeader={"Player","Position","Points All Season"};
+		final Player[] rankedPlayers=theLeague.getRankedPlayers();
+		final String[][] addData=new String[rankedPlayers.length][3];
+		for(int i=0;i<rankedPlayers.length;i++){
+			addData[i][0]=rankedPlayers[i].getName();
+			addData[i][1]=rankedPlayers[i].getPosition();
+			addData[i][2]=Double.toString(rankedPlayers[i].getPoints());
+		}
 
 		
 		final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -52,7 +75,7 @@ public class GUI {
 		JScrollPane homePane = new JScrollPane();
 		tabbedPane.addTab("Home", null, homePane, null);
 		
-		homeTable = new JTable();
+		homeTable = new JTable(homeData,homeHeader);
 		homeTable.setEnabled(false);
 		homePane.setViewportView(homeTable);
 		
@@ -63,23 +86,33 @@ public class GUI {
 		JScrollPane addScrollPane = new JScrollPane();
 		addSplitPane.setRightComponent(addScrollPane);
 		
-		addTable = new MyTableModel();
+		addTable = new MyTableModel(addData,addHeader);
 		addTable.setCellSelectionEnabled(true);
-		addTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		addTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		addScrollPane.setViewportView(addTable);
 		
 		JToolBar addToolBar = new JToolBar();
 		addSplitPane.setLeftComponent(addToolBar);
 		
-		JComboBox addComboBox = new JComboBox();
-		addToolBar.add(addComboBox);
+		final JLabel addLabel = new JLabel("New label");
+		addLabel.setMinimumSize(new Dimension(600, 15));
+		addLabel.setMaximumSize(new Dimension(32767, 15));
+		addToolBar.add(addLabel);
 		
 		JButton btnAdd = new JButton("Add");
+		btnAdd.setPreferredSize(new Dimension(100, 25));
+		btnAdd.setMaximumSize(new Dimension(100, 25));
+		btnAdd.setMinimumSize(new Dimension(100, 25));
 		addToolBar.add(btnAdd);
 		
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//Add player using selection of table
+				for(int i=0;i<addData.length;i++){
+					if(addTable.isCellSelected(i,0)){
+						if(!Test.draftPlayer(theLeague.getUser(i),rankedPlayers[i]))
+							addLabel.setText("Invalid pick!");
+					}
+				}
 			}
 		});
 		
