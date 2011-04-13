@@ -1,24 +1,24 @@
 package backend;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 
-public class User {
-    private int points;
+public class User implements Comparable<User>{
+    private double points;
     private String name;
-    private ArrayList<Player> teamAthletes;
+    private HashMap<String,Player> teamAthletes;
     
     public User(String name){
     	this.name=name;
     	points=0;
-    	teamAthletes=new ArrayList<Player>();
+    	teamAthletes=new HashMap<String,Player>();
     }
-    public void addPlayer(Player athelete){
-    		teamAthletes.add(athelete);
+    public void addPlayer(Player athlete){
+    	teamAthletes.put(athlete.getName(),athlete);
     }
     public void removePlayer(Player athlete){
-    	teamAthletes.remove(athlete);
+    	teamAthletes.remove(athlete.getName());
     }
-	public int getPoints() {
+	public double getPoints() {
 		return points;
 	}
 	public String getName() {
@@ -35,5 +35,12 @@ public class User {
 		if (name.equals(other.name))
 			return true;
 		return false;
+	}
+	public int compareTo(User o) {
+		if(points>o.getPoints())
+			return 1;
+		else if(points==o.getPoints())
+			return 0;
+		return -1;
 	}
 }
