@@ -1,17 +1,25 @@
 package backend;
 
-public class Player {
+public class Player implements Comparable<Player>{
 	private String name, position;
+	private double totalPoints;
 	
 	public Player(String name, String position){
 		this.name=name;
 		this.position=position;
+		totalPoints=0;
 	}
 	public String getName() {
 		return name;
 	}
 	public String getPosition() {
 		return position;
+	}
+	public void addPoints(double pts){
+		totalPoints+=pts;
+	}
+	public double getPoints(){
+		return totalPoints;
 	}
 	public boolean equals(Object obj){
 		if (this == obj)
@@ -25,4 +33,12 @@ public class Player {
 			return true;
 		return false;
 	}
+	public int compareTo(Player o) {
+		if(totalPoints>o.getPoints())
+			return 1;
+		else if(totalPoints==o.getPoints())
+			return 0;
+		return -1;
+	}
+	
 }
