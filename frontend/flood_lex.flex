@@ -20,23 +20,37 @@
 %}
 
 ID    = [a-zA-Z"_"]([a-zA-Z"_"] | [0-9])*
+NL    = \n | \r | \r\n
+WP    = " "
 INT   = [0-9]+
 FLT   = [0-9]+ ("." [0-9]+)?
-NL    = \n | \r | \r\n
 HT    = \t
-WP    = " "
 
 %%
 
 /* Keywords */
-leagueName        { yyparser.yycolumn += yytext().length(); return Parser.leagueName;   }
-maxUser           { yyparser.yycolumn += yytext().length(); return Parser.maxUser;   }
-minUser           { yyparser.yycolumn += yytext().length(); return Parser.minUser;   }
-set               { yyparser.yycolumn += yytext().length(); return Parser.set;          }
-define_league     { yyparser.yycolumn += yytext().length(); return Parser.define_league;   }
-add               { yyparser.yycolumn += yytext().length(); return Parser.add;          }
-User              { yyparser.yycolumn += yytext().length(); return Parser.User;   }
-Action              { yyparser.yycolumn += yytext().length(); return Parser.Action;   }
+define_league     { yyparser.yycolumn += yytext().length(); return Parser.define_league;  }
+define_functions     { yyparser.yycolumn += yytext().length(); return Parser.define_functions;  }
+leagueName        { yyparser.yycolumn += yytext().length(); return Parser.leagueName;     }
+maxUser           { yyparser.yycolumn += yytext().length(); return Parser.maxUser;        }
+minUser           { yyparser.yycolumn += yytext().length(); return Parser.minUser;        }
+set               { yyparser.yycolumn += yytext().length(); return Parser.set;            }
+add               { yyparser.yycolumn += yytext().length(); return Parser.add;            }
+Action            { yyparser.yycolumn += yytext().length(); return Parser.Action;         }
+User              { yyparser.yycolumn += yytext().length(); return Parser.User;           }
+Void              { yyparser.yycolumn += yytext().length(); return Parser.Void;     }
+Int               { yyparser.yycolumn += yytext().length(); return Parser.Int;      }
+bool              { yyparser.yycolumn += yytext().length(); return Parser.bool;     }
+str               { yyparser.yycolumn += yytext().length(); return Parser.str;      }
+flt               { yyparser.yycolumn += yytext().length(); return Parser.flt;      }
+Return            { yyparser.yycolumn += yytext().length(); return Parser.Return;      }
+
+/* Identifier */
+{ID}              {
+                    yyparser.yycolumn += yytext().length();
+                    yyparser.yylval = new ParserVal(yytext());
+                    return Parser.ID;
+                  }
 
 /* Newline */
 {NL}              {
@@ -62,25 +76,27 @@ Action              { yyparser.yycolumn += yytext().length(); return Parser.Acti
                     return Parser.FLT;
                   }
 
+[\t]+            { yyparser.yycolumn += yytext().length(); }
+
 "\""[^\"]*"\""    {
                     yyparser.yycolumn += yytext().length();
                     yyparser.yylval = new ParserVal(yytext());
                     return Parser.STRING_CONST;   
                   }
 
-"/*"(.*|\n*|\r*|\r\n*)*"*/"     { yyparser.yycolumn+= yytext().length();          }
+"/*"(.*|\n*|\r*|\r\n*)*"*/"   { yyparser.yycolumn+= yytext().length();          }
 
-,                 { yyparser.yycolumn++; return Parser.COMMA; }
+,                             { yyparser.yycolumn++; return Parser.COMMA;       }
 
-"+"               { yyparser.yycolumn++; return Parser.PLUS;        }
+"+"                           { yyparser.yycolumn++; return Parser.PLUS;        }
 
-"{"               { yyparser.yycolumn++; return Parser.OPEN_PARAN;  }
+"{"                           { yyparser.yycolumn++; return Parser.OPEN_PARAN;  }
 
-"}"               { yyparser.yycolumn++; return Parser.CLOSE_PARAN; }
+"}"                           { yyparser.yycolumn++; return Parser.CLOSE_PARAN; }
 
-"("               { yyparser.yycolumn++;return Parser.OPEN;         }
+"("                           { yyparser.yycolumn++;return Parser.OPEN;         }
 
-")"               { yyparser.yycolumn++;return Parser.CLOSE;        }
+")"                           { yyparser.yycolumn++;return Parser.CLOSE;        }
 
 /* Error Fallback */
 [^]               {

@@ -1,6 +1,10 @@
-/* testing
-dakdj fdgds
+/*
+comments
+multiline
+test
 */
+/* comments single line test */
+
 define_league
 set leagueName("Happy League")
 set maxUser(10)
@@ -8,4 +12,10 @@ set leagueName("Happy League")
 set minUser(11)
 set minUser(12)
 add User("Eli")
-add Action("Field Goal Attempt", 0.5)+
+add Action("Field Goal Attempt", 0.5)
+
+define_functions
+Int myFunction(Int turn, flt turn2)
+{
+	Return "skdjf"
+}

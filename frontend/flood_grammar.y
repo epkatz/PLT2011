@@ -14,35 +14,49 @@
 %}
 
 /* YACC Declarations */
-%token PLUS             /* + */
-%token OPEN_PARAN       /* { */ 
-%token CLOSE_PARAN      /* } */
-%token OPEN             /* ( */
-%token CLOSE            /* ) */
-%token <dval> FLT       /* a float */
-%token <ival> INT       /* a integer */
-%token <sval> STRING_CONST     /* String literal constants */
-%token COMMA            /* comma separator */
+%token PLUS                   /* + */
+%token OPEN_PARAN             /* { */ 
+%token CLOSE_PARAN            /* } */
+%token OPEN                   /* ( */
+%token CLOSE                  /* ) */
+%token <dval> FLT             /* Float */
+%token <ival> INT             /* Integer */
+%token <sval> STRING_CONST    /* String literal onstants */
+%token COMMA                  /* Comma */
+%token <sval> ID              /* a string */
 
 /* Keywords */
 %token define_league
+%token define_functions
 %token leagueName
 %token maxUser
 %token minUser
 %token set
 %token add
-%token User
 %token Action
+%token User
+%token Void             
+%token str              
+%token bool            
+%token flt              
+%token Int
+%token Return
 
 /* Associativity and Precedence */
 %left PLUS
 
 /* Types */
 %type <sval> definitions
-%type <sval> functions
 %type <sval> definitionlist
 %type <sval> definitionproductions
+%type <sval> functions
+%type <sval> functionproductions
+%type <sval> returnType
+%type <sval> functionName
+%type <sval> argumentList
+%type <sval> functionBody
 %type <sval> empty;
+%type <sval> returnproduction;
 
 %%
 
@@ -58,21 +72,48 @@ program: definitions functions
 
 definitions: define_league definitionlist { $$ = $2; };
            
-definitionlist: definitionlist definitionproductions {$$=$1+$2;};
+definitionlist: definitionlist definitionproductions {$$ = $1 + $2;}
               | empty { $$ = $1; }
               ;
 
-definitionproductions: set leagueName OPEN STRING_CONST CLOSE { $$ = "myLeague = new League("+$4+");\n"; }
-              | set maxUser OPEN INT CLOSE { $$ = "myLeague.setMaxUser("+$4+");\n"; }
-              | set minUser OPEN INT CLOSE { $$ = "myLeague.setMinUser("+$4+");\n"; }
-              | add User OPEN STRING_CONST CLOSE { $$ = "myLeague.addUser(new User("+$4+"));\n"; }
-              | add Action OPEN STRING_CONST COMMA FLT CLOSE { $$ = "myLeague.addAction(new Action("+$4+", "+$6+"));\n"; }
-              ;
-              
+definitionproductions: set leagueName OPEN STRING_CONST CLOSE { $$ = "myLeague = new League(" + $4 + ");\n"; }
+                     | set maxUser OPEN INT CLOSE { $$ = "myLeague.setMaxUser(" + $4 + ");\n"; }
+                     | set minUser OPEN INT CLOSE { $$ = "myLeague.setMinUser(" + $4 + ");\n"; }
+                     | add User OPEN STRING_CONST CLOSE { $$ = "myLeague.addUser(new User(" + $4 + "));\n"; }
+                     | add Action OPEN STRING_CONST COMMA FLT CLOSE { $$ = "myLeague.addAction(new Action(" + $4 + ", " + $6 + "));\n"; }
+                     ;
 
-functions: PLUS { $$ = "TBA"; };
+functions: define_functions functionproductions { $$ = $2; };
 
-empty: ; { $$ = ""; }  
+functionproductions: functionproductions returnType functionName OPEN argumentList CLOSE OPEN_PARAN functionBody CLOSE_PARAN { $$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + "\n}"; }
+                     | empty { $$ = $1; }
+                     ;
+
+returnType: Void { $$ = "void"; }
+          | str { $$ = "String"; }
+          | bool { $$ = "boolean"; }
+          | Int { $$ = "int"; }
+          | flt { $$ = "float"; }
+          ;
+          
+functionName: ID { $$ = $1; };
+
+argumentList: argumentList COMMA returnType ID { $$ = $1 + "," + $3 + " " + $4; }
+            | returnType ID { $$ = $1 + " " + $2; }
+            | empty { $$ = $1; }
+            ;
+
+functionBody: returnproduction { $$ = $1; };
+
+/* TODO: semicolon after return */
+returnproduction: Return ID { $$ = "return " + $2; }
+                | Return STRING_CONST { $$ = "return " + $2; }
+                | Return INT { $$ = "return " + $2; }
+                | Return FLT { $$ = "return " + $2; }
+                | empty { $$ = $1; }
+                ;
+
+empty: ; { $$ = ""; }
 
 %%
 
@@ -85,16 +126,16 @@ public int yycolumn = 0;
 boolean createPositionFile = false;
 
 /***************************************************
-* generateFloodProgram
+* generateFloodProgram()
 ****************************************************/
 public void generateFloodProgram(String definitions, String functions)
 {
   System.out.println("Line 59");
   
-  String classStart = "public class FloodProgram {\n";
+  String classStart = "public class FloodProgram\n{\n";
   String classEnd = "\n}";
 
-  String main_start = "public static void main(String[] args){\n";
+  String main_start = "public static void main(String[] args)\n{\n";
   String main_end = "\n}";
 
   try
@@ -111,12 +152,10 @@ public void generateFloodProgram(String definitions, String functions)
 }
 
 /***************************************************
-* yylex
+* yylex()
 ****************************************************/
 private int yylex()
-{
-  System.out.println("Line 83");
-  
+{  
   int yyl_return = -1;
   
   try
@@ -133,7 +172,7 @@ private int yylex()
 }
 
 /***************************************************
-* Parser
+* Parser()
 ****************************************************/
 public Parser(Reader r, boolean createFile)
 {
@@ -144,14 +183,14 @@ public Parser(Reader r, boolean createFile)
 }
 
 /***************************************************
-* yyerror
+* yyerror()
 ****************************************************/
 public void yyerror(String error)
 {
 }
 
 /***************************************************
-* main
+* main()
 ****************************************************/
 public static void main(String args[]) throws IOException
 {
