@@ -24,6 +24,18 @@
 %token <sval> STRING_CONST    /* String literal onstants */
 %token COMMA                  /* Comma */
 %token <sval> ID              /* a string */
+%token EQUAL            /* = */
+%token NOTEQUAL         /* != */
+%token LESSEQUAL        /* <= */
+%token GREATEQUAL       /* >= */
+%token ISEQUAL          /* == */
+%token LESS             /* < */
+%token GREAT            /* > */
+%token PLUS             /* + */
+%token MINUS            /* - */
+%token MULT             /* * */
+%token DIV              /* / */
+%token SEMICOLON        /* semicolon */
 
 /* Keywords */
 %token define_league
@@ -41,6 +53,9 @@
 %token flt              
 %token Int
 %token Return
+%token If               /* If keyword               */
+%token Else             /* Else keyword             */
+%token While
 
 /* Associativity and Precedence */
 %left PLUS
@@ -52,11 +67,21 @@
 %type <sval> functions
 %type <sval> functionproductions
 %type <sval> returnType
+%type <sval> dataType
 %type <sval> functionName
 %type <sval> argumentList
-%type <sval> functionBody
 %type <sval> empty;
-%type <sval> returnproduction;
+%type <sval> returnproduction
+%type <sval> blockBody
+%type <sval> statement
+%type <sval> statements
+%type <sval> conditionals
+%type <sval> loop
+%type <sval> declarations
+%type <sval> relationalexp
+%type <sval> arithmeticexp
+%type <sval> constOrVar
+/*%type <sval> functioncalls;*/
 
 %%
 
@@ -85,7 +110,14 @@ definitionproductions: set leagueName OPEN STRING_CONST CLOSE { $$ = "myLeague =
 
 functions: define_functions functionproductions { $$ = $2; };
 
-functionproductions: functionproductions returnType functionName OPEN argumentList CLOSE OPEN_PARAN functionBody CLOSE_PARAN { $$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + "\n}"; }
+functionproductions: functionproductions returnType functionName OPEN argumentList CLOSE blockBody
+                     {
+                      /*
+                      * TODO: hastable for function scoping and function list
+                      * eg: scopeName = $2; addToHashtable($2, "Function");
+                      */
+                      $$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n" + $7;
+                     }
                      | empty { $$ = $1; }
                      ;
 
@@ -103,17 +135,71 @@ argumentList: argumentList COMMA returnType ID { $$ = $1 + "," + $3 + " " + $4; 
             | empty { $$ = $1; }
             ;
 
-functionBody: returnproduction { $$ = $1; };
+blockBody: OPEN_PARAN blockBody statements returnproduction CLOSE_PARAN { $$ = "{\n" + $2 + $3 + "\n" + $4 + "\n}\n"; };
+     | OPEN_PARAN statements returnproduction CLOSE_PARAN { $$ = "{\n" + $2 + "\n" + $3 + "\n}\n"; }
+     ;
 
-/* TODO: semicolon after return */
-returnproduction: Return ID { $$ = "return " + $2; }
-                | Return STRING_CONST { $$ = "return " + $2; }
-                | Return INT { $$ = "return " + $2; }
-                | Return FLT { $$ = "return " + $2; }
+statements: statements statement SEMICOLON { $$ = $1 + $2; }
+          | statement SEMICOLON { $$ = $1; }
+          ;
+
+statement: conditionals { $$ = $1; }
+         | loop { $$ = $1; }
+         | declarations { $$ = $1; }
+         | relationalexp { $$ = $1; }
+         | arithmeticexp { $$ = $1; }
+         ;
+
+returnproduction: Return ID { $$ = "return " + $2 + ";"; }
+                | Return STRING_CONST { $$ = "return " + $2 + ";"; }
+                | Return INT { $$ = "return " + $2 + ";"; }
+                | Return FLT { $$ = "return " + $2 + ";"; }
                 | empty { $$ = $1; }
                 ;
 
+conditionals: If OPEN relationalexp CLOSE blockBody { $$ = "if(" + $3 + ")" + $5; }
+         | If OPEN relationalexp CLOSE blockBody Else blockBody { $$ = "if(" + $3 + ")" + $5 + "\nelse" + $7; }
+        ;
+
+loop: While OPEN relationalexp CLOSE blockBody { $$ = "while(" + $3 + ")" + $5; }
+
+declarations: dataType ID { $$ = $1 + " " + $2; }
+
+relationalexp: ID LESSEQUAL constOrVar { $$ = $1 + " <= " + $3; }
+             | ID GREATEQUAL constOrVar { $$ = $1 + " >= " + $3; }
+             | ID NOTEQUAL constOrVar { $$ = $1 + " != " + $3; }
+             | ID LESS constOrVar { $$ = $1 + " < " + $3; }
+             | ID GREAT constOrVar { $$ = $1 + " > " + $3; }
+             | ID ISEQUAL constOrVar { $$ = $1 + " == " + $3; }
+             ;
+
+constOrVar: FLT { $$ = "" + $1; }
+          | INT { $$ = "" + $1; }
+          | ID { $$ = "" + $1; }
+          ;
+
+arithmeticexp: arithmeticexp PLUS arithmeticexp  { $$ = $1 + "+" + $3; }
+               | arithmeticexp MINUS arithmeticexp { $$ = $1 + "-" + $3; }
+               | arithmeticexp MULT arithmeticexp   { $$ = $1 + "*" + $3; }
+               | arithmeticexp DIV arithmeticexp   { $$ = $1 + "/" + $3; }
+                     | OPEN arithmeticexp CLOSE            { $$ = "(" + $2 + ")"; }
+                     | ID  
+                     { 
+                        /*TODO: semantic check for mismatch operands*/
+                        $$ = $1;
+                     }
+                     | FLT { $$ = "" + $1; }
+          | INT { $$ = "" + $1; }
+                     ;
+
+dataType: str { $$ = "String"; }
+        | bool { $$ = "boolean"; }
+        | Int { $$ = "int"; }
+        | flt { $$ = "float"; }
+        ;
+
 empty: ; { $$ = ""; }
+
 
 %%
 

@@ -17,5 +17,22 @@ add Action("Field Goal Attempt", 0.5)
 define_functions
 Int myFunction(Int turn, flt turn2)
 {
-	Return "skdjf"
+Int a;
+Int b;
+Int c;
+If(a<b)
+{
+Int a;
+Int b;
+Int c;
+Return a
+};
+While(a<b)
+{
+1-0;
+Int a;
+Int b;
+Int c;
+};
+Return a
 }
