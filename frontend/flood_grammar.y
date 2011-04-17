@@ -11,6 +11,7 @@
   import java.util.Hashtable;
   import java.util.ArrayList;
   import java.util.Iterator;
+  import java.util.HashMap;
 %}
 
 /* YACC Declarations */
@@ -141,6 +142,7 @@ argumentList: argumentList COMMA returnType ID { $$ = $1 + "," + $3 + " " + $4; 
             | empty { $$ = $1; }
             ;
 
+/* Also check to see if there is a return statement for the return type mentioned */
 blockBody: OPEN_CURLY blockBody statements returnProduction CLOSE_CURLY { $$ = "{\n" + $2 + $3 + "\n" + $4 + "\n}\n"; }
          | OPEN_CURLY statements returnProduction CLOSE_CURLY { $$ = "{\n" + $2 + "\n" + $3 + "\n}\n"; }
          ;
@@ -176,7 +178,7 @@ loop: While OPEN_PARAN relationalExp CLOSE_PARAN blockBody { $$ = "while(" + $3 
     | While OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY { $$ = "while(" + $3 + ")\n{\n}"; }
     ;
 
-declarations: dataType ID { $$ = $1 + " " + $2 + ";\n"; }
+declarations: dataType ID { $$ = $1 + " " + $2 + ";\n"; if (!addToVarTable($2, $1)) {System.out.println("variable already exists");}}
             | dataType ID EQUAL FLT { $$ = $1 + " " + $2 + " = " + $4 + ";\n"; }
             | dataType ID EQUAL INT { $$ = $1 + " " + $2 + " = " + $4 + ";\n"; }
             | dataType ID EQUAL STRING_CONST { $$ = $1 + " " + $2 + " = " + $4 + ";\n"; }
@@ -188,6 +190,7 @@ relationalExp: ID LESSEQUAL constOrVar { $$ = $1 + " <= " + $3; }
              | ID LESS constOrVar { $$ = $1 + " < " + $3; }
              | ID GREAT constOrVar { $$ = $1 + " > " + $3; }
              | ID ISEQUAL constOrVar { $$ = $1 + " == " + $3; }
+             | ID {$$ = $1; /* Check whether its a boolean value*/}
              ;
 
 constOrVar: FLT { $$ = "" + $1; }
@@ -242,7 +245,51 @@ empty: ; { $$ = ""; }
 private Yylex lexer;
 public int yyline = 1;
 public int yycolumn = 0;
-boolean createPositionFile = false;
+public boolean createPositionFile = false;
+public HashMap<String, String[]> functionTable = new HashMap<String, String[]>();
+public HashMap<String, String> varTable = new HashMap<String, String>();
+
+
+
+/***************************************************
+* HashTable functions
+****************************************************/
+
+public boolean inFunctionTable(String name)
+{
+    return functionTable.containsKey(name);
+}
+
+public boolean inVarTable(String name)
+{
+    return varTable.containsKey(name);
+}
+
+public boolean addToFunctionTable(String name, String[] args)
+{
+    if (!inFunctionTable(name))
+    {
+      functionTable.put(name, args);
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+}
+
+public boolean addToVarTable(String name, String type)
+{
+    if (!inVarTable(name))
+    {
+      varTable.put(name, type);
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+}
 
 /***************************************************
 * generateFloodProgram()

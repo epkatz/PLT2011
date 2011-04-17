@@ -2,8 +2,11 @@
 Testing
 Multiline
 Comments
+Int
 */
-/* Testing single line comments */
+/* Testing single line comments Int */
+
+
 defineLeague
 	set leagueName("Happy League");
 	set maxUser(10);
@@ -14,6 +17,7 @@ defineLeague
 defineFunctions
 	Int myFunction(Int turn, flt turn2)
 	{
+		flt fltVar;
 		flt fltVar;
 		Int intVar;
 		str strVar;
@@ -93,4 +97,4 @@ defineFunctions
 			b = myFunction3();
 		};
 		
-	}
+		}
