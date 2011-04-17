@@ -29,8 +29,8 @@ HT    = \t
 %%
 
 /* Keywords */
-define_league     { yyparser.yycolumn += yytext().length(); return Parser.define_league;  }
-define_functions  { yyparser.yycolumn += yytext().length(); return Parser.define_functions;  }
+defineLeague     { yyparser.yycolumn += yytext().length(); return Parser.defineLeague;  }
+defineFunctions  { yyparser.yycolumn += yytext().length(); return Parser.defineFunctions;  }
 leagueName        { yyparser.yycolumn += yytext().length(); return Parser.leagueName;     }
 maxUser           { yyparser.yycolumn += yytext().length(); return Parser.maxUser;        }
 minUser           { yyparser.yycolumn += yytext().length(); return Parser.minUser;        }
@@ -71,13 +71,14 @@ While                { yyparser.yycolumn += yytext().length(); return Parser.Whi
                     yyparser.yylval = new ParserVal(Integer.parseInt(yytext()));
                     return Parser.INT;
                   }
-
+                  
 /* Float */
 {FLT}             {
                     yyparser.yycolumn += yytext().length();
                     yyparser.yylval = new ParserVal(Double.parseDouble(yytext()));
                     return Parser.FLT;
                   }
+                  
 
 [\t]+            { yyparser.yycolumn += yytext().length(); }
 
@@ -93,13 +94,13 @@ While                { yyparser.yycolumn += yytext().length(); return Parser.Whi
 
 "+"                           { yyparser.yycolumn++; return Parser.PLUS;        }
 
-"{"                           { yyparser.yycolumn++; return Parser.OPEN_PARAN;  }
+"{"                           { yyparser.yycolumn++; return Parser.OPEN_CURLY;  }
 
-"}"                           { yyparser.yycolumn++; return Parser.CLOSE_PARAN; }
+"}"                           { yyparser.yycolumn++; return Parser.CLOSE_CURLY; }
 
-"("                           { yyparser.yycolumn++;return Parser.OPEN;         }
+"("                           { yyparser.yycolumn++;return Parser.OPEN_PARAN;         }
 
-")"                           { yyparser.yycolumn++;return Parser.CLOSE;        }
+")"                           { yyparser.yycolumn++;return Parser.CLOSE_PARAN;        }
 
 "=="                { yyparser.yycolumn++; return Parser.ISEQUAL;        }
 
