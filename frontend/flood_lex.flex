@@ -19,6 +19,7 @@
   }
 %}
 
+COMMENTS = "/*"(.*|\n*|\r*|\r\n*)*"*/"
 ID    = [a-zA-Z"_"]([a-zA-Z"_"] | [0-9])*
 NL    = \n | \r | \r\n
 WP    = " "
@@ -27,6 +28,9 @@ FLT   = [0-9]+ ("." [0-9]+)?
 HT    = \t
 
 %%
+
+/* Comments (highest precedence) */
+{COMMENTS}   { yyparser.yycolumn+= yytext().length();          }
 
 /* Keywords */
 defineLeague     { yyparser.yycolumn += yytext().length(); return Parser.defineLeague;  }
@@ -87,8 +91,6 @@ While                { yyparser.yycolumn += yytext().length(); return Parser.Whi
                     yyparser.yylval = new ParserVal(yytext());
                     return Parser.STRING_CONST;   
                   }
-
-"/*"(.*|\n*|\r*|\r\n*)*"*/"   { yyparser.yycolumn+= yytext().length();          }
 
 ,                             { yyparser.yycolumn++; return Parser.COMMA;       }
 
