@@ -24,11 +24,11 @@
 %token <sval> STRING_CONST    /* String literal onstants */
 %token COMMA                  /* Comma */
 %token <sval> ID              /* a string */
-%token EQUAL            /* = */
-%token NOTEQUAL         /* != */
-%token LESSEQUAL        /* <= */
-%token GREATEQUAL       /* >= */
-%token ISEQUAL          /* == */
+%token EQUAL                  /* = */
+%token NOTEQUAL               /* != */
+%token LESSEQUAL              /* <= */
+%token GREATEQUAL             /* >= */
+%token ISEQUAL                /* == */
 %token LESS             /* < */
 %token GREAT            /* > */
 %token PLUS             /* + */
@@ -58,7 +58,9 @@
 %token While
 
 /* Associativity and Precedence */
-%left PLUS
+%left MINUS PLUS
+%left MULT DIV
+%nonassoc EQUAL NOTEQUAL LESSEQUAL GREATEQUAL ISEQUAL LESS GREAT
 
 /* Types */
 %type <sval> definitions
@@ -81,7 +83,10 @@
 %type <sval> relationalexp
 %type <sval> arithmeticexp
 %type <sval> constOrVar
-/*%type <sval> functioncalls;*/
+%type <sval> left_side
+%type <sval> right_side
+%type <sval> assignment
+%type <sval> functioncall;
 
 %%
 
@@ -147,7 +152,8 @@ statement: conditionals { $$ = $1; }
          | loop { $$ = $1; }
          | declarations { $$ = $1; }
          | relationalexp { $$ = $1; }
-         | arithmeticexp { $$ = $1; }
+         | assignment { $$ = $1; }
+         | functioncall { $$ = $1; }
          ;
 
 returnproduction: Return ID { $$ = "return " + $2 + ";"; }
@@ -185,12 +191,25 @@ arithmeticexp: arithmeticexp PLUS arithmeticexp  { $$ = $1 + "+" + $3; }
                      | OPEN arithmeticexp CLOSE            { $$ = "(" + $2 + ")"; }
                      | ID  
                      { 
-                        /*TODO: semantic check for mismatch operands*/
+                        //TODO: semantic check for mismatch operands
                         $$ = $1;
                      }
                      | FLT { $$ = "" + $1; }
-          | INT { $$ = "" + $1; }
+          | INT { $$ = "" + $1; } 
                      ;
+
+assignment: left_side EQUAL right_side { $$ = $1 + " = " + $3;};
+
+left_side: ID 
+{ 
+    $$ = $1;
+};
+
+right_side: arithmeticexp { $$ = $1 + ";"; }
+          | functioncall { $$ = $1; }
+          ;
+
+functioncall: functionName OPEN argumentList CLOSE { $$ = $1 + "(" + $3 + ");" ; } ;
 
 dataType: str { $$ = "String"; }
         | bool { $$ = "boolean"; }
@@ -199,7 +218,6 @@ dataType: str { $$ = "String"; }
         ;
 
 empty: ; { $$ = ""; }
-
 
 %%
 
