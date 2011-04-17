@@ -29,10 +29,12 @@ Return a
 };
 While(a<b)
 {
-1-0;
+a=1-0;
 Int a;
 Int b;
 Int c;
+myFunction();
+b = myFunc2();
 };
 Return a
 }

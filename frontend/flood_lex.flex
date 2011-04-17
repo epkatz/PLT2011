@@ -30,7 +30,7 @@ HT    = \t
 
 /* Keywords */
 define_league     { yyparser.yycolumn += yytext().length(); return Parser.define_league;  }
-define_functions     { yyparser.yycolumn += yytext().length(); return Parser.define_functions;  }
+define_functions  { yyparser.yycolumn += yytext().length(); return Parser.define_functions;  }
 leagueName        { yyparser.yycolumn += yytext().length(); return Parser.leagueName;     }
 maxUser           { yyparser.yycolumn += yytext().length(); return Parser.maxUser;        }
 minUser           { yyparser.yycolumn += yytext().length(); return Parser.minUser;        }
