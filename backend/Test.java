@@ -9,6 +9,8 @@ public class Test {
 	 */
 	public static void main(String[] args) {
 		myLeague = new League("Happy League");
+		myLeague.setMaxTeamSize(10);
+		myLeague.setMinTeamSize(5);
 	    myLeague.setMaxUser(10);
 	    myLeague.setMinUser(4);
 	    myLeague.addUser(new User("Eli"));
@@ -16,7 +18,7 @@ public class Test {
 	    myLeague.addUser(new User("Anuj"));
 	    myLeague.addUser(new User("Tam"));
 	    myLeague.addUser(new User("Steph"));
-	    myLeague.addPlayer(new Player("Lebron James","forawrd"));
+	    myLeague.addPlayer(new Player("Lebron James","forward"));
 	    myLeague.addPlayer(new Player("Chris Bosh","forward"));
 	    myLeague.addPlayer(new Player("Dwyane Wade","guard"));
 	    myLeague.addPlayer(new Player("Eddie House","guard"));
@@ -53,7 +55,6 @@ public class Test {
 		myLeague.addAction(new Action("Turnover",-2.0));
 		myLeague.addAction(new Action("Blocked Shot",3.0));
 		
-		
 		GUI run = new GUI(myLeague);
 		run.drawBoard();
 
@@ -65,15 +66,70 @@ public class Test {
 		u.addPlayer(p);
 		return true;
 	}
-	public static boolean trade(User u1, Player p1, User u2, Player p2){
-		u1.removePlayer(p1);
-		u2.removePlayer(p2);
-		u1.addPlayer(p2);
-		u2.addPlayer(p1);
+	public static boolean trade(User u1, Player[] p1, User u2, Player[] p2){
+		boolean flag2=true;;
+		for(int i=0;i<p1.length;i++){
+			System.out.println(p1[i]);
+			flag2=dropPlayer(u1,p1[i]);
+			if(!flag2){	//If the drop was unsuccessful
+				for(int j=i;j>=0;j--){	//Add p1 back to u1
+					draftPlayer(u1,p1[j]);
+				}
+				return false;
+			}
+		}
+		for(int i=0;i<p2.length;i++){
+			System.out.println(p2[i]);
+			flag2=dropPlayer(u2,p2[i]);
+			if(!flag2){	//If the drop was unsuccessful
+				for(int j=i;j>=0;j--){	//Add p2 back to u2
+					draftPlayer(u2,p2[j]);
+				}
+				for(int j=0;j<p1.length;j++){	//Add p1 to u1
+					draftPlayer(u1,p1[j]);
+				}
+				return false;
+			}
+		}
+		for(int i=0;i<p1.length;i++){
+			flag2=draftPlayer(u2,p1[i]);
+			if(!flag2){	//If draft was unsuccessful
+				for(int j=i;j>=0;j--){	//Remove p1 from u2
+					dropPlayer(u2,p1[j]);
+				}
+				for(int j=0;j<p1.length;j++){	//Add p1 to u1
+					draftPlayer(u1,p1[j]);
+				}
+				for(int j=0;j<p2.length;j++){	//Add p2 to u2
+					draftPlayer(u2,p2[j]);
+				}
+				return false;
+			}
+		}
+		for(int i=0;i<p2.length;i++){
+			flag2=draftPlayer(u1,p2[i]);
+			if(!flag2){	//If the drop was unsucessful
+				for(int j=i;j>=0;j--){	//Remove p2 from u1
+					dropPlayer(u1,p2[j]);
+				}
+				for(int j=0;j<p1.length;j++){	//Remove p1 from u2
+					dropPlayer(u2,p1[j]);
+				}
+				for(int j=0;j<p1.length;j++){	//Add p1 to u1
+					draftPlayer(u1,p1[j]);
+				}
+				for(int j=0;j<p2.length;j++){	//Add p2 to u2
+					draftPlayer(u2,p2[j]);
+				}
+				return false;
+			}
+		}
 		return true;
 	}
-	public static void dropPlayer(User u, Player p){
+	public static boolean dropPlayer(User u, Player p){
+		System.out.println(u+"\n"+p);
 		u.removePlayer(p);
+		return true;
 	}
 }
 
