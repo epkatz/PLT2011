@@ -1,11 +1,100 @@
-/* testing
-dakdj fdgds
+/*
+Testing
+Multiline
+Comments
+Int
 */
-define_league
-set leagueName("Happy League")
-set maxUser(10)
-set leagueName("Happy League")
-set minUser(11)
-set minUser(12)
-add User("Eli")
-add Action("Field Goal Attempt", 0.5)+
+/* Testing single line comments Int */
+
+
+defineLeague
+	set leagueName("Happy League");
+	set maxUser(10);
+	set minUser(12);
+	add User("Eli");
+	add Action("Field Goal Attempt", 0.5);
+
+defineFunctions
+	Int myFunction(Int turn, flt turn2)
+	{
+		flt fltVar;
+		flt fltVar;
+		Int intVar;
+		str strVar;
+		bool boolVar;
+		
+		If( a < b)
+		{
+		}
+		Else
+		{
+		};
+		
+		If( a < b)
+		{
+			Int a = 0;
+			flt b = 11.1;
+			str c = "test";
+			myFunction2(a, 10, 11.1);
+			b = myFunction3();
+		}
+		Else
+		{
+		};
+		
+		If( a < b)
+		{
+		}
+		Else
+		{
+			Int a = 0;
+			flt b = 11.1;
+			str c = "test";
+			myFunction2(a, 10, 11.1);
+			b = myFunction3();
+		};
+		
+		If( a < b)
+		{
+			Int a = 0;
+			flt b = 11.1;
+			str c = "test";
+			myFunction2(a, 10, 11.1);
+			b = myFunction3();
+		}
+		Else
+		{
+			Int a = 0;
+			flt b = 11.1;
+			str c = "test";
+			myFunction2(a, 10, 11.1);
+			b = myFunction3();
+		};
+		
+		If( a < b)
+		{
+		};
+		
+		If( a < b)
+		{
+			Int a = 0;
+			flt b = 11.1;
+			str c = "test";
+			myFunction2(a, 10, 11.1);
+			b = myFunction3();
+		};
+		
+		While(a>b)
+		{
+		};
+		
+		While(a>b)
+		{
+			Int a = 0;
+			flt b = 11.1;
+			str c = "test";
+			myFunction2(a, 10, 11.1);
+			b = myFunction3();
+		};
+		
+		}
