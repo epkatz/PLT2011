@@ -69,7 +69,6 @@ public class Test {
 	public static boolean trade(User u1, Player[] p1, User u2, Player[] p2){
 		boolean flag2=true;;
 		for(int i=0;i<p1.length;i++){
-			System.out.println(p1[i]);
 			flag2=dropPlayer(u1,p1[i]);
 			if(!flag2){	//If the drop was unsuccessful
 				for(int j=i;j>=0;j--){	//Add p1 back to u1
@@ -79,7 +78,6 @@ public class Test {
 			}
 		}
 		for(int i=0;i<p2.length;i++){
-			System.out.println(p2[i]);
 			flag2=dropPlayer(u2,p2[i]);
 			if(!flag2){	//If the drop was unsuccessful
 				for(int j=i;j>=0;j--){	//Add p2 back to u2
@@ -127,7 +125,6 @@ public class Test {
 		return true;
 	}
 	public static boolean dropPlayer(User u, Player p){
-		System.out.println(u+"\n"+p);
 		u.removePlayer(p);
 		return true;
 	}
