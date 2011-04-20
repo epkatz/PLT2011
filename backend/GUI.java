@@ -214,6 +214,7 @@ public class GUI {
 		
 		dropModel = new DefaultTableModel(playerInfoHeader,0);
 		dropTable = new MyTableModel(dropModel);
+		dropTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		dropScrollPane.setViewportView(dropTable);
 		
 		JPanel uploadPanel = new JPanel();
@@ -270,7 +271,7 @@ public class GUI {
 				for(int i=0;i<addTable.getRowCount();i++){	//Iterate through table entries
 					if(addTable.isCellSelected(i,0)){	//If it's selected
 						if(!Test.draftPlayer(theLeague.getUser(pick),League.athletes.get(addModel.getValueAt(i,0)))){
-							displayError("Invalid drop!","Sorry, your drop violates rules of the league.");
+							displayError("Invalid draft!","Sorry, your draft violates rules of the league.");
 							return;
 						}
 						currentTurn++;
@@ -289,7 +290,7 @@ public class GUI {
 						for(int j=0;j<dropModel.getRowCount();j++){
 				    		dropModel.removeRow(j);
 				    	}
-						break;
+						return;
 					}
 				}
 				displayError("Add error!","Sorry, no player was selected!");
@@ -382,7 +383,7 @@ public class GUI {
 		
 		dropComboBox.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
-		    	if(dropComboBox.getSelectedIndex()==-1){
+		    	if(dropComboBox.getSelectedIndex()!=-1){
 			    	Player[] teamPlayers=League.teams.get(dropComboBox.getSelectedItem()).getPlayers();
 			    	for(int i=0;i<dropModel.getRowCount();i++){
 			    		dropModel.removeRow(i);

@@ -28,18 +28,16 @@ public class StatParser {
 			in.close();
 			String[][] stats = new String[statsAL.size()][3];
 			for(int i=0; i<stats.length; i++){
-				for(int j=0; j<3; j++)
+				for(int j=0; j<3; j++){
 					stats[i][j] = statsAL.get(i)[j];
+				}
 			}
 			return stats;
 		} catch (FileNotFoundException e) {
-			System.out.println("File not found!");
 			return null;
 		} catch (IOException e) {
-			System.out.println("Error reading file!");
 			return null;
 		} catch (IndexOutOfBoundsException e){
-			System.out.println("Invalid stat file!");
 			return null;
 		}
 	}
