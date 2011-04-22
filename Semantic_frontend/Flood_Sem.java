@@ -10,6 +10,12 @@ public class Flood_Sem {
 	* HashTable functions
 	****************************************************/
 
-	//Put a Variable 
+	//Check SemanticValue
+	
+	//RelationshalExpression Check; For instance if Int x = y then check that y is an int and is set
+	
+	//Validate Attribute Value ie: make sure that the assignment int x = 3; that 3 is actual an ant or in some cases use coercion
+	
+	
 	
 }
