@@ -51,6 +51,7 @@ Return            { yyparser.yycolumn += yytext().length(); return Parser.Return
 If                  { yyparser.yycolumn += yytext().length(); return Parser.If;             }
 Else                { yyparser.yycolumn += yytext().length(); return Parser.Else;           }
 While                { yyparser.yycolumn += yytext().length(); return Parser.While;           }
+Player             { yyparser.yycolumn += yytext().length(); return Parser.Player;           }
 
 /* Identifier */
 {ID}              {
@@ -130,6 +131,10 @@ While                { yyparser.yycolumn += yytext().length(); return Parser.Whi
                         yyparser.yycolumn += yytext().length(); 
                         return Parser.SEMICOLON;      
                     }
+                    
+"["                 { yyparser.yycolumn++; return Parser.OPEN_SQUARE;    }
+
+"]"                 { yyparser.yycolumn++; return Parser.CLOSE_SQUARE;    }
 
 /* Error Fallback */
 [^]               {

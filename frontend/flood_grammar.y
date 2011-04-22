@@ -12,6 +12,7 @@
   import java.util.ArrayList;
   import java.util.Iterator;
   import java.util.HashMap;
+  import java.util.*;
 %}
 
 /* YACC Declarations */
@@ -20,6 +21,8 @@
 %token CLOSE_CURLY            /* } */
 %token OPEN_PARAN             /* ( */
 %token CLOSE_PARAN            /* ) */
+%token OPEN_SQUARE            /* [ */
+%token CLOSE_SQUARE           /* ] */
 %token <dval> FLT             /* Float */
 %token <ival> INT             /* Integer */
 %token <sval> STRING_CONST    /* String literal onstants */
@@ -38,6 +41,7 @@
 %token DIV                    /* / */
 %token SEMICOLON              /* Semicolon */
 
+
 /* Keywords */
 %token defineLeague
 %token defineFunctions
@@ -48,6 +52,7 @@
 %token add
 %token Action
 %token User
+%token Player
 %token Void             
 %token str              
 %token bool            
@@ -72,15 +77,16 @@
 %type <sval> returnType
 %type <sval> dataType
 %type <sval> functionName
+%type <sval> argumentLists
 %type <sval> argumentList
 %type <sval> empty;
 %type <sval> returnProduction
-%type <sval> blockBody
 %type <sval> statement
 %type <sval> statements
 %type <sval> conditionals
 %type <sval> loop
 %type <sval> declarations
+%type <sval> declaration
 %type <sval> relationalExp
 %type <sval> arithmeticExp
 %type <sval> constOrVar
@@ -97,9 +103,10 @@
 ****************************************************/
 program: definitions functions
 {
-  System.out.println("Line 41");
+  System.out.println("Line 100");
   generateFloodProgram($1, $2);
   System.out.println("Total number of lines in the input: " + (yyline - 1));
+  tester();
 };
 
 definitions: defineLeague definitionlist { $$ = $2; };
@@ -117,13 +124,14 @@ definitionproductions: set leagueName OPEN_PARAN STRING_CONST CLOSE_PARAN SEMICO
 
 functions: defineFunctions functionProductions { $$ = $2; };
 
-functionProductions: functionProductions returnType functionName OPEN_PARAN argumentList CLOSE_PARAN blockBody
+functionProductions: functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY declarations statements returnProduction CLOSE_CURLY
                      {
                       /*
                       * TODO: hastable for function scoping and function list
                       * eg: scopeName = $2; addToHashtable($2, "Function");
                       */
-                      $$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n" + $7;
+                      if (!addToFunctionTable($3, $5)) {System.out.println("Function Error");}
+                      $$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n";
                      }
                      | empty { $$ = $1; }
                      ;
@@ -137,15 +145,17 @@ returnType: Void { $$ = "void"; }
           
 functionName: ID { $$ = $1; };
 
-argumentList: argumentList COMMA returnType ID { $$ = $1 + "," + $3 + " " + $4; }
-            | returnType ID { $$ = $1 + " " + $2; }
-            | empty { $$ = $1; }
-            ;
+argumentLists: argumentLists COMMA argumentList { $$ = $1 + ", " + $3; }
+              | argumentList { $$ = $1; }
+              | empty { $$ = $1; }
+              ;
 
-/* Also check to see if there is a return statement for the return type mentioned */
-blockBody: OPEN_CURLY blockBody statements returnProduction CLOSE_CURLY { $$ = "{\n" + $2 + $3 + "\n" + $4 + "\n}\n"; }
-         | OPEN_CURLY statements returnProduction CLOSE_CURLY { $$ = "{\n" + $2 + "\n" + $3 + "\n}\n"; }
-         ;
+argumentList: returnType ID { $$ = $1 + " " + $2; }
+            | User OPEN_SQUARE CLOSE_SQUARE ID {$$ = "User[] " + $4;}
+            | Player OPEN_SQUARE CLOSE_SQUARE ID {$$ = "Player[] " + $4;}
+            | User ID {$$ = "User " + $2;}
+            | Player ID {$$ = "Player " + $2;}
+            ;
 
 statements: statements statement SEMICOLON { $$ = $1 + $2; }
           | statement SEMICOLON { $$ = $1; }
@@ -153,35 +163,42 @@ statements: statements statement SEMICOLON { $$ = $1 + $2; }
 
 statement: conditionals { $$ = $1; }
          | loop { $$ = $1; }
-         | declarations { $$ = $1; }
          | relationalExp { $$ = $1; }
          | assignment { $$ = $1; }
          | functionCall { $$ = $1; }
          ;
 
-returnProduction: Return ID { $$ = "return " + $2 + ";"; }
-                | Return STRING_CONST { $$ = "return " + $2 + ";"; }
-                | Return INT { $$ = "return " + $2 + ";"; }
-                | Return FLT { $$ = "return " + $2 + ";"; }
+returnProduction: Return ID SEMICOLON { $$ = "return " + $2 + ";"; }
+                | Return STRING_CONST SEMICOLON { $$ = "return " + $2 + ";"; }
+                | Return INT SEMICOLON { $$ = "return " + $2 + ";"; }
+                | Return FLT SEMICOLON { $$ = "return " + $2 + ";"; }
                 | empty { $$ = $1; }
                 ;
 
-conditionals: If OPEN_PARAN relationalExp CLOSE_PARAN blockBody { $$ = "if(" + $3 + ")" + $5; }
-            | If OPEN_PARAN relationalExp CLOSE_PARAN blockBody Else blockBody { $$ = "if(" + $3 + ")" + $5 + "\nelse" + $7; }
-            | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY  { $$ = "if(" + $3 + ")\n{\n}"; }
-            | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY Else OPEN_CURLY empty CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n}\nelse\n{\n}"; }
-            | If OPEN_PARAN relationalExp CLOSE_PARAN blockBody Else OPEN_CURLY empty CLOSE_CURLY { $$ = "if(" + $3 + ")" + $5 + "\nelse\n{\n}"; }
-            | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY Else blockBody { $$ = "if(" + $3 + ")\n{\n}" + "\nelse" + $9; }
+conditionals: If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")" + $6; }
+            | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY Else OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")" + $6 + "\nelse{\n" + $10 + "\n}\n"; }
+            | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY  { $$ = "if(" + $3 + ")\n{\n}\n"; }
+            | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY Else OPEN_CURLY empty CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n}\nelse\n{\n}\n"; }
+            | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY Else OPEN_CURLY empty CLOSE_CURLY { $$ = "if(" + $3 + ")" + $6 + "\nelse\n{\n}\n"; }
+            | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY Else OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n}" + "\nelse{\n" + $10 + "\n}\n"; }
             ;
 
-loop: While OPEN_PARAN relationalExp CLOSE_PARAN blockBody { $$ = "while(" + $3 + ")" + $5; }
-    | While OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY { $$ = "while(" + $3 + ")\n{\n}"; }
+loop: While OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY { $$ = "while(" + $3 + ")" + $6; }
+    | While OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY { $$ = "while(" + $3 + ")\n{\n}\n"; }
     ;
 
-declarations: dataType ID { $$ = $1 + " " + $2 + ";\n"; if (!addToVarTable($2, $1)) {System.out.println("variable already exists");}}
+declarations: declarations declaration SEMICOLON{$$= $1+$2;}
+            | declaration SEMICOLON{$$=$1;}
+            ;
+
+declaration: dataType ID { $$ = $1 + " " + $2 + ";\n"; if (!addToVarTable($2, $1)) {System.out.println("variable already exists");};}
             | dataType ID EQUAL FLT { $$ = $1 + " " + $2 + " = " + $4 + ";\n"; }
             | dataType ID EQUAL INT { $$ = $1 + " " + $2 + " = " + $4 + ";\n"; }
             | dataType ID EQUAL STRING_CONST { $$ = $1 + " " + $2 + " = " + $4 + ";\n"; }
+            | str OPEN_SQUARE INT CLOSE_SQUARE ID {$$ = "String["+$3+"] " + $5 + ";\n";}
+            | Int OPEN_SQUARE INT CLOSE_SQUARE ID {$$ = "int["+$3+"] " + $5 + ";\n";}
+            | flt OPEN_SQUARE INT CLOSE_SQUARE ID {$$ = "float["+$3+"] " + $5 + ";\n";}
+            | empty{$$="";}
             ;
 
 relationalExp: ID LESSEQUAL constOrVar { $$ = $1 + " <= " + $3; }
@@ -246,10 +263,8 @@ private Yylex lexer;
 public int yyline = 1;
 public int yycolumn = 0;
 public boolean createPositionFile = false;
-public HashMap<String, String[]> functionTable = new HashMap<String, String[]>();
+public HashMap<String, String> functionTable = new HashMap<String, String>();
 public HashMap<String, String> varTable = new HashMap<String, String>();
-
-
 
 /***************************************************
 * HashTable functions
@@ -265,7 +280,7 @@ public boolean inVarTable(String name)
     return varTable.containsKey(name);
 }
 
-public boolean addToFunctionTable(String name, String[] args)
+public boolean addToFunctionTable(String name, String args)
 {
     if (!inFunctionTable(name))
     {
@@ -296,13 +311,13 @@ public boolean addToVarTable(String name, String type)
 ****************************************************/
 public void generateFloodProgram(String definitions, String functions)
 {
-  System.out.println("Line 59");
+  System.out.println("Line 305");
   
   String classStart = "public class FloodProgram\n{\n";
-  String classEnd = "\n}";
+  String classEnd = "}\n";
 
   String main_start = "public static void main(String[] args)\n{\n";
-  String main_end = "\n}";
+  String main_end = "}\n";
 
   try
   {
@@ -342,10 +357,20 @@ private int yylex()
 ****************************************************/
 public Parser(Reader r, boolean createFile)
 {
-  System.out.println("Line 102");
+  System.out.println("Line 351");
 
   lexer = new Yylex(r, this);
   this.createPositionFile = createFile;
+}
+
+/***************************************************
+* getErrorLocationInfo()
+****************************************************/
+public String getErrorLocationInfo(boolean onlyLineInfo){
+  if(onlyLineInfo)
+    return "Error on line(" + yyline + "): ";
+  else
+    return "Error on line(" + yyline + ") and column(" + yycolumn + "): ";    
 }
 
 /***************************************************
@@ -353,14 +378,30 @@ public Parser(Reader r, boolean createFile)
 ****************************************************/
 public void yyerror(String error)
 {
+    try{      
+      if(stateptr > 0) {
+        System.out.print("Syntax " + getErrorLocationInfo(true));
+        System.out.println(": Illegal token '" + lexer.yytext() + "'");
+      }
+    }
+    catch(Exception ex){      
+    }
 }
 
 /***************************************************
 * main()
 ****************************************************/
+public void tester(){
+  Iterator it = functionTable.entrySet().iterator();
+          while (it.hasNext()) {
+              Map.Entry pairs = (Map.Entry)it.next();
+              System.out.println(pairs.getKey() + " = " + pairs.getValue());
+    }
+}
+
 public static void main(String args[]) throws IOException
 {
-  System.out.println("Line 114");
+  System.out.println("Line 377");
 
   Parser yyparser;
   boolean createFile = false;
@@ -381,5 +422,4 @@ public static void main(String args[]) throws IOException
   System.out.println("\nCompiling ...\n");
 
     yyparser.yyparse();
-
 }

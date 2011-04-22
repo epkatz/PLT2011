@@ -1,12 +1,3 @@
-/*
-Testing
-Multiline
-Comments
-Int
-*/
-/* Testing single line comments Int */
-
-
 defineLeague
 	set leagueName("Happy League");
 	set maxUser(10);
@@ -15,6 +6,26 @@ defineLeague
 	add Action("Field Goal Attempt", 0.5);
 
 defineFunctions
+	flt anotherFunction(Int bubble, flt bubble2, User u, Player p, User[] u2, Player[] p2)
+	{
+		flt fltVar;
+				Int[10] arr;
+				flt fltVar;
+				Int intVar;
+				str strVar;
+				bool boolVar;
+				Int a;
+				
+				If( a < b)
+				{
+				}
+				Else
+				{
+				};
+		
+		Return a;
+	}
+
 	Int myFunction(Int turn, flt turn2)
 	{
 		flt fltVar;
@@ -22,79 +33,63 @@ defineFunctions
 		Int intVar;
 		str strVar;
 		bool boolVar;
-		
+
 		If( a < b)
 		{
 		}
 		Else
 		{
 		};
-		
+
 		If( a < b)
 		{
-			Int a = 0;
-			flt b = 11.1;
-			str c = "test";
 			myFunction2(a, 10, 11.1);
 			b = myFunction3();
 		}
 		Else
 		{
 		};
-		
+
 		If( a < b)
 		{
 		}
 		Else
 		{
-			Int a = 0;
-			flt b = 11.1;
-			str c = "test";
 			myFunction2(a, 10, 11.1);
 			b = myFunction3();
 		};
-		
+
 		If( a < b)
 		{
-			Int a = 0;
-			flt b = 11.1;
-			str c = "test";
 			myFunction2(a, 10, 11.1);
 			b = myFunction3();
 		}
 		Else
 		{
-			Int a = 0;
-			flt b = 11.1;
-			str c = "test";
 			myFunction2(a, 10, 11.1);
 			b = myFunction3();
 		};
-		
+
 		If( a < b)
 		{
 		};
-		
+
 		If( a < b)
 		{
-			Int a = 0;
-			flt b = 11.1;
-			str c = "test";
 			myFunction2(a, 10, 11.1);
 			b = myFunction3();
 		};
-		
+
 		While(a>b)
 		{
 		};
-		
+
 		While(a>b)
 		{
-			Int a = 0;
-			flt b = 11.1;
-			str c = "test";
 			myFunction2(a, 10, 11.1);
 			b = myFunction3();
 		};
 		
-		}
+		Return a;
+
+	}
