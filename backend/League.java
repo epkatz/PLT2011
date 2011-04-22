@@ -1,4 +1,5 @@
 package backend;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -8,15 +9,19 @@ public class League {
 	String name;
 	private int maxTeamSize,minTeamSize,maxUser,minUser;
 	public static HashMap<String,User> teams;
-	public static ArrayList<User> indexedTeams;
+	public static HashMap<Player,User> playerToTeam;
 	public static HashMap<String,Player> athletes;
 	public static HashMap<String,Action> ptsDist;
+	public static ArrayList<User> indexedTeams;
+	public static User freeAgent;
 	public League(String name){
 		this.name=name;
 		teams=new HashMap<String,User>();
 		indexedTeams=new ArrayList<User>();
 		athletes=new HashMap<String,Player>();
 		ptsDist=new HashMap<String,Action>();
+		playerToTeam= new HashMap<Player,User>();
+		freeAgent=new User("Free Agent");
 	}
 	public void addAction(Action a){
 		ptsDist.put(a.getAction(),a);
@@ -27,9 +32,7 @@ public class League {
 	}
 	public void addPlayer(Player p){
 		athletes.put(p.getName(),p);
-	}
-	public void draftPlayer(User u,Player p){
-		u.addPlayer(p);
+		freeAgent.addPlayer(p);
 	}
 	public User getUser(int index){
 		return indexedTeams.get(index);
@@ -85,11 +88,10 @@ public class League {
 		Arrays.sort(ranked);
 		return ranked;
 	}
-	public Player[] getRankedPlayers(){
-		Player[] ranked=new Player[athletes.size()];
-		athletes.values().toArray(ranked);
-		Arrays.sort(ranked);
-		return ranked;
+	public Player[] getRankedAvailablePlayers(){
+		return freeAgent.getPlayers();
 	}
-	
+	public boolean uploadStatFile(File file){
+		return true;
+	}
 }
