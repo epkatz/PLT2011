@@ -10,40 +10,6 @@ public class Flood_Sem {
 	* HashTable functions
 	****************************************************/
 
-	public boolean inFunctionTable(String name)
-	{
-	    return functionTable.containsKey(name);
-	}
-
-	public boolean inVarTable(String name)
-	{
-	    return varTable.containsKey(name);
-	}
-
-	public boolean addToFunctionTable(String name, String[] args)
-	{
-	    if (!inFunctionTable(name))
-	    {
-	      functionTable.put(name, args);
-	      return true;
-	    }
-	    else
-	    {
-	      return false;
-	    }
-	}
-
-	public boolean addToVarTable(String name, String type)
-	{
-	    if (!inVarTable(name))
-	    {
-	      varTable.put(name, type);
-	      return true;
-	    }
-	    else
-	    {
-	      return false;
-	    }
-	} 
+	//Put a Variable 
 	
 }
