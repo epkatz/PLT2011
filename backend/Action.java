@@ -31,4 +31,8 @@ public class Action {
 			return true;
 		return false;
 	}
+	public String toString() {
+		return "Action [action=" + action + ", points=" + points + "]";
+	}
+	
 }
