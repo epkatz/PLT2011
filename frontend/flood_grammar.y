@@ -5,6 +5,14 @@
 *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+/*
+Macro TODO List
+- A function doesn't parse if you don't declare any variables at the top
+- Arrays doesn't seem to catch on the semantic checks. Possible parsing error?
+- '!' for boolean values isn't in the grammar. Do we want that?
+- Can't do assignment then declaration such as Flt b = someFunction();
+*/
+
 %{
   import java.lang.Math;
   import java.io.*;
@@ -124,15 +132,8 @@ definitionproductions: set leagueName OPEN_PARAN STRING_CONST CLOSE_PARAN SEMICO
 
 functions: defineFunctions functionProductions { $$ = $2; };
 
-functionProductions: functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY declarations statements returnProduction CLOSE_CURLY
-                     {
-                      /*
-                      * TODO: hastable for function scoping and function list
-                      * eg: scopeName = $2; addToHashtable($2, "Function");
-                      */
-                      if (!addToFunctionTable($3, $5)) {System.out.println("Function Error");}
-                      $$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n";
-                     }
+/* The tempVarList is a list of variables already seen that need to be added to the function */
+functionProductions: functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  declarations statements returnProduction CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5)) System.out.println("Function Error"); /* FLOODException Here */}
                      | empty { $$ = $1; }
                      ;
 
@@ -191,13 +192,14 @@ declarations: declarations declaration SEMICOLON{$$= $1+$2;}
             | declaration SEMICOLON{$$=$1;}
             ;
 
-declaration: dataType ID { $$ = $1 + " " + $2 + ";\n"; if (!addToVarTable($2, $1)) {System.out.println("variable already exists");};}
-            | dataType ID EQUAL FLT { $$ = $1 + " " + $2 + " = " + $4 + ";\n"; }
-            | dataType ID EQUAL INT { $$ = $1 + " " + $2 + " = " + $4 + ";\n"; }
-            | dataType ID EQUAL STRING_CONST { $$ = $1 + " " + $2 + " = " + $4 + ";\n"; }
-            | str OPEN_SQUARE INT CLOSE_SQUARE ID {$$ = "String["+$3+"] " + $5 + ";\n";}
-            | Int OPEN_SQUARE INT CLOSE_SQUARE ID {$$ = "int["+$3+"] " + $5 + ";\n";}
-            | flt OPEN_SQUARE INT CLOSE_SQUARE ID {$$ = "float["+$3+"] " + $5 + ";\n";}
+/* TODO The semantac check doesn't see the array */
+declaration: dataType ID { $$ = $1 + " " + $2 + ";\n"; semantics.addVar($2, $1);}
+            | dataType ID EQUAL FLT { $$ = $1 + " " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, $1);}
+            | dataType ID EQUAL INT { $$ = $1 + " " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, $1);}
+            | dataType ID EQUAL STRING_CONST { $$ = $1 + " " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, $1);}
+            | str OPEN_SQUARE INT CLOSE_SQUARE ID {$$ = "String["+$3+"] " + $5 + ";\n"; semantics.addVar($5, "String");}
+            | Int OPEN_SQUARE INT CLOSE_SQUARE ID {$$ = "int["+$3+"] " + $5 + ";\n";semantics.addVar($5, "int");}
+            | flt OPEN_SQUARE INT CLOSE_SQUARE ID {$$ = "float["+$3+"] " + $5 + ";\n";semantics.addVar($5, "float");}
             | empty{$$="";}
             ;
 
@@ -207,7 +209,7 @@ relationalExp: ID LESSEQUAL constOrVar { $$ = $1 + " <= " + $3; }
              | ID LESS constOrVar { $$ = $1 + " < " + $3; }
              | ID GREAT constOrVar { $$ = $1 + " > " + $3; }
              | ID ISEQUAL constOrVar { $$ = $1 + " == " + $3; }
-             | ID {$$ = $1; /* Check whether its a boolean value*/}
+             | ID {$$ = $1; if (!semantics.isBooleanValue($1)) {System.out.println("Not a boolean value");}} //FLOODException Here
              ;
 
 constOrVar: FLT { $$ = "" + $1; }
@@ -220,21 +222,18 @@ arithmeticExp: arithmeticExp PLUS arithmeticExp { $$ = $1 + " + " + $3; }
              | arithmeticExp MULT arithmeticExp { $$ = $1 + " * " + $3; }
              | arithmeticExp DIV arithmeticExp { $$ = $1 + " / " + $3; }
              | OPEN_PARAN arithmeticExp CLOSE_PARAN { $$ = "(" + $2 + ")"; }
-             | ID
-               {
-                //TODO: semantic check for mismatch operands
-                $$ = $1;
-               }
+             | ID  {$$ = $1;}
              | FLT { $$ = "" + $1; }
              | INT { $$ = "" + $1; }
              ;
 
-assignment: leftSide EQUAL rightSide { $$ = $1 + " = " + $3;}
+/* Possible to seperate the rightSide here so that we can check expressions and functioncalls seperately?*/
+assignment: leftSide EQUAL rightSide { $$ = $1 + " = " + $3; semantics.assignmentCheck($1, $3);}
 
 leftSide: ID { $$ = $1; }
 
 rightSide: arithmeticExp { $$ = $1 + ";"; }
-         | functionCall { $$ = $1; }
+         | functionCall { $$ = $1;}
          ;
 
 functionCall: functionName OPEN_PARAN parameterList CLOSE_PARAN { $$ = $1 + "(" + $3 + ");"; }
@@ -263,48 +262,9 @@ private Yylex lexer;
 public int yyline = 1;
 public int yycolumn = 0;
 public boolean createPositionFile = false;
-public HashMap<String, String> functionTable = new HashMap<String, String>();
-public HashMap<String, String> varTable = new HashMap<String, String>();
-
-/***************************************************
-* HashTable functions
-****************************************************/
-
-public boolean inFunctionTable(String name)
-{
-    return functionTable.containsKey(name);
-}
-
-public boolean inVarTable(String name)
-{
-    return varTable.containsKey(name);
-}
-
-public boolean addToFunctionTable(String name, String args)
-{
-    if (!inFunctionTable(name))
-    {
-      functionTable.put(name, args);
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-}
-
-public boolean addToVarTable(String name, String type)
-{
-    if (!inVarTable(name))
-    {
-      varTable.put(name, type);
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-}
+//Semantic Object
+Flood_Sem semantics = new Flood_Sem();
+String scope = "main";
 
 /***************************************************
 * generateFloodProgram()
@@ -366,8 +326,8 @@ public Parser(Reader r, boolean createFile)
 /***************************************************
 * getErrorLocationInfo()
 ****************************************************/
-public String getErrorLocationInfo(boolean onlyLineInfo){
-  if(onlyLineInfo)
+public String getErrorLocationInfo(boolean justLine){
+  if(justLine)
     return "Error on line(" + yyline + "): ";
   else
     return "Error on line(" + yyline + ") and column(" + yycolumn + "): ";    
@@ -389,37 +349,34 @@ public void yyerror(String error)
 }
 
 /***************************************************
-* main()
+* Debugging
 ****************************************************/
 public void tester(){
-  Iterator it = functionTable.entrySet().iterator();
-          while (it.hasNext()) {
-              Map.Entry pairs = (Map.Entry)it.next();
-              System.out.println(pairs.getKey() + " = " + pairs.getValue());
-    }
+	semantics.functionTest();
 }
 
+/***************************************************
+* main()
+****************************************************/
 public static void main(String args[]) throws IOException
 {
-  System.out.println("Line 377");
 
-  Parser yyparser;
-  boolean createFile = false;
+	Parser yyparser;
+	boolean createFile = false;
 
-  if (args.length < 1)
-  {
-    System.out.println("Usage: java Parser <flood_progam.txt>");
-    return;
-  }
-  else if (args.length == 2)
-  {
-    createFile = Boolean.parseBoolean(args[1]);
-  }
+	if (args.length < 1)
+	{
+		System.out.println("Usage: java Parser <flood_progam.txt>");
+		return;
+	}
+	else if (args.length == 2)
+	{
+		createFile = Boolean.parseBoolean(args[1]);
+	}
 
-  // parse a file
-  yyparser = new Parser(new FileReader(args[0]), createFile);
+	// parse a file
+	yyparser = new Parser(new FileReader(args[0]), createFile);
 
-  System.out.println("\nCompiling ...\n");
-
-    yyparser.yyparse();
+	System.out.println("\nCompiling ...\n");
+	yyparser.yyparse();
 }
