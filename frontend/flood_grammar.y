@@ -8,9 +8,10 @@
 /*
 Macro TODO List
 - A function doesn't parse if you don't declare any variables at the top
-- Arrays doesn't seem to catch on the semantic checks. Possible parsing error?
+- (Arrays doesn't seem to catch on the semantic checks. Possible parsing error?)
 - '!' for boolean values isn't in the grammar. Do we want that?
 - Can't do assignment then declaration such as Flt b = someFunction();
+- Fix Comments
 */
 
 %{
