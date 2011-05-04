@@ -8,22 +8,22 @@ defineLeague
 defineFunctions
 	flt anotherFunction(Int bubble, flt bubble2, User u, Player p, User[] u2, Player[] p2)
 	{
+	}
+	
+	flt anotherFunction2(Int bubble, flt bubble2, User u, Player p, User[] u2, Player[] p2)
+	{
+		If(a < b)
+		{
+		};
+	}
+	
+	flt anotherFunction3(Int bubble, flt bubble2, User u, Player p, User[] u2, Player[] p2)
+	{
 		flt fltVar;
-				Int[10] arr;
-				flt fltVar;
-				Int intVar;
-				str strVar;
-				bool boolVar;
-				Int a;
-				
-				If( a < b)
-				{
-				}
-				Else
-				{
-				};
-		
-		Return a;
+		flt fltVar;
+		Int intVar;
+		str strVar;
+		bool boolVar;
 	}
 
 	Int myFunction(Int turn, flt turn2)
@@ -34,14 +34,24 @@ defineFunctions
 		str strVar;
 		bool boolVar;
 
-		If( a < b)
+		If(a < b)
+		{
+		};
+
+		If(a < b)
+		{
+			myFunction2(a, 10, 11.1);
+			b = myFunction3();
+		};
+		
+		If(a < b)
 		{
 		}
 		Else
 		{
 		};
 
-		If( a < b)
+		If((a < b) && (a || b))
 		{
 			myFunction2(a, 10, 11.1);
 			b = myFunction3();
@@ -50,7 +60,7 @@ defineFunctions
 		{
 		};
 
-		If( a < b)
+		If(a < b && a || b)
 		{
 		}
 		Else
@@ -59,7 +69,7 @@ defineFunctions
 			b = myFunction3();
 		};
 
-		If( a < b)
+		If(a < b)
 		{
 			myFunction2(a, 10, 11.1);
 			b = myFunction3();
@@ -70,11 +80,49 @@ defineFunctions
 			b = myFunction3();
 		};
 
-		If( a < b)
+		If(!a)
 		{
 		};
 
-		If( a < b)
+		If(!a)
+		{
+			myFunction2(a, 10, 11.1);
+			b = myFunction3();
+		};
+		
+		If(!a)
+		{
+		}
+		Else
+		{
+		};
+
+		If(!a && b || c && (!a) || (a && b || c) && (a < b))
+		{
+			myFunction2(a, 10, 11.1);
+			b = myFunction3();
+		}
+		Else
+		{
+		a= b%d;
+		a= b+d-c/d%e;
+		};
+
+		If(a && b && !a && (a && b))
+		{
+		}
+		Else
+		{
+			myFunction2(a, 10, 11.1);
+			b = myFunction3();
+		};
+
+		If(!a)
+		{
+			myFunction2(a, 10, 11.1);
+			b = myFunction3();
+		}
+		Else
 		{
 			myFunction2(a, 10, 11.1);
 			b = myFunction3();
@@ -83,8 +131,18 @@ defineFunctions
 		While(a>b)
 		{
 		};
+		
+		While(!a)
+		{
+		};
 
 		While(a>b)
+		{
+			myFunction2(a, 10, 11.1);
+			b = myFunction3();
+		};
+		
+		While(!a)
 		{
 			myFunction2(a, 10, 11.1);
 			b = myFunction3();

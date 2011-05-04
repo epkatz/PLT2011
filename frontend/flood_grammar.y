@@ -5,15 +5,6 @@
 *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-/*
-Macro TODO List
-- A function doesn't parse if you don't declare any variables at the top
-- (Arrays doesn't seem to catch on the semantic checks. Possible parsing error?)
-- '!' for boolean values isn't in the grammar. Do we want that?
-- Can't do assignment then declaration such as Flt b = someFunction();
-- Fix Comments
-*/
-
 %{
   import java.lang.Math;
   import java.io.*;
@@ -48,8 +39,11 @@ Macro TODO List
 %token MINUS                  /* - */
 %token MULT                   /* * */
 %token DIV                    /* / */
+%token NOT                    /* ! */
+%token AND                    /* && */
+%token OR                     /* || */
+%token MOD                    /* % */
 %token SEMICOLON              /* Semicolon */
-
 
 /* Keywords */
 %token defineLeague
@@ -75,7 +69,8 @@ Macro TODO List
 /* Associativity and Precedence */
 %left MINUS PLUS COMMA
 %left MULT DIV
-%nonassoc EQUAL NOTEQUAL LESSEQUAL GREATEQUAL ISEQUAL LESS GREAT
+%right NOT
+%nonassoc EQUAL NOTEQUAL LESSEQUAL GREATEQUAL ISEQUAL LESS GREAT AND OR MOD
 
 /* Types */
 %type <sval> definitions
@@ -98,6 +93,8 @@ Macro TODO List
 %type <sval> declaration
 %type <sval> relationalExp
 %type <sval> arithmeticExp
+%type <sval> booleanExp
+//%type <sval> boolean
 %type <sval> constOrVar
 %type <sval> leftSide
 %type <sval> rightSide
@@ -135,6 +132,9 @@ functions: defineFunctions functionProductions { $$ = $2; };
 
 /* The tempVarList is a list of variables already seen that need to be added to the function */
 functionProductions: functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  declarations statements returnProduction CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5)) System.out.println("Function Error"); /* FLOODException Here */}
+                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5)) System.out.println("Function Error"); /* FLOODException Here */}
+                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  empty statements returnProduction CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5)) System.out.println("Function Error"); /* FLOODException Here */}
+                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  declarations empty returnProduction CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5)) System.out.println("Function Error"); /* FLOODException Here */}
                      | empty { $$ = $1; }
                      ;
 
@@ -177,20 +177,30 @@ returnProduction: Return ID SEMICOLON { $$ = "return " + $2 + ";"; }
                 | empty { $$ = $1; }
                 ;
 
-conditionals: If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")" + $6; }
-            | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY Else OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")" + $6 + "\nelse{\n" + $10 + "\n}\n"; }
+conditionals: If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n" + $6 + "}\n"; }
+            | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY Else OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n" + $6 + "}\nelse\n{\n" + $10 + "}\n"; }
             | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY  { $$ = "if(" + $3 + ")\n{\n}\n"; }
             | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY Else OPEN_CURLY empty CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n}\nelse\n{\n}\n"; }
-            | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY Else OPEN_CURLY empty CLOSE_CURLY { $$ = "if(" + $3 + ")" + $6 + "\nelse\n{\n}\n"; }
-            | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY Else OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n}" + "\nelse{\n" + $10 + "\n}\n"; }
+            | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY Else OPEN_CURLY empty CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n" + $6 + "}\nelse\n{\n}\n"; }
+            | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY Else OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n}" + "\nelse\n{\n" + $10 + "}\n"; }
+            
+            
+            | If OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n" + $6 + "}\n"; }
+            | If OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY Else OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n" + $6 + "}\nelse\n{\n" + $10 + "}\n"; }
+            | If OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY  { $$ = "if(" + $3 + ")\n{\n}\n"; }
+            | If OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY Else OPEN_CURLY empty CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n}\nelse\n{\n}\n"; }
+            | If OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY Else OPEN_CURLY empty CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n" + $6 + "}\nelse\n{\n}\n"; }
+            | If OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY Else OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n}" + "\nelse\n{\n" + $10 + "}\n"; }
             ;
 
-loop: While OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY { $$ = "while(" + $3 + ")" + $6; }
+loop: While OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY { $$ = "while(" + $3 + ")\n{\n" + $6 + "}\n"; }
     | While OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY { $$ = "while(" + $3 + ")\n{\n}\n"; }
+    | While OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY { $$ = "while(" + $3 + ")\n{\n" + $6 + "}\n"; }
+    | While OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY { $$ = "while(" + $3 + ")\n{\n}\n"; }
     ;
 
 declarations: declarations declaration SEMICOLON{$$= $1+$2;}
-            | declaration SEMICOLON{$$=$1;}
+            | declaration SEMICOLON{$$ = $1;}
             ;
 
 /* TODO The semantac check doesn't see the array */
@@ -201,7 +211,7 @@ declaration: dataType ID { $$ = $1 + " " + $2 + ";\n"; semantics.addVar($2, $1);
             | str OPEN_SQUARE INT CLOSE_SQUARE ID {$$ = "String["+$3+"] " + $5 + ";\n"; semantics.addVar($5, "String");}
             | Int OPEN_SQUARE INT CLOSE_SQUARE ID {$$ = "int["+$3+"] " + $5 + ";\n";semantics.addVar($5, "int");}
             | flt OPEN_SQUARE INT CLOSE_SQUARE ID {$$ = "float["+$3+"] " + $5 + ";\n";semantics.addVar($5, "float");}
-            | empty{$$="";}
+            //| empty{$$="";}
             ;
 
 relationalExp: ID LESSEQUAL constOrVar { $$ = $1 + " <= " + $3; }
@@ -210,20 +220,35 @@ relationalExp: ID LESSEQUAL constOrVar { $$ = $1 + " <= " + $3; }
              | ID LESS constOrVar { $$ = $1 + " < " + $3; }
              | ID GREAT constOrVar { $$ = $1 + " > " + $3; }
              | ID ISEQUAL constOrVar { $$ = $1 + " == " + $3; }
-             | ID {$$ = $1; if (!semantics.isBooleanValue($1)) {System.out.println("Not a boolean value");}} //FLOODException Here
+             | OPEN_PARAN relationalExp CLOSE_PARAN { $$ = "(" +  $2 + ")"; }
+             //FLOODException Here
              ;
+
+booleanExp: booleanExp AND booleanExp { $$ = $1 +" && " + $3;}
+          | booleanExp OR booleanExp { $$ = $1 +" || " + $3;}
+          | relationalExp AND relationalExp { $$ = $1 +" && " + $3;}
+          | relationalExp OR relationalExp { $$ = $1 +" || " + $3;}
+          | relationalExp AND booleanExp { $$ = $1 +" && " + $3;}
+          | relationalExp OR booleanExp { $$ = $1 +" || " + $3;}
+          | booleanExp AND relationalExp { $$ = $1 +" && " + $3;}
+          | booleanExp OR relationalExp { $$ = $1 +" || " + $3;}
+          | OPEN_PARAN booleanExp CLOSE_PARAN { $$ = "(" +  $2 + ")"; }
+          | NOT booleanExp { $$= " !"+ $2;}
+          | ID { $$ = $1;}
+          ;
 
 constOrVar: FLT { $$ = "" + $1; }
           | INT { $$ = "" + $1; }
           | ID { $$ = "" + $1; }
           ;
 
-arithmeticExp: arithmeticExp PLUS arithmeticExp { $$ = $1 + " + " + $3; }
+arithmeticExp: arithmeticExp PLUS arithmeticExp { $$ = $1 + " + " + $3 ; }
              | arithmeticExp MINUS arithmeticExp { $$ = $1 + " - " + $3; }
              | arithmeticExp MULT arithmeticExp { $$ = $1 + " * " + $3; }
              | arithmeticExp DIV arithmeticExp { $$ = $1 + " / " + $3; }
+             | arithmeticExp MOD arithmeticExp { $$ = $1 + " % " + $3 ;}
              | OPEN_PARAN arithmeticExp CLOSE_PARAN { $$ = "(" + $2 + ")"; }
-             | ID  {$$ = $1;}
+             | ID  { $$ = $1 ; }
              | FLT { $$ = "" + $1; }
              | INT { $$ = "" + $1; }
              ;
@@ -233,11 +258,11 @@ assignment: leftSide EQUAL rightSide { $$ = $1 + " = " + $3; semantics.assignmen
 
 leftSide: ID { $$ = $1; }
 
-rightSide: arithmeticExp { $$ = $1 + ";"; }
+rightSide: arithmeticExp { $$ = $1 + ";\n"; }
          | functionCall { $$ = $1;}
          ;
 
-functionCall: functionName OPEN_PARAN parameterList CLOSE_PARAN { $$ = $1 + "(" + $3 + ");"; }
+functionCall: functionName OPEN_PARAN parameterList CLOSE_PARAN { $$ = $1 + "(" + $3 + ");\n"; }
 
 dataType: str { $$ = "String"; }
         | bool { $$ = "boolean"; }
@@ -353,7 +378,7 @@ public void yyerror(String error)
 * Debugging
 ****************************************************/
 public void tester(){
-	semantics.functionTest();
+  semantics.functionTest();
 }
 
 /***************************************************
@@ -362,22 +387,22 @@ public void tester(){
 public static void main(String args[]) throws IOException
 {
 
-	Parser yyparser;
-	boolean createFile = false;
+  Parser yyparser;
+  boolean createFile = false;
 
-	if (args.length < 1)
-	{
-		System.out.println("Usage: java Parser <flood_progam.txt>");
-		return;
-	}
-	else if (args.length == 2)
-	{
-		createFile = Boolean.parseBoolean(args[1]);
-	}
+  if (args.length < 1)
+  {
+    System.out.println("Usage: java Parser <flood_progam.txt>");
+    return;
+  }
+  else if (args.length == 2)
+  {
+    createFile = Boolean.parseBoolean(args[1]);
+  }
 
-	// parse a file
-	yyparser = new Parser(new FileReader(args[0]), createFile);
+  // parse a file
+  yyparser = new Parser(new FileReader(args[0]), createFile);
 
-	System.out.println("\nCompiling ...\n");
-	yyparser.yyparse();
+  System.out.println("\nCompiling ...\n");
+  yyparser.yyparse();
 }

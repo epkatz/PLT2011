@@ -3,27 +3,25 @@
 JFLEX      = jflex 
 JAVAC      = javac
 JAR        = jar -cf
-IS_WINDOWS = true
-
-ifdef IS_WINDOWS
-  DELETE = del /q /s
-  BYACCJ = yacc -J
-else
-  DELETE = rm -rf
-  BYACCJ = yacc.linux
-endif
+DELETE     = del
+BYACCJ     = yacc -Jnorun -d -v
 
 # targets:
+
+build: clean flood_frontend.jar
+
+clean:
+	$(DELETE) *.*~ *.class
+	$(DELETE) ParserVal.java
+	$(DELETE) ParserTokens.java
+	$(DELETE) Parser.java
+	$(DELETE) Yylex.java
+	$(DELETE) flood_front.jar
 
 all: flood_frontend.jar
 
 run: flood_frontend.jar
 	java Parser
-
-build: clean flood_frontend.jar
-
-clean:
-	$(DELETE) *.*~ *.class *.java
 
 flood_frontend.jar: Parser.class
 	$(JAR) flood_front.jar *.class
@@ -36,3 +34,4 @@ Yylex.java: flood_lex.flex
 
 Parser.java: flood_grammar.y
 	$(BYACCJ) flood_grammar.y
+	

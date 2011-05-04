@@ -53,6 +53,7 @@ Else                { yyparser.yycolumn += yytext().length(); return Parser.Else
 While                { yyparser.yycolumn += yytext().length(); return Parser.While;           }
 Player             { yyparser.yycolumn += yytext().length(); return Parser.Player;           }
 
+
 /* Identifier */
 {ID}              {
                     yyparser.yycolumn += yytext().length();
@@ -83,7 +84,7 @@ Player             { yyparser.yycolumn += yytext().length(); return Parser.Playe
                     yyparser.yylval = new ParserVal(Double.parseDouble(yytext()));
                     return Parser.FLT;
                   }
-                  
+
 
 [\t]+            { yyparser.yycolumn += yytext().length(); }
 
@@ -126,6 +127,15 @@ Player             { yyparser.yycolumn += yytext().length(); return Parser.Playe
 "*"                 { yyparser.yycolumn++; return Parser.MULT;            }
 
 "/"                 { yyparser.yycolumn++; return Parser.DIV;            }
+
+"!"                 { yyparser.yycolumn++; return Parser.NOT;            }
+
+"&&"                { yyparser.yycolumn++; return Parser.AND;            }
+
+"||"                { yyparser.yycolumn++; return Parser.OR;             }
+
+"%"                 { yyparser.yycolumn++; return Parser.MOD;             }
+
 
 [;]+                { 
                         yyparser.yycolumn += yytext().length(); 
