@@ -1,0 +1,72 @@
+defineLeague
+	set leagueName("Happy League");
+	set maxUser(10);
+	set minUser(12);
+	add User("Eli");
+	add Action("Field Goal Attempt", 0.5);
+
+defineFunctions
+	Int myFunction(Int turn, flt turn2)
+	{
+
+		flt testVar;		
+
+		If(true)
+		{
+		}
+		Else
+		{
+		};
+
+		If(false)
+		{
+			myFunction2(a, 10, 11.1);
+			b = myFunction3();
+		}
+		Else
+		{
+		};
+
+		If( a < b)
+		{
+		}
+		Else
+		{
+			myFunction2(a, 10, 11.1);
+			b = myFunction3();
+		};
+
+		If( a < b)
+		{
+			myFunction2(a, 10, 11.1);
+			b = myFunction3();
+		}
+		Else
+		{
+			myFunction2(a, 10, 11.1);
+			b = myFunction3();
+		};
+
+		If( a < b)
+		{
+		};
+
+		If( a > b)
+		{
+			myFunction2(a, 10, 11.1);
+			b = myFunction3();
+		};
+
+		While(a>b)
+		{
+		};
+
+		While(a == b)
+		{
+			myFunction2(a, 10, 11.1);
+			b = myFunction3();
+		};
+		
+		Return a;
+
+	}
