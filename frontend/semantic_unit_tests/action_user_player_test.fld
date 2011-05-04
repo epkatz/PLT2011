@@ -1,0 +1,18 @@
+defineLeague
+	set leagueName("Happy League");
+	set maxUser(10);
+	set minUser(12);
+	add User("Eli");
+	add User("Steph");
+	add User("Eli");
+	add Action("Field Goal Attempt", 0.5);
+	add Action("Field Goal Attempt", 0.5);
+	add Action("Rebound", 1.0);
+
+defineFunctions
+	flt anotherFunction(Int bubble, flt bubble2, User u, Player p, User[] u2, Player[] p2)
+	{	
+		flt a;
+		a = 1.0;	
+		Return a;
+	}
