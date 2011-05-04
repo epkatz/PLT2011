@@ -1,6 +1,5 @@
 import java.util.*;
 
-
 public class Flood_Sem {
 	
 	HashMap<String, Function> functionTable = new HashMap<String, Function>();
@@ -10,6 +9,9 @@ public class Flood_Sem {
 	boolean draftPlayFlag = false;
 	boolean tradeFlag = false;
 	boolean dropPlayFlag = false;
+	LinkedList<String> actionNames = new LinkedList<String>();
+	LinkedList<String> playerNames = new LinkedList<String>();
+	LinkedList<String> userNames = new LinkedList<String>();
 	
 
 	public Flood_Sem(){
@@ -25,16 +27,45 @@ public class Flood_Sem {
              		System.out.println(pairs.getKey());
     		}
 	}
-
-	//Check SemanticValue
 	
 	//RelationshalExpression Check; For instance if Int x = y then check that y is an int and is set
 	
 	//Validate Attribute Value ie: make sure that the assignment int x = 3; that 3 is actual an ant or in some cases use coercion
 	
 	//Check to make sure max user is greater than min user
-	
-	//Check whether a user and action have already been added
+
+	/*Adds an Action */
+	public boolean addAction(String name){
+		if (actionNames.contains(name)){
+			if (debugging){System.out.println(name + " already exists as an Action");}
+			return false;
+		}
+		actionNames.add(name);
+		if (debugging){System.out.println(name + " was added as an Action");}
+		return true;
+	}
+
+	/* Add a User */
+	public boolean addUser(String name){
+		if (userNames.contains(name)){
+			if (debugging){System.out.println(name + " already exists as a User");}
+			return false;
+		}
+		userNames.add(name);
+		if (debugging){System.out.println(name + " was added as a User");}
+		return true;
+	}
+
+	/* Add a Player */
+	public boolean addPlayer(String name){
+		if (playerNames.contains(name)){
+			if (debugging){System.out.println(name + " already exists as a Player");}
+			return false;
+		}
+		playerNames.add(name);
+		if (debugging){System.out.println(name + " was added as a Player");}
+		return true;
+	}
 	
 	/* Check Divide by zero */
 	public boolean checkDivideByZero(String var1, String var2){

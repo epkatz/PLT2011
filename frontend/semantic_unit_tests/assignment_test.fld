@@ -1,0 +1,30 @@
+defineLeague
+	set leagueName("Happy League");
+	set maxUser(10);
+	set minUser(12);
+	add User("Eli");
+	add Action("Field Goal Attempt", 0.5);
+
+defineFunctions
+	flt anotherFunction(Int bubble, flt bubble2, User u, Player p, User[] u2, Player[] p2)
+	{
+		flt fltVar;
+		Int[10] arr;
+		flt fltVar;
+		Int intVar;
+		str strVar;
+		bool boolVar;
+		Int a;
+		
+		If( a < b)
+		{
+			a = 2;
+			boolVar = true;
+		}
+		Else
+		{
+			intVar= t;
+		};
+		
+		Return a;
+	}
