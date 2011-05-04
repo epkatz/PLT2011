@@ -13,6 +13,11 @@ public class User implements Comparable<User>{
     	totalPoints=0;
     	teamAthletes=new HashMap<String,Player>();
     }
+    public User(String name,double totalPoints){
+    	this.name=name;
+    	this.totalPoints=totalPoints;
+    	teamAthletes=new HashMap<String,Player>();
+    }
     public void addPlayer(Player athlete){
     	teamAthletes.put(athlete.getName(),athlete);	//Add player to this team
     	if(!name.equals("Free Agent")){	//If it's not the free agent team
@@ -40,8 +45,7 @@ public class User implements Comparable<User>{
 		return teamAthletes.size();
 	}
 	public Player[] getPlayers(){
-		Player[] ranked=new Player[teamAthletes.size()];
-		teamAthletes.values().toArray(ranked);
+		Player[] ranked=teamAthletes.values().toArray(new Player[teamAthletes.size()]);
 		Arrays.sort(ranked);
 		return ranked;
 	}
@@ -66,5 +70,8 @@ public class User implements Comparable<User>{
 	}
 	public String toString() {
 		return "User [name=" + name + ", points=" + totalPoints + "]";
+	}
+	public void clear(){
+		teamAthletes.clear();
 	}
 }

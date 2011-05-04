@@ -3,6 +3,7 @@ package backend;
 
 public class Test {
 	public static League myLeague;
+	public static GUI run;
 	
 	/**
 	 * @param args
@@ -55,7 +56,7 @@ public class Test {
 		myLeague.addAction(new Action("Turnover",-2.0));
 		myLeague.addAction(new Action("Blocked Shot",3.0));
 		
-		GUI run = new GUI(myLeague);
+		run = new GUI(myLeague);
 		run.drawBoard();
 
 	}
@@ -63,11 +64,12 @@ public class Test {
 		return turn%myLeague.getCurrentNumUsers();
 	}
 	public static boolean draftPlayer(User u, Player p){
+		GUI.alert("Bitches","I'm tradin' yo");
 		u.addPlayer(p);
 		return true;
 	}
 	public static boolean trade(User u1, Player[] p1, User u2, Player[] p2){
-		boolean flag2=true;;
+		boolean flag2=true;
 		for(int i=0;i<p1.length;i++){
 			flag2=dropPlayer(u1,p1[i]);
 			if(!flag2){	//If the drop was unsuccessful

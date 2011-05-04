@@ -82,16 +82,32 @@ public class League {
 	public Action getAction(String action){
 		return ptsDist.get(action);
 	}
+	public User getFreeAgent(){
+		return freeAgent;
+	}
 	public User[] getRankedUsers(){
-		User[] ranked=new User[teams.size()];
-		teams.values().toArray(ranked);
+		User[] ranked=teams.values().toArray(new User[teams.size()]);
 		Arrays.sort(ranked);
 		return ranked;
 	}
 	public Player[] getRankedAvailablePlayers(){
 		return freeAgent.getPlayers();
 	}
+	public Player[] getAllPlayers(){
+		return athletes.values().toArray(new Player[athletes.size()]);
+	}
+	public Action[] getActions(){
+		return ptsDist.values().toArray(new Action[ptsDist.size()]);
+	}
 	public boolean uploadStatFile(File file){
 		return true;
+	}
+	public void clear(){
+		teams.clear();
+		playerToTeam.clear();
+		athletes.clear();
+		ptsDist.clear();
+		indexedTeams.clear();
+		freeAgent.clear();
 	}
 }
