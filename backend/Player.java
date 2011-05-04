@@ -1,17 +1,18 @@
 package backend;
-import java.text.DecimalFormat;
-
 
 public class Player implements Comparable<Player>{
 	private String name, position;
 	private double totalPoints;
-	private DecimalFormat twoDForm;
 	
 	public Player(String name, String position){
 		this.name=name;
 		this.position=position;
 		totalPoints=0;
-		twoDForm = new DecimalFormat("#.##");
+	}
+	public Player(String name, String position,double totalPoints){
+		this.name=name;
+		this.position=position;
+		this.totalPoints=totalPoints;
 	}
 	public String getName() {
 		return name;
@@ -31,7 +32,7 @@ public class Player implements Comparable<Player>{
 			temp.addPoints(pts);
 	}
 	public double getPoints(){
-		return Double.valueOf(twoDForm.format(totalPoints));
+		return totalPoints;
 	}
 	public boolean equals(Object obj){
 		if (this == obj)
