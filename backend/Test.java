@@ -12,8 +12,8 @@ public class Test {
 		myLeague = new League("Happy League");
 		myLeague.setMaxTeamSize(10);
 		myLeague.setMinTeamSize(5);
-	    myLeague.setMaxUser(10);
-	    myLeague.setMinUser(4);
+	    myLeague.setMaxUsers(10);
+	    myLeague.setMinUsers(4);
 	    myLeague.addUser(new User("Eli"));
 	    myLeague.addUser(new User("Dillen"));
 	    myLeague.addUser(new User("Anuj"));
@@ -64,7 +64,6 @@ public class Test {
 		return turn%myLeague.getCurrentNumUsers();
 	}
 	public static boolean draftPlayer(User u, Player p){
-		GUI.alert("Bitches","I'm tradin' yo");
 		u.addPlayer(p);
 		return true;
 	}
