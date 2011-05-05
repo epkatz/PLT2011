@@ -19,16 +19,18 @@ public class Function {
 		this.returnType = returnType;
 		if (debugging){System.out.println(functionName + "= returnType: " + returnType);}
 		this.lineNumber = lineNumber;
-		String[] params = paramList.split(",");
-		String[] temp;
-		for(int i=0; i<params.length; i++){
-			//remove spaces at beginning
-			if(params[i].charAt(0)==' ')
-				params[i] = params[i].substring(1);
-			//split
-			temp = params[i].split(" ");
-			argsList.put(temp[1], temp[0]); //This is reversed in the argument list so reversing it back here
-			if (debugging) {System.out.println(functionName + "= argName: " + temp[1] + ", type: " + temp[0]);}
+		if (paramList.contains(",")){
+			String[] params = paramList.split(",");
+			String[] temp;
+			for(int i=0; i<params.length; i++){
+				//remove spaces at beginning
+				if(params[i].charAt(0)==' ')
+					params[i] = params[i].substring(1);
+				//split
+				temp = params[i].split(" ");
+				argsList.put(temp[1], temp[0]); //This is reversed in the argument list so reversing it back here
+				if (debugging) {System.out.println(functionName + "= argName: " + temp[1] + ", type: " + temp[0]);}
+			}
 		}
 	}
 	
