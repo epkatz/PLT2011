@@ -46,7 +46,7 @@
 %token SEMICOLON              /* Semicolon */
 
 /* Keywords */
-%token defineLeague
+%token DefineLeague
 %token defineFunctions
 %token leagueName
 %token maxUser
@@ -94,7 +94,6 @@
 %type <sval> relationalExp
 %type <sval> arithmeticExp
 %type <sval> booleanExp
-//%type <sval> boolean
 %type <sval> constOrVar
 %type <sval> leftSide
 %type <sval> rightSide
@@ -115,7 +114,7 @@ program: definitions functions
   tester();
 };
 
-definitions: defineLeague definitionlist { $$ = $2; };
+definitions: DefineLeague definitionlist { $$ = $2; };
            
 definitionlist: definitionlist definitionproductions { $$ = $1 + $2; }
               | empty { $$ = $1; }
@@ -260,6 +259,7 @@ leftSide: ID { $$ = $1; }
 
 rightSide: arithmeticExp { $$ = $1 + ";\n"; }
          | functionCall { $$ = $1;}
+         | STRING_CONST { $$ = $1 + ";\n"; }
          ;
 
 functionCall: functionName OPEN_PARAN parameterList CLOSE_PARAN { $$ = $1 + "(" + $3 + ");\n"; }
