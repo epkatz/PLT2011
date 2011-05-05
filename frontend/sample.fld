@@ -1,4 +1,7 @@
-defineLeague
+/*
+adjfjdsafsakkja()
+*/
+DefineLeague
 	set leagueName("Happy League");
 	set maxUser(10);
 	set minUser(12);
@@ -6,13 +9,18 @@ defineLeague
 	add Action("Field Goal Attempt", 0.5);
 
 defineFunctions
+/*
+****************/
 	flt anotherFunction(Int bubble, flt bubble2, User u, Player p, User[] u2, Player[] p2)
 	{
 	}
-	
+
 	flt anotherFunction2(Int bubble, flt bubble2, User u, Player p, User[] u2, Player[] p2)
 	{
-		If(a < b)
+		/*
+		* comments
+		*/
+		If(a < b /* inline comments */)
 		{
 		};
 	}
@@ -24,6 +32,8 @@ defineFunctions
 		Int intVar;
 		str strVar;
 		bool boolVar;
+		
+		strVar = "sdkfjaslkdf";
 	}
 
 	Int myFunction(Int turn, flt turn2)
