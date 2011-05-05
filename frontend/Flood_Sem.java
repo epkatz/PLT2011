@@ -9,10 +9,14 @@ public class Flood_Sem {
 	boolean draftPlayFlag = false;
 	boolean tradeFlag = false;
 	boolean dropPlayFlag = false;
+
+	//Add Variables
 	LinkedList<String> actionNames = new LinkedList<String>();
 	LinkedList<String> playerNames = new LinkedList<String>();
 	LinkedList<String> userNames = new LinkedList<String>();
 	
+	//Assignment Variables
+	String leftSide = "";
 
 	public Flood_Sem(){
 		System.out.println("Starting Semantic Object Checker");
@@ -67,16 +71,6 @@ public class Flood_Sem {
 		return true;
 	}
 	
-	/* Check Divide by zero */
-	public boolean checkDivideByZero(String var1, String var2){
-		try{
-			int x = Integer.parseInt(var1) / Integer.parseInt(var2);
-			return true;
-		} catch (Exception e){
-			return false;
-		}
-	}
-
 	/* Adds a function to the function table. TODO Checks if it exists first */
 	public boolean addToFunctionTable(String functionName, String returnType, String paramList, int lineNumber){
 		try{
@@ -85,6 +79,7 @@ public class Flood_Sem {
 			if (debugging){System.out.println("Reinitializing variable list");}
 			return true;
 		} catch(Exception e) {
+			System.out.println(e);
 			return false;
 		}
 	}
@@ -129,32 +124,61 @@ public class Flood_Sem {
 		return true;
 	}
 
-	/* Checking both sides of an assignment */
-	public boolean assignmentCheck(String left, String right){
-		System.out.println("Checking if " + left + " = " + right);
-		if (varExists(left)){
-			String leftType = varList.get(left);
-			if (varExists(right)){
-				if (varList.get(right).equals(leftType)){
-					if (debugging){System.out.println("Both are of type " + leftType);}
-					return true;
-				}
+	public boolean assignmentCheckVar(String right){
+		if (varExists(right)){
+			if (varList.get(right).equals(leftSide)){
+				if (debugging){System.out.println("Both are of type " + leftSide);}
+				return true;
 			}
-			else if (right.contains("(")){
-				String[] params = right.split("\\("); //Opening bracket is special character to be escaped
-				String functionName = params[0];
-				if (functionTable.containsKey(functionName)){
-					if (functionTable.get(functionName).getReturnType().equals(leftType)){
-						if (debugging){System.out.println("Both are of type " + leftType);}
-						return true;
-					}
-				}
-			}
+			if (debugging){System.out.println(right + " isn't of type " + leftSide);}
+			return false;
 		}
-		else{
-			if (debugging){System.out.println(left + " doesn't exist");}		
+		if (debugging){System.out.println(right + " doesn't exist");}
+		return false;
+	}
+
+	public boolean assignmentCheckLeft(String left){
+		if (varExists(left)){
+			leftSide = varList.get(left);
+			if (debugging){System.out.println("Added " + left);}	
 		}
 		return false;
+	}
+
+	public boolean assignmentCheckLeftIsFlt(){
+		if (leftSide.equals("float")){
+			if (debugging){System.out.println(leftSide + " IS of type float");}
+			return true;
+		}
+		if (debugging){System.out.println(leftSide + " is not of type float");}
+		return false;
+	}
+
+	public boolean assignmentCheckFunction(String right){
+		String[] params = right.split("\\("); //Opening bracket is special character to be escaped
+		String functionName = params[0];
+		if (functionTable.containsKey(functionName)){
+			if (functionTable.get(functionName).getReturnType().equals(leftSide)){
+				if (debugging){System.out.println("Both are of type " + leftSide);}
+				return true;
+			}
+			if (debugging){System.out.println(right + " doesn't return type " + leftSide);}
+			return false;
+		}
+		if (debugging){System.out.println(right + " doesn't exist");}
+		return false;
+	}
+
+	/* Check Divide by zero */
+	public boolean checkDivideByZero(String var){
+		try{
+			if (Double.parseDouble(var) == 0){
+				return true;
+			}
+			return false;
+		} catch (Exception e){
+			return false;
+		}
 	}
 	
 	//set flags for required functions
