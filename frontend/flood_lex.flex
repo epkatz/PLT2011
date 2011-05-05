@@ -19,21 +19,21 @@
   }
 %}
 
-COMMENTS = "/*"(.*|\n*|\r*|\r\n*)*"*/"
 ID    = [a-zA-Z"_"]([a-zA-Z"_"] | [0-9])*
 NL    = \n | \r | \r\n
 WP    = " "
 INT   = [0-9]+
 FLT   = [0-9]+ ("." [0-9]+)?
 HT    = \t
+COMMENTS = "/*" [^*] ~"*/" | "/*" "*" + "/"
 
 %%
 
-/* Comments (highest precedence) */
-{COMMENTS}   { yyparser.yycolumn+= yytext().length();          }
+/* Comments */
+{COMMENTS}   { /* ignore */          }
 
 /* Keywords */
-defineLeague     { yyparser.yycolumn += yytext().length(); return Parser.defineLeague;  }
+DefineLeague     { yyparser.yycolumn += yytext().length(); return Parser.DefineLeague;  }
 defineFunctions  { yyparser.yycolumn += yytext().length(); return Parser.defineFunctions;  }
 leagueName        { yyparser.yycolumn += yytext().length(); return Parser.leagueName;     }
 maxUser           { yyparser.yycolumn += yytext().length(); return Parser.maxUser;        }
@@ -135,6 +135,9 @@ Player             { yyparser.yycolumn += yytext().length(); return Parser.Playe
 "||"                { yyparser.yycolumn++; return Parser.OR;             }
 
 "%"                 { yyparser.yycolumn++; return Parser.MOD;             }
+
+//"@"{ID}*|{WP}*|{HT}*|{NL}*"#"                {   yyparser.yycolumn=0;
+//                        yyparser.yyline++;                                 }
 
 
 [;]+                { 
