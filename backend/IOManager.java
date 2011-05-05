@@ -14,142 +14,236 @@ import java.util.ArrayList;
  */
 public class IOManager {
 	
-	public static String[][] getStats(String file){
-		ArrayList<String[]> statsAL = new ArrayList<String[]>();		
+	/**Write the current state of the league to a text file so that the program
+	 * may be exited and resumes from the place it left off.
+	 * 
+	 * @param League myLeague
+	 * @param String filePath
+	 * @param int turn
+	 */
+	public static void writeState(League myLeague,String filePath,int turn){
 		try {
-			// Open the file that is the first 
-			FileInputStream fstream = new FileInputStream(file);
-			// Get the object of DataInputStream
-			DataInputStream in = new DataInputStream(fstream);
-			BufferedReader br = new BufferedReader(new InputStreamReader(in));
-			String str;
-			//Read File Line By Line
-			while((str = br.readLine()) != null){
-				statsAL.add(str.split(","));
-			}
-			in.close();
-			String[][] stats = new String[statsAL.size()][3];
-			for(int i=0; i<stats.length; i++){
-				for(int j=0; j<3; j++){
-					stats[i][j] = statsAL.get(i)[j];
-				}
-			}
-			return stats;
-		} catch (FileNotFoundException e) {
-			return null;
-		} catch (IOException e) {
-			return null;
-		} catch (IndexOutOfBoundsException e){
-			return null;
-		}
-	}
-	public static void writeState(League myLeague,int turn){
-		try {
-			FileWriter fstream = new FileWriter("statdmp.txt");	//Create the file
-			BufferedWriter out = new BufferedWriter(fstream);
-			out.write(turn+","+myLeague.getMaxTeamSize()+","+myLeague.getMinTeamSize()+","+myLeague.getMaxUser()+","+myLeague.getMinUser()+"\n");
+			FileWriter fstream = new FileWriter(filePath);	//Create the file
+			BufferedWriter out = new BufferedWriter(fstream);	//Initialize the output stream
+			out.write(turn+","+myLeague.getMaxTeamSize()+","+myLeague.getMinTeamSize()+","+myLeague.getMaxUsers()+","+myLeague.getMinUsers()+"\n");	//Write the first line of the file
+			//Write the actions
 			out.write("ACTIONS:\n");
-			Action[] actions=myLeague.getActions();
-			for(int i=0;i<actions.length;i++){
-				out.write(actions[i].getAction()+","+actions[i].getPoints()+"\n");
+			Action[] actions=myLeague.getActions();	//Get the actions
+			for(int i=0;i<actions.length;i++){	//Iterate through the actions
+				out.write(actions[i].getAction()+","+actions[i].getPoints()+"\n");	//Write each action
 			}
+			//Write the players
 			out.write("PLAYERS:\n");
-			Player[] players=myLeague.getAllPlayers();
-			for(int i=0;i<players.length;i++){
-				out.write(players[i].getName()+","+players[i].getPosition()+","+players[i].getPoints()+"\n");
+			Player[] players=myLeague.getAllPlayers();	//Get the players
+			for(int i=0;i<players.length;i++){	//Iterate through the players
+				out.write(players[i].getName()+","+players[i].getPosition()+","+players[i].getPoints()+"\n");	//Write each players
 			}
+			//Write the teams
 			out.write("TEAMS:\n");
-			User[] teams=myLeague.getRankedUsers();
-			for(int i=0;i<teams.length;i++){
-				Player[] teamPlayers=teams[i].getPlayers();
-				out.write(","+teams[i].getName()+","+teams[i].getPoints());
-				for(int j=0;j<teamPlayers.length;j++){
-					out.write(teamPlayers[j].getName()+"\n");
+			User[] teams=myLeague.getRankedUsers();	//Get the teams
+			for(int i=0;i<teams.length;i++){	//Iterate through the teams
+				Player[] teamPlayers=teams[i].getPlayers();	//Get the players of each team
+				out.write(","+teams[i].getName()+","+teams[i].getPoints()+"\n");	//Write each team
+				for(int j=0;j<teamPlayers.length;j++){	//Iterate through the players
+					out.write(teamPlayers[j].getName()+"\n");	//Write the player's name as a reference to the above players
 				}
 			}
+			//Write the free agent
 			out.write("FREE AGENT:\n");
-			User free=League.freeAgent;
-			Player[] freePlayers=free.getPlayers();
-			for(int i=0;i<freePlayers.length;i++){
-				out.write(freePlayers[i].getName()+"\n");
+			User free=League.freeAgent;	//Get the free agen
+			Player[] freePlayers=free.getPlayers();	//Get the players of the free agent
+			for(int i=0;i<freePlayers.length;i++){	//Iterate through the players
+				out.write(freePlayers[i].getName()+"\n");	//Write the player's name as a reference to the above players
 			}
+			out.close();	//Close the output stream
 		} catch (IOException e) {
 			GUI.alert("Stat Dump Error!", "Error creating the dump file! Please try again.");
 		}
 	}
-	public static int importState(String filePath,League myLeague){
+	
+	/**Read a file representing the state of a program and restore that state
+	 * to the current program.
+	 * 
+	 * @param League myLeague
+	 * @param String filePath
+	 * @return int turn
+	 */
+	public static int importState(League myLeague,String filePath){
 		try {
-			myLeague.clear();
-			// Open the file that is the first 
-			FileInputStream fstream = new FileInputStream(filePath);
-			// Get the object of DataInputStream
-			DataInputStream in = new DataInputStream(fstream);
-			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			myLeague.clear();	//Clear the current league
+			FileInputStream fstream = new FileInputStream(filePath);	//Open the file
+			DataInputStream in = new DataInputStream(fstream);//Get the object of DataInputStream
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));	//Initialize the buffered reader
+			//Initialize variables
 			String str="",team="";
 			int turn=-1;
-			str=br.readLine();
-			String[] data=str.split(",");
+			str=br.readLine();	//Read the first line
+			String[] data=str.split(",\\s*");	//Split on commas
+			if(data.length!=5){
+				in.close();
+				myLeague.clear();
+				GUI.alert("Dump Import Error!", "Invalid dump file!");
+				return -1;
+			}
+			//Store the data
 			turn=Integer.parseInt(data[0]);
 			myLeague.setMaxTeamSize(Integer.parseInt(data[1]));
 			myLeague.setMinTeamSize(Integer.parseInt(data[2]));
-			myLeague.setMaxUser(Integer.parseInt(data[3]));
-			myLeague.setMinUser(Integer.parseInt(data[4]));
-			//Read File Line By Line
+			myLeague.setMaxUsers(Integer.parseInt(data[3]));
+			myLeague.setMinUsers(Integer.parseInt(data[4]));
+			
 			boolean teamFlag=false,playerFlag=false,actionFlag=false,freeFlag=false;
-			while((str = br.readLine()) != null){
-				if(str.equalsIgnoreCase("ACTIONS:")){
+			while((str = br.readLine()) != null){	//Read File Line By Line
+				if(str.equalsIgnoreCase("ACTIONS:")){	//Actions reached
 					actionFlag=true;
 					playerFlag=false;
 					teamFlag=false;
 					freeFlag=false;
 				}
-				else if(str.equalsIgnoreCase("PLAYERS:")){
+				else if(str.equalsIgnoreCase("PLAYERS:")){	//Players reached
 					playerFlag=true;
 					actionFlag=false;
 					teamFlag=false;
 					freeFlag=false;
 				}
-				else if(str.equalsIgnoreCase("TEAMS:")){
+				else if(str.equalsIgnoreCase("TEAMS:")){	//Teams reached
 					teamFlag=true;
 					actionFlag=false;
 					playerFlag=false;
 					freeFlag=false;
 				}
-				else if(str.equals("FREE AGENT:")){
+				else if(str.equals("FREE AGENT:")){	//Free agent reached
 					teamFlag=false;
 					actionFlag=false;
 					playerFlag=false;
 					freeFlag=true;
 				}
-				if(actionFlag){
-					String[] parts=str.split(",");
-					myLeague.addAction(new Action(parts[0].trim(),Double.parseDouble(parts[1].trim())));
-				}
-				else if(playerFlag){
-					String[] parts=str.split(",");
-					myLeague.addPlayer(new Player(parts[0].trim(),parts[1].trim(),Double.parseDouble(parts[2].trim())));
-				}
-				else if(teamFlag){
-					String[] parts=str.split(",");
-					if(str.charAt(0)==','){
-						team=parts[0].trim();
-						myLeague.addUser(new User(team,Double.parseDouble(parts[1].trim())));
+				else{	//Data
+					if(actionFlag){	//If currently looking at actions
+						String[] parts=str.split(",\\s*");	//Split on commas
+						if(parts.length!=2){	//Validate that it's an action
+							in.close();
+							myLeague.clear();
+							GUI.alert("Dump Import Error!", "Invalid dump file!");
+							return -1;
+						}
+						myLeague.addAction(new Action(parts[0].trim(),Double.parseDouble(parts[1].trim())));	//Add action to league
 					}
-					else
-						myLeague.getTeam(team).addPlayer(myLeague.getPlayer(str.trim()));
-				}
-				else if(freeFlag){
-					myLeague.getFreeAgent().addPlayer(myLeague.getPlayer(str.trim()));
+					else if(playerFlag){	//If currently looking at players
+						String[] parts=str.split(",\\s*");	//Split on commas
+						if(parts.length!=3){	//Validate that it's a player
+							in.close();
+							myLeague.clear();
+							GUI.alert("Dump Import Error!", "Invalid dump file!");
+							return -1;
+						}
+						myLeague.addPlayer(new Player(parts[0].trim(),parts[1].trim(),Double.parseDouble(parts[2].trim())));	//Add player to league
+					}
+					else if(teamFlag){	//If currently looking at teams
+						String[] parts=str.split(",\\s*");	//Split on commas
+						if(str.charAt(0)==','){	//If it's a team name
+							if(parts.length!=3){	//Validate that it's a team name
+								in.close();
+								myLeague.clear();
+								GUI.alert("Dump Import Error!", "Invalid dump file!");
+								return -1;
+							}
+							team=parts[1].trim();	//Trim white space
+							myLeague.addUser(new User(team,Double.parseDouble(parts[2].trim())));	//Add team to league
+						}
+						else{	//If it's a team player
+							if(parts.length!=1){	//Validate that it's a player name
+								in.close();
+								myLeague.clear();
+								GUI.alert("Dump Import Error!", "Invalid dump file!");
+								return -1;
+							}
+							myLeague.getTeam(team).addPlayer(myLeague.getPlayer(parts[0].trim()));	//Get reference to player and add to team
+						}
+					}
+					else if(freeFlag){	//If currently looking at free agent
+						String[] parts=str.split(",\\s*");	//Split on commas
+						if(parts.length!=1){	//Validate that it's a player name
+							in.close();
+							myLeague.clear();
+							GUI.alert("Dump Import Error!", "Invalid dump file!");
+							return -1;
+						}
+						myLeague.getFreeAgent().addPlayer(myLeague.getPlayer(parts[0].trim()));	//Get reference to player and add player to free agent
+					}
 				}
 			}
-			in.close();
-			return turn;
+			in.close();	//Close input stream
+			if(!freeFlag){	//If the free agent was never reached
+				in.close();
+				myLeague.clear();
+				GUI.alert("Dump Import Error!", "Invalid dump file!");
+				return -1;
+			}
+			return turn;	//Return current turn
 		} catch (FileNotFoundException e) {
+			myLeague.clear();
+			GUI.alert("Dump Import Error!", "File not found!");
 			return -1;
 		} catch (IOException e) {
+			myLeague.clear();
+			GUI.alert("Dump Import Error!", "Error writing file!");
 			return -1;
 		} catch (IndexOutOfBoundsException e){
+			myLeague.clear();
+			GUI.alert("Dump Import Error!", "Invalid dump file!");
 			return -1;
+		}
+	}
+	
+	/**Upload the statistics from a file.
+	 * 
+	 * @param League myLeague
+	 * @param String fileName
+	 */
+	public static void uploadStats(League myLeague,String filePath){
+		try {
+			ArrayList<String[]> statsAL = new ArrayList<String[]>();
+			FileInputStream fstream = new FileInputStream(filePath);	//Open the file
+			DataInputStream in = new DataInputStream(fstream);	//Get the object of DataInputStream
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			String str;
+			String[] stats;
+			boolean valid=true;
+			while((str = br.readLine()) != null){	//Read File Line By Line
+				stats=str.split(",\\s*");
+				valid=valid && myLeague.getPlayer(stats[0])!=null;	//Check if the athlete exists
+				if(!valid){	//If the athlete doesn't exist
+					in.close();
+					GUI.error("Athelete doesn't exist! ",stats[0]+" is not a valid athlete.");
+					return;
+				}
+				valid=valid && myLeague.getAction(stats[1])!=null;	//Check if the action exists
+				if(!valid){	//If the athlete doesn't exist
+					in.close();
+					GUI.error("Action doesn't exist! ",stats[1]+" is not a valid action.");
+					return;
+				}
+				valid=valid && Integer.parseInt(stats[2])>0;	//Check if the quantity is greater than zero
+				if(!valid){	//If the quantity is less than or equal to zero
+					in.close();
+					GUI.error("Quantity must be positive! ",stats[2]+" is not a positive number greater than zero.");
+					return;
+				}
+				statsAL.add(stats);	//Split on commas
+			}
+			in.close();	//Close
+			for(int i=0;i<statsAL.size();i++){	//Iterate through the stats
+				double pts=myLeague.getAction(statsAL.get(i)[1]).getPoints() * Integer.parseInt(statsAL.get(i)[2]);	//Compute the points
+				Player temp=myLeague.getPlayer(statsAL.get(i)[0]);	//Get the player
+				temp.addPoints(pts);	//Add the points to the player and thereby the team they're one
+			}
+		} catch (FileNotFoundException e) {
+			GUI.alert("Stat Parsing Error!","File not found!");
+		} catch (IOException e) {
+			GUI.alert("Stat Parsing Error!","Error opening the file!");
+		} catch (IndexOutOfBoundsException e){
+			GUI.alert("Stat Parsing Error!","Invalid stat file!");
 		}
 	}
 }

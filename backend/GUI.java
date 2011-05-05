@@ -13,7 +13,6 @@ import javax.swing.JToolBar;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -30,7 +29,7 @@ public class GUI {
 	private static JFrame frmFloodFantasyLeague;
 	private MyTableModel homeTable,draftTable,tradeTable_1,tradeTable_2,dropTable;
 	private DefaultTableModel homeModel,draftModel,tradeModel_1,tradeModel_2,dropModel;
-	private int currentTurn,pick,previousIndex;
+	private int currentTurn,pick;
 	private DecimalFormat twoDForm;
 	private final String[] homeHeader={"Rank","Team","Points"},
 		playerInfoHeader={"Player","Position","Points All Season"};
@@ -43,7 +42,6 @@ public class GUI {
 		this.theLeague=game;
 		twoDForm = new DecimalFormat("0.00");
 		currentTurn=0;
-		previousIndex=0;
 	}
 	
 	/**Populates the home table assuming it has already been initialized.
@@ -78,48 +76,13 @@ public class GUI {
 		}
 	}
 	
-	/**Upload the statistics from a file.
-	 * 
-	 * @param String fileName
-	 */
-	private void uploadStats(String fileName){
-		String[][] stats=IOManager.getStats(fileName);	//Parse the file
-		if(stats==null){	//If the stat array is empty, there was an error opening/reading/parsing the file
-			displayError("Upload error!","Sorry, there was an error opening the stat file.");
-			return;
-		}
-		boolean valid=true;
-		for(int i=0;i<stats.length;i++){	//Iterate through the stat array
-			valid=valid && League.athletes.containsKey(stats[i][0]);	//Check if the athlete exists
-			if(!valid){	//If the athlete doesn't exist
-				displayError("Athelete doesn't exist!",stats[i][0]+" is not a valid athlete.");
-				return;
-			}
-			valid=valid && League.ptsDist.containsKey(stats[i][1]);	//Check if the action exists
-			if(!valid){	//If the athlete doesn't exist
-				displayError("Action doesn't exist!",stats[i][1]+" Is not a valid action.");
-				return;
-			}
-			valid=valid && Integer.parseInt(stats[i][2])>0;	//Check if the quantity is greater than zero
-			if(!valid){	//If the quantity is less than or equal to zero
-				displayError("Quantity must be positive!",stats[i][2]+" is not a positive number greater than zero.");
-				return;
-			}
-		}
-		for(int i=0;i<stats.length;i++){	//Iterate through the stats
-			double pts=League.ptsDist.get(stats[i][1]).getPoints() * Integer.parseInt(stats[i][2]);	//Compute the points
-			Player temp=League.athletes.get(stats[i][0]);	//Get the player
-			temp.addPoints(pts);	//Add the points to the player and thereby the team they're one
-		}
-	}
-	
 	/**Display an error window with the title and message given
 	 * as parameters.
 	 * 
 	 * @param String title
 	 * @param String message
 	 */
-	private void displayError(String title,String message){
+	public static void error(String title,String message){
 		JOptionPane.showMessageDialog(frmFloodFantasyLeague, message,title,JOptionPane.ERROR_MESSAGE);
 	}
 	
@@ -150,9 +113,36 @@ public class GUI {
 		final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frmFloodFantasyLeague.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
-		//Initialize and add the home pane
+		//Initialize the home tab
+		JSplitPane homeSplitPane = new JSplitPane();
+		homeSplitPane.setResizeWeight(0.99);
+		homeSplitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
+		
+		//Initialize the home tab toolbar
+		JToolBar toolBar = new JToolBar();
+		homeSplitPane.setRightComponent(toolBar);
+		
+		//Add the upload stats button to the toolbar
+		JButton uploadStatsButton = new JButton("Upload Stat File");
+		uploadStatsButton.setMaximumSize(new Dimension(32767, 32767));
+		toolBar.add(uploadStatsButton);
+		
+		//Add the create dump button to the toolbar
+		JButton createDumpButton = new JButton("Create Dump File");
+		createDumpButton.setMaximumSize(new Dimension(32767, 32767));
+		toolBar.add(createDumpButton);
+		
+		//Add the import dump button to the toolbar
+		JButton importDumpButton = new JButton("Import Dump File");
+		importDumpButton.setMaximumSize(new Dimension(32767, 32767));
+		toolBar.add(importDumpButton);
+		
+		//Initialize the home tab scrollpane
 		JScrollPane homePane = new JScrollPane();
-		tabbedPane.addTab("Home", null, homePane, null);
+		homeSplitPane.setLeftComponent(homePane);
+		
+		//Add the home tab to the tabbed pane
+		tabbedPane.addTab("Home", null, homeSplitPane, null);
 		
 		//Initialize, format and add the home table
 		homeModel = new DefaultTableModel(homeHeader,0);	//Add the header but no rows
@@ -277,13 +267,8 @@ public class GUI {
 		dropTable.setAutoCreateRowSorter(true);	//Allow sorting
 		dropScrollPane.setViewportView(dropTable);	//Add the table to the scroll pane
 		
-		//Initialize and add the upload panel
-		JPanel uploadPanel = new JPanel();
-		tabbedPane.addTab("Upload Stat File", null, uploadPanel, null);
-		
-		//Initialize and add the dump panel
-		JPanel dumpPanel = new JPanel();
-		tabbedPane.addTab("Upload Stat File", null, uploadPanel, null);
+		//Initialize the file chooser
+		final JFileChooser chooser=new JFileChooser();
 		
 		//Populate both trade and the drop combo boxes
 		User[] rankedTeams= theLeague.getRankedUsers();
@@ -293,9 +278,9 @@ public class GUI {
 			dropComboBox.insertItemAt(rankedTeams[i].getName(),i);
 		}
 		
-		//*************************************************************************
-		//**********************Action Listener Portion****************************
-		//*************************************************************************
+		//************************************************************************
+		//****************************Action Listeners****************************
+		//************************************************************************
 		
 		//Action listener for changing tabs
 		tabbedPane.addChangeListener(new ChangeListener() {
@@ -304,30 +289,82 @@ public class GUI {
 				switch(selection){
 				case 0:	//Populate home table
 					populateHome();
-					previousIndex=selection;
 					break;
 				case 1:	//Populate draft table
 					populateDraft();
-					previousIndex=selection;
 					break;
-				case 4:	//Prompt user to browse for file
-					JFileChooser chooser=new JFileChooser();
-					int result = chooser.showOpenDialog(null);	//Determine what the user pressed
-					switch (result) {
-					case JFileChooser.APPROVE_OPTION:	//Opened file
-						File file=chooser.getSelectedFile();	//Get the chosen file
-						uploadStats(file.getAbsolutePath());	//Pass the file path to the parser method
-						break;
-					case JFileChooser.CANCEL_OPTION:	//Cancelled
-						break;
-					case JFileChooser.ERROR_OPTION:	//Generated an error
-						displayError("Upload Error!","Sorry, there was an error opening the stat file.");
-						break;
+				}
+			}
+		});
+		
+		//Stats upload action listener
+		uploadStatsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int result = chooser.showOpenDialog(null);	//Determine what the user pressed
+				switch (result) {
+				case JFileChooser.APPROVE_OPTION:	//Opened file
+					File file=chooser.getSelectedFile();	//Get the chosen file
+					IOManager.uploadStats(theLeague,file.getAbsolutePath());	//Pass the file path to the parser method
+					populateHome();
+					break;
+				case JFileChooser.CANCEL_OPTION:	//Canceled
+					break;
+				case JFileChooser.ERROR_OPTION:	//Generated an error
+					GUI.error("Upload Error!","Sorry, there was an error opening the stat file.");
+					break;
+				}
+			}
+		});
+		
+		//Dump generator action listener
+		createDumpButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				chooser.setSelectedFile(new File("flooddmp.txt"));
+				int result = chooser.showSaveDialog(null);
+				switch (result) {
+				case JFileChooser.APPROVE_OPTION:	//Opened file
+					File file=chooser.getSelectedFile();	//Get the chosen file
+					if(file.exists()) {
+		                int overwrite = JOptionPane.showConfirmDialog(frmFloodFantasyLeague, "Do you want to overwrite " + file.getName());
+		                if(overwrite == JOptionPane.YES_OPTION) {
+		                	IOManager.writeState(theLeague,file.getAbsolutePath(),currentTurn);	//Pass the file path to the parser method
+		                }
 					}
-					tabbedPane.setSelectedIndex(previousIndex);	//Select the previously selected tab
+					else{
+						IOManager.writeState(theLeague,file.getAbsolutePath(),currentTurn);	//Pass the file path to the parser method
+						tabbedPane.setSelectedIndex(0);
+					}
 					break;
-				default:
-					previousIndex=selection;
+				case JFileChooser.CANCEL_OPTION:	//Canceled
+					break;
+				case JFileChooser.ERROR_OPTION:	//Generated an error
+					GUI.error("Upload Error!","Sorry, error creating the dump file.");
+					break;
+				}
+			}
+		});
+		
+		//Dump importer action listener
+		importDumpButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int result = chooser.showOpenDialog(null);	//Determine what the user pressed
+				switch (result) {
+				case JFileChooser.APPROVE_OPTION:	//Opened file
+					File file=chooser.getSelectedFile();	//Get the chosen file
+					int temp=IOManager.importState(theLeague,file.getAbsolutePath());	//Pass the file path to the parser method
+					if(temp!=-1){
+						currentTurn=temp;
+						//Determine which user is picking
+						pick=Test.draftFunction(currentTurn);	//Gets the number representing the user's turn
+						draftLabel.setText(theLeague.getUser(pick).getName()+"'s turn!");	//Puts the user's name in the label 
+					}
+					populateHome();
+					break;
+				case JFileChooser.CANCEL_OPTION:	//Canceled
+					break;
+				case JFileChooser.ERROR_OPTION:	//Generated an error
+					GUI.error("Upload Error!","Sorry, there was an error opening the stat file.");
+					break;
 				}
 			}
 		});
@@ -342,7 +379,7 @@ public class GUI {
 				for(int i=0;i<draftTable.getRowCount();i++){	//Iterate through table entries
 					if(draftTable.isCellSelected(i,0)){	//If it's selected
 						if(!Test.draftPlayer(theLeague.getUser(pick),League.athletes.get(draftModel.getValueAt(i,0)))){	//If the draft isn't successful
-							displayError("Invalid draft!","Sorry, your draft violates rules of the league.");
+							GUI.error("Invalid draft!","Sorry, your draft violates rules of the league.");
 							return;
 						}
 						currentTurn++;	//Increment the turn
@@ -367,7 +404,7 @@ public class GUI {
 					}
 				}
 				//If no selection is found
-				displayError("Add error!","Sorry, no player was selected!");
+				GUI.error("Add error!","Sorry, no player was selected!");
 			}
 		});
 		
@@ -407,17 +444,17 @@ public class GUI {
 		btnTrade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (tradeComboBox_1.getSelectedIndex()==-1 || tradeComboBox_2.getSelectedIndex()==-1) {	//If either combo box doesn't have a user selected
-					displayError("Trade error!","Must select two teams to trade between.");
+					GUI.error("Trade error!","Must select two teams to trade between.");
 					return;
 				}
 				else if(tradeComboBox_1.getSelectedIndex()==tradeComboBox_2.getSelectedIndex()){	//If the same user is selected in each combo box
-					displayError("Trade error!","Must select two different teams to trade between.");
+					GUI.error("Trade error!","Must select two different teams to trade between.");
 					return;
 				}
 				int rows1[] = tradeTable_1.getSelectedRows();	//Get selected rows in the left table
 				int rows2[] = tradeTable_2.getSelectedRows();	//Get selected rows in the right table
 				if(rows1.length==0 && rows2.length==0){	//If no players are selected
-					displayError("Trade error!","Must select at least one player to trade.");
+					GUI.error("Trade error!","Must select at least one player to trade.");
 					return;
 				}
 				Player[] p1 = new Player[rows1.length];	//Initialize player array for the left table selection
@@ -433,7 +470,7 @@ public class GUI {
 						.getSelectedItem()), p1, League.teams
 						.get(tradeComboBox_2.getSelectedItem()), p2);
 				if(!success){	//If unsuccessful
-					displayError("Invalid trade!","Sorry, your trade violates rules of the league.");
+					GUI.error("Invalid trade!","Sorry, your trade violates rules of the league.");
 					return;
 				}
 				//Repopulate the tables
@@ -481,13 +518,13 @@ public class GUI {
 			public void actionPerformed(ActionEvent arg0) {
 				int index=dropTable.getSelectedRow();
 				if(index==-1){	//If no player is selected to drop
-					displayError("Drop error!","Must select a team to drop a player from.");
+					GUI.error("Drop error!","Must select a team to drop a player from.");
 					return;
 				}
 				Player drop=League.athletes.get(dropModel.getValueAt(index,0));	//Get player
 				boolean success=Test.dropPlayer(League.teams.get(dropComboBox.getSelectedItem()),drop);	//Determine if drop is successful
 				if(!success){
-					displayError("Invalid drop!","Sorry, your drop violates rules of the league.");
+					GUI.error("Invalid drop!","Sorry, your drop violates rules of the league.");
 					return;
 				}
 				dropModel.removeRow(index);	//Delete that row
