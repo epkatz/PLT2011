@@ -29,30 +29,33 @@ COMMENTS = "/*" [^*] ~"*/" | "/*" "*" + "/"
 
 %%
 
-/* Comments */
-{COMMENTS}   { /* ignore */          }
-
 /* Keywords */
-DefineLeague     { yyparser.yycolumn += yytext().length(); return Parser.DefineLeague;  }
-defineFunctions  { yyparser.yycolumn += yytext().length(); return Parser.defineFunctions;  }
-leagueName        { yyparser.yycolumn += yytext().length(); return Parser.leagueName;     }
-maxUser           { yyparser.yycolumn += yytext().length(); return Parser.maxUser;        }
-minUser           { yyparser.yycolumn += yytext().length(); return Parser.minUser;        }
-set               { yyparser.yycolumn += yytext().length(); return Parser.set;            }
-add               { yyparser.yycolumn += yytext().length(); return Parser.add;            }
-Action            { yyparser.yycolumn += yytext().length(); return Parser.Action;         }
-User              { yyparser.yycolumn += yytext().length(); return Parser.User;           }
-Void              { yyparser.yycolumn += yytext().length(); return Parser.Void;     }
-Int               { yyparser.yycolumn += yytext().length(); return Parser.Int;      }
-bool              { yyparser.yycolumn += yytext().length(); return Parser.bool;     }
-str               { yyparser.yycolumn += yytext().length(); return Parser.str;      }
-flt               { yyparser.yycolumn += yytext().length(); return Parser.flt;      }
-Return            { yyparser.yycolumn += yytext().length(); return Parser.Return;      }
-If                  { yyparser.yycolumn += yytext().length(); return Parser.If;             }
-Else                { yyparser.yycolumn += yytext().length(); return Parser.Else;           }
-While                { yyparser.yycolumn += yytext().length(); return Parser.While;           }
-Player             { yyparser.yycolumn += yytext().length(); return Parser.Player;           }
+DefineLeague      { yyparser.yycolumn += yytext().length(); return Parser.DefineLeague;     }
+DefineFunctions   { yyparser.yycolumn += yytext().length(); return Parser.DefineFunctions;  }
+LeagueName        { yyparser.yycolumn += yytext().length(); return Parser.LeagueName;       }
+MaxUser           { yyparser.yycolumn += yytext().length(); return Parser.MaxUser;          }
+MinUser           { yyparser.yycolumn += yytext().length(); return Parser.MinUser;          }
+MaxTeamSize       { yyparser.yycolumn += yytext().length(); return Parser.MaxTeamSize;      }
+MinTeamSize       { yyparser.yycolumn += yytext().length(); return Parser.MinTeamSize;      }
+Set               { yyparser.yycolumn += yytext().length(); return Parser.Set;              }
+Add               { yyparser.yycolumn += yytext().length(); return Parser.Add;              }
+Action            { yyparser.yycolumn += yytext().length(); return Parser.Action;           }
+User              { yyparser.yycolumn += yytext().length(); return Parser.User;             }
+Void              { yyparser.yycolumn += yytext().length(); return Parser.Void;             }
+Int               { yyparser.yycolumn += yytext().length(); return Parser.Int;              }
+Bool              { yyparser.yycolumn += yytext().length(); return Parser.Bool;             }
+Str               { yyparser.yycolumn += yytext().length(); return Parser.Str;              }
+Flt               { yyparser.yycolumn += yytext().length(); return Parser.Flt;              }
+Return            { yyparser.yycolumn += yytext().length(); return Parser.Return;           }
+If                { yyparser.yycolumn += yytext().length(); return Parser.If;               }
+Else              { yyparser.yycolumn += yytext().length(); return Parser.Else;             }
+While             { yyparser.yycolumn += yytext().length(); return Parser.While;            }
+Player            { yyparser.yycolumn += yytext().length(); return Parser.Player;           }
+True              { yyparser.yycolumn += yytext().length(); return Parser.True;             }
+False             { yyparser.yycolumn += yytext().length(); return Parser.False;            }
 
+/* Comments */
+{COMMENTS}        { /* ignore */ }
 
 /* Identifier */
 {ID}              {
@@ -86,7 +89,7 @@ Player             { yyparser.yycolumn += yytext().length(); return Parser.Playe
                   }
 
 
-[\t]+            { yyparser.yycolumn += yytext().length(); }
+[\t]+             { yyparser.yycolumn += yytext().length(); }
 
 "\""[^\"]*"\""    {
                     yyparser.yycolumn += yytext().length();
@@ -94,60 +97,56 @@ Player             { yyparser.yycolumn += yytext().length(); return Parser.Playe
                     return Parser.STRING_CONST;   
                   }
 
-,                             { yyparser.yycolumn++; return Parser.COMMA;       }
+,                 { yyparser.yycolumn++; return Parser.COMMA;          }
 
-"+"                           { yyparser.yycolumn++; return Parser.PLUS;        }
+"+"               { yyparser.yycolumn++; return Parser.PLUS;           }
 
-"{"                           { yyparser.yycolumn++; return Parser.OPEN_CURLY;  }
+"{"               { yyparser.yycolumn++; return Parser.OPEN_CURLY;     }
 
-"}"                           { yyparser.yycolumn++; return Parser.CLOSE_CURLY; }
+"}"               { yyparser.yycolumn++; return Parser.CLOSE_CURLY;    }
 
-"("                           { yyparser.yycolumn++;return Parser.OPEN_PARAN;         }
+"("               { yyparser.yycolumn++;return Parser.OPEN_PARAN;      }
 
-")"                           { yyparser.yycolumn++;return Parser.CLOSE_PARAN;        }
+")"               { yyparser.yycolumn++;return Parser.CLOSE_PARAN;     }
 
-"=="                { yyparser.yycolumn++; return Parser.ISEQUAL;        }
+"=="              { yyparser.yycolumn++; return Parser.ISEQUAL;        }
 
-"="                 { yyparser.yycolumn++; return Parser.EQUAL;          }
+"="               { yyparser.yycolumn++; return Parser.EQUAL;          }
 
-"!="                { yyparser.yycolumn++; return Parser.NOTEQUAL;       }
+"!="              { yyparser.yycolumn++; return Parser.NOTEQUAL;       }
 
-"<="                { yyparser.yycolumn++; return Parser.LESSEQUAL;      }
+"<="              { yyparser.yycolumn++; return Parser.LESSEQUAL;      }
 
-">="                { yyparser.yycolumn++; return Parser.GREATEQUAL;     }
+">="              { yyparser.yycolumn++; return Parser.GREATEQUAL;     }
 
-">"                 { yyparser.yycolumn++; return Parser.GREAT;          }
+">"               { yyparser.yycolumn++; return Parser.GREAT;          }
 
-"<"                 { yyparser.yycolumn++;return Parser.LESS;            }
+"<"               { yyparser.yycolumn++;return Parser.LESS;            }
 
-"+"                 { yyparser.yycolumn++; return Parser.PLUS;           }
+"+"               { yyparser.yycolumn++; return Parser.PLUS;           }
 
-"-"                 { yyparser.yycolumn++; return Parser.MINUS;          }
+"-"               { yyparser.yycolumn++; return Parser.MINUS;          }
 
-"*"                 { yyparser.yycolumn++; return Parser.MULT;            }
+"*"               { yyparser.yycolumn++; return Parser.MULT;           }
 
-"/"                 { yyparser.yycolumn++; return Parser.DIV;            }
+"/"               { yyparser.yycolumn++; return Parser.DIV;            }
 
-"!"                 { yyparser.yycolumn++; return Parser.NOT;            }
+"!"               { yyparser.yycolumn++; return Parser.NOT;            }
 
-"&&"                { yyparser.yycolumn++; return Parser.AND;            }
+"&&"              { yyparser.yycolumn++; return Parser.AND;            }
 
-"||"                { yyparser.yycolumn++; return Parser.OR;             }
+"||"              { yyparser.yycolumn++; return Parser.OR;             }
 
-"%"                 { yyparser.yycolumn++; return Parser.MOD;             }
+"%"               { yyparser.yycolumn++; return Parser.MOD;            }
 
-//"@"{ID}*|{WP}*|{HT}*|{NL}*"#"                {   yyparser.yycolumn=0;
-//                        yyparser.yyline++;                                 }
-
-
-[;]+                { 
-                        yyparser.yycolumn += yytext().length(); 
-                        return Parser.SEMICOLON;      
-                    }
+[;]+              {
+                    yyparser.yycolumn += yytext().length();
+                    return Parser.SEMICOLON;      
+                  }
                     
-"["                 { yyparser.yycolumn++; return Parser.OPEN_SQUARE;    }
+"["               { yyparser.yycolumn++; return Parser.OPEN_SQUARE;    }
 
-"]"                 { yyparser.yycolumn++; return Parser.CLOSE_SQUARE;    }
+"]"               { yyparser.yycolumn++; return Parser.CLOSE_SQUARE;    }
 
 /* Error Fallback */
 [^]               {

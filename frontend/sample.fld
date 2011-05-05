@@ -2,20 +2,23 @@
 adjfjdsafsakkja()
 */
 DefineLeague
-	set leagueName("Happy League");
-	set maxUser(10);
-	set minUser(12);
-	add User("Eli");
-	add Action("Field Goal Attempt", 0.5);
+	Set LeagueName("Happy League");
+	Set MaxUser(10);
+	Set MinUser(12);
+	Set MaxTeamSize(10);
+	Set MinTeamSize(5);
+	Add User("Eli");
+	Add Action("Field Goal Attempt", 0.5);
+	Add Player("Lebron James","forward");
 
-defineFunctions
+DefineFunctions
 /*
 ****************/
-	flt anotherFunction(Int bubble, flt bubble2, User u, Player p, User[] u2, Player[] p2)
+	Flt anotherFunction(Int bubble, Flt bubble2, User u, Player p, User[] u2, Player[] p2)
 	{
 	}
 
-	flt anotherFunction2(Int bubble, flt bubble2, User u, Player p, User[] u2, Player[] p2)
+	Flt anotherFunction2(Int bubble, Flt bubble2, User u, Player p, User[] u2, Player[] p2)
 	{
 		/*
 		* comments
@@ -25,27 +28,29 @@ defineFunctions
 		};
 	}
 	
-	flt anotherFunction3(Int bubble, flt bubble2, User u, Player p, User[] u2, Player[] p2)
+	Flt anotherFunction3(Int bubble, Flt bubble2, User u, Player p, User[] u2, Player[] p2)
 	{
-		flt fltVar;
-		flt fltVar;
+		Flt fltVar;
+		Flt fltVar;
 		Int intVar;
-		str strVar;
-		bool boolVar;
+		Str strVar;
+		Bool boolVar;
 		
 		strVar = "sdkfjaslkdf";
 	}
 
-	Int myFunction(Int turn, flt turn2)
+	Int myFunction(Int turn, Flt turn2)
 	{
-		flt fltVar;
-		flt fltVar;
+		Flt fltVar;
+		Flt fltVar;
 		Int intVar;
-		str strVar;
-		bool boolVar;
+		Str strVar;
+		Bool boolVar;
 
 		If(a < b)
 		{
+			myFunction(u[1]);
+			myFunction(u[i]);
 		};
 
 		If(a < b)
@@ -145,11 +150,22 @@ defineFunctions
 		While(!a)
 		{
 		};
+		
+		If(True)
+		{
+			boolVar = True;
+		};
+		
+		If(False)
+		{
+			
+		};
 
 		While(a>b)
 		{
 			myFunction2(a, 10, 11.1);
 			b = myFunction3();
+			Alert("alert title here", "alert message here");
 		};
 		
 		While(!a)

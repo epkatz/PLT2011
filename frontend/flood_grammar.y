@@ -46,25 +46,29 @@
 %token SEMICOLON              /* Semicolon */
 
 /* Keywords */
-%token DefineLeague
-%token defineFunctions
-%token leagueName
-%token maxUser
-%token minUser
-%token set
-%token add
-%token Action
-%token User
-%token Player
-%token Void             
-%token str              
-%token bool            
-%token flt              
-%token Int
-%token Return
-%token If               /* If keyword */
-%token Else             /* Else keyword */
-%token While
+%token DefineLeague           /* Define the league */
+%token DefineFunctions        /* Define functions */
+%token LeagueName             /* Set league name */
+%token MaxUser                /* Set the max user */
+%token MinUser                /* Set the min user */
+%token MaxTeamSize            /* Set the max team size */
+%token MinTeamSize            /* Set the min team size */
+%token Set                    /* Set keyword */
+%token Add                    /* Add keyword */
+%token Action                 /* Action keyword */
+%token User                   /* User keyword */
+%token Player                 /* Player keyword */
+%token Void                   /* Void keyword */
+%token Str                    /* String keyword */
+%token Bool                   /* Boolean keyword */
+%token Flt                    /* Float keyword */
+%token Int                    /* Integer keyword */
+%token Return                 /* Return keyword */
+%token If                     /* If keyword */
+%token Else                   /* Else keyword */
+%token While                  /* While keyword */
+%token True                   /* True keyword */
+%token False                  /* False keyword */
 
 /* Associativity and Precedence */
 %left MINUS PLUS COMMA
@@ -120,14 +124,17 @@ definitionlist: definitionlist definitionproductions { $$ = $1 + $2; }
               | empty { $$ = $1; }
               ;
 
-definitionproductions: set leagueName OPEN_PARAN STRING_CONST CLOSE_PARAN SEMICOLON { $$ = "myLeague = new League(" + $4 + ");\n"; }
-                     | set maxUser OPEN_PARAN INT CLOSE_PARAN SEMICOLON { $$ = "myLeague.setMaxUser(" + $4 + ");\n"; }
-                     | set minUser OPEN_PARAN INT CLOSE_PARAN SEMICOLON { $$ = "myLeague.setMinUser(" + $4 + ");\n"; }
-                     | add User OPEN_PARAN STRING_CONST CLOSE_PARAN SEMICOLON { $$ = "myLeague.addUser(new User(" + $4 + "));\n"; }
-                     | add Action OPEN_PARAN STRING_CONST COMMA FLT CLOSE_PARAN SEMICOLON { $$ = "myLeague.addAction(new Action(" + $4 + ", " + $6 + "));\n"; }
+definitionproductions: Set LeagueName OPEN_PARAN STRING_CONST CLOSE_PARAN SEMICOLON { $$ = "myLeague = new League(" + $4 + ");\n"; }
+                     | Set MaxUser OPEN_PARAN INT CLOSE_PARAN SEMICOLON { $$ = "myLeague.setMaxUser(" + $4 + ");\n"; }
+                     | Set MinUser OPEN_PARAN INT CLOSE_PARAN SEMICOLON { $$ = "myLeague.setMinUser(" + $4 + ");\n"; }
+                     | Set MaxTeamSize OPEN_PARAN INT CLOSE_PARAN SEMICOLON { $$ = "myLeague.setMaxTeamSize(" + $4 + ");\n"; }
+                     | Set MinTeamSize OPEN_PARAN INT CLOSE_PARAN SEMICOLON { $$ = "myLeague.setMinTeamSize(" + $4 + ");\n"; }
+                     | Add User OPEN_PARAN STRING_CONST CLOSE_PARAN SEMICOLON { $$ = "myLeague.addUser(new User(" + $4 + "));\n"; }
+                     | Add Action OPEN_PARAN STRING_CONST COMMA FLT CLOSE_PARAN SEMICOLON { $$ = "myLeague.addAction(new Action(" + $4 + ", " + $6 + "));\n"; }
+                     | Add Player OPEN_PARAN STRING_CONST COMMA STRING_CONST CLOSE_PARAN SEMICOLON { $$ = "myLeague.addPlayer(new Player(" + $4 + ", " + $6 + "));\n"; }
                      ;
 
-functions: defineFunctions functionProductions { $$ = $2; };
+functions: DefineFunctions functionProductions { $$ = $2; };
 
 /* The tempVarList is a list of variables already seen that need to be added to the function */
 functionProductions: functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  declarations statements returnProduction CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5)) System.out.println("Function Error"); /* FLOODException Here */}
@@ -138,10 +145,10 @@ functionProductions: functionProductions returnType functionName OPEN_PARAN argu
                      ;
 
 returnType: Void { $$ = "void"; }
-          | str { $$ = "String"; }
-          | bool { $$ = "boolean"; }
+          | Str { $$ = "String"; }
+          | Bool { $$ = "boolean"; }
           | Int { $$ = "int"; }
-          | flt { $$ = "float"; }
+          | Flt { $$ = "float"; }
           ;
           
 functionName: ID { $$ = $1; };
@@ -152,10 +159,10 @@ argumentLists: argumentLists COMMA argumentList { $$ = $1 + ", " + $3; }
               ;
 
 argumentList: returnType ID { $$ = $1 + " " + $2; }
-            | User OPEN_SQUARE CLOSE_SQUARE ID {$$ = "User[] " + $4;}
-            | Player OPEN_SQUARE CLOSE_SQUARE ID {$$ = "Player[] " + $4;}
-            | User ID {$$ = "User " + $2;}
-            | Player ID {$$ = "Player " + $2;}
+            | User OPEN_SQUARE CLOSE_SQUARE ID { $$ = "User[] " + $4; }
+            | Player OPEN_SQUARE CLOSE_SQUARE ID { $$ = "Player[] " + $4; }
+            | User ID { $$ = "User " + $2; }
+            | Player ID { $$ = "Player " + $2; }
             ;
 
 statements: statements statement SEMICOLON { $$ = $1 + $2; }
@@ -166,7 +173,7 @@ statement: conditionals { $$ = $1; }
          | loop { $$ = $1; }
          | relationalExp { $$ = $1; }
          | assignment { $$ = $1; }
-         | functionCall { $$ = $1; }
+         | functionCall { $$ = $1 + ";\n"; }
          ;
 
 returnProduction: Return ID SEMICOLON { $$ = "return " + $2 + ";"; }
@@ -178,39 +185,38 @@ returnProduction: Return ID SEMICOLON { $$ = "return " + $2 + ";"; }
 
 conditionals: If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n" + $6 + "}\n"; }
             | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY Else OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n" + $6 + "}\nelse\n{\n" + $10 + "}\n"; }
-            | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY  { $$ = "if(" + $3 + ")\n{\n}\n"; }
+            | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n}\n"; }
             | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY Else OPEN_CURLY empty CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n}\nelse\n{\n}\n"; }
             | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY Else OPEN_CURLY empty CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n" + $6 + "}\nelse\n{\n}\n"; }
             | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY Else OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n}" + "\nelse\n{\n" + $10 + "}\n"; }
-            
-            
             | If OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n" + $6 + "}\n"; }
             | If OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY Else OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n" + $6 + "}\nelse\n{\n" + $10 + "}\n"; }
-            | If OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY  { $$ = "if(" + $3 + ")\n{\n}\n"; }
+            | If OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n}\n"; }
             | If OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY Else OPEN_CURLY empty CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n}\nelse\n{\n}\n"; }
             | If OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY Else OPEN_CURLY empty CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n" + $6 + "}\nelse\n{\n}\n"; }
             | If OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY Else OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n}" + "\nelse\n{\n" + $10 + "}\n"; }
             ;
 
+/* NEED SEMANCTIC ACTION: Check types for all boolean expressions below - !!!PLEASE REMOVE THIS COMMENT WHEN DONE!!! */
 loop: While OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY { $$ = "while(" + $3 + ")\n{\n" + $6 + "}\n"; }
     | While OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY { $$ = "while(" + $3 + ")\n{\n}\n"; }
     | While OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY { $$ = "while(" + $3 + ")\n{\n" + $6 + "}\n"; }
     | While OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY { $$ = "while(" + $3 + ")\n{\n}\n"; }
     ;
 
-declarations: declarations declaration SEMICOLON{$$= $1+$2;}
-            | declaration SEMICOLON{$$ = $1;}
+declarations: declarations declaration SEMICOLON{ $$ = $1 + $2; }
+            | declaration SEMICOLON{ $$ = $1; }
             ;
 
 /* TODO The semantac check doesn't see the array */
-declaration: dataType ID { $$ = $1 + " " + $2 + ";\n"; semantics.addVar($2, $1);}
-            | dataType ID EQUAL FLT { $$ = $1 + " " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, $1);}
-            | dataType ID EQUAL INT { $$ = $1 + " " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, $1);}
-            | dataType ID EQUAL STRING_CONST { $$ = $1 + " " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, $1);}
-            | str OPEN_SQUARE INT CLOSE_SQUARE ID {$$ = "String["+$3+"] " + $5 + ";\n"; semantics.addVar($5, "String");}
-            | Int OPEN_SQUARE INT CLOSE_SQUARE ID {$$ = "int["+$3+"] " + $5 + ";\n";semantics.addVar($5, "int");}
-            | flt OPEN_SQUARE INT CLOSE_SQUARE ID {$$ = "float["+$3+"] " + $5 + ";\n";semantics.addVar($5, "float");}
-            //| empty{$$="";}
+declaration: dataType ID { $$ = $1 + " " + $2 + ";\n"; semantics.addVar($2, $1); }
+            | dataType ID EQUAL FLT { $$ = $1 + " " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, $1); }
+            | dataType ID EQUAL INT { $$ = $1 + " " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, $1); }
+            | dataType ID EQUAL STRING_CONST { $$ = $1 + " " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, $1); }
+            //| Str OPEN_SQUARE INT CLOSE_SQUARE ID { $$ = "String[" + $3 + "] " + $5 + ";\n"; semantics.addVar($5, "String"); }
+            //| Int OPEN_SQUARE INT CLOSE_SQUARE ID { $$ = "int[" + $3 + "] " + $5 + ";\n"; semantics.addVar($5, "int");}
+            //| Flt OPEN_SQUARE INT CLOSE_SQUARE ID { $$ = "float[" + $3 + "] " + $5 + ";\n"; semantics.addVar($5, "float"); }
+            //| empty{ $$ = ""; }
             ;
 
 relationalExp: ID LESSEQUAL constOrVar { $$ = $1 + " <= " + $3; }
@@ -219,21 +225,24 @@ relationalExp: ID LESSEQUAL constOrVar { $$ = $1 + " <= " + $3; }
              | ID LESS constOrVar { $$ = $1 + " < " + $3; }
              | ID GREAT constOrVar { $$ = $1 + " > " + $3; }
              | ID ISEQUAL constOrVar { $$ = $1 + " == " + $3; }
-             | OPEN_PARAN relationalExp CLOSE_PARAN { $$ = "(" +  $2 + ")"; }
+             | OPEN_PARAN relationalExp CLOSE_PARAN { $$ = "(" + $2 + ")"; }
              //FLOODException Here
              ;
 
-booleanExp: booleanExp AND booleanExp { $$ = $1 +" && " + $3;}
-          | booleanExp OR booleanExp { $$ = $1 +" || " + $3;}
-          | relationalExp AND relationalExp { $$ = $1 +" && " + $3;}
-          | relationalExp OR relationalExp { $$ = $1 +" || " + $3;}
-          | relationalExp AND booleanExp { $$ = $1 +" && " + $3;}
-          | relationalExp OR booleanExp { $$ = $1 +" || " + $3;}
-          | booleanExp AND relationalExp { $$ = $1 +" && " + $3;}
-          | booleanExp OR relationalExp { $$ = $1 +" || " + $3;}
+/* NEED SEMANCTIC ACTION: Check types for all boolean expressions below - !!!PLEASE REMOVE THIS COMMENT WHEN DONE!!! */
+booleanExp: booleanExp AND booleanExp { $$ = $1 + " && " + $3; }
+          | booleanExp OR booleanExp { $$ = $1 + " || " + $3; }
+          | relationalExp AND relationalExp { $$ = $1 + " && " + $3; }
+          | relationalExp OR relationalExp { $$ = $1 + " || " + $3; }
+          | relationalExp AND booleanExp { $$ = $1 + " && " + $3; }
+          | relationalExp OR booleanExp { $$ = $1 + " || " + $3; }
+          | booleanExp AND relationalExp { $$ = $1 + " && " + $3; }
+          | booleanExp OR relationalExp { $$ = $1 + " || " + $3; }
           | OPEN_PARAN booleanExp CLOSE_PARAN { $$ = "(" +  $2 + ")"; }
-          | NOT booleanExp { $$= " !"+ $2;}
-          | ID { $$ = $1;}
+          | NOT booleanExp { $$= " !"+ $2; }
+          | ID { $$ = $1; }
+          | True { $$ = "true"; }
+          | False { $$ = "false"; }
           ;
 
 constOrVar: FLT { $$ = "" + $1; }
@@ -241,39 +250,44 @@ constOrVar: FLT { $$ = "" + $1; }
           | ID { $$ = "" + $1; }
           ;
 
+/* NEED SEMANCTIC ACTION: Check types for all arithmetic expressions below - !!!PLEASE REMOVE THIS COMMENT WHEN DONE!!! */
 arithmeticExp: arithmeticExp PLUS arithmeticExp { $$ = $1 + " + " + $3 ; }
              | arithmeticExp MINUS arithmeticExp { $$ = $1 + " - " + $3; }
              | arithmeticExp MULT arithmeticExp { $$ = $1 + " * " + $3; }
              | arithmeticExp DIV arithmeticExp { $$ = $1 + " / " + $3; }
-             | arithmeticExp MOD arithmeticExp { $$ = $1 + " % " + $3 ;}
+             | arithmeticExp MOD arithmeticExp { $$ = $1 + " % " + $3; }
              | OPEN_PARAN arithmeticExp CLOSE_PARAN { $$ = "(" + $2 + ")"; }
-             | ID  { $$ = $1 ; }
+             | ID  { $$ = $1; }
              | FLT { $$ = "" + $1; }
              | INT { $$ = "" + $1; }
              ;
 
-/* Possible to seperate the rightSide here so that we can check expressions and functioncalls seperately?*/
-assignment: leftSide EQUAL rightSide { $$ = $1 + " = " + $3; semantics.assignmentCheck($1, $3);}
+assignment: leftSide EQUAL rightSide { $$ = $1 + " = " + $3; semantics.assignmentCheck($1, $3); /* NEED SEMANCTIC ACTION: Check for boolean True and False - !!!PLEASE REMOVE THIS COMMENT WHEN DONE!!! */}
 
 leftSide: ID { $$ = $1; }
 
 rightSide: arithmeticExp { $$ = $1 + ";\n"; }
-         | functionCall { $$ = $1;}
+         | functionCall { $$ = $1 + ";\n"; }
          | STRING_CONST { $$ = $1 + ";\n"; }
+         | True { $$ = "true" + ";\n"; }
+         | False { $$ = "false" + ";\n"; }
          ;
 
-functionCall: functionName OPEN_PARAN parameterList CLOSE_PARAN { $$ = $1 + "(" + $3 + ");\n"; }
+functionCall: functionName OPEN_PARAN parameterList CLOSE_PARAN { $$ = $1 + "(" + $3 + ")"; /* NEED SEMANCTIC ACTION: Check for Alert(titleStr, messageStr) and Error(titleStr, messageStr) function calls - !!!PLEASE REMOVE THIS COMMENT WHEN DONE!!! */}
 
-dataType: str { $$ = "String"; }
-        | bool { $$ = "boolean"; }
+dataType: Str { $$ = "String"; }
+        | Bool { $$ = "boolean"; }
         | Int { $$ = "int"; }
-        | flt { $$ = "float"; }
+        | Flt { $$ = "float"; }
         ;
 
 parameterList: parameterList COMMA parameterList { $$ = $1 + ", " + $3; }
              | ID { $$ = $1; }
              | INT { $$ = "" + $1; }
              | FLT { $$ = "" + $1; }
+             | STRING_CONST { $$ = $1; }
+             | ID OPEN_SQUARE INT CLOSE_SQUARE { $$ = $1 + "[" + $3 + "]"; }
+             | ID OPEN_SQUARE ID CLOSE_SQUARE { $$ = $1 + "[" + $3 + "]"; }
              | empty { $$ = $1; }
              ;
 
@@ -300,16 +314,19 @@ public void generateFloodProgram(String definitions, String functions)
   System.out.println("Line 305");
   
   String classStart = "public class FloodProgram\n{\n";
+  String staticDeclarations = "public static League myLeague;\npublic static GUI run;\n";
   String classEnd = "}\n";
 
   String main_start = "public static void main(String[] args)\n{\n";
+  String main_preEndAutogenerate = "run = new GUI(myLeague);\nrun.drawBoard();\n";
   String main_end = "}\n";
 
   try
   {
     System.out.println("Line 67");
+    /**************** !!!MANUALLY CHANGE DIRECTORY OUTPUT BELOW FOR FLOOD PROGRAM!!! ************************/
     FileWriter writer = new FileWriter(new File("C:/PLT/FloodProgram.java"));
-    String buffer = classStart + main_start + definitions  + main_end + functions + classEnd;
+    String buffer = classStart + staticDeclarations + main_start + definitions + main_preEndAutogenerate + main_end + functions + classEnd;
     writer.write(buffer);
     writer.close();
   }
