@@ -86,25 +86,7 @@ public class Function {
 		returnVal = returnVal.replaceAll(";", "");
 		return (returnVal.length()>0);
 	}
-	
-	//write required functions
-	
-	public void writeDraftFunction(){
 		
-	}
-	
-	public void writeDraftPlayer(){
-		
-	}
-	
-	public void writeTrade(){
-		
-	}
-	
-	public void writeDropPlayer(){
-		
-	}
-	
 	public String getFunctionName() {
 		return functionName;
 	}

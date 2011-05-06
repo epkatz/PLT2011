@@ -71,9 +71,13 @@ public class Flood_Sem {
 		return true;
 	}
 	
-	/* Adds a function to the function table. TODO Checks if it exists first */
+	/* Adds a function to the function table. */
 	public boolean addToFunctionTable(String functionName, String returnType, String paramList, int lineNumber){
 		try{
+			if (functionTable.containsKey(functionName)){
+				if (debugging){System.out.println(functionName + "already exists");}
+				return false;
+			}
 			functionTable.put(functionName, new Function(functionName, returnType, paramList, lineNumber));
 			this.varList = new HashMap<String, String>();
 			if (debugging){System.out.println("Reinitializing variable list");}
@@ -124,6 +128,7 @@ public class Flood_Sem {
 		return true;
 	}
 
+	/* Checks the type of a variable agains the left side of an expression */
 	public boolean assignmentCheckVar(String right){
 		if (varExists(right)){
 			if (varList.get(right).equals(leftSide)){
@@ -137,6 +142,7 @@ public class Flood_Sem {
 		return false;
 	}
 
+	/* Preserves the type of the left side of an expression */
 	public boolean assignmentCheckLeft(String left){
 		if (varExists(left)){
 			leftSide = varList.get(left);
@@ -145,15 +151,17 @@ public class Flood_Sem {
 		return false;
 	}
 
-	public boolean assignmentCheckLeftIsFlt(){
-		if (leftSide.equals("float")){
-			if (debugging){System.out.println(leftSide + " IS of type float");}
+	/* Checks whether the left side of the expression is a TYPE */
+	public boolean assignmentCheckLeftIsOfType(String type){
+		if (leftSide.equals(type)){
+			if (debugging){System.out.println(leftSide + " IS of type " + type);}
 			return true;
 		}
-		if (debugging){System.out.println(leftSide + " is not of type float");}
+		if (debugging){System.out.println(leftSide + " is not of type " + type);}
 		return false;
 	}
-
+	
+	/* Checks the Return Type of the Function Against the Left Side of an expression */
 	public boolean assignmentCheckFunction(String right){
 		String[] params = right.split("\\("); //Opening bracket is special character to be escaped
 		String functionName = params[0];
