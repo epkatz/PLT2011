@@ -93,6 +93,7 @@
 %type <sval> argumentList
 %type <sval> empty;
 %type <sval> returnProduction
+%type <sval> returnProd
 %type <sval> statement
 %type <sval> statements
 %type <sval> conditionals
@@ -144,7 +145,7 @@ functionProductions: functionProductions returnType functionName OPEN_PARAN argu
                      | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5, yyline)) System.out.println("Function Error"); }
                      | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  empty statements returnProduction CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5, yyline)) System.out.println("Function Error"); }
                      | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  declarations empty returnProduction CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5, yyline)) System.out.println("Function Error"); }
-                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY empty returnProduction CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $9 + "\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5, yyline)) System.out.println("Function Error"); }
+                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY returnProd CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + "\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5, yyline)) System.out.println("Function Error"); }
                      | empty { $$ = $1; }
                      ;
 
@@ -194,6 +195,14 @@ returnProduction: Return ID SEMICOLON { $$ = "return " + $2 + ";"; }
                 | Return False SEMICOLON { $$ = "return false;"; }
                 | empty { $$ = $1; }
                 ;
+
+returnProd: Return ID SEMICOLON { $$ = "return " + $2 + ";"; }
+                | Return STRING_CONST SEMICOLON { $$ = "return " + $2 + ";"; }
+                | Return INT SEMICOLON { $$ = "return " + $2 + ";"; }
+                | Return FLT SEMICOLON { $$ = "return " + $2 + ";"; }
+                | Return True SEMICOLON { $$ = "return true;"; }
+                | Return False SEMICOLON { $$ = "return false;"; }
+		;
 
 conditionals: If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n" + $6 + "}\n"; }
             | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY Else OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n" + $6 + "}\nelse\n{\n" + $10 + "}\n"; }
