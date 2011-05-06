@@ -129,18 +129,18 @@ definitionproductions: Set LeagueName OPEN_PARAN STRING_CONST CLOSE_PARAN SEMICO
                      | Set MinUser OPEN_PARAN INT CLOSE_PARAN SEMICOLON { $$ = "myLeague.setMinUser(" + $4 + ");\n"; }
                      | Set MaxTeamSize OPEN_PARAN INT CLOSE_PARAN SEMICOLON { $$ = "myLeague.setMaxTeamSize(" + $4 + ");\n"; }
                      | Set MinTeamSize OPEN_PARAN INT CLOSE_PARAN SEMICOLON { $$ = "myLeague.setMinTeamSize(" + $4 + ");\n"; }
-                     | Add User OPEN_PARAN STRING_CONST CLOSE_PARAN SEMICOLON { $$ = "myLeague.addUser(new User(" + $4 + "));\n"; }
-                     | Add Action OPEN_PARAN STRING_CONST COMMA FLT CLOSE_PARAN SEMICOLON { $$ = "myLeague.addAction(new Action(" + $4 + ", " + $6 + "));\n"; }
-                     | Add Player OPEN_PARAN STRING_CONST COMMA STRING_CONST CLOSE_PARAN SEMICOLON { $$ = "myLeague.addPlayer(new Player(" + $4 + ", " + $6 + "));\n"; }
+                     | Add User OPEN_PARAN STRING_CONST CLOSE_PARAN SEMICOLON { $$ = "myLeague.addUser(new User(" + $4 + "));\n"; semantics.addUser($4);}
+                     | Add Action OPEN_PARAN STRING_CONST COMMA FLT CLOSE_PARAN SEMICOLON { $$ = "myLeague.addAction(new Action(" + $4 + ", " + $6 + "));\n"; semantics.addAction($4);}
+                     | Add Player OPEN_PARAN STRING_CONST COMMA STRING_CONST CLOSE_PARAN SEMICOLON { $$ = "myLeague.addPlayer(new Player(" + $4 + ", " + $6 + "));\n"; semantics.addPlayer($4);}
                      ;
 
 functions: DefineFunctions functionProductions { $$ = $2; };
 
 /* The tempVarList is a list of variables already seen that need to be added to the function */
-functionProductions: functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  declarations statements returnProduction CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5)) System.out.println("Function Error"); /* FLOODException Here */}
-                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5)) System.out.println("Function Error"); /* FLOODException Here */}
-                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  empty statements returnProduction CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5)) System.out.println("Function Error"); /* FLOODException Here */}
-                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  declarations empty returnProduction CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5)) System.out.println("Function Error"); /* FLOODException Here */}
+functionProductions: functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  declarations statements returnProduction CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5, yyline)) System.out.println("Function Error"); /* FLOODException Here */}
+                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5, yyline)) System.out.println("Function Error"); /* FLOODException Here */}
+                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  empty statements returnProduction CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5, yyline)) System.out.println("Function Error"); /* FLOODException Here */}
+                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  declarations empty returnProduction CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5, yyline)) System.out.println("Function Error"); /* FLOODException Here */}
                      | empty { $$ = $1; }
                      ;
 
@@ -250,27 +250,26 @@ constOrVar: FLT { $$ = "" + $1; }
           | ID { $$ = "" + $1; }
           ;
 
-/* NEED SEMANCTIC ACTION: Check types for all arithmetic expressions below - !!!PLEASE REMOVE THIS COMMENT WHEN DONE!!! */
 arithmeticExp: arithmeticExp PLUS arithmeticExp { $$ = $1 + " + " + $3 ; }
              | arithmeticExp MINUS arithmeticExp { $$ = $1 + " - " + $3; }
              | arithmeticExp MULT arithmeticExp { $$ = $1 + " * " + $3; }
              | arithmeticExp DIV arithmeticExp { $$ = $1 + " / " + $3; }
              | arithmeticExp MOD arithmeticExp { $$ = $1 + " % " + $3; }
              | OPEN_PARAN arithmeticExp CLOSE_PARAN { $$ = "(" + $2 + ")"; }
-             | ID  { $$ = $1; }
-             | FLT { $$ = "" + $1; }
-             | INT { $$ = "" + $1; }
+             | ID  { $$ = $1; semantics.assignmentCheckVar($1);}
+             | FLT { $$ = "" + $1; semantics.assignmentCheckLeftIsOfType("float");}
+             | INT { $$ = "" + $1; semantics.assignmentCheckLeftIsOfType("int");}
              ;
 
-assignment: leftSide EQUAL rightSide { $$ = $1 + " = " + $3; semantics.assignmentCheck($1, $3); /* NEED SEMANCTIC ACTION: Check for boolean True and False - !!!PLEASE REMOVE THIS COMMENT WHEN DONE!!! */}
+assignment: leftSide EQUAL rightSide { $$ = $1 + " = " + $3;}
 
-leftSide: ID { $$ = $1; }
+leftSide: ID { $$ = $1; semantics.assignmentCheckLeft($1);}
 
 rightSide: arithmeticExp { $$ = $1 + ";\n"; }
-         | functionCall { $$ = $1 + ";\n"; }
-         | STRING_CONST { $$ = $1 + ";\n"; }
-         | True { $$ = "true" + ";\n"; }
-         | False { $$ = "false" + ";\n"; }
+         | functionCall { $$ = $1 + ";\n"; semantics.assignmentCheckFunction($1);}
+         | STRING_CONST { $$ = $1 + ";\n"; semantics.assignmentCheckLeftIsOfType("String");}
+         | True { $$ = "true" + ";\n"; semantics.assignmentCheckLeftIsOfType("boolean");}
+         | False { $$ = "false" + ";\n"; semantics.assignmentCheckLeftIsOfType("boolean");}
          ;
 
 functionCall: functionName OPEN_PARAN parameterList CLOSE_PARAN { $$ = $1 + "(" + $3 + ")"; /* NEED SEMANCTIC ACTION: Check for Alert(titleStr, messageStr) and Error(titleStr, messageStr) function calls - !!!PLEASE REMOVE THIS COMMENT WHEN DONE!!! */}

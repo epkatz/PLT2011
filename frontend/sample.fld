@@ -18,7 +18,7 @@ DefineFunctions
 	{
 	}
 
-	Flt anotherFunction2(Int bubble, Flt bubble2, User u, Player p, User[] u2, Player[] p2)
+	Flt anotherFunction(Int bubble, Flt bubble2, User u, Player p, User[] u2, Player[] p2)
 	{
 		/*
 		* comments
@@ -36,7 +36,7 @@ DefineFunctions
 		Str strVar;
 		Bool boolVar;
 		
-		strVar = "sdkfjaslkdf";
+		strVar = "sdhfsd";
 	}
 
 	Int myFunction(Int turn, Flt turn2)
