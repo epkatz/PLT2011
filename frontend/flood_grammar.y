@@ -228,6 +228,7 @@ declarations: declarations declaration SEMICOLON{ $$ = $1 + $2; }
             | declaration SEMICOLON{ $$ = $1; }
             ;
 
+/* NEED SEMANCTIC ACTION: Declaration needs type checking - !!!PLEASE REMOVE THIS COMMENT WHEN DONE!!! */
 declaration: dataType ID
              {
               if ($1 == "String")
