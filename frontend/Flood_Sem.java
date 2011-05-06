@@ -38,6 +38,8 @@ public class Flood_Sem {
 	
 	//Check to make sure max user is greater than min user
 
+	//Check whether a user and action have already been added
+
 	/*Adds an Action */
 	public boolean addAction(String name){
 		if (actionNames.contains(name)){
