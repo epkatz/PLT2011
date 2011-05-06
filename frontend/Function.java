@@ -78,6 +78,35 @@ public class Function {
 			}
 		}
 	}
+
+	/*
+	 * Handle array elements
+	 */
+	
+	//make sure array is of either type User or Player
+	public boolean checkType(String arrayType) throws FLOODException{
+		if (arrayType.equals("User") || arrayType.equals("Player")){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	//check that array index is an int
+	public boolean Array(String arrayName){
+		int index = arrayName.indexOf('[');
+		String arrayIndex = ""; 
+		while(arrayName.charAt(index) != ']')
+			arrayIndex += arrayName.charAt(index);
+		try{
+			Integer.parseInt(arrayIndex);
+			return true;
+		}
+		catch(Exception e){
+			return false;
+		}
+	}
 	
 	//check that function returns
 	public boolean functionReturns(String returnProduction){

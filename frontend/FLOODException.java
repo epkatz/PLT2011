@@ -19,6 +19,11 @@ public class FLOODException extends Exception {
 		return e;
 	}
 
+	public static FLOODException InvalidArrayType(int lineInfo, String element) throws FLOODException{
+		FLOODException e = new FLOODException(lineInfo, "At line: " + lineInfo + ", " + element + " invalid array type. Arrays can only be of type User or Player");
+		return e;
+	}
+
 	public String getError(){
 		return message;
 	}
