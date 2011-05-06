@@ -53,6 +53,9 @@ While             { yyparser.yycolumn += yytext().length(); return Parser.While;
 Player            { yyparser.yycolumn += yytext().length(); return Parser.Player;           }
 True              { yyparser.yycolumn += yytext().length(); return Parser.True;             }
 False             { yyparser.yycolumn += yytext().length(); return Parser.False;            }
+RemovePlayer      { yyparser.yycolumn += yytext().length(); return Parser.RemovePlayer;     }
+AddPlayer         { yyparser.yycolumn += yytext().length(); return Parser.AddPlayer;        }
+ArrayLength       { yyparser.yycolumn += yytext().length(); return Parser.ArrayLength;      }
 
 /* Comments */
 {COMMENTS}        { /* ignore */ }
@@ -98,6 +101,8 @@ False             { yyparser.yycolumn += yytext().length(); return Parser.False;
                   }
 
 ,                 { yyparser.yycolumn++; return Parser.COMMA;          }
+
+"."               { yyparser.yycolumn++; return Parser.DOT;            }
 
 "+"               { yyparser.yycolumn++; return Parser.PLUS;           }
 
