@@ -1,70 +1,21 @@
-defineLeague
-	set leagueName("Happy League");
-	set maxUser(10);
-	set minUser(12);
-	add User("Eli");
-	add Action("Field Goal Attempt", 0.5);
+DefineLeague
+	Set LeagueName("Happy League");
+	Set MaxUser(10);
+	Set MinUser(12);
+	Add User("Eli");
+	Add Action("Field Goal Attempt", 0.5);
 
-defineFunctions
-	Int myFunction(Int turn, flt turn2)
+DefineFunctions
+	Int myFunction(Int turn, Flt turn2)
 	{
+		Int a;
 
-		flt testVar;		
+		Bool t;
 
-		If(a > b)
-		{
-		}
-		Else
-		{
-		};
+		t = True;
 
-		If(false)
-		{
-			myFunction2(a, 10, 11.1);
-			b = myFunction3();
-		}
-		Else
-		{
-		};
-
-		If( a < b)
-		{
-		}
-		Else
-		{
-			myFunction2(a, 10, 11.1);
-			b = myFunction3();
-		};
-
-		If( a < b)
-		{
-			myFunction2(a, 10, 11.1);
-			b = myFunction3();
-		}
-		Else
-		{
-			myFunction2(a, 10, 11.1);
-			b = myFunction3();
-		};
-
-		If( a < b)
-		{
-		};
-
-		If( a > b)
-		{
-			myFunction2(a, 10, 11.1);
-			b = myFunction3();
-		};
-
-		While(a>b)
-		{
-		};
-
-		While(a == b)
-		{
-			myFunction2(a, 10, 11.1);
-			b = myFunction3();
+		If (t > a){
+			t = False;
 		};
 		
 		Return a;

@@ -136,11 +136,10 @@ definitionproductions: Set LeagueName OPEN_PARAN STRING_CONST CLOSE_PARAN SEMICO
 
 functions: DefineFunctions functionProductions { $$ = $2; };
 
-/* The tempVarList is a list of variables already seen that need to be added to the function */
 functionProductions: functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  declarations statements returnProduction CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5, yyline)) System.out.println("Function Error"); /* FLOODException Here */}
-                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5, yyline)) System.out.println("Function Error"); /* FLOODException Here */}
-                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  empty statements returnProduction CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5, yyline)) System.out.println("Function Error"); /* FLOODException Here */}
-                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  declarations empty returnProduction CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5, yyline)) System.out.println("Function Error"); /* FLOODException Here */}
+                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5, yyline)) System.out.println("Function Error");}
+                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  empty statements returnProduction CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5, yyline)) System.out.println("Function Error");}
+                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  declarations empty returnProduction CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5, yyline)) System.out.println("Function Error");}
                      | empty { $$ = $1; }
                      ;
 
@@ -197,7 +196,6 @@ conditionals: If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOS
             | If OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY Else OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n}" + "\nelse\n{\n" + $10 + "}\n"; }
             ;
 
-/* NEED SEMANCTIC ACTION: Check types for all boolean expressions below - !!!PLEASE REMOVE THIS COMMENT WHEN DONE!!! */
 loop: While OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY { $$ = "while(" + $3 + ")\n{\n" + $6 + "}\n"; }
     | While OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY { $$ = "while(" + $3 + ")\n{\n}\n"; }
     | While OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY { $$ = "while(" + $3 + ")\n{\n" + $6 + "}\n"; }
@@ -208,28 +206,23 @@ declarations: declarations declaration SEMICOLON{ $$ = $1 + $2; }
             | declaration SEMICOLON{ $$ = $1; }
             ;
 
-/* TODO The semantac check doesn't see the array */
+
 declaration: dataType ID { $$ = $1 + " " + $2 + ";\n"; semantics.addVar($2, $1); }
             | dataType ID EQUAL FLT { $$ = $1 + " " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, $1); }
             | dataType ID EQUAL INT { $$ = $1 + " " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, $1); }
             | dataType ID EQUAL STRING_CONST { $$ = $1 + " " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, $1); }
-            //| Str OPEN_SQUARE INT CLOSE_SQUARE ID { $$ = "String[" + $3 + "] " + $5 + ";\n"; semantics.addVar($5, "String"); }
-            //| Int OPEN_SQUARE INT CLOSE_SQUARE ID { $$ = "int[" + $3 + "] " + $5 + ";\n"; semantics.addVar($5, "int");}
-            //| Flt OPEN_SQUARE INT CLOSE_SQUARE ID { $$ = "float[" + $3 + "] " + $5 + ";\n"; semantics.addVar($5, "float"); }
-            //| empty{ $$ = ""; }
             ;
 
-relationalExp: ID LESSEQUAL constOrVar { $$ = $1 + " <= " + $3; }
-             | ID GREATEQUAL constOrVar { $$ = $1 + " >= " + $3; }
-             | ID NOTEQUAL constOrVar { $$ = $1 + " != " + $3; }
-             | ID LESS constOrVar { $$ = $1 + " < " + $3; }
-             | ID GREAT constOrVar { $$ = $1 + " > " + $3; }
-             | ID ISEQUAL constOrVar { $$ = $1 + " == " + $3; }
+relationalExp: ID LESSEQUAL constOrVar { $$ = $1 + " <= " + $3; semantics.checkRelationalExp($1, $3); semantics.checkRelationForInvalidType($1);}
+             | ID GREATEQUAL constOrVar { $$ = $1 + " >= " + $3; semantics.checkRelationalExp($1, $3); semantics.checkRelationForInvalidType($1);}
+             | ID NOTEQUAL constOrVar { $$ = $1 + " != " + $3; semantics.checkRelationalExp($1, $3);}
+             | ID LESS constOrVar { $$ = $1 + " < " + $3; semantics.checkRelationalExp($1, $3); semantics.checkRelationForInvalidType($1);}
+             | ID GREAT constOrVar { $$ = $1 + " > " + $3; semantics.checkRelationalExp($1, $3); semantics.checkRelationForInvalidType($1);}
+             | ID ISEQUAL constOrVar { $$ = $1 + " == " + $3; semantics.checkRelationalExp($1, $3);}
              | OPEN_PARAN relationalExp CLOSE_PARAN { $$ = "(" + $2 + ")"; }
              //FLOODException Here
              ;
 
-/* NEED SEMANCTIC ACTION: Check types for all boolean expressions below - !!!PLEASE REMOVE THIS COMMENT WHEN DONE!!! */
 booleanExp: booleanExp AND booleanExp { $$ = $1 + " && " + $3; }
           | booleanExp OR booleanExp { $$ = $1 + " || " + $3; }
           | relationalExp AND relationalExp { $$ = $1 + " && " + $3; }
