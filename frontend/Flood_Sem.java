@@ -188,6 +188,57 @@ public class Flood_Sem {
 			return false;
 		}
 	}
+
+	/* Checks against an int */
+	public boolean checkRelationalExp(String left, int right){
+		return checkRelationalExpAgainstType(left, "int");
+	}
+
+	/* Checks against a float */
+	public boolean checkRelationalExp(String left, float right){
+		return checkRelationalExpAgainstType(left, "float");
+	}
+
+	/* Checks against a declared variable */
+	public boolean checkRelationalExp(String left, String right){
+		if (varExists(right)){
+			return checkRelationalExpAgainstType(left, varList.get(right));
+		}
+		if (debugging){System.out.println(right + " doesn't exist");}
+		return false;
+	}
+
+	/* Checks to make sure that relational expression don't compare an invalid type */
+	public boolean checkRelationForInvalidType(String left){
+		if (varExists(left)){
+			String leftType = varList.get(left);
+			if (!leftType.equals("int") || !leftType.equals("float")){
+				if (debugging){System.out.println(left + " cannot be used because it is of type " + leftType);}
+				return false;
+			}
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	/* Private method for checking a variable against a type */
+	private boolean checkRelationalExpAgainstType(String left, String rightType){
+		if (varExists(left)){
+			String leftType = varList.get(left);
+			if (leftType.equals(rightType)){
+				if (debugging){System.out.println("Both are of type " + rightType);}
+				return true;
+			}
+			if (debugging){System.out.println(rightType + " is not " + leftType);}
+			return false;
+		}
+		else{
+			if (debugging){System.out.println(left + " doesn't exist");}
+			return false;
+		}
+	}
 	
 	//set flags for required functions
 	public void setFlags() throws FLOODException{
