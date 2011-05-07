@@ -229,24 +229,15 @@ declarations: declarations declaration SEMICOLON{ $$ = $1 + $2; }
             ;
 
 /* NEED SEMANCTIC ACTION: Declaration needs type checking - !!!PLEASE REMOVE THIS COMMENT WHEN DONE!!! */
-declaration: dataType ID
-             {
-              if ($1 == "String")
-              {
-                $$ = $1 + " " + $2 + " = new String();\n";
-              }
-              else
-              {
-                $$ = $1 + " " + $2 + ";\n";
-              }
-              
-               semantics.addVar($2, $1);
-             }
-            | dataType ID EQUAL FLT { $$ = $1 + " " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, $1); }
-            | dataType ID EQUAL INT { $$ = $1 + " " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, $1); }
-            | dataType ID EQUAL True { $$ = $1 + " " + $2 + " = true;\n"; semantics.addVar($2, $1); }
-            | dataType ID EQUAL False { $$ = $1 + " " + $2 + " = false;\n"; semantics.addVar($2, $1); }
-            | dataType ID EQUAL STRING_CONST { $$ = $1 + " " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, $1); }
+declaration: Flt ID  { $$ = "float " + $2 + ";\n";  semantics.addVar($2, "float"); }
+            | Int ID  { $$ = "int " + $2 + ";\n";  semantics.addVar($2, "int"); }
+            | Bool ID  { $$ = "boolean " + $2 + ";\n";  semantics.addVar($2, "boolean"); }
+            | Str ID  { $$ = "String " + $2 + " = new String();\n";  semantics.addVar($2, "String"); }
+            | Flt ID EQUAL FLT { $$ = "float " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, "float"); }
+            | Int ID EQUAL INT { $$ = "int " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, "int"); }
+            | Bool ID EQUAL True { $$ = "boolean " + $2 + " = true;\n"; semantics.addVar($2, "boolean"); }
+            | Bool ID EQUAL False { $$ = "boolean " + $2 + " = false;\n"; semantics.addVar($2, "boolean"); }
+            | Str ID EQUAL STRING_CONST { $$ = "String " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, "String"); }
             ;
 
 relationalExp: ID LESSEQUAL constOrVar { $$ = $1 + " <= " + $3; semantics.checkRelationalExp($1, $3); semantics.checkRelationForInvalidType($1); }
