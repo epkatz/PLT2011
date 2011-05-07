@@ -130,7 +130,7 @@ public class Flood_Sem {
 		return true;
 	}
 
-	/* Checks the type of a variable agains the left side of an expression */
+	/* Checks the type of a variable against the left side of an expression */
 	public boolean assignmentCheckVar(String right){
 		if (varExists(right)){
 			if (varList.get(right).equals(leftSide)){
@@ -242,58 +242,170 @@ public class Flood_Sem {
 		}
 	}
 	
+	//check that array index is an int
+	public boolean checkIndex(String arrayIndex){ 
+		//check if ID is a variable of type int
+		arrayIndex = arrayIndex.replaceAll(" ", "");
+		if(varList.containsKey(arrayIndex) && varList.get(arrayIndex).equals("int")){
+			System.out.println(arrayIndex +"\n"+ varList.get(arrayIndex));
+			return true;
+		}
+		else{
+			System.out.println("Fail, invalid type");
+			return false;
+		}
+	} 
+	
 	//set flags for required functions
-	public void setFlags() throws FLOODException{
+	public String setFlags(){
 		//flag for draftFunction
 		Function fun;
 		if(functionTable.containsKey("draftFunction")){
 			fun = functionTable.get("draftFunction");
-			if(fun.returnType.equals("int"))
-				draftFunFlag = true;
-			else
-				throw FLOODException.InvalidFunctionReturnType(fun.lineNumber, fun.functionName);
+			if(fun.returnType.equals("int")){
+				if(fun.paramTypeList.length == 1 && fun.paramTypeList[0].equals("int")){
+					System.out.println("Draft function found");
+					draftFunFlag = true;
+				}
+			}
 		}
 		if(functionTable.containsKey("draftPlayer")){
 			fun = functionTable.get("draftPlayer");
-			if(fun.returnType.equals("boolean"))
-				draftPlayFlag = true;
-			else
-				throw FLOODException.InvalidFunctionReturnType(fun.lineNumber, fun.functionName);
+			if(fun.returnType.equals("boolean")){
+				if(fun.paramTypeList.length==2 && fun.paramTypeList[0].equals("User")  && fun.paramTypeList[1].equals("Player")){
+					System.out.println("Draft player found");
+					draftPlayFlag = true;
+				}
+			}
 		}
 		if(functionTable.containsKey("trade")){
 			fun = functionTable.get("trade");
-			if(fun.returnType.equals("boolean"))
-				draftPlayFlag = true;
-			else
-				throw FLOODException.InvalidFunctionReturnType(fun.lineNumber, fun.functionName);
+			if(fun.returnType.equals("boolean")){
+				if(fun.paramTypeList.length==4 && fun.paramTypeList[0].equals("User")
+						&& fun.paramTypeList[1].equals("Player[]") && fun.paramTypeList[2].equals("User")
+						&& fun.paramTypeList[3].equals("Player[]")){
+					System.out.println("Trade found");
+					tradeFlag = true;
+				}
+			}
 		}
 		if(functionTable.containsKey("dropPlayer")){
 			fun = functionTable.get("dropPlayer");
-			if(fun.returnType.equals("boolean"))
-				draftPlayFlag = true;
-			else
-				throw FLOODException.InvalidFunctionReturnType(fun.lineNumber, fun.functionName);
+			if(fun.returnType.equals("boolean")){
+				if(fun.paramTypeList.length==2 && fun.paramTypeList[0].equals("User")
+						&& fun.paramTypeList[1].equals("Player")){
+					System.out.println("Drop player found");
+					dropPlayFlag = true;
+				}
+			}
 		}
+		return writeDefaultFuns();
 	}
 	
 	//write default functions if needed
-	public String[] writeDefaultFuns(){
-		String[] functions = {"", "", "", ""};
+	public String writeDefaultFuns(){
+		String functions = "";
 		if(!draftFunFlag){
 			//write draft function
-			functions[0] = "public static int draftFunction(int turn){return turn%myLeague.getCurrentNumUsers();}";
+			functions += "public static int draftFunction(int turn){\nreturn turn%myLeague.getCurrentNumUsers();\n}\n";
 		}
 		if(!draftPlayFlag){
 			//write draft player
-			functions[1] = "public static boolean draftPlayer(User u, Player p){u.addPlayer(p);return true;}";
+			functions += "public static boolean draftPlayer(User u, Player p){\nu.addPlayer(p);\nreturn true;\n}\n";
 		}
 		if(!tradeFlag){
 			//write trade
-			functions[2] = "public static boolean trade(User u1, Player[] p1, User u2, Player[] p2){boolean flag2=true;for(int i=0;i<p1.length;i++){flag2=dropPlayer(u1,p1[i]);if(!flag2){for(int j=i;j>=0;j--){draftPlayer(u1,p1[j]);}return false;}}for(int i=0;i<p2.length;i++){flag2=dropPlayer(u2,p2[i]);if(!flag2){for(int j=i;j>=0;j--){draftPlayer(u2,p2[j]);}for(int j=0;j<p1.length;j++){draftPlayer(u1,p1[j]);}return false;}}for(int i=0;i<p1.length;i++){flag2=draftPlayer(u2,p1[i]);if(!flag2){for(int j=i;j>=0;j--){dropPlayer(u2,p1[j]);}for(int j=0;j<p1.length;j++){draftPlayer(u1,p1[j]);}for(int j=0;j<p2.length;j++){draftPlayer(u2,p2[j]);}return false;}}for(int i=0;i<p2.length;i++){flag2=draftPlayer(u1,p2[i]);if(!flag2){for(int j=i;j>=0;j--){dropPlayer(u1,p2[j]);}for(int j=0;j<p1.length;j++){dropPlayer(u2,p1[j]);}for(int j=0;j<p1.length;j++){draftPlayer(u1,p1[j]);}for(int j=0;j<p2.length;j++){draftPlayer(u2,p2[j]);}return false;}}return true;}";
+			functions += "public static boolean trade(User u1, Player[] p1, User u2, Player[] p2){\n"+
+						"int i,j;\n"+
+						"boolean flag2=true;\n"+
+						"i=0;\n"+
+						"while(i<p1.length){\n"+
+							"flag2=dropPlayer(u1,p1[i]);\n"+
+							"if(!flag2){    //If the drop was unsuccessful\n"+
+								"j=i;\n"+
+								"while(j>=0){    //Add p1 back to u1\n"+
+								    "draftPlayer(u1,p1[j]);\n"+
+								    "j--;\n"+
+								"}\n"+
+								"return false;\n"+
+							"}\n"+
+							"i++;\n"+
+						"}\n"+
+						"i=0;\n"+
+						"while(i<p2.length){\n"+
+							"flag2=dropPlayer(u2,p2[i]);\n"+
+							"if(!flag2){    //If the drop was unsuccessful\n"+
+								"j=i;\n"+
+								"while(j>=0){    //Add p2 back to u2\n"+
+								    "draftPlayer(u2,p2[j]);\n"+
+								    "j--;\n"+
+								"}\n"+
+								"j=0;\n"+
+								"while(j<p1.length){    //Add p1 to u1\n"+
+								    "draftPlayer(u1,p1[j]);\n"+
+								    "j++;\n"+
+								"}\n"+
+								"return false;\n"+
+							"}\n"+
+							"i++;\n"+
+						"}\n"+
+						"i=0;\n"+
+						"while(i<p1.length){\n"+
+							"flag2=draftPlayer(u2,p1[i]);\n"+
+							"if(!flag2){    //If draft was unsuccessful\n"+
+								"j=i;\n"+
+								"while(j>=0){    //Remove p1 from u2\n"+
+								    "dropPlayer(u2,p1[j]);\n"+
+								    "j--;\n"+
+								"}\n"+
+								"j=0;\n"+
+								"while(j<p1.length){    //Add p1 to u1\n"+
+								    "draftPlayer(u1,p1[j]);\n"+
+								    "j++;\n"+
+								"}\n"+
+								"j=0;\n"+
+								"while(j<p2.length){    //Add p2 to u2\n"+
+								    "draftPlayer(u2,p2[j]);\n"+
+								    "j++;\n"+
+								"}\n"+
+								"return false;\n"+
+							"}\n"+
+							"i++;\n"+
+						"}\n"+
+						"i=0;\n"+
+						"while(i<p2.length){\n"+
+							"flag2=draftPlayer(u1,p2[i]);\n"+
+							"if(!flag2){    //If the drop was unsuccessful\n"+
+								"j=i;\n"+
+								"while(j>=0){    //Remove p2 from u1\n"+
+								    "dropPlayer(u1,p2[j]);\n"+
+								    "j--;\n"+
+								"}\n"+
+								"j=0;\n"+
+								"while(j<p1.length){    //Remove p1 from u2\n"+
+								    "dropPlayer(u2,p1[j]);\n"+
+								    "j++;\n"+
+								"}\n"+
+								"j=0;\n"+
+								"while(j<p1.length){    //Add p1 to u1\n"+
+								    "draftPlayer(u1,p1[j]);\n"+
+								    "j++;\n"+
+								"}\n"+
+								"j=0;\n"+
+								"while(j<p2.length){    //Add p2 to u2\n"+
+								    "draftPlayer(u2,p2[j]);\n"+
+								    "j++;\n"+
+								"}\n"+
+								"return false;\n"+
+							"}\n"+
+							"i++;\n"+
+						"}\n"+
+						"return true;\n"+
+					"}\n";
 		}
 		if(!dropPlayFlag){
 			//write drop player
-			functions[3] = "public static boolean dropPlayer(User u, Player p){u.removePlayer(p);return true;}";
+			functions += "public static boolean dropPlayer(User u, Player p){\nu.removePlayer(p);\nreturn true;\n}\n";
 		}
 		return functions;
 	}

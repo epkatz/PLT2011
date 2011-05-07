@@ -1,12 +1,11 @@
 import java.util.HashMap;
-import java.util.StringTokenizer;
 import java.lang.Integer;
-import java.util.ArrayList;
 
 
 public class Function {
 
 	String functionName;
+	String[] paramTypeList;
 	HashMap<String, String> argsList = new HashMap<String, String>(); //name type
 	String returnType;
 	int lineNumber;
@@ -19,18 +18,15 @@ public class Function {
 		this.returnType = returnType;
 		if (debugging){System.out.println(functionName + "= returnType: " + returnType);}
 		this.lineNumber = lineNumber;
-		if (paramList.contains(",")){
-			String[] params = paramList.split(",");
-			String[] temp;
-			for(int i=0; i<params.length; i++){
-				//remove spaces at beginning
-				if(params[i].charAt(0)==' ')
-					params[i] = params[i].substring(1);
-				//split
-				temp = params[i].split(" ");
-				argsList.put(temp[1], temp[0]); //This is reversed in the argument list so reversing it back here
-				if (debugging) {System.out.println(functionName + "= argName: " + temp[1] + ", type: " + temp[0]);}
-			}
+		
+		String[] params = paramList.trim().split("\\s*,\\s*");
+		paramTypeList = new String[params.length];
+		for(int i=0; i<params.length; i++){
+			//split
+			String[] temp = params[i].split("\\s+");
+			argsList.put(temp[1], temp[0]); //This is reversed in the argument list so reversing it back here
+			paramTypeList[i]=temp[0];
+			if (debugging) {System.out.println(functionName + "= argName: " + temp[1] + ", type: " + temp[0]);}
 		}
 	}
 	
@@ -76,35 +72,6 @@ public class Function {
 					return false;
 				}
 			}
-		}
-	}
-
-	/*
-	 * Handle array elements
-	 */
-	
-	//make sure array is of either type User or Player
-	public boolean checkType(String arrayType) throws FLOODException{
-		if (arrayType.equals("User") || arrayType.equals("Player")){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-	
-	//check that array index is an int
-	public boolean Array(String arrayName){
-		int index = arrayName.indexOf('[');
-		String arrayIndex = ""; 
-		while(arrayName.charAt(index) != ']')
-			arrayIndex += arrayName.charAt(index);
-		try{
-			Integer.parseInt(arrayIndex);
-			return true;
-		}
-		catch(Exception e){
-			return false;
 		}
 	}
 	
