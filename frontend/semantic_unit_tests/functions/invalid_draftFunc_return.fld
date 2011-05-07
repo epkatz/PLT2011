@@ -1,0 +1,13 @@
+DefineLeague
+	Set LeagueName("Happy League");
+	Set MaxUser(10);
+	Set MinUser(12);
+	Add User("Eli");
+	Add Action("Field Goal Attempt", 0.5);
+
+DefineFunctions
+	Bool draftFuntion(Int turn){
+		Bool b;
+		b=True;
+		Return b;
+	}
