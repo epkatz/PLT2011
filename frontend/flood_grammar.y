@@ -301,10 +301,10 @@ rightSide: arithmeticExp { $$ = $1 + ";\n"; }
          | False { $$ = "false" + ";\n"; semantics.assignmentCheckLeftIsOfType("boolean"); }
          ;
 
-functionCall: functionName OPEN_PARAN parameterList CLOSE_PARAN { $$ = $1 + "(" + $3 + ")"; /* NEED SEMANCTIC ACTION: Check for Alert(titleStr, messageStr) and Error(titleStr, messageStr) function calls - !!!PLEASE REMOVE THIS COMMENT WHEN DONE!!! */}
-            | AddPlayer OPEN_PARAN ID COMMA ID CLOSE_PARAN { $$ = $3 + ".addPlayer(" + $5 + ")" ; }
-            | RemovePlayer OPEN_PARAN ID COMMA ID CLOSE_PARAN { $$ = $3 + ".removePlayer(" + $5 + ")" ; }
-            | ArrayLength OPEN_PARAN ID CLOSE_PARAN { $$ = $3 + ".length"; }
+functionCall: functionName OPEN_PARAN parameterList CLOSE_PARAN { $$ = $1 + "(" + $3 + ")"; }
+            | AddPlayer OPEN_PARAN ID COMMA ID CLOSE_PARAN { $$ = $3 + ".addPlayer(" + $5 + ")" ; semantics.checkIDagainstType($3,"User");semantics.checkIDagainstType($5,"Player");}
+            | RemovePlayer OPEN_PARAN ID COMMA ID CLOSE_PARAN { $$ = $3 + ".removePlayer(" + $5 + ")" ; semantics.checkIDagainstType($3,"User");semantics.checkIDagainstType($5,"Player");}
+            | ArrayLength OPEN_PARAN ID CLOSE_PARAN { $$ = $3 + ".length"; semantics.checkIDagainstType($3,"User[]") || semantics.checkIDagainstType($3,"Player[]");}
             ;
 
 parameterList: parameterList COMMA parameterList { $$ = $1 + ", " + $3; }
@@ -351,7 +351,7 @@ public void generateFloodProgram(String definitions, String functions)
   {
     System.out.println("Line 67");
     /**************** !!!MANUALLY CHANGE DIRECTORY OUTPUT BELOW FOR FLOOD PROGRAM!!! ************************/
-    FileWriter writer = new FileWriter(new File("C:/PLT/FloodProgram.java"));
+    FileWriter writer = new FileWriter(new File("FloodProgram.java"));
     String buffer = classStart + staticDeclarations + main_start + definitions + main_preEndAutogenerate + main_end + functions + classEnd;
     writer.write(buffer);
     writer.close();
