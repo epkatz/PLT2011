@@ -202,7 +202,7 @@ returnProd: Return ID SEMICOLON { $$ = "return " + $2 + ";"; }
                 | Return FLT SEMICOLON { $$ = "return " + $2 + ";"; }
                 | Return True SEMICOLON { $$ = "return true;"; }
                 | Return False SEMICOLON { $$ = "return false;"; }
-		;
+    ;
 
 conditionals: If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n" + $6 + "}\n"; }
             | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY Else OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n" + $6 + "}\nelse\n{\n" + $10 + "}\n"; }
@@ -351,7 +351,7 @@ public void generateFloodProgram(String definitions, String functions)
   {
     System.out.println("Line 67");
     /**************** !!!MANUALLY CHANGE DIRECTORY OUTPUT BELOW FOR FLOOD PROGRAM!!! ************************/
-    FileWriter writer = new FileWriter(new File("/home/dillen/workspace_PLT/PLT2011/frontend/floodProgram.java"));
+    FileWriter writer = new FileWriter(new File("C:/PLT/FloodProgram.java"));
     String buffer = classStart + staticDeclarations + main_start + definitions + main_preEndAutogenerate + main_end + functions + classEnd;
     writer.write(buffer);
     writer.close();
