@@ -57,6 +57,14 @@ RemovePlayer      { yyparser.yycolumn += yytext().length(); return Parser.Remove
 AddPlayer         { yyparser.yycolumn += yytext().length(); return Parser.AddPlayer;        }
 ArrayLength       { yyparser.yycolumn += yytext().length(); return Parser.ArrayLength;      }
 
+GetUserName       { yyparser.yycolumn += yytext().length(); return Parser.GetUserName;      }
+GetNumPlayers     { yyparser.yycolumn += yytext().length(); return Parser.GetNumPlayers;    }
+GetPlayerName     { yyparser.yycolumn += yytext().length(); return Parser.GetPlayerName;    }
+GetPlayerPosition { yyparser.yycolumn += yytext().length(); return Parser.GetPlayerPosition;}
+GetPlayerPoints   { yyparser.yycolumn += yytext().length(); return Parser.GetPlayerPoints;  }
+
+
+
 /* Comments */
 {COMMENTS}        { /* ignore */ }
 
