@@ -1,14 +1,13 @@
-defineLeague
+DefineLeague
 
-defineFunctions
-	flt anotherFunction()
+DefineFunctions
+	Flt anotherFunction()
 	{
-		flt fltVar;
-		Int[10] arr;
-		flt fltVar;
+		Flt fltVar;
+		Flt fltVar;
 		Int intVar;
-		str strVar;
-		bool boolVar;
+		Str strVar;
+		Bool boolVar;
 		Int a;
 		
 		a = 2.0;
