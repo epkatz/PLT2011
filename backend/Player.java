@@ -2,7 +2,7 @@ package backend;
 
 public class Player implements Comparable<Player>{
 	private String name, position;
-	private double totalPoints;
+	private float totalPoints;
 	
 	/**Constructor with just the name and position.
      * 
@@ -20,9 +20,9 @@ public class Player implements Comparable<Player>{
      * 
      * @param String name
      * @param String position
-     * @param double totalPoints
+     * @param float totalPoints
      */
-	public Player(String name, String position,double totalPoints){
+	public Player(String name, String position,float totalPoints){
 		this.name=name;
 		this.position=position;
 		this.totalPoints=totalPoints;
@@ -55,9 +55,9 @@ public class Player implements Comparable<Player>{
 	
 	/**Add points to the player and the team they are on.
 	 * 
-	 * @param double pts
+	 * @param float pts
 	 */
-	public void addPoints(double pts){
+	public void addPoints(float pts){
 		totalPoints+=pts;	//Add pts to players points
 		User temp=League.playerToTeam.get(this);	//Get team they are on
 		if(temp!=null)	//Free agent
@@ -66,9 +66,9 @@ public class Player implements Comparable<Player>{
 	
 	/**Get the player's total points.
 	 * 
-	 * @return double totalPoints
+	 * @return float totalPoints
 	 */
-	public double getPoints(){
+	public float getPoints(){
 		return totalPoints;
 	}
 	

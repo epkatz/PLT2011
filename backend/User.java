@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 
 public class User implements Comparable<User>{
-    private double totalPoints;
+    private float totalPoints;
     private String name;
     private HashMap<String,Player> teamAthletes;
     
@@ -22,9 +22,9 @@ public class User implements Comparable<User>{
      * dump files.
      * 
      * @param String name
-     * @param double totalPoints
+     * @param float totalPoints
      */
-    public User(String name,double totalPoints){
+    public User(String name,float totalPoints){
     	this.name=name;
     	this.totalPoints=totalPoints;
     	teamAthletes=new HashMap<String,Player>();
@@ -58,17 +58,17 @@ public class User implements Comparable<User>{
     
     /**Add points to the team.
      * 
-     * @param double points
+     * @param float points
      */
-    public void addPoints(double points){
+    public void addPoints(float points){
     	totalPoints+=points;
     }
     
     /**Get the user's points.
      * 
-     * @return double totalPoints
+     * @return float totalPoints
      */
-	public double getPoints() {
+	public float getPoints() {
 		return totalPoints;
 	}
 	
