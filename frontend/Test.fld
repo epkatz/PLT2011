@@ -1,0 +1,61 @@
+/*
+* Test FLOOD program
+*/
+
+/*
+* Define league parameters
+*/
+DefineLeague
+	Set LeagueName("Happy League");
+	Set MaxTeamSize(10);
+	Set MinTeamSize(5);
+	Set MaxUser(10);
+	Set MinUser(4);
+	Add User("Eli");
+	Add User("Dillen");
+	Add User("Anuj");
+	Add User("Tam");
+	Add User("Steph");
+	/* Add Players */
+	Add Player("Lebron James","forward");
+	Add Player("Chris Bosh","forward");
+	Add Player("Dwyane Wade","guard");
+	Add Player("Eddie House","guard");
+	Add Player("Joel Anthony","center");
+	Add Player("Ron Artest","forward");
+	Add Player("Pau Gasol","forwardcenter");
+	Add Player("Lamar Odom","forward");
+	Add Player("Kobe Bryant","guard");
+	Add Player("Derek Fisher","guard");
+	Add Player("Ray Allen","guard");
+	Add Player("Kevin Garnett","forward");
+	Add Player("Paul Pierce","forward");
+	Add Player("Shaquille O'Neal","center");
+	Add Player("Glen Davis","forwardcenter");
+	Add Player("Carmelo Anthony","forward");
+	Add Player("Landry Fields","guard");
+	Add Player("Derrick Brown","forward");
+	Add Player("Amare Stoudemire","forwardcenter");
+	Add Player("Bill Walker","guardforward");
+	Add Player("Josh Powell","forward");
+	Add Player("Joe Johnson","guard");
+	Add Player("Damien Wilkins","guardforward");
+	Add Player("Zaza Pachulia","center");
+	Add Player("Marvin Williams","forward");
+	/* Add Actions */
+	Add Action("Field Goal Attempt",-0.45);
+	Add Action("Field Goal Made",1.0);
+	Add Action("Free Throw Attempt",-0.75);
+	Add Action("Free Throw Made",1.0);
+	Add Action("3-Point Shot Made",3.0);
+	Add Action("Point Scored",0.5);
+	Add Action("Rebound",1.5);
+	Add Action("Assist",2.0);
+	Add Action("Steal",3.0);
+	Add Action("Turnover",-2.0);
+	Add Action("Blocked Shot",3.0);
+
+/*
+* Define functions
+*/
+DefineFunctions
