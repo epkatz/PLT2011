@@ -4,11 +4,14 @@ public class Flood_Sem {
 	
 	HashMap<String, Function> functionTable = new HashMap<String, Function>();
 	HashMap<String, String> varList = new HashMap<String, String>();
-	static boolean debugging = true;
+	ArrayList<String> errorList=new ArrayList<String>();
+	String returnProductionType;
+	static boolean debugging = false,validProgram=true;
 	boolean draftFunFlag = false;
 	boolean draftPlayFlag = false;
 	boolean tradeFlag = false;
 	boolean dropPlayFlag = false;
+	
 
 	//Add Variables
 	LinkedList<String> actionNames = new LinkedList<String>();
@@ -19,99 +22,86 @@ public class Flood_Sem {
 	String leftSide = "";
 
 	public Flood_Sem(){
-		System.out.println("Starting Semantic Object Checker");
-	}
-
-
-	/* Function Debugging Test */
-	public void functionTest(){
-		Iterator it = functionTable.entrySet().iterator();
-         	while (it.hasNext()) {
-             		Map.Entry pairs = (Map.Entry)it.next();
-             		System.out.println(pairs.getKey());
-    		}
+		if(debugging)System.out.print("Starting Semantic Object Checker");
 	}
 	
-	//RelationshalExpression Check; For instance if Int x = y then check that y is an int and is set
+	public String printErrors(){
+		String errors="";
+		for(String s:errorList){
+			errors+=s+"\n";
+		}
+		return errors;
+	}
 	
-	//Validate Attribute Value ie: make sure that the assignment int x = 3; that 3 is actual an ant or in some cases use coercion
-	
-	//Check to make sure max user is greater than min user
-
-	//Check whether a user and action have already been added
-
 	/*Adds an Action */
-	public boolean addAction(String name){
+	public void addAction(String name, int line){
 		if (actionNames.contains(name)){
 			if (debugging){System.out.println(name + " already exists as an Action");}
-			return false;
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +name+" has already been defined.");
+			return;
 		}
 		actionNames.add(name);
 		if (debugging){System.out.println(name + " was added as an Action");}
-		return true;
+		return;
 	}
 
 	/* Add a User */
-	public boolean addUser(String name){
+	public void addUser(String name, int line){
 		if (userNames.contains(name)){
 			if (debugging){System.out.println(name + " already exists as a User");}
-			return false;
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +name+" has already been defined.");
+			return;
 		}
 		userNames.add(name);
 		if (debugging){System.out.println(name + " was added as a User");}
-		return true;
 	}
 
 	/* Add a Player */
-	public boolean addPlayer(String name){
+	public void addPlayer(String name, int line){
 		if (playerNames.contains(name)){
 			if (debugging){System.out.println(name + " already exists as a Player");}
-			return false;
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +name+" has already been defined.");
+			return;
 		}
 		playerNames.add(name);
 		if (debugging){System.out.println(name + " was added as a Player");}
-		return true;
 	}
 	
 	/* Adds a function to the function table. */
-	public boolean addToFunctionTable(String functionName, String returnType, String paramList, int lineNumber){
-		try{
-			if (functionTable.containsKey(functionName)){
-				if (debugging){System.out.println(functionName + "already exists");}
-				return false;
-			}
-			functionTable.put(functionName, new Function(functionName, returnType, paramList, lineNumber));
-			this.varList = new HashMap<String, String>();
-			if (debugging){System.out.println("Reinitializing variable list");}
-			return true;
-		} catch(Exception e) {
-			System.out.println(e);
-			return false;
+	public void addToFunctionTable(String functionName, String returnType, String paramList, int line){
+		if (functionTable.containsKey(functionName)){
+			if (debugging){System.out.println(functionName + "already exists");}
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +functionName+" has already been defined.");
+			return;
 		}
+		functionTable.put(functionName, new Function(functionName, returnType, paramList, line));
+		this.varList = new HashMap<String, String>();
+		if (debugging){System.out.println("Reinitializing variable list");}
 	}
 
 	/* Checks whether a given value is boolean true or false (note: case specific) */
-	public boolean isBooleanValue(String bool){
+	public void isBooleanValue(String bool, int line){
 		if (bool.equals("true") || bool.equals("false")){
-			return true;
+			return;
 		}
 		if (debugging){System.out.println(bool + " is not a boolean value");}
-		return false;
+		validProgram=false;
+		errorList.add("Error at Line " + line + ": " +bool+" is not of type Bool.");
 	}
 	
 	/* Adds a variable to the function's variable list. Checks if it exists first */
-	public boolean addVar(String varName, String varType){
-		try{
-			if (varExists(varName)){
-				if (debugging){System.out.println(varName + " already exists");}
-				return false;
-			}
-			addVarToTable(varName, varType);
-			return true;
-		} catch(Exception e){
-			if (debugging){System.out.println(varName + " has bad data");}
-			return false;
-		}	
+	public void addVar(String varName, String varType, int line){
+		if (varExists(varName)){
+			if (debugging){System.out.println(varName + " already exists");}
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +varName+" has already been defined.");
+			return;
+		}
+		addVarToTable(varName, varType);
 	}
 
 	/* Check whether a variable used exists and is the same as its declared type */
@@ -119,142 +109,233 @@ public class Flood_Sem {
 		if(varList.containsKey(varName)){
 			return true;
 		}
-		else
+		else{
 			return false;
+		}
 	}
 	
 	/* AddtoCurrentVarList */
-	public boolean addVarToTable(String varName, String varType){
+	public void addVarToTable(String varName, String varType){
 		varList.put(varName, varType);
 		if (debugging){System.out.println("Added varName: " + varName + ", type: " + varType);}
-		return true;
 	}
 
 	/* Checks the type of a variable against the left side of an expression */
-	public boolean assignmentCheckVar(String right){
+	public void assignmentCheckVar(String right, int line){
 		if (varExists(right)){
 			if (varList.get(right).equals(leftSide)){
 				if (debugging){System.out.println("Both are of type " + leftSide);}
-				return true;
+				return;
 			}
 			if (debugging){System.out.println(right + " isn't of type " + leftSide);}
-			return false;
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +right+" is not of type "+leftSide+".");
+			return;
 		}
 		if (debugging){System.out.println(right + " doesn't exist");}
-		return false;
+		validProgram=false;
+			errorList.add("Error at Line " + line + ": " +right+" has not been defined.");
+			return;
 	}
 
 	/* Preserves the type of the left side of an expression */
-	public boolean assignmentCheckLeft(String left){
+	public void assignmentCheckLeft(String left, int line){
 		if (varExists(left)){
 			leftSide = varList.get(left);
-			if (debugging){System.out.println("Added " + left);}	
+			if (debugging){System.out.println("Added " + left);}
+			return;
 		}
-		return false;
+		validProgram=false;
+		errorList.add("Error at Line " + line + ": " +left+" has not been defined.");
+	}
+	
+	/* Check whether an arithmetic expression can be used with the kind of ID */
+	public void checkForBadAdditionType(int line){
+		if (leftSide.equals("float") || leftSide.equals("int") || leftSide.equals("String")){
+			if (debugging){System.out.println(leftSide + " can be used with add");}
+			return;
+		}
+		if (debugging){System.out.println(leftSide + " cannot be used in addition");}
+		validProgram=false;
+		errorList.add("Error at Line " + line + ": " +leftSide+" cannot be used in addition.");
+		return;
+	}
+	
+	/* Check whether an arithmetic expression can be used with the kind of ID */
+	public void checkForBadArithmeticType(int line){
+		if (leftSide.equals("float") || leftSide.equals("int")){
+			if (debugging){System.out.println(leftSide + " can be used with add/sub/mul/div/mod");}
+			return;
+		}
+		if (debugging){System.out.println(leftSide + " cannot be used in an arithmetic expression");}
+		validProgram=false;
+		errorList.add("Error at Line " + line + ": " +leftSide+" cannot be used with arithmetic expressions.");
+		return;
 	}
 
 	/* Checks whether the left side of the expression is a TYPE */
-	public boolean assignmentCheckLeftIsOfType(String type){
+	public void assignmentCheckLeftIsOfType(String type, int line){
 		if (leftSide.equals(type)){
 			if (debugging){System.out.println(leftSide + " IS of type " + type);}
-			return true;
+			return;
 		}
 		if (debugging){System.out.println(leftSide + " is not of type " + type);}
-		return false;
+		validProgram=false;
+			errorList.add("Error at Line " + line + ": " +leftSide + " is not of type " + type + ".");
+			return;
 	}
 	
 	/* Checks the Return Type of the Function Against the Left Side of an expression */
-	public boolean assignmentCheckFunction(String right){
+	public void assignmentCheckFunction(String right, int line){
 		String[] params = right.split("\\("); //Opening bracket is special character to be escaped
 		String functionName = params[0];
 		if (functionTable.containsKey(functionName)){
 			if (functionTable.get(functionName).getReturnType().equals(leftSide)){
 				if (debugging){System.out.println("Both are of type " + leftSide);}
-				return true;
+				return;
 			}
 			if (debugging){System.out.println(right + " doesn't return type " + leftSide);}
-			return false;
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +right + " does not return a value of type " + leftSide + ".");
+			return;
 		}
-		if (debugging){System.out.println(right + " doesn't exist");}
-		return false;
+		if (debugging){System.out.println(right + " has not been defined.");}
+		validProgram=false;
+		errorList.add("Error at Line " + line + ": " +right + " doesn't return a value of type " + leftSide + ".");
+		return;
 	}
 
 	/* Check Divide by zero */
-	public boolean checkDivideByZero(String var){
-		try{
-			if (Double.parseDouble(var) == 0){
-				return true;
-			}
-			return false;
-		} catch (Exception e){
-			return false;
+	public void checkDivideByZero(String var, int line){
+		if (Double.parseDouble(var) == 0){
+			return;
 		}
+		validProgram=false;
+		errorList.add("Error at Line " + line + ": Cannot divide by zero.");
+		return;
 	}
 
 	/* Checks against an int */
-	public boolean checkRelationalExp(String left, int right){
-		return checkRelationalExpAgainstType(left, "int");
+	public void checkRelationalExp(String left, int right, int line){
+		checkRelationalExpAgainstType(left, "int", line);
 	}
 
 	/* Checks against a float */
-	public boolean checkRelationalExp(String left, float right){
-		return checkRelationalExpAgainstType(left, "float");
+	public void checkRelationalExp(String left, float right, int line){
+		checkRelationalExpAgainstType(left, "float", line);
 	}
 
 	/* Checks against a declared variable */
-	public boolean checkRelationalExp(String left, String right){
+	public void checkRelationalExp(String left, String right, int line){
 		if (varExists(right)){
-			return checkRelationalExpAgainstType(left, varList.get(right));
+			checkRelationalExpAgainstType(left, varList.get(right), line);
+			return;
 		}
 		if (debugging){System.out.println(right + " doesn't exist");}
-		return false;
+		validProgram=false;
+		errorList.add("Error at Line " + line + ": " +right+" has not been defined.");
+		return;
 	}
 
 	/* Checks to make sure that relational expression don't compare an invalid type */
-	public boolean checkRelationForInvalidType(String left){
+	public void checkRelationForInvalidType(String left, int line){
 		if (varExists(left)){
 			String leftType = varList.get(left);
 			if (!leftType.equals("int") || !leftType.equals("float")){
 				if (debugging){System.out.println(left + " cannot be used because it is of type " + leftType);}
-				return false;
+				validProgram=false;
+				errorList.add("Error at Line " + line + ": " +left + " cannot be used because it is of type " + leftType + ".");
+				return;
 			}
-			return true;
 		}
 		else{
-			return false;
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +left+" has not been defined.");
+			return;
 		}
 	}
 	
 	/* Private method for checking a variable against a type */
-	private boolean checkRelationalExpAgainstType(String left, String rightType){
+	private void checkRelationalExpAgainstType(String left, String rightType, int line){
 		if (varExists(left)){
 			String leftType = varList.get(left);
 			if (leftType.equals(rightType)){
 				if (debugging){System.out.println("Both are of type " + rightType);}
-				return true;
+				return;
 			}
 			if (debugging){System.out.println(rightType + " is not " + leftType);}
-			return false;
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +rightType + " is not " + leftType + ".");
+			return;
 		}
 		else{
 			if (debugging){System.out.println(left + " doesn't exist");}
-			return false;
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +left + " has not been defined.");
+			return;
 		}
 	}
 	
 	//check that array index is an int
-	public boolean checkIndex(String arrayIndex){ 
+	public void checkIndex(String arrayIndex, int line){ 
 		//check if ID is a variable of type int
 		arrayIndex = arrayIndex.replaceAll(" ", "");
 		if(varList.containsKey(arrayIndex) && varList.get(arrayIndex).equals("int")){
-			System.out.println(arrayIndex +"\n"+ varList.get(arrayIndex));
-			return true;
+			if(debugging){System.out.println(arrayIndex +"\n"+ varList.get(arrayIndex));}
+			return;
 		}
 		else{
-			System.out.println("Fail, invalid type");
-			return false;
+			if (debugging){System.out.println("Fail, invalid type");}
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +arrayIndex+" is an invalid type for an array index.");
+			return;
 		}
-	} 
+	}
+	
+	public String getType(String id){
+		if(varExists(id))
+			return varList.get(id);
+		if(debugging){System.out.println(id+" is a valid variable!");}
+		return null;
+	}
+	public void setReturnProdType(String type){
+		returnProductionType=type;
+	}
+	public void checkReturnTypeMatch(String returnType, int line){
+		if(returnProductionType!=null){
+			if(returnProductionType.equals(returnType)){
+				if (debugging){System.out.println(returnProductionType + " return type matches "+returnType);}
+				return;
+			}
+			if (debugging){System.out.println(returnProductionType + " return type doesn't match "+returnType);}
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +returnProductionType + " return type does not match "+returnType+".");
+			return;
+		}
+		if (debugging){System.out.println(returnProductionType + " is not a valid type");}
+		validProgram=false;
+		errorList.add("Error at Line " + line + ": " +returnProductionType + " is not a valid type.");
+		return;
+	}
+	
+	/* Check that an ID is of a certain type */
+	public void checkIDagainstType(String id, String type, int line){
+		if (varExists(id)){
+			String idType = varList.get(id);
+			if (idType.equals(type)){
+				if (debugging){System.out.println(id + " IS of type " + type);}
+				return;
+			}
+			if (debugging){System.out.println(id + " is not " + type);}
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +id + " is not of type " + type + ".");
+			return;
+		}
+		if (debugging){System.out.println(id + " doesn't exist");}
+		validProgram=false;
+		errorList.add("Error at Line " + line + ": " +id + " has not been defined.");
+		return;
+	}
 	
 	//set flags for required functions
 	public String setFlags(){
@@ -264,7 +345,7 @@ public class Flood_Sem {
 			fun = functionTable.get("draftFunction");
 			if(fun.returnType.equals("int")){
 				if(fun.paramTypeList.length == 1 && fun.paramTypeList[0].equals("int")){
-					System.out.println("Draft function found");
+					if(debugging)System.out.print("Draft function found");
 					draftFunFlag = true;
 				}
 			}
@@ -273,7 +354,7 @@ public class Flood_Sem {
 			fun = functionTable.get("draftPlayer");
 			if(fun.returnType.equals("boolean")){
 				if(fun.paramTypeList.length==2 && fun.paramTypeList[0].equals("User")  && fun.paramTypeList[1].equals("Player")){
-					System.out.println("Draft player found");
+					if(debugging)System.out.print("Draft player found");
 					draftPlayFlag = true;
 				}
 			}
@@ -284,7 +365,7 @@ public class Flood_Sem {
 				if(fun.paramTypeList.length==4 && fun.paramTypeList[0].equals("User")
 						&& fun.paramTypeList[1].equals("Player[]") && fun.paramTypeList[2].equals("User")
 						&& fun.paramTypeList[3].equals("Player[]")){
-					System.out.println("Trade found");
+					if(debugging)System.out.print("Trade found");
 					tradeFlag = true;
 				}
 			}
@@ -294,7 +375,7 @@ public class Flood_Sem {
 			if(fun.returnType.equals("boolean")){
 				if(fun.paramTypeList.length==2 && fun.paramTypeList[0].equals("User")
 						&& fun.paramTypeList[1].equals("Player")){
-					System.out.println("Drop player found");
+					if(debugging)System.out.print("Drop player found");
 					dropPlayFlag = true;
 				}
 			}
@@ -410,3 +491,4 @@ public class Flood_Sem {
 		return functions;
 	}
 }
+

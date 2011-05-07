@@ -117,10 +117,15 @@
 ****************************************************/
 program: definitions functions
 {
-  System.out.println("Line 100");
-  generateFloodProgram($1, $2);
-  System.out.println("Total number of lines in the input: " + (yyline - 1));
-  tester();
+	if(semantics.validProgram)
+	{
+		generateFloodProgram($1, $2);
+		System.out.println("Total number of lines in the input: " + (yyline - 1));
+	}
+	else
+	{
+		System.out.println(semantics.printErrors());
+	}
 };
 
 definitions: DefineLeague definitionlist { $$ = $2; };
@@ -134,18 +139,18 @@ definitionproductions: Set LeagueName OPEN_PARAN STRING_CONST CLOSE_PARAN SEMICO
                      | Set MinUser OPEN_PARAN INT CLOSE_PARAN SEMICOLON { $$ = "myLeague.setMinUser(" + $4 + ");\n"; }
                      | Set MaxTeamSize OPEN_PARAN INT CLOSE_PARAN SEMICOLON { $$ = "myLeague.setMaxTeamSize(" + $4 + ");\n"; }
                      | Set MinTeamSize OPEN_PARAN INT CLOSE_PARAN SEMICOLON { $$ = "myLeague.setMinTeamSize(" + $4 + ");\n"; }
-                     | Add User OPEN_PARAN STRING_CONST CLOSE_PARAN SEMICOLON { $$ = "myLeague.addUser(new User(" + $4 + "));\n"; semantics.addUser($4); }
-                     | Add Action OPEN_PARAN STRING_CONST COMMA FLT CLOSE_PARAN SEMICOLON { $$ = "myLeague.addAction(new Action(" + $4 + ", " + $6 + "));\n"; semantics.addAction($4); }
-                     | Add Player OPEN_PARAN STRING_CONST COMMA STRING_CONST CLOSE_PARAN SEMICOLON { $$ = "myLeague.addPlayer(new Player(" + $4 + ", " + $6 + "));\n"; semantics.addPlayer($4); }
+                     | Add User OPEN_PARAN STRING_CONST CLOSE_PARAN SEMICOLON { $$ = "myLeague.addUser(new User(" + $4 + "));\n"; semantics.addUser($4, yyline); }
+                     | Add Action OPEN_PARAN STRING_CONST COMMA FLT CLOSE_PARAN SEMICOLON { $$ = "myLeague.addAction(new Action(" + $4 + ", " + $6 + "));\n"; semantics.addAction($4, yyline); }
+                     | Add Player OPEN_PARAN STRING_CONST COMMA STRING_CONST CLOSE_PARAN SEMICOLON { $$ = "myLeague.addPlayer(new Player(" + $4 + ", " + $6 + "));\n"; semantics.addPlayer($4, yyline); }
                      ;
 
 functions: DefineFunctions functionProductions { $$ = $2 + semantics.setFlags(); };
 
-functionProductions: functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  declarations statements returnProduction CLOSE_CURLY { $$ = "public static "+$1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5, yyline)) System.out.println("Function Error"); /* FLOODException Here */}
-                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY {$$ = "public static "+$1 + $2 + " " + $3 + "(" + $5 + ")\n{\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5, yyline)) System.out.println("Function Error"); }
-                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  empty statements returnProduction CLOSE_CURLY {$$ = "public static "+$1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5, yyline)) System.out.println("Function Error"); }
-                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  declarations empty returnProduction CLOSE_CURLY {$$ = "public static "+$1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5, yyline)) System.out.println("Function Error"); }
-                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY returnProd CLOSE_CURLY {$$ = "public static "+$1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + "\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5, yyline)) System.out.println("Function Error"); }
+functionProductions: functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  declarations statements returnProduction CLOSE_CURLY { $$ = "public static "+$1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; semantics.addToFunctionTable($3, $2, $5, yyline); semantics.checkReturnTypeMatch($2, yyline); }
+                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY {$$ = "public static "+$1 + $2 + " " + $3 + "(" + $5 + ")\n{\n}\n"; this.scope = $3; semantics.addToFunctionTable($3, $2, $5, yyline); semantics.checkReturnTypeMatch($2, yyline); }
+                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  empty statements returnProduction CLOSE_CURLY {$$ = "public static "+$1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; semantics.addToFunctionTable($3, $2, $5, yyline); semantics.checkReturnTypeMatch($2, yyline); }
+                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  declarations empty returnProduction CLOSE_CURLY {$$ = "public static "+$1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; semantics.addToFunctionTable($3, $2, $5, yyline); semantics.checkReturnTypeMatch($2, yyline); }
+                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY returnProd CLOSE_CURLY {$$ = "public static "+$1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + "\n}\n"; this.scope = $3; semantics.addToFunctionTable($3, $2, $5, yyline); semantics.checkReturnTypeMatch($2, yyline); }
                      | empty { $$ = $1; }
                      ;
 
@@ -187,21 +192,21 @@ statement: conditionals { $$ = $1; }
          | functionCall { $$ = $1 + ";\n"; }
          ;
 
-returnProduction: Return ID SEMICOLON { $$ = "return " + $2 + ";"; }
-                | Return STRING_CONST SEMICOLON { $$ = "return " + $2 + ";"; }
-                | Return INT SEMICOLON { $$ = "return " + $2 + ";"; }
-                | Return FLT SEMICOLON { $$ = "return " + $2 + ";"; }
-                | Return True SEMICOLON { $$ = "return true;"; }
-                | Return False SEMICOLON { $$ = "return false;"; }
-                | empty { $$ = $1; }
+returnProduction: Return ID SEMICOLON { $$ = "return " + $2 + ";"; semantics.setReturnProdType(semantics.getType($2)); }
+                | Return STRING_CONST SEMICOLON { $$ = "return " + $2 + ";"; semantics.setReturnProdType("String"); }
+                | Return INT SEMICOLON { $$ = "return " + $2 + ";"; semantics.setReturnProdType("int"); }
+                | Return FLT SEMICOLON { $$ = "return " + $2 + ";"; semantics.setReturnProdType("float"); }
+                | Return True SEMICOLON { $$ = "return true;"; semantics.setReturnProdType("boolean"); }
+                | Return False SEMICOLON { $$ = "return false;"; semantics.setReturnProdType("boolean"); }
+                | empty { $$ = $1; semantics.setReturnProdType("void"); }
                 ;
 
-returnProd: Return ID SEMICOLON { $$ = "return " + $2 + ";"; }
-                | Return STRING_CONST SEMICOLON { $$ = "return " + $2 + ";"; }
-                | Return INT SEMICOLON { $$ = "return " + $2 + ";"; }
-                | Return FLT SEMICOLON { $$ = "return " + $2 + ";"; }
-                | Return True SEMICOLON { $$ = "return true;"; }
-                | Return False SEMICOLON { $$ = "return false;"; }
+returnProd: Return ID SEMICOLON { $$ = "return " + $2 + ";"; semantics.setReturnProdType(semantics.getType($2)); }
+                | Return STRING_CONST SEMICOLON { $$ = "return " + $2 + ";"; semantics.setReturnProdType("String"); }
+                | Return INT SEMICOLON { $$ = "return " + $2 + ";"; semantics.setReturnProdType("int"); }
+                | Return FLT SEMICOLON { $$ = "return " + $2 + ";"; semantics.setReturnProdType("float"); }
+                | Return True SEMICOLON { $$ = "return true;"; semantics.setReturnProdType("boolean"); }
+                | Return False SEMICOLON { $$ = "return false;"; semantics.setReturnProdType("boolean"); }
     ;
 
 conditionals: If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n" + $6 + "}\n"; }
@@ -229,23 +234,23 @@ declarations: declarations declaration SEMICOLON{ $$ = $1 + $2; }
             ;
 
 /* NEED SEMANCTIC ACTION: Declaration needs type checking - !!!PLEASE REMOVE THIS COMMENT WHEN DONE!!! */
-declaration: Flt ID  { $$ = "float " + $2 + ";\n";  semantics.addVar($2, "float"); }
-            | Int ID  { $$ = "int " + $2 + ";\n";  semantics.addVar($2, "int"); }
-            | Bool ID  { $$ = "boolean " + $2 + ";\n";  semantics.addVar($2, "boolean"); }
-            | Str ID  { $$ = "String " + $2 + " = new String();\n";  semantics.addVar($2, "String"); }
-            | Flt ID EQUAL FLT { $$ = "float " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, "float"); }
-            | Int ID EQUAL INT { $$ = "int " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, "int"); }
-            | Bool ID EQUAL True { $$ = "boolean " + $2 + " = true;\n"; semantics.addVar($2, "boolean"); }
-            | Bool ID EQUAL False { $$ = "boolean " + $2 + " = false;\n"; semantics.addVar($2, "boolean"); }
-            | Str ID EQUAL STRING_CONST { $$ = "String " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, "String"); }
+declaration: Flt ID  { $$ = "float " + $2 + ";\n";  semantics.addVar($2, "float", yyline); }
+            | Int ID  { $$ = "int " + $2 + ";\n";  semantics.addVar($2, "int", yyline); }
+            | Bool ID  { $$ = "boolean " + $2 + ";\n";  semantics.addVar($2, "boolean", yyline); }
+            | Str ID  { $$ = "String " + $2 + " = new String();\n";  semantics.addVar($2, "String", yyline); }
+            | Flt ID EQUAL FLT { $$ = "float " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, "float", yyline); }
+            | Int ID EQUAL INT { $$ = "int " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, "int", yyline); }
+            | Bool ID EQUAL True { $$ = "boolean " + $2 + " = true;\n"; semantics.addVar($2, "boolean", yyline); }
+            | Bool ID EQUAL False { $$ = "boolean " + $2 + " = false;\n"; semantics.addVar($2, "boolean", yyline); }
+            | Str ID EQUAL STRING_CONST { $$ = "String " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, "String", yyline); }
             ;
 
-relationalExp: ID LESSEQUAL constOrVar { $$ = $1 + " <= " + $3; semantics.checkRelationalExp($1, $3); semantics.checkRelationForInvalidType($1); }
-             | ID GREATEQUAL constOrVar { $$ = $1 + " >= " + $3; semantics.checkRelationalExp($1, $3); semantics.checkRelationForInvalidType($1); }
-             | ID NOTEQUAL constOrVar { $$ = $1 + " != " + $3; semantics.checkRelationalExp($1, $3); }
-             | ID LESS constOrVar { $$ = $1 + " < " + $3; semantics.checkRelationalExp($1, $3); semantics.checkRelationForInvalidType($1); }
-             | ID GREAT constOrVar { $$ = $1 + " > " + $3; semantics.checkRelationalExp($1, $3); semantics.checkRelationForInvalidType($1); }
-             | ID ISEQUAL constOrVar { $$ = $1 + " == " + $3; semantics.checkRelationalExp($1, $3); }
+relationalExp: ID LESSEQUAL constOrVar { $$ = $1 + " <= " + $3; semantics.checkRelationalExp($1, $3, yyline); semantics.checkRelationForInvalidType($1, yyline); }
+             | ID GREATEQUAL constOrVar { $$ = $1 + " >= " + $3; semantics.checkRelationalExp($1, $3, yyline); semantics.checkRelationForInvalidType($1, yyline); }
+             | ID NOTEQUAL constOrVar { $$ = $1 + " != " + $3; semantics.checkRelationalExp($1, $3, yyline); }
+             | ID LESS constOrVar { $$ = $1 + " < " + $3; semantics.checkRelationalExp($1, $3, yyline); semantics.checkRelationForInvalidType($1, yyline); }
+             | ID GREAT constOrVar { $$ = $1 + " > " + $3; semantics.checkRelationalExp($1, $3, yyline); semantics.checkRelationForInvalidType($1, yyline); }
+             | ID ISEQUAL constOrVar { $$ = $1 + " == " + $3; semantics.checkRelationalExp($1, $3, yyline); }
              | OPEN_PARAN relationalExp CLOSE_PARAN { $$ = "(" + $2 + ")"; }
              //FLOODException Here
              ;
@@ -270,32 +275,32 @@ constOrVar: FLT { $$ = "" + $1; }
           | ID { $$ = "" + $1; }
           ;
 
-arithmeticExp: arithmeticExp PLUS arithmeticExp { $$ = $1 + " + " + $3 ; }
-             | arithmeticExp MINUS arithmeticExp { $$ = $1 + " - " + $3; }
-             | arithmeticExp MULT arithmeticExp { $$ = $1 + " * " + $3; }
-             | arithmeticExp DIV arithmeticExp { $$ = $1 + " / " + $3; }
-             | arithmeticExp MOD arithmeticExp { $$ = $1 + " % " + $3; }
+arithmeticExp: arithmeticExp PLUS arithmeticExp { $$ = $1 + " + " + $3 ; semantics.checkForBadAdditionType(yyline);}
+             | arithmeticExp MINUS arithmeticExp { $$ = $1 + " - " + $3; semantics.checkForBadArithmeticType(yyline);}
+             | arithmeticExp MULT arithmeticExp { $$ = $1 + " * " + $3; semantics.checkForBadArithmeticType(yyline);}
+             | arithmeticExp DIV arithmeticExp { $$ = $1 + " / " + $3; semantics.checkForBadArithmeticType(yyline);}
+             | arithmeticExp MOD arithmeticExp { $$ = $1 + " % " + $3; semantics.checkForBadArithmeticType(yyline);}
              | OPEN_PARAN arithmeticExp CLOSE_PARAN { $$ = "(" + $2 + ")"; }
-             | ID  { $$ = $1; semantics.assignmentCheckVar($1); }
-             | FLT { $$ = "" + $1; semantics.assignmentCheckLeftIsOfType("float"); }
-             | INT { $$ = "" + $1; semantics.assignmentCheckLeftIsOfType("int"); }
+             | ID  { $$ = $1; semantics.assignmentCheckVar($1, yyline); }
+             | FLT { $$ = "" + $1; semantics.assignmentCheckLeftIsOfType("float", yyline); }
+             | INT { $$ = "" + $1; semantics.assignmentCheckLeftIsOfType("int", yyline); }
              ;
 
 assignment: leftSide EQUAL rightSide { $$ = $1 + " = " + $3; }
 
-leftSide: ID { $$ = $1; semantics.assignmentCheckLeft($1); }
+leftSide: ID { $$ = $1; semantics.assignmentCheckLeft($1, yyline); }
 
 rightSide: arithmeticExp { $$ = $1 + ";\n"; }
-         | functionCall { $$ = $1 + ";\n"; semantics.assignmentCheckFunction($1); }
-         | STRING_CONST { $$ = $1 + ";\n"; semantics.assignmentCheckLeftIsOfType("String"); }
-         | True { $$ = "true" + ";\n"; semantics.assignmentCheckLeftIsOfType("boolean"); }
-         | False { $$ = "false" + ";\n"; semantics.assignmentCheckLeftIsOfType("boolean"); }
+         | functionCall { $$ = $1 + ";\n"; semantics.assignmentCheckFunction($1, yyline); }
+         | STRING_CONST { $$ = $1 + ";\n"; semantics.assignmentCheckLeftIsOfType("String", yyline); }
+         | True { $$ = "true" + ";\n"; semantics.assignmentCheckLeftIsOfType("boolean", yyline); }
+         | False { $$ = "false" + ";\n"; semantics.assignmentCheckLeftIsOfType("boolean", yyline); }
          ;
 
 functionCall: functionName OPEN_PARAN parameterList CLOSE_PARAN { $$ = $1 + "(" + $3 + ")"; }
-            | AddPlayer OPEN_PARAN ID COMMA ID CLOSE_PARAN { $$ = $3 + ".addPlayer(" + $5 + ")" ; semantics.checkIDagainstType($3,"User");semantics.checkIDagainstType($5,"Player");}
-            | RemovePlayer OPEN_PARAN ID COMMA ID CLOSE_PARAN { $$ = $3 + ".removePlayer(" + $5 + ")" ; semantics.checkIDagainstType($3,"User");semantics.checkIDagainstType($5,"Player");}
-            | ArrayLength OPEN_PARAN ID CLOSE_PARAN { $$ = $3 + ".length"; semantics.checkIDagainstType($3,"User[]") || semantics.checkIDagainstType($3,"Player[]");}
+            | AddPlayer OPEN_PARAN ID COMMA ID CLOSE_PARAN { $$ = $3 + ".addPlayer(" + $5 + ")" ; semantics.checkIDagainstType($3,"User", yyline);semantics.checkIDagainstType($5,"Player", yyline);}
+            | RemovePlayer OPEN_PARAN ID COMMA ID CLOSE_PARAN { $$ = $3 + ".removePlayer(" + $5 + ")" ; semantics.checkIDagainstType($3,"User", yyline);semantics.checkIDagainstType($5,"Player", yyline);}
+            | ArrayLength OPEN_PARAN ID CLOSE_PARAN { $$ = $3 + ".length"; semantics.checkIDagainstType($3,"User[]", yyline); semantics.checkIDagainstType($3,"Player[]", yyline);}
             ;
 
 parameterList: parameterList COMMA parameterList { $$ = $1 + ", " + $3; }
@@ -304,7 +309,7 @@ parameterList: parameterList COMMA parameterList { $$ = $1 + ", " + $3; }
              | FLT { $$ = "" + $1; }
              | STRING_CONST { $$ = $1; }
              | ID OPEN_SQUARE INT CLOSE_SQUARE { $$ = $1 + "[" + $3 + "]"; }
-             | ID OPEN_SQUARE ID CLOSE_SQUARE { $$ = $1 + "[" + $3 + "]"; semantics.checkIndex($3);}
+             | ID OPEN_SQUARE ID CLOSE_SQUARE { $$ = $1 + "[" + $3 + "]"; semantics.checkIndex($3, yyline);}
              | empty { $$ = $1; }
              ;
 
@@ -328,8 +333,6 @@ String scope = "main";
 ****************************************************/
 public void generateFloodProgram(String definitions, String functions)
 {
-  System.out.println("Line 305");
-  
   String classStart = "public class FloodProgram\n{\n";
   String staticDeclarations = "public static League myLeague;\npublic static GUI run;\n";
   String classEnd = "}\n";
@@ -340,8 +343,6 @@ public void generateFloodProgram(String definitions, String functions)
 
   try
   {
-    System.out.println("Line 67");
-    /**************** !!!MANUALLY CHANGE DIRECTORY OUTPUT BELOW FOR FLOOD PROGRAM!!! ************************/
     FileWriter writer = new FileWriter(new File("FloodProgram.java"));
     String buffer = classStart + staticDeclarations + main_start + definitions + main_preEndAutogenerate + main_end + functions + classEnd;
     writer.write(buffer);
@@ -377,8 +378,6 @@ private int yylex()
 ****************************************************/
 public Parser(Reader r, boolean createFile)
 {
-  System.out.println("Line 351");
-
   lexer = new Yylex(r, this);
   this.createPositionFile = createFile;
 }
@@ -407,13 +406,6 @@ public void yyerror(String error)
     }
     catch(Exception ex){      
     }
-}
-
-/***************************************************
-* Debugging
-****************************************************/
-public void tester(){
-  semantics.functionTest();
 }
 
 /***************************************************

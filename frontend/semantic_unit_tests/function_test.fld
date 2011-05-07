@@ -1,19 +1,18 @@
-defineLeague
-	set leagueName("Happy League");
-	set maxUser(10);
-	set minUser(12);
-	add User("Eli");
-	add Action("Field Goal Attempt", 0.5);
+DefineLeague
+	Set LeagueName("Happy League");
+	Set MaxUser(10);
+	Set MinUser(12);
+	Add User("Eli");
+	Add Action("Field Goal Attempt", 0.5);
 
-defineFunctions
-	flt anotherFunction(Int bubble, flt bubble2, User u, Player p, User[] u2, Player[] p2)
+DefineFunctions
+	Flt anotherFunction(Int bubble, Flt bubble2, User u, Player p, User[] u2, Player[] p2)
 	{
-		flt fltVar;
-				Int[10] arr;
-				flt fltVar;
+		Flt fltVar;
+				Flt fltVar;
 				Int intVar;
-				str strVar;
-				bool boolVar;
+				Str strVar;
+				Bool boolVar;
 				Int a;
 				
 				If( a < b)
@@ -26,15 +25,16 @@ defineFunctions
 		Return a;
 	}
 
-	Int myFunction(Int turn, flt turn2)
+	Int myFunction(Int turn, Flt turn2)
 	{
-		flt fltVar;
-		flt fltVar;
+		Flt fltVar;
+		Flt fltVar;
 		Int intVar;
-		str strVar;
-		bool boolVar;
+		Str strVar;
+		Bool boolVar;
+		Bool a;
 		fltVar = anotherFunction();
-
+		
 		If( a < b)
 		{
 		}
