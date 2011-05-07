@@ -119,7 +119,7 @@ public class GUI {
 		//Set up the frame
 		frmFloodFantasyLeague = new JFrame();
 		frmFloodFantasyLeague.setBackground(new Color(0, 0, 205));
-		frmFloodFantasyLeague.setTitle("FLOOD Fantasy League");
+		frmFloodFantasyLeague.setTitle("FLOOD Fantasy League: "+theLeague.getName());
 		frmFloodFantasyLeague.setBounds(100, 100, 450, 300);
 		frmFloodFantasyLeague.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmFloodFantasyLeague.setSize(new Dimension(700, 400));
