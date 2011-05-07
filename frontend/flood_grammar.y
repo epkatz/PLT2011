@@ -73,6 +73,11 @@
 %token RemovePlayer           /* Remove Player function */
 %token AddPlayer              /* Add Player function */
 %token ArrayLength            /* Length of an array */
+%token GetUserName	      /* Gets the name of the user object*/
+%token GetNumPlayers          /* Gets the number of players of the user*/
+%token GetPlayerName          /* gets the name of the player object*/
+%token GetPlayerPosition      /* Gets the position of the player*/
+%token GetPlayerPoints        /* Gets the points of the player*/
 
 /* Associativity and Precedence */
 %left MINUS PLUS COMMA
@@ -301,6 +306,11 @@ functionCall: functionName OPEN_PARAN parameterList CLOSE_PARAN { $$ = $1 + "(" 
             | AddPlayer OPEN_PARAN ID COMMA ID CLOSE_PARAN { $$ = $3 + ".addPlayer(" + $5 + ")" ; semantics.checkIDagainstType($3,"User", yyline);semantics.checkIDagainstType($5,"Player", yyline);}
             | RemovePlayer OPEN_PARAN ID COMMA ID CLOSE_PARAN { $$ = $3 + ".removePlayer(" + $5 + ")" ; semantics.checkIDagainstType($3,"User", yyline);semantics.checkIDagainstType($5,"Player", yyline);}
             | ArrayLength OPEN_PARAN ID CLOSE_PARAN { $$ = $3 + ".length"; semantics.checkIDagainstType($3,"User[]", yyline); semantics.checkIDagainstType($3,"Player[]", yyline);}
+	    | GetUserName OPEN_PARAN ID CLOSE_PARAN { $$ = $3 + ".getName()";} //Semantic check to be added
+	    | GetNumPlayers OPEN_PARAN ID CLOSE_PARAN { $$ = $3 +".getNumPlayers()";} //Semantic check needed
+	    | GetPlayerName OPEN_PARAN ID CLOSE_PARAN { $$ = $3 + ".getName()";} //Semantic check needed
+	    | GetPlayerPosition OPEN_PARAN ID CLOSE_PARAN { $$= $3 + ".getPosition()";}//Semantic check needed
+	    | GetPlayerPoints OPEN_PARAN ID CLOSE_PARAN { $$ =$3 + ".getPoints()";}//Semantic check needed
             ;
 
 parameterList: parameterList COMMA parameterList { $$ = $1 + ", " + $3; }
