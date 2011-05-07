@@ -12,8 +12,8 @@ public class Test {
 		myLeague = new League("Happy League");
 		myLeague.setMaxTeamSize(10);
 		myLeague.setMinTeamSize(5);
-	    myLeague.setMaxUsers(10);
-	    myLeague.setMinUsers(4);
+	    myLeague.setMaxUser(10);
+	    myLeague.setMinUser(4);
 	    myLeague.addUser(new User("Eli"));
 	    myLeague.addUser(new User("Dillen"));
 	    myLeague.addUser(new User("Anuj"));
@@ -61,67 +61,96 @@ public class Test {
 
 	}
 	public static int draftFunction(int turn){
-		return turn%myLeague.getCurrentNumUsers();
+		return turn%5;
 	}
 	public static boolean draftPlayer(User u, Player p){
 		u.addPlayer(p);
 		return true;
 	}
 	public static boolean trade(User u1, Player[] p1, User u2, Player[] p2){
+		int i,j;
 		boolean flag2=true;
-		for(int i=0;i<p1.length;i++){
+		i=0;
+		while(i<p1.length){
 			flag2=dropPlayer(u1,p1[i]);
 			if(!flag2){	//If the drop was unsuccessful
-				for(int j=i;j>=0;j--){	//Add p1 back to u1
+				j=i;
+				while(j>=0){	//Add p1 back to u1
 					draftPlayer(u1,p1[j]);
+					j--;
 				}
 				return false;
 			}
+			i++;
 		}
-		for(int i=0;i<p2.length;i++){
+		i=0;
+		while(i<p2.length){
 			flag2=dropPlayer(u2,p2[i]);
 			if(!flag2){	//If the drop was unsuccessful
-				for(int j=i;j>=0;j--){	//Add p2 back to u2
+				j=i;
+				while(j>=0){	//Add p2 back to u2
 					draftPlayer(u2,p2[j]);
+					j--;
 				}
-				for(int j=0;j<p1.length;j++){	//Add p1 to u1
+				j=0;
+				while(j<p1.length){	//Add p1 to u1
 					draftPlayer(u1,p1[j]);
+					j++;
 				}
 				return false;
 			}
+			i++;
 		}
-		for(int i=0;i<p1.length;i++){
+		i=0;
+		while(i<p1.length){
 			flag2=draftPlayer(u2,p1[i]);
 			if(!flag2){	//If draft was unsuccessful
-				for(int j=i;j>=0;j--){	//Remove p1 from u2
+				j=i;
+				while(j>=0){	//Remove p1 from u2
 					dropPlayer(u2,p1[j]);
+					j--;
 				}
-				for(int j=0;j<p1.length;j++){	//Add p1 to u1
+				j=0;
+				while(j<p1.length){	//Add p1 to u1
 					draftPlayer(u1,p1[j]);
+					j++;
 				}
-				for(int j=0;j<p2.length;j++){	//Add p2 to u2
+				j=0;
+				while(j<p2.length){	//Add p2 to u2
 					draftPlayer(u2,p2[j]);
+					j++;
 				}
 				return false;
 			}
+			i++;
 		}
-		for(int i=0;i<p2.length;i++){
+		i=0;
+		while(i<p2.length){
 			flag2=draftPlayer(u1,p2[i]);
-			if(!flag2){	//If the drop was unsucessful
-				for(int j=i;j>=0;j--){	//Remove p2 from u1
+			if(!flag2){	//If the drop was unsuccessful
+				j=i;
+				while(j>=0){	//Remove p2 from u1
 					dropPlayer(u1,p2[j]);
+					j--;
 				}
-				for(int j=0;j<p1.length;j++){	//Remove p1 from u2
+				j=0;
+				while(j<p1.length){	//Remove p1 from u2
 					dropPlayer(u2,p1[j]);
+					j++;
 				}
-				for(int j=0;j<p1.length;j++){	//Add p1 to u1
+				j=0;
+				while(j<p1.length){	//Add p1 to u1
 					draftPlayer(u1,p1[j]);
+					j++;
 				}
-				for(int j=0;j<p2.length;j++){	//Add p2 to u2
+				j=0;
+				while(j<p2.length){	//Add p2 to u2
 					draftPlayer(u2,p2[j]);
+					j++;
 				}
 				return false;
 			}
+			i++;
 		}
 		return true;
 	}

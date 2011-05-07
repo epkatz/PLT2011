@@ -25,7 +25,8 @@ public class IOManager {
 		try {
 			FileWriter fstream = new FileWriter(filePath);	//Create the file
 			BufferedWriter out = new BufferedWriter(fstream);	//Initialize the output stream
-			out.write(turn+","+myLeague.getMaxTeamSize()+","+myLeague.getMinTeamSize()+","+myLeague.getMaxUsers()+","+myLeague.getMinUsers()+"\n");	//Write the first line of the file
+			System.out.println("Writing turn: "+turn);
+			out.write(turn+","+myLeague.getMaxTeamSize()+","+myLeague.getMinTeamSize()+","+myLeague.getMaxUser()+","+myLeague.getMinUser()+"\n");	//Write the first line of the file
 			//Write the actions
 			out.write("ACTIONS:\n");
 			Action[] actions=myLeague.getActions();	//Get the actions
@@ -87,10 +88,11 @@ public class IOManager {
 			}
 			//Store the data
 			turn=Integer.parseInt(data[0]);
+			System.out.println("Reading turn: "+turn);
 			myLeague.setMaxTeamSize(Integer.parseInt(data[1]));
 			myLeague.setMinTeamSize(Integer.parseInt(data[2]));
-			myLeague.setMaxUsers(Integer.parseInt(data[3]));
-			myLeague.setMinUsers(Integer.parseInt(data[4]));
+			myLeague.setMaxUser(Integer.parseInt(data[3]));
+			myLeague.setMinUser(Integer.parseInt(data[4]));
 			
 			boolean teamFlag=false,playerFlag=false,actionFlag=false,freeFlag=false;
 			while((str = br.readLine()) != null){	//Read File Line By Line
@@ -127,7 +129,7 @@ public class IOManager {
 							GUI.alert("Dump Import Error!", "Invalid dump file!");
 							return -1;
 						}
-						myLeague.addAction(new Action(parts[0].trim(),Double.parseDouble(parts[1].trim())));	//Add action to league
+						myLeague.addAction(new Action(parts[0].trim(),Float.parseFloat(parts[1].trim())));	//Add action to league
 					}
 					else if(playerFlag){	//If currently looking at players
 						String[] parts=str.split(",\\s*");	//Split on commas
@@ -137,7 +139,7 @@ public class IOManager {
 							GUI.alert("Dump Import Error!", "Invalid dump file!");
 							return -1;
 						}
-						myLeague.addPlayer(new Player(parts[0].trim(),parts[1].trim(),Double.parseDouble(parts[2].trim())));	//Add player to league
+						myLeague.addPlayer(new Player(parts[0].trim(),parts[1].trim(),Float.parseFloat(parts[2].trim())));	//Add player to league
 					}
 					else if(teamFlag){	//If currently looking at teams
 						String[] parts=str.split(",\\s*");	//Split on commas
@@ -149,7 +151,7 @@ public class IOManager {
 								return -1;
 							}
 							team=parts[1].trim();	//Trim white space
-							myLeague.addUser(new User(team,Double.parseDouble(parts[2].trim())));	//Add team to league
+							myLeague.addUser(new User(team,Float.parseFloat(parts[2].trim())));	//Add team to league
 						}
 						else{	//If it's a team player
 							if(parts.length!=1){	//Validate that it's a player name
@@ -234,7 +236,7 @@ public class IOManager {
 			}
 			in.close();	//Close
 			for(int i=0;i<statsAL.size();i++){	//Iterate through the stats
-				double pts=myLeague.getAction(statsAL.get(i)[1]).getPoints() * Integer.parseInt(statsAL.get(i)[2]);	//Compute the points
+				float pts=myLeague.getAction(statsAL.get(i)[1]).getPoints() * Integer.parseInt(statsAL.get(i)[2]);	//Compute the points
 				Player temp=myLeague.getPlayer(statsAL.get(i)[0]);	//Get the player
 				temp.addPoints(pts);	//Add the points to the player and thereby the team they're one
 			}
