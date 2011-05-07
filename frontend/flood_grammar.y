@@ -139,7 +139,7 @@ definitionproductions: Set LeagueName OPEN_PARAN STRING_CONST CLOSE_PARAN SEMICO
                      | Add Player OPEN_PARAN STRING_CONST COMMA STRING_CONST CLOSE_PARAN SEMICOLON { $$ = "myLeague.addPlayer(new Player(" + $4 + ", " + $6 + "));\n"; semantics.addPlayer($4); }
                      ;
 
-functions: DefineFunctions functionProductions { $$ = $2; };
+functions: DefineFunctions functionProductions { $$ = $2 + semantics.setFlags(); };
 
 functionProductions: functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  declarations statements returnProduction CLOSE_CURLY { $$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5, yyline)) System.out.println("Function Error"); /* FLOODException Here */}
                      | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY {$$ = $1 + $2 + " " + $3 + "(" + $5 + ")\n{\n}\n"; this.scope = $3; if (!semantics.addToFunctionTable($3, $2, $5, yyline)) System.out.println("Function Error"); }
@@ -313,7 +313,7 @@ parameterList: parameterList COMMA parameterList { $$ = $1 + ", " + $3; }
              | FLT { $$ = "" + $1; }
              | STRING_CONST { $$ = $1; }
              | ID OPEN_SQUARE INT CLOSE_SQUARE { $$ = $1 + "[" + $3 + "]"; }
-             | ID OPEN_SQUARE ID CLOSE_SQUARE { $$ = $1 + "[" + $3 + "]"; }
+             | ID OPEN_SQUARE ID CLOSE_SQUARE { $$ = $1 + "[" + $3 + "]"; semantics.checkIndex($3);}
              | empty { $$ = $1; }
              ;
 
@@ -351,7 +351,7 @@ public void generateFloodProgram(String definitions, String functions)
   {
     System.out.println("Line 67");
     /**************** !!!MANUALLY CHANGE DIRECTORY OUTPUT BELOW FOR FLOOD PROGRAM!!! ************************/
-    FileWriter writer = new FileWriter(new File("C:/PLT/FloodProgram.java"));
+    FileWriter writer = new FileWriter(new File("/home/dillen/workspace_PLT/PLT2011/frontend/floodProgram.java"));
     String buffer = classStart + staticDeclarations + main_start + definitions + main_preEndAutogenerate + main_end + functions + classEnd;
     writer.write(buffer);
     writer.close();
