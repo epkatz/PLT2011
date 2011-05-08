@@ -1,21 +1,21 @@
 DefineLeague
 	Set LeagueName("PLS-Pseudo League Soccer");
 	Add User("Carlo Ancelotti");
-	Add User("Alex Ferfuson");
+	Add User("Alex Ferguson");
 	Add User("Jose Mourinho");
 	Add User("Josep Guardiola");
 	Add User("Massimiliano Allegri");
-	Add Action("Score goal", 2.0);
-	Add Action("Block shot", 0.5);
-	Add Action("Block shot on goal", 1.0);
-	Add Action("Tackle", 0.5);
-	Add Action("Shot on goal", 1.0);
-	Add Action("Shot", 0.5);
-	Add Action("Score penalty kick", 0.5);
-	Add Action("Score with a header", 1.5);
-	Add Action("Score from 30 +  yards out", 1.5);
-	Add Action("Red card", -2.0);
-	Add Action("Yellow Card",  -1.0);
+	Add Action("score goal", 2.0);
+	Add Action("block shot", 0.5);
+	Add Action("block shot on goal", 1.0);
+	Add Action("tackle", 0.5);
+	Add Action("shot on goal", 1.0);
+	Add Action("shot", 0.5);
+	Add Action("score penalty kick", 0.5);
+	Add Action("score with a header", 1.5);
+	Add Action("score from 30+ yards out", 1.5);
+	Add Action("red card", -2.0);
+	Add Action("yellow card",  -1.0);
 	Add Player("Petr Cech","goal keeper");
 	Add Player("Branislav Ivanovic","defender");
 	Add Player("Ashley Cole","defender");
@@ -89,132 +89,135 @@ DefineLeague
 
 DefineFunctions
 	Bool tooSmall(Int players){
-		Bool flag = False;
+		Bool flag=False;
 		If(players<11){
-			flag = True;
+			flag=True;
 		};
 		Return flag;
 	}
 	Bool tooBig(Int players){
-		Bool flag = False;
+		Bool flag=False;
 		If(players > 13){
-			flag = True;
+			flag=True;
 		};
 		Return flag;
 	}
 	Bool draftPlayer(User u, Player p){
 		Bool tooBig;
-		Bool value = True;
+		Bool value=False;
 		Int i;
-		i = GetNumPlayers(u);
-		i = i + 1;
-		tooBig = tooBig(i);
+		i=GetNumPlayers(u);
+		i=i+1;
+		tooBig=tooBig(i);
 		If(!tooBig){
-			value = False;
+			AddPlayer(u,p);
+			value=True;
 		};
 		Return value;
 	}
 	Bool dropPlayer(User u, Player p){
 		Bool tooSmall;
-		Bool value = True;
+		Bool value=False;
 		Int i;
-		i = GetNumPlayers(u);
-		i = i + 1;
-		tooSmall = tooSmall(i);
+		i=GetNumPlayers(u);
+		i=i+1;
+		tooSmall=tooSmall(i);
 		If(!tooSmall){
-			value = False;
+
+			RemovePlayer(u,p);
+			value=True;
 		};
 		Return value;
 	}
 	Bool trade(User u1,Player[] p1,User u2,Player[] p2){
-		Int i = 0;
+		Int i=0;
 		Int j;
 		Int len1;
 		Int len2;
-		Bool flag = True;
-		Bool value = True;
-		len1 = ArrayLength(p1);
-		len2 = ArrayLength(p2);
-		While(i < len1){
-			flag = dropPlayer(u1,p1[i]);
+		Bool flag=True;
+		Bool value=True;
+		len1=ArrayLength(p1);
+		len2=ArrayLength(p2);
+		While(i<len1){
+			flag=dropPlayer(u1,p1[i]);
 			If(!flag){	/*If the drop was unsuccessful*/
-				j = i;
-				While(j >= 0){	/*Add p1 back to u1*/
+				j=i;
+				While(j>=0){	/*Add p1 back to u1*/
 					draftPlayer(u1,p1[j]);
-					j = j - 1;
+					j=j-1;
 				};
-				value = False;
+				value=False;
 			};
-			i = i + 1;
+			i=i+1;
 		};
-		i = 0;
-		While(value && i < len2){
-			flag = dropPlayer(u2,p2[i]);
+		i=0;
+		While(value && i<len2){
+			flag=dropPlayer(u2,p2[i]);
 			If(!flag){	/*If the drop was unsuccessful*/
-				j = i;
-				While(j >= 0){	/*Add p2 back to u2*/
+				j=i;
+				While(j>=0){	/*Add p2 back to u2*/
 					draftPlayer(u2,p2[j]);
-					j = j - 1;
+					j=j-1;
 				};
-				j = 0;
-				While(j < len1){	/*Add p1 to u1*/
+				j=0;
+				While(j<len1){	/*Add p1 to u1*/
 					draftPlayer(u1,p1[j]);
-					j = j + 1;
+					j=j+1;
 				};
-				value = False;
+				value=False;
 			};
-			i = i + 1;
+			i=i+1;
 		};
-		i = 0;
-		While(value && i < len1){
-			flag = draftPlayer(u2,p1[i]);
+		i=0;
+		While(value && i<len1){
+			flag=draftPlayer(u2,p1[i]);
 			If(!flag){	/*If draft was unsuccessful*/
-				j = i;
-				While(j >= 0){	/*Remove p1 from u2*/
+				j=i;
+				While(j>=0){	/*Remove p1 from u2*/
 					dropPlayer(u2,p1[j]);
-					j = j - 1;
+					j=j-1;
 				};
-				j = 0;
-				While(j < len1){	/*Add p1 to u1*/
+				j=0;
+				While(j<len1){	/*Add p1 to u1*/
 					draftPlayer(u1,p1[j]);
-					j = j + 1;
+					j=j+1;
 				};
-				j = 0;
-				While(j < len2){	/*Add p2 to u2*/
+				j=0;
+				While(j<len2){	/*Add p2 to u2*/
 					draftPlayer(u2,p2[j]);
-					j = j + 1;
+					j=j+1;
 				};
-				value = False;
+				value=False;
 			};
-			i = i + 1;
+			i=i+1;
 		};
-		i = 0;
-		While(value && i < len2){
-			flag = draftPlayer(u1,p2[i]);
+		i=0;
+		While(value && i<len2){
+			flag=draftPlayer(u1,p2[i]);
 			If(!flag){	/*If the drop was unsuccessful*/
-				j = i;
-				While(j >= 0){	/*Remove p2 from u1*/
+				j=i;
+				While(j>=0){	/*Remove p2 from u1*/
 					dropPlayer(u1,p2[j]);
-					j = j - 1;
+					j=j-1;
 				};
-				j = 0;
-				While(j < len1){	/*Remove p1 from u2*/
+				j=0;
+				While(j<len1){	/*Remove p1 from u2*/
 					dropPlayer(u2,p1[j]);
-					j = j + 1;
+					j=j+1;
 				};
-				j = 0;
-				While(j < len1){	/*Add p1 to u1*/
+				j=0;
+				While(j<len1){	/*Add p1 to u1*/
 					draftPlayer(u1,p1[j]);
-					j = j + 1;
+					j=j+1;
 				};
-				j = 0;
-				While(j < len2){	/*Add p2 to u2*/
+				j=0;
+				While(j<len2){	/*Add p2 to u2*/
 					draftPlayer(u2,p2[j]);
-					j = j + 1;
+					j=j+1;
 				};
-				value = False;
+				value=False;
 			};
-			i = i + 1;
+			i=i+1;
 		};
 		Return value;
 	}

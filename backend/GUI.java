@@ -135,23 +135,24 @@ public class GUI {
 		homeSplitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		
 		//Initialize the home tab toolbar
-		JToolBar toolBar = new JToolBar();
-		homeSplitPane.setRightComponent(toolBar);
+		JToolBar homeToolBar = new JToolBar();
+		homeToolBar.setFloatable(false);
+		homeSplitPane.setRightComponent(homeToolBar);
 		
 		//Add the upload stats button to the toolbar
 		JButton uploadStatsButton = new JButton("Upload Stat File");
 		uploadStatsButton.setMaximumSize(new Dimension(32767, 32767));
-		toolBar.add(uploadStatsButton);
+		homeToolBar.add(uploadStatsButton);
 		
 		//Add the create dump button to the toolbar
 		JButton createDumpButton = new JButton("Create Dump File");
 		createDumpButton.setMaximumSize(new Dimension(32767, 32767));
-		toolBar.add(createDumpButton);
+		homeToolBar.add(createDumpButton);
 		
 		//Add the import dump button to the toolbar
 		JButton importDumpButton = new JButton("Import Dump File");
 		importDumpButton.setMaximumSize(new Dimension(32767, 32767));
-		toolBar.add(importDumpButton);
+		homeToolBar.add(importDumpButton);
 		
 		//Initialize the home tab scrollpane
 		JScrollPane homePane = new JScrollPane();
@@ -412,31 +413,35 @@ public class GUI {
 		//Draft action listener
 		btnDraft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				for(int i=0;i<draftTable.getRowCount();i++){	//Iterate through table entries
+				for(int i=0;i<draftModel.getRowCount();i++){	//Iterate through table entries
 					if(draftTable.isCellSelected(i,0)){	//If it's selected
 						if(!Test.draftPlayer(theLeague.getUser(pick),League.athletes.get(draftModel.getValueAt(i,0)))){	//If the draft isn't successful
 							GUI.error("Invalid draft!","Sorry, your draft violates rules of the league.");
 							return;
 						}
-						currentTurn++;	//Increment the turn
-						draftModel.removeRow(i);	//Remove that row from the draft table
-						pick=Test.draftFunction(currentTurn);	//Determine who is picking next
-						draftLabel.setText(theLeague.getUser(pick).getName()+"'s turn!");	//Figure out which user is picking next
-						//Make all the combo boxes not select anything
-						tradeComboBox_1.setSelectedIndex(-1);
-						tradeComboBox_2.setSelectedIndex(-1);
-						dropComboBox.setSelectedIndex(-1);
-						//Remove the current tables in all the other tabs so that they are up to date
-						while(tradeModel_1.getRowCount()>0){
-				    		tradeModel_1.removeRow(0);
-				    	}
-						while(tradeModel_2.getRowCount()>0){
-				    		tradeModel_2.removeRow(0);
-				    	}
-						while(dropModel.getRowCount()>0){
-				    		dropModel.removeRow(0);
-				    	}
-						return;
+						int overwrite = JOptionPane.showConfirmDialog(frmFloodFantasyLeague, "Are you sure you want to draft: " + League.athletes.get(draftModel.getValueAt(i,0)).getName());
+		                if(overwrite == JOptionPane.YES_OPTION) {
+							currentTurn++;	//Increment the turn
+							draftModel.removeRow(i);	//Remove that row from the draft table
+							pick=Test.draftFunction(currentTurn);	//Determine who is picking next
+							draftLabel.setText(theLeague.getUser(pick).getName()+"'s turn!");	//Figure out which user is picking next
+							//Make all the combo boxes not select anything
+							tradeComboBox_1.setSelectedIndex(-1);
+							tradeComboBox_2.setSelectedIndex(-1);
+							dropComboBox.setSelectedIndex(-1);
+							//Remove the current tables in all the other tabs so that they are up to date
+							while(tradeModel_1.getRowCount()>0){
+					    		tradeModel_1.removeRow(0);
+					    	}
+							while(tradeModel_2.getRowCount()>0){
+					    		tradeModel_2.removeRow(0);
+					    	}
+							while(dropModel.getRowCount()>0){
+					    		dropModel.removeRow(0);
+					    	}
+							return;
+		                }
+		                return;
 					}
 				}
 				//If no selection is found
@@ -493,43 +498,46 @@ public class GUI {
 					GUI.error("Trade error!","Must select at least one player to trade.");
 					return;
 				}
-				Player[] p1 = new Player[rows1.length];	//Initialize player array for the left table selection
-				Player[] p2 = new Player[rows2.length];	//Initialize player array for the right table selection
-				//Populate the player arrays
-				for (int i = 0; i < p1.length; i++) {
-					p1[i] = League.athletes.get(tradeModel_1.getValueAt(rows1[i],0));
-				}
-				for (int i = 0; i < p2.length; i++) {
-					p2[i] = League.athletes.get(tradeModel_2.getValueAt(rows2[i],0));
-				}
-				boolean success=Test.trade(League.teams.get(tradeComboBox_1	//Determine if it's a successful trade
-						.getSelectedItem()), p1, League.teams
-						.get(tradeComboBox_2.getSelectedItem()), p2);
-				if(!success){	//If unsuccessful
-					GUI.error("Invalid trade!","Sorry, your trade violates rules of the league.");
-					return;
-				}
-				//Repopulate the tables
-				Player[] teamPlayers = League.teams.get(tradeComboBox_1.getSelectedItem()).getPlayers();
-				while (tradeModel_1.getRowCount() > 0) {	//Clear the left trade table
-					tradeModel_1.removeRow(0);
-				}
-				for (int i = 0; i < teamPlayers.length; i++) {	//Repopulate the left trade table
-					String[] temp = { teamPlayers[i].getName(),
-							teamPlayers[i].getPosition(),
-							Float.toString(teamPlayers[i].getPoints()) };
-					tradeModel_1.addRow(temp);	//Add the row
-				}
-				teamPlayers = League.teams.get(tradeComboBox_2.getSelectedItem()).getPlayers();
-				while (tradeModel_2.getRowCount() > 0) {	//Clear the left trade table
-					tradeModel_2.removeRow(0);
-				}
-				for (int i = 0; i < teamPlayers.length; i++) {	//Repopulate the left trade table
-					String[] temp = { teamPlayers[i].getName(),
-							teamPlayers[i].getPosition(),
-							Float.toString(teamPlayers[i].getPoints()) };
-					tradeModel_2.addRow(temp);	//Add the row
-				}
+				int overwrite = JOptionPane.showConfirmDialog(frmFloodFantasyLeague, "Are you sure you want to trade?");
+                if(overwrite == JOptionPane.YES_OPTION) {
+					Player[] p1 = new Player[rows1.length];	//Initialize player array for the left table selection
+					Player[] p2 = new Player[rows2.length];	//Initialize player array for the right table selection
+					//Populate the player arrays
+					for (int i = 0; i < p1.length; i++) {
+						p1[i] = League.athletes.get(tradeModel_1.getValueAt(rows1[i],0));
+					}
+					for (int i = 0; i < p2.length; i++) {
+						p2[i] = League.athletes.get(tradeModel_2.getValueAt(rows2[i],0));
+					}
+					boolean success=Test.trade(League.teams.get(tradeComboBox_1	//Determine if it's a successful trade
+							.getSelectedItem()), p1, League.teams
+							.get(tradeComboBox_2.getSelectedItem()), p2);
+					if(!success){	//If unsuccessful
+						GUI.error("Invalid trade!","Sorry, your trade violates rules of the league.");
+						return;
+					}
+					//Repopulate the tables
+					Player[] teamPlayers = League.teams.get(tradeComboBox_1.getSelectedItem()).getPlayers();
+					while (tradeModel_1.getRowCount() > 0) {	//Clear the left trade table
+						tradeModel_1.removeRow(0);
+					}
+					for (int i = 0; i < teamPlayers.length; i++) {	//Repopulate the left trade table
+						String[] temp = { teamPlayers[i].getName(),
+								teamPlayers[i].getPosition(),
+								Float.toString(teamPlayers[i].getPoints()) };
+						tradeModel_1.addRow(temp);	//Add the row
+					}
+					teamPlayers = League.teams.get(tradeComboBox_2.getSelectedItem()).getPlayers();
+					while (tradeModel_2.getRowCount() > 0) {	//Clear the left trade table
+						tradeModel_2.removeRow(0);
+					}
+					for (int i = 0; i < teamPlayers.length; i++) {	//Repopulate the left trade table
+						String[] temp = { teamPlayers[i].getName(),
+								teamPlayers[i].getPosition(),
+								Float.toString(teamPlayers[i].getPoints()) };
+						tradeModel_2.addRow(temp);	//Add the row
+					}
+                }
 			}
 		});
 		
@@ -557,22 +565,25 @@ public class GUI {
 					GUI.error("Drop error!","Must select a team to drop a player from.");
 					return;
 				}
-				Player drop=League.athletes.get(dropModel.getValueAt(index,0));	//Get player
-				boolean success=Test.dropPlayer(League.teams.get(dropComboBox.getSelectedItem()),drop);	//Determine if drop is successful
-				if(!success){
-					GUI.error("Invalid drop!","Sorry, your drop violates rules of the league.");
-					return;
-				}
-				dropModel.removeRow(index);	//Delete that row
-				//Make all the combo boxes not select anything
-				tradeComboBox_1.setSelectedIndex(-1);
-				tradeComboBox_2.setSelectedIndex(-1);
-				while(tradeModel_1.getRowCount()>0){
-					tradeModel_1.removeRow(0);
-				}
-				while(tradeModel_2.getRowCount()>0){
-					tradeModel_2.removeRow(0);
-				}
+				int overwrite = JOptionPane.showConfirmDialog(frmFloodFantasyLeague, "Are you sure you want to drop: " + League.athletes.get(dropModel.getValueAt(index,0)).getName());
+                if(overwrite == JOptionPane.YES_OPTION) {
+					Player drop=League.athletes.get(dropModel.getValueAt(index,0));	//Get player
+					boolean success=Test.dropPlayer(League.teams.get(dropComboBox.getSelectedItem()),drop);	//Determine if drop is successful
+					if(!success){
+						GUI.error("Invalid drop!","Sorry, your drop violates rules of the league.");
+						return;
+					}
+					dropModel.removeRow(index);	//Delete that row
+					//Make all the combo boxes not select anything
+					tradeComboBox_1.setSelectedIndex(-1);
+					tradeComboBox_2.setSelectedIndex(-1);
+					while(tradeModel_1.getRowCount()>0){
+						tradeModel_1.removeRow(0);
+					}
+					while(tradeModel_2.getRowCount()>0){
+						tradeModel_2.removeRow(0);
+					}
+                }
 			}
 		});
 		

@@ -175,31 +175,43 @@ public class Flood_Sem {
 
 	/* Checks whether the left side of the expression is a TYPE */
 	public void assignmentCheckLeftIsOfType(String type, int line){
-		if (leftSide.equals(type)){
-			if (debugging){System.out.println(leftSide + " IS of type " + type);}
+		if(funcReturnFlag){
+			if (leftSide.equals(type)){
+				if (debugging){System.out.println(leftSide + " IS of type " + type);}
+				return;
+			}
+			if (debugging){System.out.println(leftSide + " is not of type " + type);}
+			validProgram=false;
+				errorList.add("Error at Line " + line + ": " +leftSide + " is not of type " + type + ".");
+				return;
+		}
+		else{
+			if (debugging){System.out.println("Function with no return assignment");}
 			return;
 		}
-		if (debugging){System.out.println(leftSide + " is not of type " + type);}
-		validProgram=false;
-			errorList.add("Error at Line " + line + ": " +leftSide + " is not of type " + type + ".");
-			return;
 	}
 	
 	/* Checks the Return Type of the Function Against the Left Side of an expression */
 	public void assignmentCheckFunction(String functionName, int line){
 		if (functionTable.containsKey(functionName)){
-			if (functionTable.get(functionName).getReturnType().equals(leftSide)){
-				if (debugging){System.out.println("Both are of type " + leftSide);}
+			if(funcReturnFlag){
+				if (functionTable.get(functionName).getReturnType().equals(leftSide)){
+					if (debugging){System.out.println("Both are of type " + leftSide);}
+					return;
+				}
+				if (debugging){System.out.println(functionName + " doesn't return type " + leftSide);}
+				validProgram=false;
+				errorList.add("Error at Line " + line + ": " +functionName + " does not return a value of type " + leftSide + ".");
 				return;
 			}
-			if (debugging){System.out.println(functionName + " doesn't return type " + leftSide);}
-			validProgram=false;
-			errorList.add("Error at Line " + line + ": " +functionName + " does not return a value of type " + leftSide + ".");
-			return;
+			else{
+				if (debugging){System.out.println("Function with no return assignment");}
+				return;
+			}
 		}
 		if (debugging){System.out.println(functionName + " has not been defined.");}
 		validProgram=false;
-		errorList.add("Error at Line " + line + ": " +functionName + " doesn't return a value of type " + leftSide + ".");
+		errorList.add("Error at Line " + line + ": " +functionName + " has not been defined.");
 		return;
 	}
 
@@ -239,6 +251,9 @@ public class Flood_Sem {
 				checkRelationalExpAgainstType(left, "int", line);
 			}
 		}
+		else if(right.matches("^\".*\"$")){
+			checkRelationalExpAgainstType(left, "String", line);
+		}
 		else{
 			checkRelationalExp(left, right, line);
 		}
@@ -257,7 +272,7 @@ public class Flood_Sem {
 	}
 
 	/* Checks to make sure that relational expression don't compare an invalid type */
-	public void checkRelationForInvalidType(String left, int line){
+	public void checkRelationNumber(String left, int line){
 		if (varExists(left)){
 			String leftType = varList.get(left);
 			if (!leftType.equals("int") && !leftType.equals("float")){
@@ -273,8 +288,59 @@ public class Flood_Sem {
 			return;
 		}
 	}
+
+	/* Checks to make sure that relational expression don't compare an invalid type */
+	public void checkRelationNotString(String left, int line){
+		if (varExists(left)){
+			String leftType = varList.get(left);
+			if (leftType.equals("String")){
+				if (debugging){System.out.println(left + " cannot be used because it is of type " + leftType);}
+				validProgram=false;
+				errorList.add("Error at Line " + line + ": " +left + " cannot be used because it is of type " + leftType + ".");
+				return;
+			}
+		}
+		else{
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +left+" has not been defined.");
+			return;
+		}
+	}
+
+	/* Checking known type of string */
+	public void checkRelationString(String left, int line){
+		if (varExists(left)){
+			String leftType = varList.get(left);
+			if (!leftType.equals("String")){
+				if (debugging){System.out.println(left + " cannot be used because it is of type " + leftType);}
+				validProgram=false;
+				errorList.add("Error at Line " + line + ": " +left + " cannot be used because it is of type " + leftType + ".");
+				return;
+			}
+		}
+		else{
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +left+" has not been defined.");
+			return;
+		}
+	}
+
+	public boolean isString(String left, int line){
+		if (varExists(left)){
+			String leftType = varList.get(left);
+			if (leftType.equals("String")){
+				return true;
+			}
+			return false;
+		}
+		else{
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +left+" has not been defined.");
+			return false;
+		}
+	}
 	
-	/* Private method for checking a variable against a type */
+	/* Private method for checking a variable against an unknown type */
 	private void checkRelationalExpAgainstType(String left, String rightType, int line){
 		if (varExists(left)){
 			String leftType = varList.get(left);
