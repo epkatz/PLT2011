@@ -239,7 +239,6 @@ declarations: declarations declaration SEMICOLON{ $$ = $1 + $2; }
             | declaration SEMICOLON{ $$ = $1; }
             ;
 
-/* NEED SEMANCTIC ACTION: Declaration needs type checking - !!!PLEASE REMOVE THIS COMMENT WHEN DONE!!! */
 declaration: Flt ID  { $$ = "float " + $2 + ";\n";  semantics.addVar($2, "float", yyline); }
             | Int ID  { $$ = "int " + $2 + ";\n";  semantics.addVar($2, "int", yyline); }
             | Bool ID  { $$ = "boolean " + $2 + ";\n";  semantics.addVar($2, "boolean", yyline); }
@@ -251,14 +250,13 @@ declaration: Flt ID  { $$ = "float " + $2 + ";\n";  semantics.addVar($2, "float"
             | Str ID EQUAL STRING_CONST { $$ = "String " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, "String", yyline); }
             ;
 
-relationalExp: ID LESSEQUAL constOrVar { $$ = $1 + " <= " + $3; semantics.checkRelExp($1, $3, yyline); semantics.checkRelationForInvalidType($1, yyline); }
-             | ID GREATEQUAL constOrVar { $$ = $1 + " >= " + $3; semantics.checkRelExp($1, $3, yyline); semantics.checkRelationForInvalidType($1, yyline); }
-             | ID NOTEQUAL constOrVar { $$ = $1 + " != " + $3; semantics.checkRelExp($1, $3, yyline); }
-             | ID LESS constOrVar { $$ = $1 + " < " + $3; semantics.checkRelExp($1, $3, yyline); semantics.checkRelationForInvalidType($1, yyline); }
-             | ID GREAT constOrVar { $$ = $1 + " > " + $3; semantics.checkRelExp($1, $3, yyline); semantics.checkRelationForInvalidType($1, yyline); }
-             | ID ISEQUAL constOrVar { $$ = $1 + " == " + $3; semantics.checkRelExp($1, $3, yyline); }//semantics needs to change "==" to ".equals()"
+relationalExp: ID LESSEQUAL constOrVar { $$ = $1 + " <= " + $3; semantics.checkRelExp($1, $3, yyline); semantics.checkRelationNumber($1, yyline); }
+             | ID GREATEQUAL constOrVar { $$ = $1 + " >= " + $3; semantics.checkRelExp($1, $3, yyline); semantics.checkRelationNumber($1, yyline); }
+             | ID NOTEQUAL constOrVar { $$ = $1 + " != " + $3; semantics.checkRelExp($1, $3, yyline); semantics.checkRelationNotString($1, yyline); }
+             | ID LESS constOrVar { $$ = $1 + " < " + $3; semantics.checkRelExp($1, $3, yyline); semantics.checkRelationNumber($1, yyline); }
+             | ID GREAT constOrVar { $$ = $1 + " > " + $3; semantics.checkRelExp($1, $3, yyline); semantics.checkRelationNumber($1, yyline); }
+             | ID ISEQUAL constOrVar { 	if(semantics.isString($1, yyline)){$$ = $1 + ".equals(" + $3 + ")"; semantics.checkRelationString($1,yyline); }else{$$ = $1 + " == " + $3; semantics.checkRelationNotString($1, yyline); } semantics.checkRelExp($1, $3, yyline); }
 	     | OPEN_PARAN relationalExp CLOSE_PARAN { $$ = "(" + $2 + ")"; }
-             //FLOODException Here
              ;
 
 booleanExp: booleanExp AND booleanExp { $$ = $1 + " && " + $3; }
@@ -279,7 +277,7 @@ booleanExp: booleanExp AND booleanExp { $$ = $1 + " && " + $3; }
 constOrVar: FLT { $$ = "" + $1; }
           | INT { $$ = "" + $1; }
           | ID  { $$ = "" + $1; }
-	  | STRING_CONST { $$ = $1;     	}
+	  | STRING_CONST { $$ = $1; }
           ;
 
 arithmeticExp: arithmeticExp PLUS arithmeticExp { $$ = $1 + " + " + $3 ; semantics.checkForBadAdditionType(yyline);}
