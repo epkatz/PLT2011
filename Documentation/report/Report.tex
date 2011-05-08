@@ -8,6 +8,7 @@
 \usepackage{setspace}
 \usepackage{verbatim}
 \usepackage{alltt}
+\usepackage{graphicx}
 \usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
 
 \lstset{
@@ -95,23 +96,23 @@ As defined on Wikipedia: \textit{fantasy sport (also known as \textbf{rotisserie
 
 The popularity of fantasy sports has exploded in recent years. A 2007 study by the \textit{Fantasy Sports Trade Association (FSTA)} estimated  nearly 30 million people in the U.S. and Canada, ranging in age from 12 and above, participated in organized fantasy sports leagues. In comparison, an estimated 3 million people played in the early 1990s, swelling to 15 million by the early 2000s. This impressive growth looks to continue since the study revealed teenagers in both the U.S. and Canada play fantasy sports at a higher rate than the national average, with 13 percent of teens playing in the U.S. and 14 percent playing in Canada.
 
-The FSTA study also estimated the spending habits and overall economic impact of fantasy sports players. Consumers engaging in this ever growing hobby spent \$800 million directly on fantasy sports products and an additional \$3 billion worth of related media products (such as DirecTV's NFL Sunday Ticket and satellite radio's coverage of MLB). Moreover, the growing popularity of fantasy sports is not restricted to North America alone. A recent 2008 study by a European-based market research company estimated the number of fantasy sports players in Britain range between 5.5 and 7.5 million and vary in age between 16-64, of which 80 percent participated in fantasy soccer.
+The FSTA study also estimated the spending habits and overall economic impact of fantasy sports players. Consumers engaging in this ever growing hobby spent \$800 million directly on fantasy sports products and an additional \$3 billion worth of related media products (such as DirecTV's NFL Sunday Ticket and satellite radio's coverage of MLB). Moreover, the growing popularity of fantasy sports is not restricted to North America alone. A recent 2008 study by a European-based market research company estimated the number of fantasy sports players in Britain range between 5.5 and 7.5 million and vary in age between 16-64, of which 80 percent participated in fantasy soccer. Fantasy gaming has become so entrenched in popular culture, there's even a American comedy sitcom called \textit{The League} in which the main characters obsess over winning their fantasy football league.
 
-Thus, the \textbf{FLOOD} programming language is targeted to address a specific problem domain: the creation of fantasy gaming league applications. From the ground up, the language is designed to make it as straitforward as possible for programmers to create fantasy gaming applications. This task will entail defining a league and its type (sports, financial markets, election polls, etc.), establish the rules of governance, enumerate the users/teams and individual league players, and set various other control parameters. 
+Thus, the \textbf{FLOOD} programming language is targeted to address a specific problem domain: the creation of fantasy gaming league applications. From the ground up, the language is designed to make it as straightforward as possible for programmers to create fantasy gaming applications. This task will entail defining a league and its type (sports, financial markets, election polls, etc.), establish the rules of governance, enumerate the users/teams and individual league players, and set various other control parameters. 
 
 In this sense, \textbf{FLOOD} is very much a ``high-level" and ``domain-specific" language. Such as \textbf{R} and \textbf{S} are languages designed specifically to perform statistics calculations, \textbf{SQL} for relational database queries, and \textbf{Mathematica} and \textbf{Maxima} for symbolic mathematics, \textbf{FLOOD} is dedicated to solving the particular problem of fantasy gaming. Given the ubiquity of fantasy sports as a recreational hobby for millions of people, the creation of a domain-specific language to attack this problem in a clear and concise native programming etymology, as opposed to the application of a general purpose language such as \textbf{C} and \textbf{Java}, is a challenging and worthwhile undertaking.
 
 \chapter{A Quick Tutorial}
 
-The goal of this tutorial is to jump into the \textbf{FLOOD} language by creating a simple fantasy league. We won't concern ourselves with implementation details just yet. The language is meant to be simple yet sufficiently extensible but the tutorial will not delve into the various features that make this possible. 
+The goal of this tutorial is to jump into the \textbf{FLOOD} language by creating a simple fantasy league. We won't concern ourselves with implementation details just yet. The language is meant to be simple yet sufficiently extensible. However, the tutorial will not delve into the various features that make this possible. 
 
-Experienced Java programmers will be familiar with most of the syntax since it is a subset of the popular C-like syntax. In certain instances we have opted to use Python style syntax for improved readability or Pascal syntax for ease of use. Where possible we compare and contrast a specific feature with Java, Python or some other language which comprise the main influence of \textbf{FLOOD}. 
+Experienced Java programmers will be familiar with most of the syntax since it is a subset of the popular C-like syntax. In certain instances we have opted to use Python style syntax for improved readability or Pascal syntax for ease of use. Where possible we compare and contrast a specific feature with Java, Python or some other language which comprise the main influences of \textbf{FLOOD}. 
 
-Some examples which aren't strictly necessary for the sample program are included to clarify points of possible confusion. These are noted when used. Additionally, we repeat portions of the \textbf{FLOOD} standard library for ease of reading. The full library is included in the \textit{Reference Manual} and \textit{Appendix} where appropriate. Please be aware of the distinction made between programmer, the person actually writing a \textbf{FLOOD} program (most likely yourself if you are reading this), and \textit{User}, the end-user of the application (which could be thought of as a team entitity). Additionally, \textit{Player} refers to a player of the fantasy league, whether this is an actual person as in the case of a quarterback in football or a non-human entitity as is the case with \textit{AAPL} (Apple) in the stock market.
+Some examples which aren't strictly necessary for the sample program are included to clarify points of possible confusion. These are noted when used. Additionally, we repeat portions of the \textbf{FLOOD} standard library for ease of reading. The full library is included in the \textit{Reference Manual} and \textit{Appendix} where appropriate. Please be aware of the distinction made between programmer, the person actually writing a \textbf{FLOOD} program (most likely yourself if you are reading this), and \textit{User}, the end-user of the application (which could be thought of as a team entitity). Additionally, \textit{Player} refers to a player of the fantasy league, either an actual person as in the case of a quarterback in football or a non-human entitity as is the case with \textit{AAPL} (Apple) in the stock market.
 
 \section{Getting Started - The ``Hello World" Program}
 
-\textbf{FLOOD} has a very specific application domain. It's goal is to create fantasy leagues and thus the ability to print to console is fruitless. However, the GUI will have a message box where messages can be displayed to the \textit{User}. \textbf{FLOOD} hides the details of the user-interface so the programmer can concentrate on the rules of their specific fantasy league. While the first simple program may seem more complicated than the simple Java ``hello world" example, most programs generally will not be any more elaborate than this case.
+\textbf{FLOOD} has a very specific application domain. It's goal is to create fantasy leagues and thus, the ability to print to console is fruitless. However, the GUI will have a message box where messages can be displayed to the \textit{User}. \textbf{FLOOD} hides the details of the user-interface so the programmer can concentrate on the rules of their specific fantasy league. While the first simple program may seem more complicated than the simple Java ``hello world" example, most programs generally will not be any more elaborate than this case.
 
 Since \textbf{FLOOD} is built on top of Java byte-code, the programmer will not need to worry about system compatibility issues. Heeding the eternal wisdom of Kernighan \& Ritchie, we also point out that compilation will only succeed if the programmer hasn't botched anything, such as missing characters, misspelled keywords, or some other mistake that can cause an error in compilation. 
 
@@ -149,11 +150,11 @@ DefineFunctions
 \end{lstlisting}
 \end{singlespace}
 
-Let's now review the notable differences between Python, Java and \textbf{FLOOD}. First,  the convention in \textbf{FLOOD} is to name each file with the \textit{.fld} extension. In addition, each file is a self-contained program and unlike Java, there is no ability to add separate classes. And the first letter of any keyword in \textbf{FLOOD} is capitalized.
+Let's now review the notable differences between Python, Java and \textbf{FLOOD}. First,  the convention in \textbf{FLOOD} is to name each file with the \textit{.fld} extension. In addition, each file is a self-contained program and unlike Java, there is no ability to add separate classes. The first letter of any keyword in \textbf{FLOOD} is capitalized.
 
-The language was originally intended to be object-oriented in order to facilitate modularity and extensibility of code. However, due to the restricted time constraints imposed by the course loads of various team members, it was decided to reduce the scope of the language without losing the basic functionalities as originally promised. Therefore, the abilities to add classes and inherit from pre-existing libraries were left for a possible future iteration of the language. 
+The language was originally intended to be object-oriented in order to facilitate modularity and extensibility of code. However, due to time constraints, it was decided to reduce the scope of the language without losing the basic functionalities as originally promised. Therefore, the ability to add classes and inherit from pre-existing libraries was left for a possible future iteration of the language. 
 
-The entry point for a \textbf{FLOOD} program is to specify the \texttt{DefineLeague} keyword. Since there is no question of class scope within a file, code below this program block is considered part of the program while any code above (excluding comments, naturally) is in error. It is important to note the \texttt{DefineLeague} block is semantically equivalent to the \texttt{main} function in a standard Java program and all the parameters and settings specified within this block can be viewed as passing parameters via the constructor method in a Java program. Moreover, it is not possible to declare local variables here since meaningful computations do not exist in this section of a \textbf{FLOOD} program. 
+The entry point for a \textbf{FLOOD} program is to specify the \texttt{DefineLeague} keyword. Since there is no question of class scope within a file, code below this program block is considered part of the program while any code above (excluding comments, naturally) is an error. It is important to note the \texttt{DefineLeague} block is semantically equivalent to the \texttt{main} function in a standard Java program and all the parameters and settings specified within this block can be viewed as passing parameters via the constructor method in a Java program. Moreover, it is not possible to declare local variables here since meaningful computations do not exist in this section of a \textbf{FLOOD} program. 
 
 \begin{singlespace}
 \begin{lstlisting}[language=Java,label=some-code,caption=Defining the league and setting parameters]
@@ -189,9 +190,9 @@ DefineLeague
 
 Every \textbf{FLOOD} program implicitly instantiates a \textit{League} object. The \textit{League} object contains most of the other objects needed for the \textbf{FLOOD} program including \textit{User}, \textit{Player} and \textit{Action} lists.
 
-For the minimum program it may be possible to leave the maximum and mininum user settings at their respective default values, but as an example we set them above. In order to change certain attributes of the \textit{League} use the \texttt{Set} keyword with the attribute to be changed. Additionally, to create new \textit{Users}, \textit{Actions} and \textit{Players} use the \texttt{Add} keyword. Since local variables can not be set in the \textit{League} definition, all attributes must be literals. Note that \textit{Users} and \textit{Players} are simply a \textit{string} representing a name while \texttt{Action} is a name-value pair consisting of the name of the \texttt{Action} and the value that will be added to a \textit{User's} points through that \texttt{Action}.
+For the minimum program, it may be possible to leave the maximum and mininum user settings at their respective default values, but as an example, we set them above. In order to change certain attributes of the \textit{League}, use the \texttt{Set} keyword with the attribute to be changed. Additionally, to create new \textit{Users}, \textit{Actions} and \textit{Players} use the \texttt{Add} keyword. Since local variables can not be set in the \textit{League} definition, all attributes must be literals. Note that \textit{Users} and \textit{Players} are simply a \textit{string} representing a name, while \texttt{Action} is a name-value pair consisting of the name of the \texttt{Action} and the value that will be added to a \textit{User's} points through that \texttt{Action}.
 
-A \textbf{FLOOD} developer need not worry about passing any values to the back-end---\textbf{FLOOD} encapsulates passing the \textit{League} to the GUI and calling the GUI.
+A \textbf{FLOOD} developer need not worry about passing any values to the back-end---\textbf{FLOOD} encapsulates the process of passing the \textit{League} to the GUI and calling the GUI.
 
 \begin{singlespace}
 \begin{lstlisting}[language=Java,label=some-code,caption=Defining functions]
@@ -244,7 +245,7 @@ Int draftFunction(Int turn)
 
 There are several things to note in the above code snippet. \textbf{FLOOD} uses $/*\ldots*/$ comments similar to Java and can span multiple lines. Variables are declared before they are used and all variables are instantiated to default values. Using a variable that hasn't been instantiated will result in a logical error rather than a semantic error. All variable declarations must occur before any other code in the function body. 
 
-A \texttt{Return} must only occur at the end of the function and must match the stated return type. In the example above, \texttt{currentTurn} is declared as an \texttt{Int} and then instantiated. Only following the rest of the production body does \texttt{currentTurn} gets returned.
+A \texttt{Return} must only occur at the end of the function and must match the stated return type. In the example above, \texttt{currentTurn} is declared as an \texttt{Int} and then instantiated. Only following the rest of the production body does \texttt{currentTurn} get returned.
 
 A function can be called similarly to Java:
 
@@ -266,11 +267,11 @@ a = draftFunction(10);
 Hiding the GUI is one of the main features of \textbf{FLOOD}. There is no need to program any part of the user-interface. The GUI will know how to hook into the \textbf{FLOOD} source and connect the buttons on the interface to the actions defined by the programmer. The output will be a GUI window which will control the flow of the program and in turn, the flow will depend upon the user's interactions. For instance, the only way to update the scores of the \textit{Users} is by adding player-action files to the program. \textit{Player-Action} files would contain new statistics such as:
 \begin{center}
 \begin{singlespace}
-\begin{tabular}{ l l }
-LeBron James & 7 Rebound \\
-Lebron James & 4 Assist \\
-Carmelo Anthony & 5 Steal \\
-Carmelo Anthony & 25 Point Scored
+\begin{tabular}{ l }
+LeBron James, Rebound, 7 \\
+Lebron James, Assist, 4  \\
+Carmelo Anthony, Steal, 5 \\
+Carmelo Anthony, Point Scored, 25
 \end{tabular}
 \end{singlespace}
 \end{center}
@@ -297,7 +298,7 @@ DefineFunctions
 
 \section{Variables \& Arithmetic Expressions}
 
-Just as any robust programming language requires a comprehensive computational model, \textbf{FLOOD} provides the user with a set of arithmetic expressions and variable types to work with. To use a variable and work with it, the variable must be declared before it is used for the first time. A declaration defines the properties of the variables. A declaration is of the form \textit{type} followed by the \textit{name} of the variable to be declared of that type.
+Just as any robust programming language requires a comprehensive computational model, \textbf{FLOOD} provides the user with a set of arithmetic expressions and variable types to work with. To use a variable and work with it, the variable must be declared before it is used for the first time. A declaration defines the properties of the variables. A declaration is of the form \textit{\texttt{type name}} where \textit{\texttt{type}} is the data type of the variable and \textit{\texttt{name}} is the identifier of the variable.
 
 \begin{singlespace}
 \begin{lstlisting}[language=Java,label=some-code,caption=Variable declarations]
@@ -315,7 +316,7 @@ s = "Hello World";
 \end{lstlisting}
 \end{singlespace}
 
-Here, variables are declared before they are used. It's also possible to assign values to the variables in the declaration. An important distinction between \textbf{FLOOD} and a programming language like Java is the location of actual declaration which, as noted \textit{\textbf{must be at the top}} of the function body. Following the declarations, the variables can be used as needed. Note that there is no coercion between \texttt{Flt} and \texttt{Int} since \textbf{FLOOD} does not support implicit type coercions, as shown here:
+Here, variables are declared before they are used. It's also possible to assign values to the variables in the declaration. An important distinction between \textbf{FLOOD} and a programming language like Java is the location of actual declaration which as noted \textit{\textbf{must be at the top}} of the function body. Following the declarations, the variables can be used as needed. Note that there is no coercion between \texttt{Flt} and \texttt{Int} since \textbf{FLOOD} does not support implicit type coercions, as shown here:
 
 \begin{singlespace}
 \begin{lstlisting}[language=Java,label=some-code,caption=Implicit type coersion is not supported]
@@ -346,7 +347,7 @@ i = someFunction() + 10 * 4; /* someFunction() returns an Int */
 \end{lstlisting}
 \end{singlespace}
 
-The above code snippet provides a glimpse of the arithmetic capabilities of \textbf{FLOOD}. The `$+$', `$-$', `$/$', and `$*$' operators are binary operators and can be used to add, subtract, divide and multiply \texttt{Flt} (floats) and \texttt{Int} (integers).
+The above code snippet provides a glimpse of the arithmetic capabilities of \textbf{FLOOD}. The `$+$', `$-$', `$/$', `$*$', and `\%' operators are binary operators and can be used to add, subtract, divide, multiply and obtain the modulo of \texttt{Flt} (floats) and \texttt{Int} (integers).
 
 \section{Loops \& Conditionals}
 
@@ -398,7 +399,7 @@ If the first condition ($\texttt{points} > 100$) is not met, then the statement 
 
 \section{Functions \& Scope}
 
-As in countless other programming languages, \textbf{FLOOD} employs the concept of a function (also referred to as a method, subroutine, or procedure), a logical grouping of code within the larger program which carries out a specific task and is relatively independent of the rest of the code base. The idea of a function is analogous to the notion of the ``black box" when discussing the concept of encapsulation in object-oriented programming. For a well-designed function, the particulars of ``how" a the function performs its task(s) is not of critical importance and just knowing ``what" it does suffices. Functions can be ``called" or ``executed" any number of times and from within other functions. 
+As in countless other programming languages, \textbf{FLOOD} employs the concept of a function (also referred to as a method, subroutine, or procedure), a logical grouping of code within the larger program which carries out a specific task and is relatively independent of the rest of the code base. The idea of a function is analogous to the notion of the ``black box" when discussing the concept of encapsulation in object-oriented programming. For a well-designed function, the particulars of ``how" the function performs its task(s) is not of critical importance and just knowing ``what" it does suffices. Functions can be ``called" or ``executed" any number of times and from within other functions. 
 
 \begin{singlespace}
 \begin{lstlisting}[language=Java,label=some-code,caption=Syntax of a FLOOD function]
@@ -563,7 +564,7 @@ Adds a \texttt{User} to the \textit{League}.
 
 \begin{singlespace}
 \begin{lstlisting}[language=Java,label=some-code,caption=Adding an Action]
-Add Action("Name of Action", 10);
+Add Action("Name of Action", 10.0);
 \end{lstlisting}
 \end{singlespace}
 
@@ -577,7 +578,7 @@ Add Player("Name of Player", "Position");
 
 Adds the \texttt{Player} to the \textit{League} object, along with the position of that \texttt{Player}.
 
-The next logical block comprises of defining functions and invoking functions within them if needed. This segment needs to begin with the \texttt{DefineFunctions} keyword as follows:
+The next logical block is comprised of defining functions and invoking functions within them if needed. This segment needs to begin with the \texttt{DefineFunctions} keyword as follows:
 
 \begin{singlespace}
 \begin{lstlisting}[language=Java,label=some-code,caption=Defining functions]
@@ -653,7 +654,7 @@ horizontal tab & HT & \textbackslash{t} & double quote & `` & \textbackslash"
 
 \textbf{FLOOD} supports the following datatypes:
 \begin{itemize}
-\item \texttt{Void}
+\item \texttt{Void}: Indicates absense of type information.
 \item \texttt{Flt}: A number with decimal values precise up to 6 decimal places.
 \item \texttt{Int}: An integer number.
 \item \texttt{Str}: A String of characters.
@@ -704,7 +705,7 @@ The result of the $+$ operator is the sum of the operands. A string may also be 
 
 The result of the $-$ operator is the difference of the operands. A string may not be subtracted from another string.
 
-Multiplication and division can be performed only on \texttt{Int} and \texttt{Flt} types. Additionally, \textbf{FLOOD} does not enforce coercion of operand types. This means that any of the above operations can be performed only on operands of the same type. For example, an \texttt{Int} var added to an \texttt{Int} var.
+Multiplication and division can be performed only on \texttt{Int} and \texttt{Flt} types. Additionally, \textbf{FLOOD} does not enforce coercion of operand types. This means that any of the above operations can be performed only on operands of the same type. For example, an \texttt{Int} variable added to an \texttt{Int} variable.
 
 \subsubsection{Relational Expressions}
 
@@ -712,12 +713,12 @@ The relational operators group left-to-right. The relational expression returns 
 
 \begin{alltt}\begin{singlespace}
          \textit{relational-expression:}
-            \textit{variable < variable or constant}
-            \textit{variable > variable or constant}
-            \textit{variable <= variable or constant}
-            \textit{variable >= variable or constant}
-            \textit{variable == variable or constant}
-            \textit{variable != variable or constant}
+            \textit{variable < variable-or-constant}
+            \textit{variable > variable-or-constant}
+            \textit{variable <= variable-or-constant}
+            \textit{variable >= variable-or-constant}
+            \textit{variable == variable-or-constant}
+            \textit{variable != variable-or-constant}
             (relational-expression)\end{singlespace}
 \end{alltt}
 
@@ -725,7 +726,7 @@ The operators ($==$) and ($!$$=$) have lower precedence than the operators ($<$)
 
 \subsubsection{Boolean Expressions}
 
-The three basic operators involved in boolean expressions are boolean \textit{AND} ($\&\&$), boolean \textit{OR} ($||$) and boolean \textit{NOT} ($!$). The \textit{AND} and \textit{OR} operators group left-to-right. The \textit{NOT} operator is right associative. The \textit{AND} operator returns true if both operands compared are true, and false otherwise. The \textit{OR} operator returns true if atleast one operand is true, and false otherwise. The \textit{NOT} operator returns true if the operand evaluates to false, and false otherwise.
+The three basic operators involved in boolean expressions are boolean \textit{AND} ($\&\&$), boolean \textit{OR} ($||$) and boolean \textit{NOT} ($!$). The \textit{AND} and \textit{OR} operators group left-to-right. The \textit{NOT} operator is right associative. The \textit{AND} operator returns true if both operands compared are true, and false otherwise. The \textit{OR} operator returns true if at least one operand is true, and false otherwise. The \textit{NOT} operator returns true if the operand evaluates to false, and false otherwise.
 
 \begin{alltt}\begin{singlespace}
          \textit{boolean-expression:}
@@ -762,7 +763,7 @@ Statements in \textbf{FLOOD} encompass conditionals, loops, assignments and func
 
 \subsubsection{Conditionals}
 
-A conditional statement in \textbf{FLOOD} is an statement which checks for a certain condition and processes the succeeding statements depending on the boolean value of the condition evaluated. The syntax is as follows:
+A conditional statement in \textbf{FLOOD} is a statement which checks for a certain condition and processes the succeeding statements depending on the boolean value of the condition evaluated. The syntax is as follows:
 
 \begin{alltt}\begin{singlespace}
             \textit{If (expression)
@@ -809,49 +810,49 @@ There are additionally a number of built-in functions the users can invoke witho
             \textit{AddPlayer(user, player);}\end{singlespace}
 \end{alltt}
 
-This function adds the \texttt{Player} object \textit{\texttt{player}} to the \texttt{User} object \textit{\texttt{user}}.
+The above function adds the \texttt{Player} object \textit{\texttt{player}} to the \texttt{User} object \textit{\texttt{user}}.
 
 \begin{alltt}\begin{singlespace}
             \textit{RemovePlayer(user, player);}\end{singlespace}
 \end{alltt}
 
-This function removes the \texttt{Player} object \textit{\texttt{player}} to the \texttt{User} object \textit{\texttt{user}}.
+The above function removes the \texttt{Player} object \textit{\texttt{player}} to the \texttt{User} object \textit{\texttt{user}}.
 
 \begin{alltt}\begin{singlespace}
             \textit{Int ArrayLength(user, player);}\end{singlespace}
 \end{alltt}
 
-This function takes as an argument either a \texttt{User} or \texttt{Player} \textit{\texttt{array}} object as the parameter and returns the length of the array.
+The above function takes as an argument either a \texttt{User} or \texttt{Player} \textit{\texttt{array}} object as the parameter and returns the length of the array.
 
 \begin{alltt}\begin{singlespace}
             \textit{Str GetUserName(user);}\end{singlespace}
 \end{alltt}
 
-Retuns the name of the \texttt{User} object \textit{\texttt{user}}.
+The above retuns the name of the \texttt{User} object \textit{\texttt{user}}.
 
 \begin{alltt}\begin{singlespace}
             \textit{Int GetNumPlayers(user);}\end{singlespace}
 \end{alltt}
      
-Returns the number of players of the \texttt{User} object \textit{\texttt{user}}.
+The above returns the number of players of the \texttt{User} object \textit{\texttt{user}}.
 
 \begin{alltt}\begin{singlespace}
             \textit{Str GetPlayerName(player);}\end{singlespace}
 \end{alltt}
 
-Returns the name of the \texttt{Player} object \textit{\texttt{player}}.
+The above returns the name of the \texttt{Player} object \textit{\texttt{player}}.
 
 \begin{alltt}\begin{singlespace}
             \textit{Str GetPlayerPosition(player);}\end{singlespace}
 \end{alltt}
 
-Returns the postion of the \texttt{Player} object \textit{\texttt{player}}.
+The above returns the postion of the \texttt{Player} object \textit{\texttt{player}}.
 
 \begin{alltt}\begin{singlespace}
             \textit{Flt GetPlayerPoints(player);}\end{singlespace}
 \end{alltt}
 
-Returns the points of the \texttt{Player} object \textit{\texttt{player}}.
+The above returns the points of the \texttt{Player} object \textit{\texttt{player}}.
 
 \subsubsection{Assignments}
 
@@ -862,7 +863,7 @@ Values can be assigned to variables depending on their type. For example,  a \te
 var1 = True; /* if var1 is of type Bool */
 var2 = 1; /* if var2 is of type Int */
 var3 = 1.0; /* if var3 is of type Flt */
-var4 = "string"; /* f var4 is of type Str */
+var4 = "string"; /* iff var4 is of type Str */
 \end{lstlisting}
 \end{singlespace}
 
@@ -876,7 +877,7 @@ var5 = function(); /* if the return type of the function matches the data type o
 
 \section{Scope}
 
-The scope to be considered while programming in \textbf{FLOOD} is lexical scope of a variable. Variables can only exist within a function, and need to be defined at the start of the function body. Therefore, the scope of a variable is limited to the function in which it is defined.
+The scope to be considered while programming in \textbf{FLOOD} is lexical scope of a variable. Variables can only exist within a function, and need to be defined at the start of the function body. Therefore, the scope of a variable is limited to the function in which it is defined. Global variables are not supported in \textbf{FLOOD}.
 
 \section{Grammar}
 
@@ -903,9 +904,9 @@ Below is a recapitulation of the grammar that was given throughout the earlier p
 
      \textit{functions: DefineFunctions functionProductions}
 
-     \textit{functionProductions: functionProductions returnType
-                          functionName ( argumentLists )
-                          \{ declarations statements returnProduction \}}
+     \textit{functionProductions:}
+          \textit{functionProductions returnType functionName ( argumentLists )
+                              \{ declarations statements returnProduction \}}
           \textit{functionProductions returnType functionName ( argumentLists )
                               \{ empty \}}
           \textit{functionProductions returnType functionName ( argumentLists )
@@ -923,32 +924,38 @@ Below is a recapitulation of the grammar that was given throughout the earlier p
           
      \textit{functionName: identifier}
 
-     \textit{argumentLists: argumentLists , argumentList}
+     \textit{argumentLists:}
+          \textit{argumentLists , argumentList}
           \textit{argumentList}
           \textit{empty}
           
-     \textit{argumentList: returnType identifier}
+     \textit{argumentList:}
+          \textit{returnType identifier}
           \textit{User [ ] identifier}
           \textit{Player [ ] identifier}
           \textit{User identifier}
           \textit{Player identifier}
 
-     \textit{statements: statements statement}
+     \textit{statements:}
+          \textit{statements statement}
           \textit{statement}
 
-     \textit{statement: conditionals}
+     \textit{statement:}
+          \textit{conditionals}
           \textit{loop}
           \textit{relational-expression}
           \textit{assignment}
           \textit{functionCall}
 
-     \textit{returnProduction: Return identifier}
+     \textit{returnProduction:}
+          \textit{Return identifier}
           \textit{Return string-constant}
           \textit{Return int}
           \textit{Return float}
           \textit{empty}
 
-     \textit{conditionals: If ( relational-expression ) \{ statements \}}
+     \textit{conditionals:}
+          \textit{If ( relational-expression ) \{ statements \}}
           \textit{If ( relational-expression ) \{ statements \} Else \{ statements \}}
           \textit{If ( relational-expression ) \{ empty \}}
           \textit{If ( relational-expression ) \{ empty \} Else \{ empty \}}
@@ -961,15 +968,18 @@ Below is a recapitulation of the grammar that was given throughout the earlier p
           \textit{If ( boolean-expression ) \{ statements \} Else \{ empty \}}
           \textit{If ( boolean-expression ) \{ empty \} Else \{ statements \}}
 
-     \textit{loop: While ( relational-expression ) \{ statements \}}
+     \textit{loop:}
+          \textit{While ( relational-expression ) \{ statements \}}
           \textit{While ( relational-expression ) \{ empty \}}
           \textit{While ( boolean-expression ) \{ statements \}}
           \textit{While ( boolean-expression ) \{ empty \}}
 
-     \textit{declarations: declarations declaration}
+     \textit{declarations:}
+          \textit{declarations declaration}
           \textit{declaration}
 
-     \textit{declaration: Flt identifier}
+     \textit{declaration:}
+          \textit{Flt identifier}
           \textit{Int identifier}
           \textit{Bool identifier}
           \textit{Str identifier}
@@ -979,7 +989,8 @@ Below is a recapitulation of the grammar that was given throughout the earlier p
           \textit{Bool identifier = False}
           \textit{Str identifier = string-constant}
 
-     \textit{relational-expression: identifier <= constant-or-variable}
+     \textit{relational-expression:}
+          \textit{identifier <= constant-or-variable}
           \textit{identifier >= constant-or-variable}
           \textit{identifier != constant-or-variable}
           \textit{identifier < constant-or-variable}
@@ -987,30 +998,32 @@ Below is a recapitulation of the grammar that was given throughout the earlier p
           \textit{identifier == constant-or-variable}
           \textit{( relational-expression )}
 
-     \textit{boolean-expression: boolean-expression AND boolean-expression}
-          \textit{boolean-expression OR boolean-expression}
-          \textit{relational-expression AND relational-expression}
-          \textit{relational-expression OR relational-expression}
-          \textit{relational-expression AND boolean-expression}
-          \textit{relational-expression OR boolean-expression}
-          \textit{boolean-expression AND relational-expression}
-          \textit{boolean-expression OR relational-expression}
+     \textit{boolean-expression:}
+          \textit{boolean-expression && boolean-expression}
+          \textit{boolean-expression || boolean-expression}
+          \textit{relational-expression && relational-expression}
+          \textit{relational-expression || relational-expression}
+          \textit{relational-expression && boolean-expression}
+          \textit{relational-expression || boolean-expression}
+          \textit{boolean-expression && relational-expression}
+          \textit{boolean-expression || relational-expression}
           \textit{( boolean-expression )}
           \textit{! boolean-expression}
           \textit{identifier}
           \textit{True}
           \textit{False}
 
-     \textit{constant-or-variable: float}
+     \textit{constant-or-variable:}
+          \textit{float}
           \textit{integer}
           \textit{identifier}
           
-     \textit{arithmetic-expression: arithmetic-expression PLUS
-                            arithmetic-expression}
-          \textit{arithmetic-expression MINUS arithmetic-expression}
-          \textit{arithmetic-expression MULT arithmetic-expression}
-          \textit{arithmetic-expression DIV arithmetic-expression}
-          \textit{arithmetic-expression MOD arithmetic-expression}
+     \textit{arithmetic-expression:}
+          \textit{arithmetic-expression + arithmetic-expression}
+          \textit{arithmetic-expression - arithmetic-expression}
+          \textit{arithmetic-expression * arithmetic-expression}
+          \textit{arithmetic-expression / arithmetic-expression}
+          \textit{arithmetic-expression % arithmetic-expression}
           \textit{( arithmetic-expression )}
           \textit{identifier}
           \textit{float}
@@ -1020,13 +1033,15 @@ Below is a recapitulation of the grammar that was given throughout the earlier p
 
      \textit{leftSide: identifier}
 
-     \textit{rightSide: arithmetic-expression}
+     \textit{rightSide:}
+          \textit{arithmetic-expression}
           \textit{functionCall}
           \textit{string-constant}
           \textit{True}
           \textit{False}
 
-     \textit{functionCall: functionName ( parameterList )}
+     \textit{functionCall:}
+          \textit{functionName ( parameterList )}
           \textit{AddPlayer ( identifier , identifier )}
           \textit{RemovePlayer ( identifier , identifier )}
           \textit{ArrayLength ( identifier )}
@@ -1036,7 +1051,8 @@ Below is a recapitulation of the grammar that was given throughout the earlier p
           \textit{GetPlayerPosition (identifier)}
           \textit{GetPlayerPoints (identifier)}
 
-     \textit{parameterList: parameterList , parameterList}
+     \textit{parameterList:}
+          \textit{parameterList , parameterList}
           \textit{identifier}
           \textit{integer}
           \textit{float}
@@ -1048,37 +1064,272 @@ Below is a recapitulation of the grammar that was given throughout the earlier p
 \end{singlespace}
 \end{alltt}
 
-%\chapter{Project Plan}
-%
-%\chapter{Language Evolution}
-%
-%\chapter{Language Architecture}
-%
-%\chapter{Development Enviornment}
-%
-%\chapter{Testing}
-%
-%\chapter{Conclusions}
-%
-%\section{Lessons Learned as a Team}
-%
-%\section{Lessons Learned by Team Members}
-%
-%\subsection{Stephanie Aligbe}
-%
-%\subsection{Elliot Katz}
-%
-%\subsection{Tam Le}
-%
-%\subsection{Dillen Roggensinger}
-%
-%\subsection{Anuj Sampathkumaran}
-%
-%\section{Advice for Future Teams}
-%
-%\section{Suggestions for Future Improvement}
-%
-%\appendix
-%\chapter{FLOOD Source Code}
+\chapter{Project Plan}
+
+\section{Processes}
+
+Our team was a mix of three undergraduates, two Computer Science majors pursuing the \textit{Applications} track and the \textit{Vision and Graphics} track and a Computer Engineer, as well as two graduates, one pursuing the \textit{Foundations} track and the other pursuing the \textit{Systems} track. The team members hail from Vietnam, Nigeria, India, Israel and Switzerland. The team had backgrounds from professional industry, the military and international educational systems. As such, the team came in with very different ideas on development and team-work.
+
+Our team decided early on that group working sessions and pair-programming would be an effective way to ensure constant communication among team members. We set out a schedule to meet every Monday night. Gradually we added Thursday night and then one weekend afternoon. Information was shared among team members through online documentation using Google Docs and a special Google Group alias. Every submission was drafted on Google Docs and every team member contributed. Additionally, the Product Manger's log and Bug Tracker were both available online and updated frequently. The code repository was hosted on GitHub. 
+
+Modules that were worked on by more than one team member would be pair-programmed with one team member acting as the ``driver" and one as the ``observer." Additionally, the observer would act as a code reviewer which speed up development time. Working sessions were generally held in an open space where team members could work on their own sections but also communicate with each other in real-time.
+
+Our team tried to ensure maximum development freedom for each member. There were no restrictions on development tools as long as it was tested and found consistent with the existing systems in place. 
+
+\section{Roles and Responsibilities}
+
+Responsibilities for each team member were generally less defined than the roles listed below. Although a division is made, team members frequently contributed code and ideas to other parts of the product. Entire sections of code have evolved over the course of the project making it almost impossible to clearly discern the primary author.
+\begin{itemize}
+\item Elliot, \textit{Product Manager} - Semantics and Error Checking.
+\item Anuj, \textit{Langauge Guru} - Parser and Grammar.
+\item Tam, \textit{System Architect} - Parser and Grammar.
+\item Dillen, \textit{System Integrator} - Backend GUI and Error Checking.
+\item Stephanie, \textit{System Tester} - Semantics and Unit Testing.
+\end{itemize}
+
+\section{Style Sheet}
+
+Recognizing that every team member has a unique style of coding, only very specific recommendations were made where differences would change readability. Small issues (such as where to put curly brackets) were left to the team member who wrote the specific section of code.
+\begin{itemize}
+\item Comments:
+\begin{itemize}
+\item Every method must have a description above it.
+\item Sophisticated functions must have comments within the body.
+\item Comments should not include \texttt{TODO} messages.
+\end{itemize}
+\item Bugs:
+\begin{itemize}
+\item All bugs must be tracked using the Google Doc spreadsheet ``Bug Tracker."
+\item If a bug was found in code that was added to the repo, the team member who found the bug must notify all team members by email.
+\item When a bug is corrected, all unit tests regarding the specific section must be re-run to assure that no new code takes away from existing functionality. 
+\end{itemize}
+\item Repository:
+\begin{itemize}
+\item Check in code to the repository after every major change.
+\item Check in code after every session and every four hours within one session.
+\item Do not check code in unless it has been tested and a unit test has been written for the functionality added.
+\item Update from the repository before a commit to minimize conflicts.
+\end{itemize}
+\item Code Style:
+\begin{itemize}
+\item Variable and Function names should be clear and understandable.
+\item White Space should be used liberally in order to make code easily readable.
+\item The semantic checks exist with the semantic object. The backend runs through GUI. The grammar must treat both as a blackbox.
+\item Java naming conventions are the preferred method for style (including but not limited to camel-case, indentation and programming practices) as appears in \textit{Code Conventions for the Java Programming Language, Revised April 20, 1999}.
+\end{itemize}
+\item Modules:
+\begin{itemize}
+\item Every module should exist within its own Java file and ideally its own folder.
+\item Unit tests should exist with the folder that includes the makefile and given names indicative of its use.
+\end{itemize}
+\end{itemize}
+
+\section{Project Timeline}
+
+\includegraphics[scale=0.7]{project_timeline.png}
+
+\section{Meeting Log}
+
+\begin{flushleft}
+\begin{singlespace}
+\begin{tabular}{ | p{2cm} | p{1.8cm} | p{12cm} | }
+\hline
+\textbf{Meeting} & \textbf{Date} & \textbf{Minutes}\\
+\hline
+\textbf{1} & Jan 24th & Brainstormed ideas for programming language. An idea that was discussed: we give users the option of using simple statements to design say maybe a Rubik cube game with a high degree of customisation; not only can the sides of the cubes be coloured, we can leave it to the imagination of the users to say, maybe use texts on the smaller cubes and come up with a creative game involving the Rubik cube or say even a sphere.\\
+\hline
+\textbf{2} & Jan 26th & More ideas discussed: The  Programmer gets to upload the instrumental, type the lyrics in the code/upload the lyrics as well. They get to choose speed of highlighting for any given interval. The onus of syncing it with the corresponding part in the music is on the user. Another idea:  Just graphics and the ability to build complex games from shapes. You could have enough power to build tower defense, angry birds, asteroids etc.. without the fancy pictures. Just with pure shapes.\\
+\hline
+\textbf{3} & Jan 30th & Settled on some sort of Fantasy League Game. Some questions discussed: Is there a problem with connecting to the Database? What kind of data-types? Will it be object-oriented? How extensible should our language be? How should we design the syntax? Started draft of white paper.\\
+\hline
+\textbf{4} & Feb 6th & Continued Working on white-paper. Agreed that language should contain OO and be similar to java but take elements from Python. Created Git Repo. Created team google-group.\\
+\hline
+\textbf{5} & Feb 9th & Agreed on Language Breakdown
+A FLOOD program can:
+\begin{itemize}
+\item Create a League and define attributes such as Team Size.
+\item Establish Rules for play using the existing libraries or overriding them.
+\item Define features of the league such as draft and trade functions.
+\item Connect the league to a database of the user's choice.
+\item Trigger the build for the front end GUI and deploy the program to users.
+\end{itemize}\\
+\hline
+\textbf{6} & Feb 13th & Continuing work on white-paper. Sketch of what a program would look like. Settled on possible name for project: FLOOD
+First Commit to new repo.\\
+\hline
+\textbf{7} & Feb 17th & Discussing feedback from language brainstorming session.\\
+\hline
+\end{tabular}
+\end{singlespace}
+\end{flushleft}
+
+\begin{flushleft}
+\begin{singlespace}
+\begin{tabular}{ | p{2cm} | p{1.8cm} | p{12cm} | }
+\hline
+\textbf{Meeting} & \textbf{Date} & \textbf{Minutes}\\
+\hline
+\textbf{8} & Feb 21th & Final Meeting to finish white-paper. Finalized language features and highlights, data-types, keywords and control-flow. Discussed possible application of a FLOOD program.\\
+\hline
+\textbf{9} & Feb 23rd & Submitted White Paper.\\
+\hline
+\textbf{10} & Mar 5th & Discussed Feedback from White-Paper. Where is our computation? How do we want to implement OO?\\
+\hline
+\textbf{11} & Mar 14th & All day session to work on RM and LT.\\
+\hline
+\textbf{12} & Mar 17th & All day session to work on RM and LT.\\
+\hline
+\textbf{13} & Mar 19th & Finishing the grammar, continuing the reference manual. Updated the Language Tutorial to reflect changes in grammar.\\
+\hline
+\textbf{14} & Mar 23rd & Submitted LT and RM.\\
+\hline
+\textbf{15} & Apr 3rd & Discussed ways to implement OO and whether to alter to the language and simplify it. Discuss times for final presentation.\\
+\hline
+\textbf{16} & Apr 8th & Feedback on LT and RM. Beginning to scale down the language to make it easier to a parser and scanner.\\
+\hline
+\textbf{17} & Apr 10th & Project File Structure finalised and committed to repo. Division of labor and initial deadlines drawn up. First files committed to repo. Java and FLOOD files used for testing created. Meeting Times for the rest of the project: Monday 6:15 pm, Thursday 6:15 pm. One weekend day to be chosen on Thursday 1:00 pm - Longer meeting to work (in clic lab).\\
+\hline
+\textbf{18} & Apr 11th & Revamped Syntax and starting sketching GUI mockups.\\
+\hline
+\textbf{19} & Apr 14th & Working meeting in Clic lab (see commit comments).\\
+\hline
+\textbf{20} & Apr 21th & Progress Report. Basic FLOOD file can be parsed.\\
+\hline
+\textbf{21} & Apr 26th & Working Meeting in Clic lab (see commit comments).\\
+\hline
+\textbf{22} & Apr 28th & Working Meeting in Clic lab (see commit comments).\\
+\hline
+\textbf{23} & May 2nd & Working Meeting in Clic lab (see commit comments).\\
+\hline
+\textbf{24} & May 4th & Putting the final product together. Finished updating the reference manual and language tutorial. Error Checking in place. File FLOOD program can be compiled.\\
+\hline
+\textbf{25} & May 6th & Last minute debugging. Adding more error productions. Last run-through of every unit test with whole team present.\\
+\hline
+\textbf{26} & May 8th & Preparing Presentation. Looking over Final Report last time.\\
+\hline
+\end{tabular}
+\end{singlespace}
+\end{flushleft}
+
+
+\chapter{Language Evolution}
+
+At the onset of our language development, we decided to provide the user with as much flexibility as possible. With this as the main focus, our language was aimed at providing object-oriented development to the users. Bearing this in mind, we began developing our language in an incremental manner. We first decided on what the output of the front-end should be, based on what the back-end would expect. In short, we settled on the rendezvous point for the front-end and back-end and worked our way towards it.
+
+As we deliberated on what this intermediate Java code should be, we realized it would be sufficient if the back-end is object-oriented. We therefore decided that the onus of object-oriented programming should not be on the programmer, keeping in mind that users of \textbf{FLOOD} will most likely not be familiar with object-oriented concepts. Moreover, we concluded that given the nature of the domain, the programming language being object-oriented would make the learning curve steeper for the user with not much added value. Fully convinced along these lines and the ease-of-use for the programmer in mind, we decided to do away with the object-oriented paradigm.
+ 
+With the face of the language now modified to provide the user with as much flexibility as needed, yet within the domain of the language as well as keeping it simple to program, we set out to decide the logical division of the program code to aid the user in programming. We carefully analysed fantasy leagues and realized there exists a common denominator between all fantasy leagues. We decided to push this common denominator to the back-end, leaving the user with the bare minimum yet retain full flexibility to design a fantasy league with the rules of his/her choice.
+
+The language now was developed with a logical division of the program the developer would have to write. The first would need to be the definition of the league; the programmer would need to specify details of the number of users, the names of the users, the players and their scores, valid actions and points associated with these valid actions. This allows the user to define rather quickly the parameters and setup the league.
+
+The next logical block we decided on was defining functions and invoking them within other functions. This section needs to begin with the keyword \texttt{DefineFunction}. There are four default functions that each league needs to have which are: \texttt{draftPlayer}, \texttt{drop}, \texttt{trade}, \texttt{draftFunction}. The user can override these functions, although the user can choose not to define these functions, and the default function definitions for these functions will be invoked. 
+
+Over and above these four functions, the user can define custom functions and invoke them. In its first incarnation, functions could take any number of parameters of the following types: \texttt{Bool}, \texttt{Str}, \texttt{Int}, \texttt{Flt}. Variable declarations were allowed at the beginning of the function before any other statements. The language at this point also provided for looping structures, arithmetic expressions, relational expressions as well as conditionals. The back-end required array constructs of objects of a couple of back-end classes, namely the \texttt{User} and \texttt{Player} classes. Since the programmer does not know the contents of the \texttt{User} and \texttt{Player} classes, we decided to introduce array constructs in the formal parameters and actual parameter list of functions as follows:
+      	functionName(User[] u,Player[] p){ statements }
+In this manner, as and when changes were made in the grammar, they were incorporated in the back-end, and as and when changes were made to the back-end, they were incorporated in the grammar. The evolution of the language thus involved the grammar and the back-end evolving in tandem and incrementally.
+
+\chapter{Language Architecture}
+
+\chapter{Development Enviornment}
+
+During the development of the FLOOD language, development was spread across two operating systems. The majority of the group developed with Ubuntu (10.04/10.10/11.04) while one other worked exclusively in Windows which ended up working out rather smoothly despite some issues setting up the Git repo on Windows and maintaining multiple makefiles. Yet this cross system development also ensures that our language is not system dependent. In order to maintain a current version of all parts of the language, our group set up an online repository on Github where changes could be made at any time at the programmer’s convenience.
+
+The majority of java code for the source files used in the intermediate code compilation level was written nearly exclusively in Eclipse 3.6 Helios. The majority of the backend was written from scratch with a select few data structures to promote efficiency. Those libraries included primarily the Java API’s HashMap and ArrayList classes when necessary so that looking up references to various Users, Players and Actions would all be O(1). They were also used in a manner to prevent duplicate copies of any particular instance of class so that references (values of references since Java is pass-by-value) were used instead.
+
+In addition to these source files, a GUI was also created to allow user interaction with the program during runtime, a key component of any fantasy league. The development of the GUI was restricted to purely Java’s Swing and AWT library components with the framework created using Google’s WindowBuilder Pro web toolkit. With the assistance of the development environment provided by that plugin to Eclipse, the GUI’s rough layout was generated with ease but was completely devoid of any functionality besides its good looks. The remainder of the GUI was developed by hand adding various functionalities to different components and promoting ease of integration with files generated by the compiler. No other outside sources were used in the remainder of the production of the source files that integrate with the compiler output besides the occasional Google search on how some feature of Swing truly worked, disregarding one’s intuition. The final features added to the GUI were the ability for the program to write its current state to a file that could be saved in a directory and then imported at a later date, so that a fantasy league could be easily maintained over the course of any sports season without leaving a program running for the entire duration.
+
+The parser and grammar were implemented with JFlex and BYacc respectively. These are both the Java versions of Lex and Yacc that the language FLOOD compiles to in its intermediate code generation. The majority of the development of the parser and grammar were done in a combination of Gedit and terminal along with some good ol’ fashioned paper and pencil. Paper and pencil is really the best (and almost only) way to really work out and recognize shift/reduce conflicts which inevitably helped to generally understand their origins and prevent them. The only exclusion to this trend was the development of the semantic actions that enforced type checking and other semantic checks, such as determining if functions and variables had been previously declared, which were primarily developed in Eclipse 3.6 Helios. This was done due to the fact that it was exclusively written in Java in which instantaneous compilation helped with simple syntax errors that may have been overlooked.
+
+The most important tool, however, used in the joint production of FLOOD was indubitably Google Docs. The ability to jointly work on the White Paper/Language Tutorial/Reference Manual and watch them come together smoothly as opposed to very disjoint and extremely differently written components was truly invaluable. The ability to share and jointly edit other’s documents such as schedules, bug reports and other files simultaneously without the burden of constantly pulling and pushing vastly improved efficiency especially when every group member can just consult a checklist to see what components were still incomplete and most urgent. Additionally, the real time updating of files provided a great base for the conversion to Latex of the final reports. It was a crucial component in the merging of everyone’s work throughout the process.
+
+\chapter{Test Plan}
+
+In the early stages of developing the grammar for FLOOD most testing simply followed this scheme:
+
+\begin{itemize}
+\item 
+\item 
+\item 
+\item 
+\end{itemize}
+
+\chapter{Conclusions}
+
+\section{Lessons Learned as a Team}
+
+We feel that as a team we have a better understanding of the magnitude of large programming projects. We learned that initial ideas are seldom translated into the final product. When the project first began, we had intended to write a very large language with many features. At the time, none of us truly understood the work that went into implementing even a small language. As we progressed in the semester, the difficulty of the task became more apparent and we had to change our entire language. We feel that we learned a great deal about the more complex aspects of programming languages specifically because we were not able to implement what we had originally intended. Trying to brainstorm features like inheritance and polymorphism taught us about how those components work in popular programming languages. 
+
+We learned that teamwork doesn’t mean everyone does their own part. It means that people help out and don’t stay contained within their respective responsibilities. It means that if someone is having an off-week and/or has an exam the next day, other team members can carry the weight that meeting. We learned that work-schedules need to be implemented early and ambitiously so that deadlines can be stretched within reason if needed.
+
+We each learned different ideas on programming and development from our teammates. Every session of programming there were arguments of proper programming practices or the design of the language. Team members contributed ideas to our language from a wealth of programming experience from languages such as Java, C++, Python and Pascal. We learned that that every team member has particular strengths and those should be utilized as often as possible.
+
+\section{Lessons Learned by Each Team Members}
+
+\subsection{Stephanie}
+
+The greatest lesson I learned from this assignment was to start small and work your way up from there. Designing a project that implements something you have no idea how to do is extremely difficult. It is all too easy to fall into a very complicated design when the process for creating the pieces is not yet known. In the beginning, my team and I were rather ambitious and naively so. We had dreams of a object oriented language complete with inheritance, polymorphism, and encapsulation. We even wanted to expand the language onto the Android platform if we had time. Somehow we had forgotten what college was: four years of spending every minute of every hour wishing you had more time. We soon realized the we were in way over our heads, and that there was only so much weight Java would carry for us. And so, we had to significantly modify our approach to this project. We first started by simply making cuts to the language, but that left a convoluted and disorganized language. So instead we began anew. We identified all the bare minimum requirements needed for a fully functional language for generating fantasy leagues. From there we could build a base language and then add to that. This process takes away depressing decisions to remove ideas, and replaces it with the exciting realization that we can add things.
+
+Projects of this magnitude need to be constantly worked on. You can’t simply wait until a week before a deadline, put in endless hours of work and expect that to be sufficient. When a project spans four months work must be put into it every week of every month. By getting into lulls where no work is being done on the language, you risk losing focus and generating a bit of a learning curve, if you will, in order to return to the language. Right from the beginning, we made sure to meet regularly, regardless of how much we needed to do. There needed to, at the very least, be a constant reminder of the project, no time for the language to be forgotten.
+
+While at times it may appear to be rather difficult, it is important to always be aware of what each team member is working on. Not in the sense that you know specifically what they are doing every minute they are working, but just where they are. Indeed, that is primarily the job of the project manager, but I found that it is rather helpful for each member of the team to communicate with the team what their next steps were and how they were going to go about completing their goals. This way there is minimal disconnect between the various parts of the language, especially between semantics and the grammar, where changes in one greatly affect the other. Our group maintained this awareness with the use of Github, Google Docs, and a Google group, in addition to our frequent team meetings and coding sessions. This way, all changes were documented and spread throughout the entire group.
+
+The project is a not a group of people designing pieces of a puzzle that will fit together, after quite a bit of massaging and molding, to produced a result. It is a team building block after block, each block being guided onto the last, until the structure is complete. The idea to split the group into 5 specific roles helps with ensuring that everyone has a part to do, however I find that this can actually create a disconnect. Instead of creating a strict line on who does what, I feel that having each person contribute to each part of the language builds a more continuous final product. Moreover, it makes the process of merging the parts of the language significantly more efficient because each member of the teams understands the language and many errors are avoided or resolved quickly by simply just knowing what to look for. In summary it creates a cohesive team, with a thorough understanding of the language.
+
+Commitment is a vital key to any successful team project, and for a project that has lasted as long as this, it is all too easy to feel overwhelmed. Over the course of the semester fluctuations in one’s workload and personal life can take quite a toll on one’s ability to function in a group. However, it is in these times that the true power of the group shines through. In the first couple weeks after I fractured my hand, the pain was enough to inhibit my ability to type. In that same time, I had a web site to build, an essay to write, and coding sessions for this project. Had it not been for my team, I would have likely given in to the stress and crumpled under the workload. However, my determination to not let my teammates down allowed me to continue pushing forward. This level of commitment can develop in a team regardless of whether or not the team member knew each other before the formation of the team. When the members of FLOOD were established, I only knew half of my teammates. However, in a team of only 5, it is hard to remain cliquish and as a result the team developed rather strongly. Throughout the course, I've have become rather close friends with my team members and will look forward to taking classes with them in the future.
+
+\subsection{Elliot}
+
+While this is not my first time as a project leader, it is my first time leading a software development project. The most important lesson I’ve learned is the need for constant communication among the team. At times though not often, information would be bottle-necked to a certain person and other team members would not be informed of important changes. The best way to deal with this situation is transparent documentation and meetings. I’ve also learned how difficult it can be for each team member’s unique coding and work style to be integrated into a cohesive unit. For instance, our version control choice was unfamiliar to some team members at first and it took some time for everyone to get used to working with it.
+
+A project of this magnitude can easily overwhelm any group no matter how experienced. The main goal should be constant pressure. Constant pressure does not mean stress but rather always making progress regardless of the difficulty or clarity of the task. Tasks should be constantly broken down into smaller pieces and distributed as evenly as possible. When a task is assigned, it shouldn’t be assumed that the team member will be able to complete it but rather teammates should look out for each other and help when needed. The role of a product manager is not to dictate and assign tasks as they please. Every team member should be given the opportunity to pick specific tasks that they find most interesting. Tasks that were deemed uninteresting were distributed evenly so that no one took more than their fair share of “grunt” work. Decisions should not only be democratic but accepted by the whole team. If even one team member didn’t like an idea or an implementation detail, the team worked hard to come up with an alternative that was acceptable to everyone. A product manager should also keep accurate records and have awareness of every moving piece in the project. Ultimately, as the saying goes, the "The Buck Stops Here". This is a lesson every good product manager must learn and usually the hard way.
+
+On a personal note, I feel comfortable saying I understand how a compiler works on a very applied level. I still don’t feel comfortable with much of the theory that goes into compilers and in a way it has given me a healthy respect for theorists who have paved the way for modern programming languages. I learned to appreciate the intricacies of programming languages and notice subtle differences that were not obvious to me beforehand. I have already seen a difference in my code production in other projects. In my opinion, one of the most fascinating aspects of software development is the relationship among the developers. Working with other people, especially in an academic setting, is always challenging but it can also be very rewarding. I truly enjoyed the time spent working with my teammates and regardless of the final outcome of this project or the class in general, I feel that I have learned a great deal from them.
+
+\subsection{Tam}
+
+\subsection{Dillen}
+
+1.     	Choose your group members wisely
+Choosing the right people for a group is beyond the most important part of an assignment. Although it may seem unclear what everyone’s exact roles may be for a given project, be sure to pick people who are passionate and have deep interest in different components as well as the overall idea of a project. Nothing can be more detrimental to a group that to have members who are unenthusiastic or not willing to pull their own weight, not due to a lack of ability (because let’s be honest, no one knew how a compiler worked when we first started) but rather a lack of motivation. Our group functioned extremely well because we all split up the parts into relatively equal work loads and when one part “overflowed” due to unforeseen complexities, those with “easier” tasks jumped in to help. Another key part of our success was the general interest in our idea, which became my next lesson learned.
+
+2.     	Thoroughly develop your idea, and then do it again
+It is important to spend adequate time to thoroughly develop an idea and delve past the surface challenges and really research potential dead-ends. Unlike most groups (I believe), we met every week from the moment our group was formed until the end of the semester, even when we all lacked any detailed view of how to complete the task. The first several meeting were literally 4+ hour long discussions on potential programming languages where everyone would express interest, play devil’s advocate and expand on ideas. The most difficult part for us was to propose ideas feasible for a semester long project without simply creating a markup language. This was crucial in creating a thorough blueprint for our language and the writing of the White Paper/Language Tutorial/Reference Manual.
+
+3.     	Don’t reinvent the wheel
+One of the most valuable parts of any programming project is to utilize tools provided online to ease the pain. Development tools such as WindowBuilder Pro for the GUI, BYacc and JFlex for the grammar and parser, Github for the online repository and Google Docs for the written portions provided greater ease and efficiency during the entire process. USE THEM!
+
+4.     	Pick a good project manager who can bring everyone together
+It is easy to get lost in time when everyone is specializing on a specific part of a project and it’s the product manager’s job to keep bringing everyone together and making sure everything is running smoothly and no individual is lagging behind. Collaboration and communication are absolutely key in the software development world because otherwise, come submission time, everyone has a bunch of extremely well developed but independent portions of the project with integration being nearly impossible. I noticed that our group was exceptionally productive when we all worked in one long line in the CLIC lab, each with the Google Bug Report Document constantly asking questions, finding bugs and delegating work with various priority. I realize it is difficult for a bunch of college students to find time to all meet and work for a few hours but those hours spent working together are far more valuable than any work you will do by yourself.
+
+\subsection{Anuj}
+
+Grammar design is not a walk in the park
+Designing the grammar for a language is not easy. Designing a small grammar for small units, like say, just arithmetic expressions, is easy. As the grammar evolves, the complexity increases linearly. It helps to have a clear idea of what the language will look like, and stub out a rough design of the grammar first. This exposes the potential shift/reduce and reduce/reduce errors right from the beginning. It also helps to understand fully how these errors occur, and how to eliminate them.
+
+Decide the scope of the language/project realistically
+One of the most important lessons I learnt from this project is to do a strong feasibility study, before proposing a project. A thorough study should be performed to roughly estimate what problem statement the project proposes to tackle. This should neither be too ambitious, nor too trivial. Getting the right balance is a tricky task, and it seems safer to project the latter, and extend the scope of the project if time permits. Another important lesson I learnt is never to commit any major feature in the name of the project, unless absolutely certain that the feature will be implemented.
+
+Working in a group
+To begin with, I had an interesting time working with my group. It not only made working on a project of this magnitude seem effortless, but I also learned a lot from my group on various fronts. This made me realise how important team members are, and the dynamics of the group, can make or break a project. While it may seem that more hands on deck means less work per person, I also realised that it requires good management on the part of the project manager to coordinate and integrate the project well; something I was witness to during the course of this project.
+
+\section{Advice for Future Teams}
+
+\begin{itemize}
+\item Never promise features of your programming language in its name. We tried very hard to come up with a “cool” name that described our language. The name is still “cool” but it doesn’t describe our language anymore.
+\item Start early and meet often. It may seem futile to meet when you have nothing to discuss but just by being in the same room you may start thinking of an idea that changes your project.
+\item Ask for help no matter how small of an issue. We utilized our TA, Hemanth, as much as possible and we are truly indebted to him for all his valuable advice.
+\item Don’t be scared of unfamiliar technology/Free software is your friend. Our entire project was written and shared in Google Docs, the code will forever be saved on GitHub and the documentation lives beautifully in Latex.
+\item Revisit your idea as much as possible. Our language has morphed from an Object-Oriented language with Java-like features into a smaller more compact version. If we had decided to go-ahead with our original idea we would not have finished our project or it would have been poorly implemented.
+\item Pair Programming may seem like a waste of time but it dramatically reduces net production time. Most of the code produced was written at one work station with two team members working at a time. Often code that seemed very difficult to one programmer was trivial to another. When a programmer was tired, they could switch and development continued.
+\item Pick a project that is interesting to you rather than trying to impress anyone. Every team member was truly interested in our project which made brainstorming more fun and productive. 
+\item A team that eats together works better. It’s better to work on a full stomach and it’s more fun to brainstorm over dinner. We personally recommend the Dominoes 7-7-7 deal.
+\end{itemize}
+
+\section{Suggestions for Future Improvement}
+
+It’s very difficult to write this section as a team since each team member had different topics that they enjoyed. We all agree that the project was the highlight of the course and very much enjoyed working on it. Some of us feel that the classes were a little theory-heavy in what was originally expected to be a more applied course in compilers. Some of the theory, especially the later topics such as code-generation and optimization as well as data-flow analysis might have been better served with more homework and possibly programming exercises. The first homework gave everyone a taste of Flex and Yacc which helped both in understanding the theory and what was expected later in the project. Those of us who had taken Computer Science Theory enjoyed seeing how the theory we had previously learned applied in the “real-world”. We all feel that this was a difficult class but in the end very rewarding.
+
+\appendix
+\chapter{FLOOD Source Code}
 
 \end{document}
