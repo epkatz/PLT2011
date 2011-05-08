@@ -122,7 +122,7 @@
 ****************************************************/
 program: definitions functions
 {
-	if(true/*semantics.validProgram*/)
+	if(semantics.validProgram)
 	{
 		generateFloodProgram($1, $2);
 		System.out.println("Total number of lines in the input: " + (yyline - 1));
