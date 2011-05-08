@@ -1,0 +1,140 @@
+Petr Cech,block shot on goal,5
+Branislav Ivanovic,block shot,3
+Ashley Cole,block shot,2
+Michael Essien,tackle,4
+Ramires,tackle,1
+Frank Lampard,tackle,2
+Fernado Torres,score goal,5
+Didier Drogba,score goal,2
+Florent Malouda,tackle,6
+Salomon Kalou,score goal,2
+John Terry,block shot,4
+Nicolas Anelka,score goal,5
+Edwin Van der Sar,block shot on goal,2
+Patrice Evra,tackle,3
+Rio Ferdinand,block shot,5
+Dimitriar Berbatov,score goal,2
+Wayne Rooney,score goal,4
+Ryan Giggs,tackle,9
+Javier Hernandez,score goal,4
+Namanja Vidic,block shot,5
+Nani,tackle,3
+Fabio,block shot,2
+Darren Fletcher,tackle,3
+Darron Gobson,tackle,4
+Iker Casillas,block shot on goal,5
+Ricardo Carvalho,block shot,6
+Sergio Ramos,block shot,1
+Emmanuel Adebayor,score goal,2
+Cristiano Ronaldo,score goal,3
+Karim Benzema,score goal,4
+Raul Albiol,block shot,5
+Mesut Ozil,tackle,6
+Marcelo,block shot,1
+Xabi Alonso,tackle,2
+Ezequiel Garay,block shot,3
+Pedro Leon,tackle,4
+Victor Valdes,block shot on goal,5
+Gerard Pique,block shot,1
+Carles Puyol,block shot,2
+Xavi Hernandez,tackle,4
+David Villa,score goal,5
+Andres Iniesta,tackle,6
+Lionel Messi,score goal,5
+Jeffren Suarez,score goal,3
+Maxwell Andrade,block shot,5
+Eric Abidal,block shot,3
+Ibrahim Afellay,tackle,6
+Javier Macherano,tackle,2
+Marco Amelia,block shot on goal,4
+Mark van Bommel,tackle,4
+Gennaro Gattuso,tackle,5
+Zlatan Ibrahimovic,score goal,1
+Alessandro Nesta,block shot,2
+Rodney Strasser,tackle,4
+Massimo Oddo,block shot,5
+Gianluca Zambrotta,block shot,3
+Thiago Silva,block shot,1
+Flavio Roma,block shot on goal,2
+Antonio Cassano,score goal,4
+Mario Yepes,block shot,3
+Kevin Prince Boateng,tackle,5
+Andreu Fontas,block shot,1
+Jose Manuel Pinto,block shot on goal,2
+Matrin Caceres,block shot,3
+Sami Khedira,tackle,4
+Henrique Hilario,block shot on goal,5
+Oliver Norwood,tackle,3
+Gabriel Obertan,score goal,1
+Sergio Canales,tackle,8
+Lassana Diarra,tackle,4
+Petr Cech,score penalty kick,1
+Branislav Ivanovic,score from 30+ yards out,2
+Ashley Cole,yellow card,1
+Michael Essien,shot,4
+Ramires,score with a header,2
+Frank Lampard,shot,4
+Fernado Torres,tackle,3
+Didier Drogba,score with a header,2
+Florent Malouda,block shot,2
+Salomon Kalou,block shot on goal,2
+John Terry,tackle,3
+Nicolas Anelka,red card,1
+Edwin Van der Sar,block shot,5
+Patrice Evra,score goal,2
+Rio Ferdinand,shot,3
+Dimitriar Berbatov,shot,2
+Wayne Rooney,score with a header,2
+Ryan Giggs,block shot,2
+Javier Hernandez,yellow card,1
+Namanja Vidic,shot,3
+Nani,score goal,2
+Fabio,tackle,4
+Darren Fletcher,score goal,1
+Darron Gobson,block shot,3
+Iker Casillas,shot,4
+Ricardo Carvalho,block shot on goal,3
+Sergio Ramos,tackle,5
+Emmanuel Adebayor,score with a header,1
+Cristiano Ronaldo,tackle,5
+Karim Benzema,score with a header,1
+Raul Albiol,tackle,3
+Mesut Ozil,block shot,3
+Marcelo,block shot on goal,2
+Xabi Alonso,shot,3
+Ezequiel Garay,tackle,3
+Pedro Leon,shot,3
+Victor Valdes,shot,2
+Gerard Pique,block shot on goal,1
+Carles Puyol,tackle,3
+Xavi Hernandez,score goal,2
+David Villa,score from 30+ yards out,2
+Andres Iniesta,block shot,2
+Lionel Messi,score with a header,3
+Jeffren Suarez,tackle,3
+Maxwell Andrade,tackle,2
+Eric Abidal,block shot on goal,1
+Ibrahim Afellay,block shot,2
+Javier Macherano,shot,2
+Marco Amelia,shot,1
+Mark van Bommel,shot,3
+Gennaro Gattuso,block shot,4
+Zlatan Ibrahimovic,shot,3
+Alessandro Nesta,tackle,3
+Rodney Strasser,shot,1
+Massimo Oddo,tackle,3
+Gianluca Zambrotta,block shot on goal,1
+Thiago Silva,tackle,2
+Flavio Roma,shot,2
+Antonio Cassano,shot,4
+Mario Yepes,tackle,1
+Kevin Prince Boateng,shot,3
+Andreu Fontas,tackle,2
+Jose Manuel Pinto,score goal,1
+Matrin Caceres,red card,1
+Sami Khedira,yellow card,3
+Henrique Hilario,tackle,3
+Oliver Norwood,shot,2
+Gabriel Obertan,shot,4
+Sergio Canales,score goal,2
+Lassana Diarra,shot,1

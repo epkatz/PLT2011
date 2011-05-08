@@ -1,0 +1,223 @@
+DefineLeague
+	Set LeagueName("PLS-Pseudo League Soccer");
+	Add User("Carlo Ancelotti");
+	Add User("Alex Ferguson");
+	Add User("Jose Mourinho");
+	Add User("Josep Guardiola");
+	Add User("Massimiliano Allegri");
+	Add Action("score goal", 2.0);
+	Add Action("block shot", 0.5);
+	Add Action("block shot on goal", 1.0);
+	Add Action("tackle", 0.5);
+	Add Action("shot on goal", 1.0);
+	Add Action("shot", 0.5);
+	Add Action("score penalty kick", 0.5);
+	Add Action("score with a header", 1.5);
+	Add Action("score from 30+ yards out", 1.5);
+	Add Action("red card", -2.0);
+	Add Action("yellow card",  -1.0);
+	Add Player("Petr Cech","goal keeper");
+	Add Player("Branislav Ivanovic","defender");
+	Add Player("Ashley Cole","defender");
+	Add Player("Michael Essien","midfielder");
+	Add Player("Ramires","midfielder");
+	Add Player("Frank Lampard","midfielder");
+	Add Player("Fernado Torres","forward");
+	Add Player("Didier Drogba", "forward");
+	Add Player("Florent Malouda","midfielder");
+	Add Player("Salomon Kalou","forward");
+	Add Player("John Terry","defender");
+	Add Player("Nicolas Anelka","forward");
+	Add Player("Edwin Van der Sar","goal keeper");
+	Add Player("Patrice Evra","defender");
+	Add Player("Rio Ferdinand","defender");
+	Add Player("Dimitriar Berbatov","forward");
+	Add Player("Wayne Rooney","forward");
+	Add Player("Ryan Giggs","midfielder");
+	Add Player("Javier Hernandez","forward");
+	Add Player("Namanja Vidic","defender");
+	Add Player("Nani","midfielder");
+	Add Player("Fabio","defender");
+	Add Player("Darren Fletcher","midfielder");
+	Add Player("Darron Gobson","midfielder");
+	Add Player("Iker Casillas","goal keeper");
+	Add Player("Ricardo Carvalho","defender");
+	Add Player("Sergio Ramos","defender");
+	Add Player("Emmanuel Adebayor","forward");
+	Add Player("Cristiano Ronaldo","forward");
+	Add Player("Karim Benzema","forward");
+	Add Player("Raul Albiol","defender");
+	Add Player("Mesut Ozil","midfielder");
+	Add Player("Marcelo","defender");
+	Add Player("Xabi Alonso","midfielder");
+	Add Player("Ezequiel Garay","defender");
+	Add Player("Pedro Leon","midfielder");
+	Add Player("Victor Valdes","goal keeper");
+	Add Player("Gerard Pique","defender");
+	Add Player("Carles Puyol","defender");
+	Add Player("Xavi Hernandez","midfielder");
+	Add Player("David Villa","forward");
+	Add Player("Andres Iniesta","midfielder");
+	Add Player("Lionel Messi","foward");
+	Add Player("Jeffren Suarez","forward");
+	Add Player("Maxwell Andrade","defender");
+	Add Player("Eric Abidal","defender");
+	Add Player("Ibrahim Afellay","midfielder");
+	Add Player("Javier Macherano","midfielder");
+	Add Player("Marco Amelia","goal keeper");
+	Add Player("Mark van Bommel","midfielder");
+	Add Player("Gennaro Gattuso","midfielder");
+	Add Player("Zlatan Ibrahimovic","forward");
+	Add Player("Alessandro Nesta","defender");
+	Add Player("Rodney Strasser","midfielder");
+	Add Player("Massimo Oddo","defender");
+	Add Player("Gianluca Zambrotta","defender");
+	Add Player("Thiago Silva","defender");
+	Add Player("Flavio Roma","goal keeper");
+	Add Player("Antonio Cassano","forward");
+	Add Player("Mario Yepes","defender");
+	Add Player("Kevin Prince Boateng","midfielder");
+	Add Player("Andreu Fontas","defender");
+	Add Player("Jose Manuel Pinto","goal keeper");
+	Add Player("Matrin Caceres","defender");
+	Add Player("Sami Khedira","midfielder");
+	Add Player("Henrique Hilario","goal keeper");
+	Add Player("Oliver Norwood","midfielder");
+	Add Player("Gabriel Obertan","forward");
+	Add Player("Sergio Canales","midfielder");
+	Add Player("Lassana Diarra","midfielderforward");
+
+DefineFunctions
+	Bool tooSmall(Int players){
+		Bool flag=False;
+		If(players<11){
+			flag=True;
+		};
+		Return flag;
+	}
+	Bool tooBig(Int players){
+		Bool flag=False;
+		If(players > 13){
+			flag=True;
+		};
+		Return flag;
+	}
+	Bool draftPlayer(User u, Player p){
+		Bool tooBig;
+		Bool value=False;
+		Int i;
+		i=GetNumPlayers(u);
+		i=i+1;
+		tooBig=tooBig(i);
+		If(!tooBig){
+			AddPlayer(u,p);
+			value=True;
+		};
+		Return value;
+	}
+	Bool dropPlayer(User u, Player p){
+		Bool tooSmall;
+		Bool value=False;
+		Int i;
+		i=GetNumPlayers(u);
+		i=i+1;
+		tooSmall=tooSmall(i);
+		If(!tooSmall){
+
+			RemovePlayer(u,p);
+			value=True;
+		};
+		Return value;
+	}
+	Bool trade(User u1,Player[] p1,User u2,Player[] p2){
+		Int i=0;
+		Int j;
+		Int len1;
+		Int len2;
+		Bool flag=True;
+		Bool value=True;
+		len1=ArrayLength(p1);
+		len2=ArrayLength(p2);
+		While(i<len1){
+			flag=dropPlayer(u1,p1[i]);
+			If(!flag){	/*If the drop was unsuccessful*/
+				j=i;
+				While(j>=0){	/*Add p1 back to u1*/
+					draftPlayer(u1,p1[j]);
+					j=j-1;
+				};
+				value=False;
+			};
+			i=i+1;
+		};
+		i=0;
+		While(value && i<len2){
+			flag=dropPlayer(u2,p2[i]);
+			If(!flag){	/*If the drop was unsuccessful*/
+				j=i;
+				While(j>=0){	/*Add p2 back to u2*/
+					draftPlayer(u2,p2[j]);
+					j=j-1;
+				};
+				j=0;
+				While(j<len1){	/*Add p1 to u1*/
+					draftPlayer(u1,p1[j]);
+					j=j+1;
+				};
+				value=False;
+			};
+			i=i+1;
+		};
+		i=0;
+		While(value && i<len1){
+			flag=draftPlayer(u2,p1[i]);
+			If(!flag){	/*If draft was unsuccessful*/
+				j=i;
+				While(j>=0){	/*Remove p1 from u2*/
+					dropPlayer(u2,p1[j]);
+					j=j-1;
+				};
+				j=0;
+				While(j<len1){	/*Add p1 to u1*/
+					draftPlayer(u1,p1[j]);
+					j=j+1;
+				};
+				j=0;
+				While(j<len2){	/*Add p2 to u2*/
+					draftPlayer(u2,p2[j]);
+					j=j+1;
+				};
+				value=False;
+			};
+			i=i+1;
+		};
+		i=0;
+		While(value && i<len2){
+			flag=draftPlayer(u1,p2[i]);
+			If(!flag){	/*If the drop was unsuccessful*/
+				j=i;
+				While(j>=0){	/*Remove p2 from u1*/
+					dropPlayer(u1,p2[j]);
+					j=j-1;
+				};
+				j=0;
+				While(j<len1){	/*Remove p1 from u2*/
+					dropPlayer(u2,p1[j]);
+					j=j+1;
+				};
+				j=0;
+				While(j<len1){	/*Add p1 to u1*/
+					draftPlayer(u1,p1[j]);
+					j=j+1;
+				};
+				j=0;
+				While(j<len2){	/*Add p2 to u2*/
+					draftPlayer(u2,p2[j]);
+					j=j+1;
+				};
+				value=False;
+			};
+			i=i+1;
+		};
+		Return value;
+	}

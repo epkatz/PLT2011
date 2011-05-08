@@ -1,4 +1,3 @@
-package backend;
 public class Test {
 	public static League myLeague;
 	public static GUI run;
