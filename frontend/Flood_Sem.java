@@ -6,7 +6,7 @@ public class Flood_Sem {
 	HashMap<String, String> varList = new HashMap<String, String>();
 	ArrayList<String> errorList=new ArrayList<String>();
 	String returnProductionType;
-	static boolean debugging = false,validProgram=true;
+	static boolean debugging = false,validProgram=true,funcReturnFlag=false;;
 	boolean draftFunFlag = false;
 	boolean draftPlayFlag = false;
 	boolean tradeFlag = false;
@@ -186,25 +186,39 @@ public class Flood_Sem {
 	}
 	
 	/* Checks the Return Type of the Function Against the Left Side of an expression */
-	public void assignmentCheckFunction(String right, int line){
-		String[] params = right.split("\\("); //Opening bracket is special character to be escaped
-		String functionName = params[0];
+	public void assignmentCheckFunction(String functionName, int line){
 		if (functionTable.containsKey(functionName)){
 			if (functionTable.get(functionName).getReturnType().equals(leftSide)){
 				if (debugging){System.out.println("Both are of type " + leftSide);}
 				return;
 			}
-			if (debugging){System.out.println(right + " doesn't return type " + leftSide);}
+			if (debugging){System.out.println(functionName + " doesn't return type " + leftSide);}
 			validProgram=false;
-			errorList.add("Error at Line " + line + ": " +right + " does not return a value of type " + leftSide + ".");
+			errorList.add("Error at Line " + line + ": " +functionName + " does not return a value of type " + leftSide + ".");
 			return;
 		}
-		if (debugging){System.out.println(right + " has not been defined.");}
+		if (debugging){System.out.println(functionName + " has not been defined.");}
 		validProgram=false;
-		errorList.add("Error at Line " + line + ": " +right + " doesn't return a value of type " + leftSide + ".");
+		errorList.add("Error at Line " + line + ": " +functionName + " doesn't return a value of type " + leftSide + ".");
 		return;
 	}
 
+	public void checkArrayType(String varName, int line){
+		if(varExists(varName)){
+			if(varList.get(varName).equals("User[]") || varList.get(varName).equals("Player[]")){
+				if (debugging){System.out.println(varName+" is of type "+varList.get(varName));}
+				return;
+			}
+			if (debugging){System.out.println(varList.get(varName)+" is not a valid array type.");}
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +varList.get(varName)+" is not a valid array type.");
+			return;
+		}
+		if (debugging){System.out.println(varName+" has not been defined.");}
+		validProgram=false;
+		errorList.add("Error at Line " + line + ": " +varName+" has not been defined.");
+		return;
+	}
 	/* Check Divide by zero */
 	public void checkDivideByZero(String var, int line){
 		if (Double.parseDouble(var) == 0){
@@ -214,19 +228,24 @@ public class Flood_Sem {
 		errorList.add("Error at Line " + line + ": Cannot divide by zero.");
 		return;
 	}
-
+	
 	/* Checks against an int */
-	public void checkRelationalExp(String left, int right, int line){
-		checkRelationalExpAgainstType(left, "int", line);
+	public void checkRelExp(String left, String right, int line){
+		if(right.matches("^-?\\d.*$")){
+			if(right.contains(".")){
+				checkRelationalExpAgainstType(left, "float", line);
+			}
+			else{
+				checkRelationalExpAgainstType(left, "int", line);
+			}
+		}
+		else{
+			checkRelationalExp(left, right, line);
+		}
 	}
-
-	/* Checks against a float */
-	public void checkRelationalExp(String left, float right, int line){
-		checkRelationalExpAgainstType(left, "float", line);
-	}
-
+	
 	/* Checks against a declared variable */
-	public void checkRelationalExp(String left, String right, int line){
+	private void checkRelationalExp(String left, String right, int line){
 		if (varExists(right)){
 			checkRelationalExpAgainstType(left, varList.get(right), line);
 			return;
@@ -241,7 +260,7 @@ public class Flood_Sem {
 	public void checkRelationForInvalidType(String left, int line){
 		if (varExists(left)){
 			String leftType = varList.get(left);
-			if (!leftType.equals("int") || !leftType.equals("float")){
+			if (!leftType.equals("int") && !leftType.equals("float")){
 				if (debugging){System.out.println(left + " cannot be used because it is of type " + leftType);}
 				validProgram=false;
 				errorList.add("Error at Line " + line + ": " +left + " cannot be used because it is of type " + leftType + ".");
@@ -265,7 +284,7 @@ public class Flood_Sem {
 			}
 			if (debugging){System.out.println(rightType + " is not " + leftType);}
 			validProgram=false;
-			errorList.add("Error at Line " + line + ": " +rightType + " is not " + leftType + ".");
+			errorList.add("Error at Line " + line + ": " +rightType + " is not of type " + leftType + ".");
 			return;
 		}
 		else{

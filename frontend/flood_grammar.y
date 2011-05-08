@@ -176,15 +176,15 @@ returnType: Void { $$ = "void"; }
 functionName: ID { $$ = $1; };
 
 argumentLists: argumentLists COMMA argumentList { $$ = $1 + ", " + $3; }
-              | argumentList { $$ = $1; }
+              | argumentList { $$ = $1;}
               | empty { $$ = $1; }
               ;
 
-argumentList: dataType ID { $$ = $1 + " " + $2; }
-            | User OPEN_SQUARE CLOSE_SQUARE ID { $$ = "User[] " + $4; }
-            | Player OPEN_SQUARE CLOSE_SQUARE ID { $$ = "Player[] " + $4; }
-            | User ID { $$ = "User " + $2; }
-            | Player ID { $$ = "Player " + $2; }
+argumentList: dataType ID { $$ = $1 + " " + $2; semantics.addVar($2,$1,yyline); }
+            | User OPEN_SQUARE CLOSE_SQUARE ID { $$ = "User[] " + $4; semantics.addVar($4,"User[]",yyline); }
+            | Player OPEN_SQUARE CLOSE_SQUARE ID { $$ = "Player[] " + $4; semantics.addVar($4,"Player[]",yyline); }
+            | User ID { $$ = "User " + $2; semantics.addVar($2,"User",yyline); }
+            | Player ID { $$ = "Player " + $2; semantics.addVar($2,"Player",yyline); }
             ;
 
 statements: statements statement SEMICOLON { $$ = $1 + $2; }
@@ -251,12 +251,12 @@ declaration: Flt ID  { $$ = "float " + $2 + ";\n";  semantics.addVar($2, "float"
             | Str ID EQUAL STRING_CONST { $$ = "String " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, "String", yyline); }
             ;
 
-relationalExp: ID LESSEQUAL constOrVar { $$ = $1 + " <= " + $3; semantics.checkRelationalExp($1, $3, yyline); semantics.checkRelationForInvalidType($1, yyline); }
-             | ID GREATEQUAL constOrVar { $$ = $1 + " >= " + $3; semantics.checkRelationalExp($1, $3, yyline); semantics.checkRelationForInvalidType($1, yyline); }
-             | ID NOTEQUAL constOrVar { $$ = $1 + " != " + $3; semantics.checkRelationalExp($1, $3, yyline); }
-             | ID LESS constOrVar { $$ = $1 + " < " + $3; semantics.checkRelationalExp($1, $3, yyline); semantics.checkRelationForInvalidType($1, yyline); }
-             | ID GREAT constOrVar { $$ = $1 + " > " + $3; semantics.checkRelationalExp($1, $3, yyline); semantics.checkRelationForInvalidType($1, yyline); }
-             | ID ISEQUAL constOrVar { $$ = $1 + " == " + $3; semantics.checkRelationalExp($1, $3, yyline); }
+relationalExp: ID LESSEQUAL constOrVar { $$ = $1 + " <= " + $3; semantics.checkRelExp($1, $3, yyline); semantics.checkRelationForInvalidType($1, yyline); }
+             | ID GREATEQUAL constOrVar { $$ = $1 + " >= " + $3; semantics.checkRelExp($1, $3, yyline); semantics.checkRelationForInvalidType($1, yyline); }
+             | ID NOTEQUAL constOrVar { $$ = $1 + " != " + $3; semantics.checkRelExp($1, $3, yyline); }
+             | ID LESS constOrVar { $$ = $1 + " < " + $3; semantics.checkRelExp($1, $3, yyline); semantics.checkRelationForInvalidType($1, yyline); }
+             | ID GREAT constOrVar { $$ = $1 + " > " + $3; semantics.checkRelExp($1, $3, yyline); semantics.checkRelationForInvalidType($1, yyline); }
+             | ID ISEQUAL constOrVar { $$ = $1 + " == " + $3; semantics.checkRelExp($1, $3, yyline); }
              | OPEN_PARAN relationalExp CLOSE_PARAN { $$ = "(" + $2 + ")"; }
              //FLOODException Here
              ;
@@ -292,21 +292,21 @@ arithmeticExp: arithmeticExp PLUS arithmeticExp { $$ = $1 + " + " + $3 ; semanti
              | INT { $$ = "" + $1; semantics.assignmentCheckLeftIsOfType("int", yyline); }
              ;
 
-assignment: leftSide EQUAL rightSide { $$ = $1 + " = " + $3; }
+assignment: leftSide EQUAL rightSide { $$ = $1 + " = " + $3; semantics.funcReturnFlag=false;}
 
-leftSide: ID { $$ = $1; semantics.assignmentCheckLeft($1, yyline); }
+leftSide: ID { $$ = $1; semantics.assignmentCheckLeft($1, yyline); semantics.funcReturnFlag=true;}
 
 rightSide: arithmeticExp { $$ = $1 + ";\n"; }
-         | functionCall { $$ = $1 + ";\n"; semantics.assignmentCheckFunction($1, yyline); }
+         | functionCall { $$ = $1 + ";\n"; }
          | STRING_CONST { $$ = $1 + ";\n"; semantics.assignmentCheckLeftIsOfType("String", yyline); }
          | True { $$ = "true" + ";\n"; semantics.assignmentCheckLeftIsOfType("boolean", yyline); }
          | False { $$ = "false" + ";\n"; semantics.assignmentCheckLeftIsOfType("boolean", yyline); }
          ;
 
-functionCall: functionName OPEN_PARAN parameterList CLOSE_PARAN { $$ = $1 + "(" + $3 + ")"; }
+functionCall: functionName OPEN_PARAN parameterList CLOSE_PARAN { $$ = $1 + "(" + $3 + ")";  if(semantics.funcReturnFlag)semantics.assignmentCheckFunction($1, yyline);}
             | AddPlayer OPEN_PARAN ID COMMA ID CLOSE_PARAN { $$ = $3 + ".addPlayer(" + $5 + ")" ; semantics.checkIDagainstType($3,"User", yyline);semantics.checkIDagainstType($5,"Player", yyline);}
             | RemovePlayer OPEN_PARAN ID COMMA ID CLOSE_PARAN { $$ = $3 + ".removePlayer(" + $5 + ")" ; semantics.checkIDagainstType($3,"User", yyline);semantics.checkIDagainstType($5,"Player", yyline);}
-            | ArrayLength OPEN_PARAN ID CLOSE_PARAN { $$ = $3 + ".length"; semantics.checkIDagainstType($3,"User[]", yyline); semantics.checkIDagainstType($3,"Player[]", yyline);}
+            | ArrayLength OPEN_PARAN ID CLOSE_PARAN { $$ = $3 + ".length"; semantics.checkArrayType($3,yyline); }
 	    | GetUserName OPEN_PARAN ID CLOSE_PARAN { $$ = $3 + ".getName()";} //Semantic check to be added
 	    | GetNumPlayers OPEN_PARAN ID CLOSE_PARAN { $$ = $3 +".getNumPlayers()";} //Semantic check needed
 	    | GetPlayerName OPEN_PARAN ID CLOSE_PARAN { $$ = $3 + ".getName()";} //Semantic check needed
