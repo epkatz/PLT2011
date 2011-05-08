@@ -57,6 +57,8 @@
 %token Set                    /* Set keyword */
 %token Add                    /* Add keyword */
 %token Action                 /* Action keyword */
+%token Alert		      /* Alert message*/
+%token Error		      /* Error message*/
 %token User                   /* User keyword */
 %token Player                 /* Player keyword */
 %token Void                   /* Void keyword */
@@ -313,6 +315,8 @@ functionCall: functionName OPEN_PARAN parameterList CLOSE_PARAN { $$ = $1 + "(" 
 	    | GetPlayerName OPEN_PARAN ID CLOSE_PARAN { $$ = $3 + ".getName()";} //Semantic check needed
 	    | GetPlayerPosition OPEN_PARAN ID CLOSE_PARAN { $$= $3 + ".getPosition()";}//Semantic check needed
 	    | GetPlayerPoints OPEN_PARAN ID CLOSE_PARAN { $$ =$3 + ".getPoints()";}//Semantic check needed
+	    | Alert OPEN_PARAN STRING_CONST COMMA STRING_CONST CLOSE_PARAN {$$ ="GUI.alert("+$3+","+$5+")";}
+	    | Error OPEN_PARAN STRING_CONST COMMA STRING_CONST CLOSE_PARAN {$$ ="GUI.error("+$3+","+$5+")";}
             ;
 
 parameterList: parameterList COMMA parameterList { $$ = $1 + ", " + $3; }
