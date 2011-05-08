@@ -264,13 +264,10 @@ a = draftFunction(10);
 \end{lstlisting}
 \end{singlespace}
 
-Hiding the GUI is one of the main features of \textbf{FLOOD}. There is no need to program any part of the user-interface. The GUI will know how to hook into the \textbf{FLOOD} source and connect the buttons on the interface to the actions defined by the programmer. The output will be a GUI window which will control the flow of the program and in turn, the flow will depend upon the user's interactions. For instance, the only way to update the scores of the \textit{Users} is by adding player-action files to the program. \textit{Player-Action} files would contain new statistics such as:
+Hiding the GUI is one of the main features of \textbf{FLOOD}. There is no need to program any part of the user-interface. The GUI will know how to hook into the \textbf{FLOOD} source and connect the buttons on the interface to the actions defined by the programmer. The output will be a GUI window which will control the flow of the program and in turn, the flow will depend upon the user's interactions. For instance, the only way to update the scores of the \textit{Users} is by adding player-action files to the program. \textit{Player-Action} files would contain new statistics of the format \textit{Player, Action, Quantity} such as:
 \begin{center}
 \begin{singlespace}
 \begin{tabular}{ l }
-Player-Action files would contain new statistics of\\
-the format \textit{Player, Action, Quantity} such as:\\
-\\
 LeBron James, Rebound, 7 \\
 Lebron James, Assist, 4  \\
 Carmelo Anthony, Steal, 5 \\
@@ -705,11 +702,11 @@ Identifiers, constants, strings, or expressions in parentheses.
 
 \textbf{FLOOD} supports the arithmetic expressions of addition, subtraction, multiplication, division and modulus.
 
-The addition ($+$) ,subtraction ($-$), multiplication ($*$) and division ($/$) operators are left associative. The modulus ($\%$) operator is non-associative.
+The addition `$+$,' subtraction `$-$,' multiplication `$*$' and division `$/$' operators are left associative. The modulus `$\%$' operator is non-associative.
 
-The result of the $+$ operator is the sum of the operands. A string may also be added to another string. In this manner, concatenation is performed where the result is a string containing the first operand and then the second beginning at the end of the first.
+The result of the `$+$' operator is the sum of the operands. A string may also be added to another string. In this manner, concatenation is performed where the result is a string containing the first operand and then the second beginning at the end of the first.
 
-The result of the $-$ operator is the difference of the operands. A string may not be subtracted from another string.
+The result of the `$-$' operator is the difference of the operands. A string may not be subtracted from another string.
 
 Multiplication and division can be performed only on \texttt{Int} and \texttt{Flt} types. Additionally, \textbf{FLOOD} does not enforce coercion of operand types. This means that any of the above operations can be performed only on operands of the same type. For example, an \texttt{Int} variable can only be added to an \texttt{Int} variable.
 
@@ -728,7 +725,7 @@ The relational operators group left-to-right. The relational expression returns 
             (relational-expression)\end{singlespace}
 \end{alltt}
 
-The operators ``$==$" and ``$!$$=$" have lower precedence than the operators ``$<$," ``$>$," ``$<=$," and ``$>=$." String comparisons are accomplished with the ``$==$" operator and are case sensitive.
+The operators `$==$' and `$!$$=$' have lower precedence than the operators `$<$,' `$>$,' `$<=$,' and `$>=$.' String comparisons are accomplished with the `$==$' operator and are case sensitive.
 
 \subsubsection{Boolean Expressions}
 
