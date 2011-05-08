@@ -146,7 +146,7 @@ definitionproductions: Set LeagueName OPEN_PARAN STRING_CONST CLOSE_PARAN SEMICO
                      | Set MinTeamSize OPEN_PARAN INT CLOSE_PARAN SEMICOLON { $$ = "myLeague.setMinTeamSize(" + $4 + ");\n"; }
                      | Add User OPEN_PARAN STRING_CONST CLOSE_PARAN SEMICOLON { $$ = "myLeague.addUser(new User(" + $4 + "));\n"; semantics.addUser($4, yyline); }
                      | Add Action OPEN_PARAN STRING_CONST COMMA FLT CLOSE_PARAN SEMICOLON { $$ = "myLeague.addAction(new Action(" + $4 + ", " + $6 + "));\n"; semantics.addAction($4, yyline); }
-		     | Add Action OPEN_PARAN STRING_CONST COMMA MINUS FLT CLOSE_PARAN SEMICOLON %prec NEG { $$ = "myLeague.addAction(new Action(" + $4 + ", " + $7 + "));\n"; semantics.addAction($4, yyline); }
+		     | Add Action OPEN_PARAN STRING_CONST COMMA MINUS FLT CLOSE_PARAN SEMICOLON %prec NEG { $$ = "myLeague.addAction(new Action(" + $4 + ", -" + $7 + "));\n"; semantics.addAction($4, yyline); }
                      | Add Player OPEN_PARAN STRING_CONST COMMA STRING_CONST CLOSE_PARAN SEMICOLON { $$ = "myLeague.addPlayer(new Player(" + $4 + ", " + $6 + "));\n"; semantics.addPlayer($4, yyline); }
                      ;
 
