@@ -1,5 +1,5 @@
 package backend;
-public class Test {
+public class FloodProgram {
 	public static League myLeague;
 	public static GUI run;
 

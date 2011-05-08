@@ -1,0 +1,161 @@
+3,0,0,0,0
+ACTIONS:
+shot on goal,1.0
+block shot on goal,1.0
+block shot,0.5
+score penalty kick,0.5
+score from 30+ yards out,1.5
+score goal,2.0
+red card,-2.0
+tackle,0.5
+yellow card,-1.0
+shot,0.5
+score with a header,1.5
+PLAYERS:
+Matrin Caceres,defender,-1.0
+Jose Manuel Pinto,goal keeper,8.0
+Didier Drogba,forward,14.0
+Rodney Strasser,midfielder,5.0
+Marco Amelia,goal keeper,9.0
+Lionel Messi,foward,29.0
+Gerard Pique,defender,3.0
+Darron Gobson,midfielder,7.0
+Rio Ferdinand,defender,8.0
+Andres Iniesta,midfielder,8.0
+Carles Puyol,defender,5.0
+Nani,midfielder,11.0
+David Villa,forward,26.0
+Dimitriar Berbatov,forward,10.0
+Pedro Leon,midfielder,7.0
+Antonio Cassano,forward,20.0
+Flavio Roma,goal keeper,6.0
+Florent Malouda,midfielder,8.0
+Fabio,defender,6.0
+Henrique Hilario,goal keeper,13.0
+John Terry,defender,7.0
+Nicolas Anelka,forward,16.0
+Petr Cech,goal keeper,11.0
+Iker Casillas,goal keeper,14.0
+Branislav Ivanovic,defender,9.0
+Michael Essien,midfielder,8.0
+Karim Benzema,forward,19.0
+Emmanuel Adebayor,forward,11.0
+Xavi Hernandez,midfielder,12.0
+Ezequiel Garay,defender,6.0
+Javier Macherano,midfielder,4.0
+Lassana Diarra,midfielderforward,5.0
+Kevin Prince Boateng,midfielder,8.0
+Javier Hernandez,forward,14.0
+Maxwell Andrade,defender,7.0
+Wayne Rooney,forward,22.0
+Frank Lampard,midfielder,6.0
+Ramires,midfielder,7.0
+Alessandro Nesta,defender,5.0
+Cristiano Ronaldo,forward,17.0
+Mesut Ozil,midfielder,9.0
+Jeffren Suarez,forward,15.0
+Mark van Bommel,midfielder,7.0
+Massimo Oddo,defender,8.0
+Darren Fletcher,midfielder,7.0
+Fernado Torres,forward,23.0
+Sami Khedira,midfielder,-2.0
+Ibrahim Afellay,midfielder,8.0
+Sergio Ramos,defender,6.0
+Oliver Norwood,midfielder,5.0
+Zlatan Ibrahimovic,forward,7.0
+Gennaro Gattuso,midfielder,9.0
+Ricardo Carvalho,defender,12.0
+Eric Abidal,defender,5.0
+Namanja Vidic,defender,8.0
+Victor Valdes,goal keeper,12.0
+Mario Yepes,defender,4.0
+Gianluca Zambrotta,defender,5.0
+Edwin Van der Sar,goal keeper,9.0
+Raul Albiol,defender,8.0
+Salomon Kalou,forward,12.0
+Xabi Alonso,midfielder,5.0
+Thiago Silva,defender,3.0
+Marcelo,defender,5.0
+Ashley Cole,defender,0.0
+Andreu Fontas,defender,3.0
+Gabriel Obertan,forward,8.0
+Patrice Evra,defender,11.0
+Ryan Giggs,midfielder,11.0
+Sergio Canales,midfielder,16.0
+TEAMS:
+,Massimiliano Allegri,0.0
+,Josep Guardiola,0.0
+,Alex Ferguson,0.0
+Ashley Cole
+,Carlo Ancelotti,8.0
+Raul Albiol
+,Jose Mourinho,10.0
+Antonio Cassano
+FREE AGENT:
+Sami Khedira
+Matrin Caceres
+Gerard Pique
+Thiago Silva
+Andreu Fontas
+Javier Macherano
+Mario Yepes
+Rodney Strasser
+Carles Puyol
+Lassana Diarra
+Alessandro Nesta
+Oliver Norwood
+Eric Abidal
+Gianluca Zambrotta
+Xabi Alonso
+Marcelo
+Flavio Roma
+Fabio
+Ezequiel Garay
+Frank Lampard
+Sergio Ramos
+Darron Gobson
+Pedro Leon
+John Terry
+Maxwell Andrade
+Ramires
+Mark van Bommel
+Darren Fletcher
+Zlatan Ibrahimovic
+Jose Manuel Pinto
+Rio Ferdinand
+Andres Iniesta
+Florent Malouda
+Michael Essien
+Kevin Prince Boateng
+Massimo Oddo
+Ibrahim Afellay
+Namanja Vidic
+Gabriel Obertan
+Marco Amelia
+Branislav Ivanovic
+Mesut Ozil
+Gennaro Gattuso
+Edwin Van der Sar
+Dimitriar Berbatov
+Nani
+Petr Cech
+Emmanuel Adebayor
+Patrice Evra
+Ryan Giggs
+Xavi Hernandez
+Ricardo Carvalho
+Victor Valdes
+Salomon Kalou
+Henrique Hilario
+Didier Drogba
+Iker Casillas
+Javier Hernandez
+Jeffren Suarez
+Nicolas Anelka
+Sergio Canales
+Cristiano Ronaldo
+Karim Benzema
+Wayne Rooney
+Fernado Torres
+David Villa
+Lionel Messi
