@@ -344,7 +344,7 @@ String scope = "main";
 ****************************************************/
 public void generateFloodProgram(String definitions, String functions)
 {
-  String classStart = "public class FloodProgram\n{\n";
+  String classStart = "public class Test\n{\n";
   String staticDeclarations = "public static League myLeague;\npublic static GUI run;\n";
   String classEnd = "}\n";
 
