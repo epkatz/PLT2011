@@ -65,7 +65,7 @@ public class GUI {
 	 * 
 	 */
 	private void populateDraft(){
-		pick=Test.draftFunction(currentTurn);	//Determine who is picking next
+		pick=FloodProgram.draftFunction(currentTurn);	//Determine who is picking next
 		draftLabel.setText(theLeague.getUser(pick).getName()+"'s turn!");	//Figure out which user is picking next
 		Player[] rankedPlayers=theLeague.getRankedAvailablePlayers();	//Get all the players in reverse ranked order
 		while(draftModel.getRowCount()>0)	//Remove all the rows from the add table
@@ -407,7 +407,7 @@ public class GUI {
 		});
 		
 		//Determine which user is picking first
-		pick=Test.draftFunction(currentTurn);	//Gets the number representing the user's turn
+		pick=FloodProgram.draftFunction(currentTurn);	//Gets the number representing the user's turn
 		draftLabel.setText(theLeague.getUser(pick).getName()+"'s turn!");	//Puts the user's name in the label 
 		
 		//Draft action listener
@@ -415,7 +415,7 @@ public class GUI {
 			public void actionPerformed(ActionEvent arg0) {
 				for(int i=0;i<draftModel.getRowCount();i++){	//Iterate through table entries
 					if(draftTable.isCellSelected(i,0)){	//If it's selected
-						if(!Test.draftPlayer(theLeague.getUser(pick),League.athletes.get(draftModel.getValueAt(i,0)))){	//If the draft isn't successful
+						if(!FloodProgram.draftPlayer(theLeague.getUser(pick),League.athletes.get(draftModel.getValueAt(i,0)))){	//If the draft isn't successful
 							GUI.error("Invalid draft!","Sorry, your draft violates rules of the league.");
 							return;
 						}
@@ -508,7 +508,7 @@ public class GUI {
 					for (int i = 0; i < p2.length; i++) {
 						p2[i] = League.athletes.get(tradeModel_2.getValueAt(rows2[i],0));
 					}
-					boolean success=Test.trade(League.teams.get(tradeComboBox_1	//Determine if it's a successful trade
+					boolean success=FloodProgram.trade(League.teams.get(tradeComboBox_1	//Determine if it's a successful trade
 							.getSelectedItem()), p1, League.teams
 							.get(tradeComboBox_2.getSelectedItem()), p2);
 					if(!success){	//If unsuccessful
@@ -567,7 +567,7 @@ public class GUI {
 				int overwrite = JOptionPane.showConfirmDialog(frmFloodFantasyLeague, "Are you sure you want to drop: " + League.athletes.get(dropModel.getValueAt(index,0)).getName());
                 if(overwrite == JOptionPane.YES_OPTION) {
 					Player drop=League.athletes.get(dropModel.getValueAt(index,0));	//Get player
-					boolean success=Test.dropPlayer(League.teams.get(dropComboBox.getSelectedItem()),drop);	//Determine if drop is successful
+					boolean success=FloodProgram.dropPlayer(League.teams.get(dropComboBox.getSelectedItem()),drop);	//Determine if drop is successful
 					if(!success){
 						GUI.error("Invalid drop!","Sorry, your drop violates rules of the league.");
 						return;

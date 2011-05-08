@@ -21,7 +21,7 @@ clean:
 	$(DELETE) Parser.java
 	$(DELETE) Yylex.java
 	$(DELETE) flood_front.jar
-	$(DELETE) Test.java
+	$(DELETE) FloodProgram.java
 
 flood_frontend.jar: Parser.class
 	$(JAR) flood_front.jar *.class
