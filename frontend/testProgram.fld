@@ -76,7 +76,7 @@ DefineLeague
 	Add Player("Flavio Roma","goal keeper");
 	Add Player("Antonio Cassano","forward");
 	Add Player("Mario Yepes","defender");
-	Add Player("Kevin_Prince Boateng","midfielder");
+	Add Player("Kevin Prince Boateng","midfielder");
 	Add Player("Andreu Fontas","defender");
 	Add Player("Jose Manuel Pinto","goal keeper");
 	Add Player("Matrin Caceres","defender");
