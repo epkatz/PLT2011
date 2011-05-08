@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Arrays;
 
 public class Function {
 
@@ -16,8 +17,7 @@ public class Function {
 		this.returnType = returnType;
 		if (debugging){System.out.println(functionName + "= returnType: " + returnType);}
 		this.lineNumber = lineNumber;
-		
-		if (paramList.contains("\\w+")){
+		if (!paramList.trim().isEmpty()){
 			String[] params = paramList.trim().split("\\s*,\\s*");
 			paramTypeList = new String[params.length];
 			for(int i=0; i<params.length; i++){
