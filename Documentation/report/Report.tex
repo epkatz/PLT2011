@@ -119,7 +119,7 @@ Since \textbf{FLOOD} is built on top of Java byte-code, the programmer will not 
 Let's start by showing what the \textit{main} class will look like. Defining the \textit{main} class should look somewhat similar to those familiar with Python.
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=Sample.fld]
+\begin{lstlisting}[language=Java,label=some-code,caption={Sample.fld}]
 /*
 * Define the league and configure various settings
 */
@@ -157,7 +157,7 @@ The language was originally intended to be object-oriented in order to facilitat
 The entry point for a \textbf{FLOOD} program is to specify the \texttt{DefineLeague} keyword. Since there is no question of class scope within a file, code below this program block is considered part of the program while any code above (excluding comments, naturally) is an error. It is important to note the \texttt{DefineLeague} block is semantically equivalent to the \texttt{main} function in a standard Java program and all the parameters and settings specified within this block can be viewed as passing parameters via the constructor method in a Java program. Moreover, it is not possible to declare local variables here since meaningful computations do not exist in this section of a \textbf{FLOOD} program. 
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=Defining the league and setting parameters]
+\begin{lstlisting}[language=Java,label=some-code,caption={Defining the league and setting parameters.}]
 /*
 * Define the league and configure various settings
 */
@@ -195,7 +195,7 @@ For the minimum program, it may be possible to leave the maximum and mininum use
 A \textbf{FLOOD} developer need not worry about passing any values to the back-end---\textbf{FLOOD} encapsulates the process of passing the \textit{League} to the GUI and calling the GUI.
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=Defining functions]
+\begin{lstlisting}[language=Java,label=some-code,caption={Defining functions.}]
 /*
 * Defining custom user functions
 */
@@ -219,7 +219,7 @@ DefineFunctions
 Before custom functions can be defined, the keyword \texttt{DefineFunctions} must be specified. Certain \textbf{FLOOD} functions are built into the language and the compiler will check whether the programmer has overridden them. They are as follows:
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=Predefined FLOOD functions]
+\begin{lstlisting}[language=Java,label=some-code,caption={Predefined FLOOD functions.}]
 Int draftFunction(int turn) {...}
 Bool draftPlayer(User u, Player p) {...}
 Bool trade(User u1, Player[] p1, User u2, Player[] p2) {...}
@@ -250,7 +250,7 @@ A \texttt{Return} must only occur at the end of the function and must match the 
 A function can be called similarly to Java:
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=Function call]
+\begin{lstlisting}[language=Java,label=some-code,caption={Function call.}]
 draftFunction(10);
 \end{lstlisting}
 \end{singlespace}
@@ -258,7 +258,7 @@ draftFunction(10);
 or in an assignment:
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=Function call in an assignment]
+\begin{lstlisting}[language=Java,label=some-code,caption={Function call in an assignment.}]
 Int a;
 a = draftFunction(10);
 \end{lstlisting}
@@ -279,7 +279,7 @@ Carmelo Anthony, Point Scored, 25
 This is everything needed to run a simple \textbf{FLOOD} program. This basketball league will mirror equivalent leagues in \textit{Yahoo! Sports} or \textit{ESPN Fantasy} without network connectivity. The minimum ``Hello World" program is included below:
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=Minimal FLOOD program to create a basektball fantasy league]
+\begin{lstlisting}[language=Java,label=some-code,caption={Minimal FLOOD program to create a basektball fantasy league.}]
 DefineLeague
 	Set LeagueName("Basketball League");
 	Add User("Anuj");
@@ -301,7 +301,7 @@ DefineFunctions
 Just as any robust programming language requires a comprehensive computational model, \textbf{FLOOD} provides the user with a set of arithmetic expressions and variable types to work with. To use a variable and work with it, the variable must be declared before it is used for the first time. A declaration defines the properties of the variables. A declaration is of the form \textit{\texttt{type name}} where \textit{\texttt{type}} is the data type of the variable and \textit{\texttt{name}} is the identifier of the variable.
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=Variable declarations]
+\begin{lstlisting}[language=Java,label=some-code,caption={Variable declarations.}]
 /* variable declarations */
 Int i;
 Bool b;
@@ -319,7 +319,7 @@ s = "Hello World";
 Here, variables are declared before they are used. It's also possible to assign values to the variables in the declaration. An important distinction between \textbf{FLOOD} and a programming language like Java is the location of actual declaration which as noted \textit{\textbf{must be at the top}} of the function body. Following the declarations, the variables can be used as needed. Note that there is no coercion between \texttt{Flt} and \texttt{Int} since \textbf{FLOOD} does not support implicit type coercions, as shown here:
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=Implicit type coersion is not supported]
+\begin{lstlisting}[language=Java,label=some-code,caption={Implicit type coersion is not supported.}]
 Int i;
 Flt f;
 i = 2.0; /* Error since 2.0 is a Flt */
@@ -341,7 +341,7 @@ i = f / f; /* Error: Int used in a Flt expression */
 \textbf{FLOOD} offers the set of arithmetic expressions required to create a comprehensive fantasy league of the developer's choice. This set comprises of the standard addition, subtraction, multiplication, division and modulus operators. In addition, statements can include functions as in the case:
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=Function used in an arithmetic statement]
+\begin{lstlisting}[language=Java,label=some-code,caption={Function used in an arithmetic statement.}]
 Int i;
 i = someFunction() + 10 * 4; /* someFunction() returns an Int */
 \end{lstlisting}
@@ -356,7 +356,7 @@ Creating a fantasy league in \textbf{FLOOD} can range from simple computations t
 The syntax for the \textit{while} loop follows the standard convention:
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=while loop]
+\begin{lstlisting}[language=Java,label=some-code,caption={\textit{while} loop}]
 While (total < 4)
 {
 	centers = centers + 1;
@@ -372,7 +372,7 @@ The \textit{while} loop operates as follows: the condition in parentheses is tes
 \textbf{FLOOD} provides the developer with a conditional in the form of the \textit{if} expression that is defined as follows:
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=If conditional]
+\begin{lstlisting}[language=Java,label=some-code,caption={\textit{If} conditional}]
 If (position == "center")
 {
 	position = position + 1;
@@ -383,7 +383,7 @@ If (position == "center")
 Here, the program checks the condition enclosed in the bracket. If this condition is met (in this case, if the person's position is \texttt{center}, then the program executes the next statement. \textbf{FLOOD} also incorporates \textit{$if\ldots else$} conditional statements as follows:
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=If...Else conditional statement]
+\begin{lstlisting}[language=Java,label=some-code,caption={\textit{If\ldots Else} conditional statement.}]
 If (points > 100)
 {
 	trade = True;
@@ -402,7 +402,7 @@ If the first condition ($\texttt{points} > 100$) is not met, then the statement 
 As in countless other programming languages, \textbf{FLOOD} employs the concept of a function (also referred to as a method, subroutine, or procedure), a logical grouping of code within the larger program which carries out a specific task and is relatively independent of the rest of the code base. The idea of a function is analogous to the notion of the ``black box" when discussing the concept of encapsulation in object-oriented programming. For a well-designed function, the particulars of ``how" the function performs its task(s) is not of critical importance and just knowing ``what" it does suffices. Functions can be ``called" or ``executed" any number of times and from within other functions. 
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=Syntax of a FLOOD function]
+\begin{lstlisting}[language=Java,label=some-code,caption={Syntax of a FLOOD function.}]
 Bool evaluate(User u, Player p)
 {
 	...
@@ -413,7 +413,7 @@ Bool evaluate(User u, Player p)
 An important requirement to remember is that functions \textit{\textbf{must be defined before}} they are used, as shown here:
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=A function must be defined before being called]
+\begin{lstlisting}[language=Java,label=some-code,caption={A function must be defined before being called.}]
 Bool function1()
 {
 	Return False;
@@ -437,7 +437,7 @@ The scope of a variable is limited to the function it is declared in---\textit{\
 The types \texttt{User} and \texttt{Player} are specific to \textbf{FLOOD}. They can only be declared as a formal parameter in the argument lists of functions:
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=User and Player declared in function argument list]
+\begin{lstlisting}[language=Java,label=some-code,caption={\texttt{User} and \texttt{Player} declared in function argument list}]
 Bool draftPlayer(User u, Player p) {...}
 Bool trade(User u1, Player[] p1, User u2, Player[] p2) {...}
 Bool dropPlayer(User u, Player p) {...}
@@ -449,7 +449,7 @@ The GUI knows to look for these specific functions and populate them correctly. 
 Within \textbf{FLOOD}, arrays exists only in the context of \texttt{User} and \texttt{Player}. Both types can be passed as single values or array types. The array declaration is similar to Java:
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=Passing User and Player arrays]
+\begin{lstlisting}[language=Java,label=some-code,caption={Passing \texttt{User} and \texttt{Player} arrays}]
 Bool trade(User u1, Player[] p1, User u2, Player[] p2) {...}
 \end{lstlisting}
 \end{singlespace}
@@ -457,7 +457,7 @@ Bool trade(User u1, Player[] p1, User u2, Player[] p2) {...}
 Square brackets are placed after the type before the name of the variable. An array can be accessed in the body of the function using an \texttt{Int} index. Both of the examples below are correct:
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=Assessing array elements using index]
+\begin{lstlisting}[language=Java,label=some-code,caption={Assessing array elements using index.}]
 Int i = 5;
 draft(a[1]);
 draft(b[i]);
@@ -467,7 +467,7 @@ draft(b[i]);
 \textbf{FLOOD} has a few built-in functions that give the programmer more flexibility in writing functions. The functions are associated with \texttt{Users} and \texttt{Players} and as such are included in this section. The first function \texttt{ArrayLength} simply returns the length of the array that is passed to it. Note that Python similarly uses this kind of syntax to find the length of a list. The other two functions \texttt{AddPlayer()} and \texttt{RemovePlayer()} are functions that alert the GUI to the addition or removal of a \texttt{Player} from a \texttt{User}. For the full list of functions, see the \textit{Reference Manual} section \textit{Function Calls}. The syntax is as follows:
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=Some FLOOD utility functions and usage]
+\begin{lstlisting}[language=Java,label=some-code,caption={Some FLOOD utility functions and usage.}]
 Int i;
 i = ArrayLength(p);  /* Where p is an array of Players */
 AddPlayer(u, p); /* Where u is a User and p is a Player */
@@ -477,10 +477,10 @@ RemovePlayer(u, p); /* Where u is a User and p is a Player */
 
 \section{Alert \& Error}
 
-\textbf{FLOOD} programs are run through a GUI so print statements conform to this interface. As an alternative to print streams to a console, \textbf{FLOOD} allows the programmer to display boxes of text. There are two kinds of boxes, \textit{Alert} and \textit{Error}:
+\textbf{FLOOD} programs are run through a GUI so print statements conform to this interface. As an alternative to print streams to a console, \textbf{FLOOD} allows the programmer to display boxes of text. There are two kinds of boxes, \texttt{Alert} and \texttt{Error}:
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=Launching Alert and Error message boxes]
+\begin{lstlisting}[language=Java,label=some-code,caption={Launching \texttt{Alert} and \texttt{Error} message boxes.}]
 Alert("Alert Box Title", "Alert message......");
 Error("Error Box Title", "Error message......");
 \end{lstlisting}
@@ -499,7 +499,7 @@ Many parts of the manual should be familiar to the seasoned programmer. We were 
 We begin with a high level view of the structure of a \textbf{FLOOD} program. It is divided into two logical blocks. The program begins with the very first block which sets the attributes of the \textit{League}. This block needs to be present and is specified as follows:
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=DefineLeague]
+\begin{lstlisting}[language=Java,label=some-code,caption={\texttt{DefineLeague}}]
 /*
 * Define the League and configure various settings
 */
@@ -515,7 +515,7 @@ DefineLeague
 In this block, various attributes and properties of the \textit{League} are set such as the name of the \textit{League}, the list of \textit{Users}, the list of \textit{Players}, etc. We enumerate the list of possible statements allowed in this block below:
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=Setting league name]
+\begin{lstlisting}[language=Java,label=some-code,caption={Setting league name.}]
 Set LeagueName("The League Name");
 \end{lstlisting}
 \end{singlespace}
@@ -523,7 +523,7 @@ Set LeagueName("The League Name");
 The above statement sets the name of the \textit{League}.
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=Setting maximun number of Users]
+\begin{lstlisting}[language=Java,label=some-code,caption={Setting maximun number of \texttt{Users}.}]
 Set MaxUser(10);
 \end{lstlisting}
 \end{singlespace}
@@ -531,7 +531,7 @@ Set MaxUser(10);
 Sets the a limit on the maximum number of \textit{Users} of the \textit{League}.
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=Setting minimum number of Users]
+\begin{lstlisting}[language=Java,label=some-code,caption={Setting minimum number of \texttt{Users}.}]
 Set MinUser(2);
 \end{lstlisting}
 \end{singlespace}
@@ -539,7 +539,7 @@ Set MinUser(2);
 Sets the a limit on the minimum number of \textit{Users} of the \textit{League}.
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=Setting maximum size of each team]
+\begin{lstlisting}[language=Java,label=some-code,caption={Setting maximum size of each team.}]
 Set MaxTeamSize(10);
 \end{lstlisting}
 \end{singlespace}
@@ -547,7 +547,7 @@ Set MaxTeamSize(10);
 Places a limit on the size of each \textit{User's} team.
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=Setting minimum size of each team]
+\begin{lstlisting}[language=Java,label=some-code,caption={Setting minimum size of each team.}]
 Set MinTeamSize(2);
 \end{lstlisting}
 \end{singlespace}
@@ -555,7 +555,7 @@ Set MinTeamSize(2);
 The minimum number of players that need to be in a \textit{User's} team.
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=Adding a User]
+\begin{lstlisting}[language=Java,label=some-code,caption={Adding a \texttt{User}.}]
 Add User("Name of User");
 \end{lstlisting}
 \end{singlespace}
@@ -563,7 +563,7 @@ Add User("Name of User");
 Adds a \texttt{User} to the \textit{League}.
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=Adding an Action]
+\begin{lstlisting}[language=Java,label=some-code,caption={Adding an \texttt{Action}.}]
 Add Action("Name of Action", 10.0);
 \end{lstlisting}
 \end{singlespace}
@@ -571,7 +571,7 @@ Add Action("Name of Action", 10.0);
 Adds an \texttt{Action} to the \textit{League} and the number of points associated with it.
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=Adding a Player]
+\begin{lstlisting}[language=Java,label=some-code,caption={Adding a \texttt{Player}.}]
 Add Player("Name of Player", "Position");	
 \end{lstlisting}
 \end{singlespace}
@@ -581,7 +581,7 @@ Adds the \texttt{Player} to the \textit{League} object, along with the position 
 The next logical block is comprised of defining functions and invoking functions within them if needed. This segment needs to begin with the \texttt{DefineFunctions} keyword as follows:
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=Defining functions]
+\begin{lstlisting}[language=Java,label=some-code,caption={Defining functions.}]
 DefineFunctions
 	Void myFunction1(Str param1, Int param2)
 	{
@@ -771,6 +771,7 @@ A conditional statement in \textbf{FLOOD} is a statement which checks for a cert
                 statements
             \};}
 
+
             \textit{If (expression)
             \{
                 statements
@@ -859,7 +860,7 @@ The above returns the points of the \texttt{Player} object \textit{\texttt{playe
 Values can be assigned to variables depending on their type. For example,  a \texttt{Bool} variable can be assigned a value of either \texttt{True} or \texttt{False}. Similarly, an \texttt{Int} variable can be assigned any integer value. 
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=Assignments]
+\begin{lstlisting}[language=Java,label=some-code,caption={Assignments}]
 var1 = True; /* if var1 is of type Bool */
 var2 = 1; /* if var2 is of type Int */
 var3 = 1.0; /* if var3 is of type Flt */
@@ -870,7 +871,7 @@ var4 = "string"; /* iff var4 is of type Str */
 Additionally, the return value of an invoked function can be assigned to a variable.
 
 \begin{singlespace}
-\begin{lstlisting}[language=Java,label=some-code,caption=Function assignment]
+\begin{lstlisting}[language=Java,label=some-code,caption={Function assignment.}]
 var5 = function(); /* if the return type of the function matches the data type of var5 */
 \end{lstlisting}
 \end{singlespace}
@@ -916,11 +917,11 @@ Below is a recapitulation of the grammar that was given throughout the earlier p
           \textit{empty}
 
      \textit{returnType:}
-          \textit{\textbf{Void}}
-          \textit{\textbf{Str}}
-          \textit{\textbf{Bool}}
-          \textit{\textbf{Int}}
-          \textit{\textbf{Flt}}
+          \textit{Void}
+          \textit{Str}
+          \textit{Bool}
+          \textit{Int}
+          \textit{Flt}
           
      \textit{functionName: identifier}
 
@@ -1068,9 +1069,9 @@ Below is a recapitulation of the grammar that was given throughout the earlier p
 
 \section{Processes}
 
-Our team was a mix of three undergraduates, two Computer Science majors pursuing the \textit{Applications} track and the \textit{Vision and Graphics} track and a Computer Engineer, as well as two graduates, one pursuing the \textit{Foundations} track and the other pursuing the \textit{Systems} track. The team members hail from Vietnam, Nigeria, India, Israel and Switzerland. The team had backgrounds from professional industry, the military and international educational systems. As such, the team came in with very different ideas on development and team-work.
+Our team was a mix of three undergraduates, two Computer Science majors pursuing the \textit{Applications} track and the \textit{Vision and Graphics} track and a Computer Engineer, as well as two graduates, one pursuing the \textit{Foundations} track and the other pursuing the \textit{Systems} track. The team members hail from Vietnam, Nigeria, India, Israel and Switzerland. The team had backgrounds from industry, the military and international educational systems. As such, the team came in with very different ideas on development and team-work.
 
-Our team decided early on that group working sessions and pair-programming would be an effective way to ensure constant communication among team members. We set out a schedule to meet every Monday night. Gradually we added Thursday night and then one weekend afternoon. Information was shared among team members through online documentation using Google Docs and a special Google Group alias. Every submission was drafted on Google Docs and every team member contributed. Additionally, the Product Manger's log and Bug Tracker were both available online and updated frequently. The code repository was hosted on GitHub. 
+Our team decided early on that group working sessions and pair-programming would be an effective way to ensure constant communication among team members. We set out a schedule to meet every Monday night. Gradually we added Thursday night and then one weekend afternoon. Information was shared among team members through online documentation using \textbf{Google Docs} and a special \textbf{Google Group} alias. Every submission was drafted on \textbf{Google Docs} and every team member contributed. Additionally, the \textit{Product Manger's} log and Bug Tracker were both available online and updated frequently. The code repository was hosted on \textbf{GitHub}. 
 
 Modules that were worked on by more than one team member would be pair-programmed with one team member acting as the ``driver" and one as the ``observer." Additionally, the observer would act as a code reviewer which speed up development time. Working sessions were generally held in an open space where team members could work on their own sections but also communicate with each other in real-time.
 
@@ -1120,7 +1121,7 @@ Recognizing that every team member has a unique style of coding, only very speci
 \item Modules:
 \begin{itemize}
 \item Every module should exist within its own Java file and ideally its own folder.
-\item Unit tests should exist with the folder that includes the makefile and given names indicative of its use.
+\item Unit tests should exist with the folder that includes the \textit{makefile} and given names indicative of its use.
 \end{itemize}
 \end{itemize}
 
@@ -1225,33 +1226,212 @@ The language now was developed with a logical division of the program the develo
 The next logical block we decided on was defining functions and invoking them within other functions. This section needs to begin with the keyword \texttt{DefineFunction}. There are four default functions that each league needs to have which are: \texttt{draftPlayer}, \texttt{drop}, \texttt{trade}, \texttt{draftFunction}. The user can override these functions, although the user can choose not to define these functions, and the default function definitions for these functions will be invoked. 
 
 Over and above these four functions, the user can define custom functions and invoke them. In its first incarnation, functions could take any number of parameters of the following types: \texttt{Bool}, \texttt{Str}, \texttt{Int}, \texttt{Flt}. Variable declarations were allowed at the beginning of the function before any other statements. The language at this point also provided for looping structures, arithmetic expressions, relational expressions as well as conditionals. The back-end required array constructs of objects of a couple of back-end classes, namely the \texttt{User} and \texttt{Player} classes. Since the programmer does not know the contents of the \texttt{User} and \texttt{Player} classes, we decided to introduce array constructs in the formal parameters and actual parameter list of functions as follows:
-      	functionName(User[] u,Player[] p){ statements }
-In this manner, as and when changes were made in the grammar, they were incorporated in the back-end, and as and when changes were made to the back-end, they were incorporated in the grammar. The evolution of the language thus involved the grammar and the back-end evolving in tandem and incrementally.
+
+\begin{alltt}\begin{singlespace}
+         functionName(User[] u,Player[] p) \{ statements \}\end{singlespace}
+\end{alltt}
+
+In this manner, when changes were made in the grammar they were incorporated in the back-end and conversely, when changes were made to the back-end, they were incorporated in the grammar. The evolution of the language thus meant the grammar and the back-end evolving in tandem and incrementally.
 
 \chapter{Language Architecture}
 
+The basic tools used to design the translator are \textbf{JFlex} for lexical tokenization and \textbf{BYACC/J} for the compiler generator. The lexical tokens are listed in the \textbf{JFlex} file, \textit{flood$\_$lex.flex}. \textbf{JFlex} tokenizes the input and passes the input in the form of these tokens to the parser, \textbf{BYACC/J}.
+
+The grammar that the language follows is defined in the \textbf{BYACC/J} file, \textit{flood$\_$grammar.y}. Once this file is compiled, the generated Java file, \textit{Parser.java} is the parser generator for our language. The semantic actions to be performed on the input file given to our compiler are listed in the semantic action of each production in the \textit{flood$\_$grammar.y} file. These semantic actions involve type checking, arithmetic logic, function definitions and variable definitions. If any error is detected in the input file, our parser will not generate the output and will display an error. The high level view is illusrated in the following figure:
+
+\includegraphics[scale=0.7]{system_architecture.png}
+
+If the input is accepted by our strongly typed language, the front-end generates the intermediate code, \textit{FloodProgram.java}. On compilation and execution, the back-end generates the output in the form of a GUI.
+
+The back-end of the system consists of all the Java files that the intermediate code references to generate the output. The GUI of the system makes use of a \textit{Statistics} file which holds the statistics of the proceedings of the league. Based on these statistics, the GUI generates the ranking of the each user of the league which determines who the winner is at any point.
+
+\section{Module Authors}
+\begin{singlespace}
+\begin{itemize}
+\item Grammar design and implementation : Tam and Anuj.
+\item Semantic actions: Dillen, Stephanie and Elliot.
+\item Backend: Dillen.
+\end{itemize}
+\end{singlespace}
+
 \chapter{Development Enviornment}
 
-During the development of the FLOOD language, development was spread across two operating systems. The majority of the group developed with Ubuntu (10.04/10.10/11.04) while one other worked exclusively in Windows which ended up working out rather smoothly despite some issues setting up the Git repo on Windows and maintaining multiple makefiles. Yet this cross system development also ensures that our language is not system dependent. In order to maintain a current version of all parts of the language, our group set up an online repository on Github where changes could be made at any time at the programmer’s convenience.
+During the development of the \textbf{FLOOD} language, development was spread across two operating systems. The majority of the group developed with \textbf{Ubuntu} (10.04/10.10/11.04) while one other worked exclusively in \textbf{Windows} which ended up working out rather smoothly despite some issues setting up the \textbf{Git} repo on \textbf{Windows} and maintaining multiple \textit{makefiles}. Yet this cross system development also ensures that our language is not system dependent. In order to maintain a current version of all parts of the language, our group set up an online repository on \textbf{GitHub} where changes could be made at any time at the programmer's convenience.
 
-The majority of java code for the source files used in the intermediate code compilation level was written nearly exclusively in Eclipse 3.6 Helios. The majority of the backend was written from scratch with a select few data structures to promote efficiency. Those libraries included primarily the Java API’s HashMap and ArrayList classes when necessary so that looking up references to various Users, Players and Actions would all be O(1). They were also used in a manner to prevent duplicate copies of any particular instance of class so that references (values of references since Java is pass-by-value) were used instead.
+The majority of Java code for the source files used in the intermediate code compilation level was written nearly exclusively in \textbf{Eclipse} 3.6 \textit{Helios}. The majority of the back-end was written from scratch with a select few data structures to promote efficiency. Those libraries included primarily the Java API's \texttt{HashMap} and \texttt{ArrayList} classes when necessary so that looking up references to various \textit{Users}, \textit{Players} and \textit{Actions} would all be $O(1)$. They were also used in a manner to prevent duplicate copies of any particular instance of class so that references (values of references since Java is pass-by-value) were used instead.
 
-In addition to these source files, a GUI was also created to allow user interaction with the program during runtime, a key component of any fantasy league. The development of the GUI was restricted to purely Java’s Swing and AWT library components with the framework created using Google’s WindowBuilder Pro web toolkit. With the assistance of the development environment provided by that plugin to Eclipse, the GUI’s rough layout was generated with ease but was completely devoid of any functionality besides its good looks. The remainder of the GUI was developed by hand adding various functionalities to different components and promoting ease of integration with files generated by the compiler. No other outside sources were used in the remainder of the production of the source files that integrate with the compiler output besides the occasional Google search on how some feature of Swing truly worked, disregarding one’s intuition. The final features added to the GUI were the ability for the program to write its current state to a file that could be saved in a directory and then imported at a later date, so that a fantasy league could be easily maintained over the course of any sports season without leaving a program running for the entire duration.
+In addition to these source files, a GUI was also created to allow user interaction with the program during runtime, a key component of any fantasy league. The development of the GUI was restricted to purely Java's \textbf{Swing} and \textbf{AWT} library components with the framework created using Google's \textbf{WindowBuilder Pro} web toolkit. With the assistance of the development environment provided by that plugin to \textbf{Eclipse}, the GUI's rough layout was generated with ease but was completely devoid of any functionality besides its good looks.
 
-The parser and grammar were implemented with JFlex and BYacc respectively. These are both the Java versions of Lex and Yacc that the language FLOOD compiles to in its intermediate code generation. The majority of the development of the parser and grammar were done in a combination of Gedit and terminal along with some good ol’ fashioned paper and pencil. Paper and pencil is really the best (and almost only) way to really work out and recognize shift/reduce conflicts which inevitably helped to generally understand their origins and prevent them. The only exclusion to this trend was the development of the semantic actions that enforced type checking and other semantic checks, such as determining if functions and variables had been previously declared, which were primarily developed in Eclipse 3.6 Helios. This was done due to the fact that it was exclusively written in Java in which instantaneous compilation helped with simple syntax errors that may have been overlooked.
+The remainder of the GUI was developed by hand adding various functionalities to different components and promoting ease of integration with files generated by the compiler. No other outside sources were used in the remainder of the production of the source files that integrate with the compiler output besides the occasional Google search on how some feature of \textbf{Swing} truly worked, disregarding one's intuition. The final features added to the GUI were the ability for the program to write its current state to a file that could be saved in a directory and then imported at a later date, so that a fantasy league could be easily maintained over the course of any sports season without leaving a program running for the entire duration.
 
-The most important tool, however, used in the joint production of FLOOD was indubitably Google Docs. The ability to jointly work on the White Paper/Language Tutorial/Reference Manual and watch them come together smoothly as opposed to very disjoint and extremely differently written components was truly invaluable. The ability to share and jointly edit other’s documents such as schedules, bug reports and other files simultaneously without the burden of constantly pulling and pushing vastly improved efficiency especially when every group member can just consult a checklist to see what components were still incomplete and most urgent. Additionally, the real time updating of files provided a great base for the conversion to Latex of the final reports. It was a crucial component in the merging of everyone’s work throughout the process.
+The parser and grammar were implemented with \textbf{JFlex} and \textbf{BYACC/J} respectively. These are both the Java versions of \textbf{Lex} and \textbf{Yacc} that the language \textbf{FLOOD} compiles to in its intermediate code generation. The majority of the development of the parser and grammar were done in a combination of \textbf{Gedit}, \textbf{TextPad}, terminal along with some good ol' fashioned paper and pencil. Paper and pencil is really the best (and almost only) way to really work out and recognize shift/reduce conflicts which inevitably helped to understand in general their origins and prevent them. The only exclusion to this trend was the development of the semantic actions that enforced type checking and other semantic checks, such as determining if functions and variables had been previously declared, which were primarily developed in \textbf{Eclipse} 3.6 \textit{Helios}. This was done due to the fact that it was exclusively written in Java in which instantaneous compilation helped with simple syntax errors that may have been overlooked.
+
+The most important tool, however, used in the joint production of \textbf{FLOOD} was indubitably \textbf{Google Docs}. The ability to jointly work on the \textit{White Paper/Language Tutorial/Reference Manual} and watch them come together smoothly as opposed to very disjoint and extremely different written components was truly invaluable. The ability to share and jointly edit other's documents such as schedules, bug reports and other files simultaneously without the burden of constantly pulling and pushing vastly improved efficiency especially when every group member can just consult a checklist to see what components were still incomplete and most urgent. Additionally, the real time updating of files provided a great base for the conversion to \textbf{\LaTeX} of the final reports. It was a crucial component in the merging of everyone's work throughout the process.
 
 \chapter{Test Plan}
 
-In the early stages of developing the grammar for FLOOD most testing simply followed this scheme:
+In the early stages of developing the grammar for \textbf{FLOOD} most testing simply followed this scheme:
 
 \begin{itemize}
-\item 
-\item 
-\item 
-\item 
+\item Write a line of code.
+\item Test it.
+\item Does it work?
+\begin{itemize}
+\item Yes
+\begin{itemize}
+\item Jump to first statement.
 \end{itemize}
+\item No
+\begin{itemize}
+\item Rewrite line of code.
+\item Jump to second statement.
+\end{itemize}
+\end{itemize}
+\end{itemize}
+
+This practice was less about writing production code, and more just to explore and understand \textbf{Lex} and \textbf{Yacc}.
+
+Soon, the grammar began to take shape. As we developed the expressions and loops, fuller and more thorough unit test programs needed to be generated. As each complete production was a made, at least two accompanying unit test programs were written to test that production. The two unit tests would test for correctness as well as for failure, meaning that one unit test was meant to be successful, while the other was meant to fail. Often there was more than one unit test intended to fail, because there are multiple ways in which any single part of the program could fail.
+
+Once the grammar reached a self sustainable level, semantic checks began to be implemented. This checks would cover errors that the grammar could not handles on its own. The testing therefore, became more rigorous in order to cover all possible bases. At this point, unit testing included the full team in order to be as thorough as possible. As each member wrote semantic checks or edited the grammar they were encourage to think of unit tests to break whatever they just wrote. These tests would be written and compiled together as they applied to each specific part of the language, and tested against the compiler. As it became increasingly more difficult to come up with unit tests, we would move on to the next semantic check, determining that the current tests sufficiently checked all possible error and success cases.
+
+\section{Example Unit Tests}
+
+\subsection{Unit Test 1}
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption={arithmetic$\_$test.fld}]
+DefineLeague
+	Set LeagueName("Happy League");
+	Set MaxUser(10);
+	Set MinUser(12);
+	Add User("Eli");
+	Add Action("Field Goal Attempt", 0.5);
+
+DefineFunctions
+	Int myFunction(Int turn, Flt turn2)
+	{
+		Str a;
+		Str c;
+		Str d;
+		Bool b = True;
+
+		a = a + c + d;		
+		Return a;
+	}
+\end{lstlisting}
+\end{singlespace}
+
+The above unit test was meant to test the concatenation of strings. It is a functioning simple \textbf{FLOOD} program.
+
+Below is one of it's counterparts. This program is meant to fail because it tries to add a boolean to the strings.
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption={arithmetic$\_$test.fld}]
+DefineLeague
+	Set LeagueName("Happy League");
+	Set MaxUser(10);
+	Set MinUser(12);
+	Add User("Eli");
+	Add Action("Field Goal Attempt", 0.5);
+
+DefineFunctions
+	Int myFunction(Int turn, Flt turn2)
+	{
+		Str a;
+		Str c;
+		Str d;
+		Bool b = True;
+
+		a = a + c + b;		
+		Return a;
+	}
+\end{lstlisting}
+\end{singlespace}
+
+\subsection{Unit Test 2}
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption={array$\_$var$\_$index.fld}]
+DefineLeague
+	Set LeagueName("Happy League");
+	Set MaxUser(10);
+	Set MinUser(12);
+	Add User("Eli");
+	Add Action("Field Goal Attempt", 0.5);
+
+DefineFunctions
+	Bool random(Player p1)
+	{
+		Bool b;
+		b = True;
+		Return b;
+	}
+
+	Bool trade(User u1,Player[] p1, User u2, Player[] p2)
+	{
+		Int i = 1;
+		Bool b;
+		b = random(p1[i]);
+	}
+\end{lstlisting}
+\end{singlespace}
+
+The above unit test is meant to check user defined functions as well as array indexing. Two of its counterparts are shown below. The first fails because the function is defined after it is called.
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption={array$\_$var$\_$index.fld}]
+DefineLeague
+	Set LeagueName("Happy League");
+	Set MaxUser(10);
+	Set MinUser(12);
+	Add User("Eli");
+	Add Action("Field Goal Attempt", 0.5);
+
+DefineFunctions
+	Bool trade(User u1,Player[] p1, User u2, Player[] p2)
+	{
+		Int i = 1;
+		Bool b;
+		b = random(p1[b]);
+	}
+
+	Bool random(Player p1)
+	{
+		Bool b;
+		b = True;
+		Return b;
+	}
+\end{lstlisting}
+\end{singlespace}
+
+The second fails because it attempts to use a boolean as the index of an array.
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption={array$\_$var$\_$index.fld}]
+DefineLeague
+	Set LeagueName("Happy League");
+	Set MaxUser(10);
+	Set MinUser(12);
+	Add User("Eli");
+	Add Action("Field Goal Attempt", 0.5);
+
+DefineFunctions
+	Bool random(Player p1)
+	{
+		Bool b;
+		b = True;
+		Return b;
+	}
+
+	Bool trade(User u1,Player[] p1, User u2, Player[] p2)
+	{
+		Int i = 1;
+		Bool b;
+		b = random(p1[b]);
+	}
+\end{lstlisting}
+\end{singlespace}
 
 \chapter{Conclusions}
 
@@ -1259,77 +1439,2917 @@ In the early stages of developing the grammar for FLOOD most testing simply foll
 
 We feel that as a team we have a better understanding of the magnitude of large programming projects. We learned that initial ideas are seldom translated into the final product. When the project first began, we had intended to write a very large language with many features. At the time, none of us truly understood the work that went into implementing even a small language. As we progressed in the semester, the difficulty of the task became more apparent and we had to change our entire language. We feel that we learned a great deal about the more complex aspects of programming languages specifically because we were not able to implement what we had originally intended. Trying to brainstorm features like inheritance and polymorphism taught us about how those components work in popular programming languages. 
 
-We learned that teamwork doesn’t mean everyone does their own part. It means that people help out and don’t stay contained within their respective responsibilities. It means that if someone is having an off-week and/or has an exam the next day, other team members can carry the weight that meeting. We learned that work-schedules need to be implemented early and ambitiously so that deadlines can be stretched within reason if needed.
+We learned that teamwork doesn't mean everyone does their own part. It means that people help out and don't stay contained within their respective responsibilities. It means that if someone is having an off-week and/or has an exam the next day, other team members can carry the weight that meeting. We learned that work-schedules need to be implemented early and ambitiously so that deadlines can be stretched within reason if needed.
 
 We each learned different ideas on programming and development from our teammates. Every session of programming there were arguments of proper programming practices or the design of the language. Team members contributed ideas to our language from a wealth of programming experience from languages such as Java, C++, Python and Pascal. We learned that that every team member has particular strengths and those should be utilized as often as possible.
 
-\section{Lessons Learned by Each Team Members}
+\section{Lessons Learned by Each Team Member}
 
 \subsection{Stephanie}
 
-The greatest lesson I learned from this assignment was to start small and work your way up from there. Designing a project that implements something you have no idea how to do is extremely difficult. It is all too easy to fall into a very complicated design when the process for creating the pieces is not yet known. In the beginning, my team and I were rather ambitious and naively so. We had dreams of a object oriented language complete with inheritance, polymorphism, and encapsulation. We even wanted to expand the language onto the Android platform if we had time. Somehow we had forgotten what college was: four years of spending every minute of every hour wishing you had more time. We soon realized the we were in way over our heads, and that there was only so much weight Java would carry for us. And so, we had to significantly modify our approach to this project. We first started by simply making cuts to the language, but that left a convoluted and disorganized language. So instead we began anew. We identified all the bare minimum requirements needed for a fully functional language for generating fantasy leagues. From there we could build a base language and then add to that. This process takes away depressing decisions to remove ideas, and replaces it with the exciting realization that we can add things.
-
-Projects of this magnitude need to be constantly worked on. You can’t simply wait until a week before a deadline, put in endless hours of work and expect that to be sufficient. When a project spans four months work must be put into it every week of every month. By getting into lulls where no work is being done on the language, you risk losing focus and generating a bit of a learning curve, if you will, in order to return to the language. Right from the beginning, we made sure to meet regularly, regardless of how much we needed to do. There needed to, at the very least, be a constant reminder of the project, no time for the language to be forgotten.
-
-While at times it may appear to be rather difficult, it is important to always be aware of what each team member is working on. Not in the sense that you know specifically what they are doing every minute they are working, but just where they are. Indeed, that is primarily the job of the project manager, but I found that it is rather helpful for each member of the team to communicate with the team what their next steps were and how they were going to go about completing their goals. This way there is minimal disconnect between the various parts of the language, especially between semantics and the grammar, where changes in one greatly affect the other. Our group maintained this awareness with the use of Github, Google Docs, and a Google group, in addition to our frequent team meetings and coding sessions. This way, all changes were documented and spread throughout the entire group.
-
-The project is a not a group of people designing pieces of a puzzle that will fit together, after quite a bit of massaging and molding, to produced a result. It is a team building block after block, each block being guided onto the last, until the structure is complete. The idea to split the group into 5 specific roles helps with ensuring that everyone has a part to do, however I find that this can actually create a disconnect. Instead of creating a strict line on who does what, I feel that having each person contribute to each part of the language builds a more continuous final product. Moreover, it makes the process of merging the parts of the language significantly more efficient because each member of the teams understands the language and many errors are avoided or resolved quickly by simply just knowing what to look for. In summary it creates a cohesive team, with a thorough understanding of the language.
-
-Commitment is a vital key to any successful team project, and for a project that has lasted as long as this, it is all too easy to feel overwhelmed. Over the course of the semester fluctuations in one’s workload and personal life can take quite a toll on one’s ability to function in a group. However, it is in these times that the true power of the group shines through. In the first couple weeks after I fractured my hand, the pain was enough to inhibit my ability to type. In that same time, I had a web site to build, an essay to write, and coding sessions for this project. Had it not been for my team, I would have likely given in to the stress and crumpled under the workload. However, my determination to not let my teammates down allowed me to continue pushing forward. This level of commitment can develop in a team regardless of whether or not the team member knew each other before the formation of the team. When the members of FLOOD were established, I only knew half of my teammates. However, in a team of only 5, it is hard to remain cliquish and as a result the team developed rather strongly. Throughout the course, I've have become rather close friends with my team members and will look forward to taking classes with them in the future.
+\begin{enumerate}
+\item The greatest lesson I learned from this assignment was to \textit{start small and work your way up from there}. Designing a project that implements something you have no idea how to do is extremely difficult. It is all too easy to fall into a very complicated design when the process for creating the pieces is not yet known. In the beginning, my team and I were rather ambitious and naively so. We had dreams of a object oriented language complete with inheritance, polymorphism, and encapsulation. We even wanted to expand the language onto the \textbf{Android} platform if we had time. Somehow we had forgotten what college was: four years of spending every minute of every hour wishing you had more time. We soon realized the we were in way over our heads, and that there was only so much weight Java would carry for us. And so, we had to significantly modify our approach to this project. We first started by simply making cuts to the language, but that left a convoluted and disorganized language. So instead we began anew. We identified all the bare minimum requirements needed for a fully functional language for generating fantasy leagues. From there we could build a base language and then add to that. This process takes away depressing decisions to remove ideas, and replaces it with the exciting realization that we can add things.
+\item \textit{Projects of this magnitude need to be constantly worked on}. You can't simply wait until a week before a deadline, put in endless hours of work and expect that to be sufficient. When a project spans four months work must be put into it every week of every month. By getting into lulls where no work is being done on the language, you risk losing focus and generating a bit of a learning curve, if you will, in order to return to the language. Right from the beginning, we made sure to meet regularly, regardless of how much we needed to do. There needed to, at the very least, be a constant reminder of the project, no time for the language to be forgotten.
+\item While at times it may appear to be rather difficult, it is important to \textit{always be aware of what each team member is working on}. Not in the sense that you know specifically what they are doing every minute they are working, but just where they are. Indeed, that is primarily the job of the project manager, but I found that it is rather helpful for each member of the team to communicate with the team what their next steps were and how they were going to go about completing their goals. This way there is minimal disconnect between the various parts of the language, especially between semantics and the grammar, where changes in one greatly affect the other. Our group maintained this awareness with the use of \textbf{GitHub}, \textbf{Google Docs}, and a \textbf{Google Group}, in addition to our frequent team meetings and coding sessions. This way, all changes were documented and spread throughout the entire group.
+\item \textit{The project is a not a group of people designing pieces of a puzzle that will fit together, after quite a bit of massaging and molding, to produced a result}. It is a team building block after block, each block being guided onto the last, until the structure is complete. The idea to split the group into 5 specific roles helps with ensuring that everyone has a part to do, however I find that this can actually create a disconnect. Instead of creating a strict line on who does what, I feel that having each person contribute to each part of the language builds a more continuous final product. Moreover, it makes the process of merging the parts of the language significantly more efficient because each member of the teams understands the language and many errors are avoided or resolved quickly by simply just knowing what to look for. In summary it creates a cohesive team, with a thorough understanding of the language.
+\item \textit{Commitment is a vital key to any successful team project}, and for a project that has lasted as long as this, it is all too easy to feel overwhelmed. Over the course of the semester fluctuations in one's workload and personal life can take quite a toll on one's ability to function in a group. However, it is in these times that the true power of the group shines through. In the first couple weeks after I fractured my hand, the pain was enough to inhibit my ability to type. In that same time, I had a web site to build, an essay to write, and coding sessions for this project. Had it not been for my team, I would have likely given in to the stress and crumpled under the workload. However, my determination to not let my teammates down allowed me to continue pushing forward. This level of commitment can develop in a team regardless of whether or not the team member knew each other before the formation of the team. When the members of \textbf{FLOOD} were established, I only knew half of my teammates. However, in a team of only 5, it is hard to remain cliquish and as a result the team developed rather strongly. Throughout the course, I've have become rather close friends with my team members and will look forward to taking classes with them in the future.
+\end{enumerate}
 
 \subsection{Elliot}
 
-While this is not my first time as a project leader, it is my first time leading a software development project. The most important lesson I’ve learned is the need for constant communication among the team. At times though not often, information would be bottle-necked to a certain person and other team members would not be informed of important changes. The best way to deal with this situation is transparent documentation and meetings. I’ve also learned how difficult it can be for each team member’s unique coding and work style to be integrated into a cohesive unit. For instance, our version control choice was unfamiliar to some team members at first and it took some time for everyone to get used to working with it.
+While this is not my first time as a project leader, it is my first time leading a software development project. The most important lesson I've learned is the need for constant communication among the team. At times though not often, information would be bottle-necked to a certain person and other team members would not be informed of important changes. The best way to deal with this situation is transparent documentation and meetings. I've also learned how difficult it can be for each team member's unique coding and work style to be integrated into a cohesive unit. For instance, our version control choice was unfamiliar to some team members at first and it took some time for everyone to get used to working with it.
 
-A project of this magnitude can easily overwhelm any group no matter how experienced. The main goal should be constant pressure. Constant pressure does not mean stress but rather always making progress regardless of the difficulty or clarity of the task. Tasks should be constantly broken down into smaller pieces and distributed as evenly as possible. When a task is assigned, it shouldn’t be assumed that the team member will be able to complete it but rather teammates should look out for each other and help when needed. The role of a product manager is not to dictate and assign tasks as they please. Every team member should be given the opportunity to pick specific tasks that they find most interesting. Tasks that were deemed uninteresting were distributed evenly so that no one took more than their fair share of “grunt” work. Decisions should not only be democratic but accepted by the whole team. If even one team member didn’t like an idea or an implementation detail, the team worked hard to come up with an alternative that was acceptable to everyone. A product manager should also keep accurate records and have awareness of every moving piece in the project. Ultimately, as the saying goes, the "The Buck Stops Here". This is a lesson every good product manager must learn and usually the hard way.
+A project of this magnitude can easily overwhelm any group no matter how experienced. The main goal should be constant pressure. Constant pressure does not mean stress but rather always making progress regardless of the difficulty or clarity of the task. Tasks should be constantly broken down into smaller pieces and distributed as evenly as possible. When a task is assigned, it shouldn't be assumed that the team member will be able to complete it but rather teammates should look out for each other and help when needed. The role of a product manager is not to dictate and assign tasks as they please. Every team member should be given the opportunity to pick specific tasks that they find most interesting. Tasks that were deemed uninteresting were distributed evenly so that no one took more than their fair share of ``grunt" work. Decisions should not only be democratic but accepted by the whole team. If even one team member didn’t like an idea or an implementation detail, the team worked hard to come up with an alternative that was acceptable to everyone. A product manager should also keep accurate records and have awareness of every moving piece in the project. Ultimately, as the saying goes, the ``The Buck Stops Here." This is a lesson every good product manager must learn and usually the hard way.
 
-On a personal note, I feel comfortable saying I understand how a compiler works on a very applied level. I still don’t feel comfortable with much of the theory that goes into compilers and in a way it has given me a healthy respect for theorists who have paved the way for modern programming languages. I learned to appreciate the intricacies of programming languages and notice subtle differences that were not obvious to me beforehand. I have already seen a difference in my code production in other projects. In my opinion, one of the most fascinating aspects of software development is the relationship among the developers. Working with other people, especially in an academic setting, is always challenging but it can also be very rewarding. I truly enjoyed the time spent working with my teammates and regardless of the final outcome of this project or the class in general, I feel that I have learned a great deal from them.
+On a personal note, I feel comfortable saying I understand how a compiler works on a very applied level. I still don't feel comfortable with much of the theory that goes into compilers and in a way it has given me a healthy respect for theorists who have paved the way for modern programming languages. I learned to appreciate the intricacies of programming languages and notice subtle differences that were not obvious to me beforehand. I have already seen a difference in my code production in other projects. In my opinion, one of the most fascinating aspects of software development is the relationship among the developers. Working with other people, especially in an academic setting, is always challenging but it can also be very rewarding. I truly enjoyed the time spent working with my teammates and regardless of the final outcome of this project or the class in general, I feel that I have learned a great deal from them.
 
 \subsection{Tam}
 
+Ah, the project post mortem. Having recently worked in industry, I have personally been an active (and at times, unwilling) participant of countless such ``taking stock" couch sessions. More often than not, and especially after a grueling projects which taxed the mind and body as well as the soul, my own thoughts inevitably turned towards alcohol---nothing like dousing the brain cells which served me so well during those sleepless nights of feverish coding!
+
+But after the welcome, and hopefully pre-paid, happy hour courtesy of a sympathetic Project Manager, gathering one's thoughts and indeed ``taking stock" to formulate a list of lessons learned is an invaluable exercise, one which will yield far-reaching benefits down the line for both developers and project managers alike.
+
+At this stage of the game, I find myself asking a similar set of questions:
+
+\begin{enumerate}
+\item \textbf{First and foremost, are you proud of the final product?}\\
+I will not be so presumptuous as to answer for my fellow group members, but I can say without hesitation that yes, I am very proud of \textbf{FLOOD}. Admittedly, certain features and overall scope were made road kill on the highway to making delivery, but such are the vagaries of software development. In fact, I now recall with particular fondness our formative group meetings in which, undoubtedly pie-in-the-sky-ish in retrospect, we brainstormed and flung around countless ideas about what our language will be capable of once completed. An Android-enabled interface! A Facebook port! Automatic texting of scores and live updates to subscribed listeners! Object-orientation that will make Java blush!\\
+Not surprisingly, the majority of these ``nice to haves" fell by the wayside as the project progressed, but did we as a group accomplish what we set out to do originally, which was to write a language that made creating a fantasy gaming league relatively easy for the programming novice? I would say the answer is a resounding \textit{YES!}\\
+And in undertaking this project, did I myself take away what is perhaps the most crucial aspect of completing the project and taking this class in the first place, which was to gain and learn from first-hand experience the inner workings of compilers and programming languages? Again, an uniequivocal \textit{YES!} Lexical analysis, semantic analysis and actions, code generation and optimization...nothing like rolling up one's sleeves and learning these concepts the hardway: by actually doing it.
+\item \textbf{What was the single most frustrating part of the project?}\\
+Hands down, tackling the lexical and semantic analysis of the grammar. Hours upon hours consummed in devising regular expressions that would do what we wanted it to do, then tracking down and eliminating with extreme prejudice countless shift/reduce reduce/reduce errors. With my comrade in arms, Anuj, the two of us now feel like battle-hardened veterans returning from the front-line trenches in our seemingly neverending battle against the Lexical/Semantic axis of power.\\
+Did \textbf{FLOOD}'s grammar put up a valiant fight? Yes. Was it frustating to slay this merciless dragon? Yup...Anuj and I certainly have the mental scars to show for it. But in the end, was it rewarding? Most definitely. I have been involved in few software development projects where the most frustrating part was also the most personally fulfilling. This was one of them.
+\item \textbf{How would you do things differently next time to avoid this frustration?}\\
+Start learning the concepts and obtaining the knowledge one will need as early in the project timeline as possible. I believe my biggest mistake was taking such a timid approach towards the grammar---instead of waiting for the material to be presented and covered in class, we (I'm certain Anuj would agree) should have been more pro-active in acquiring the know-how and skill sets needed to write \textbf{FLOOD}'s grammar. And speaking for myself once more, there was also an intimidation factor at play since the tools for creating the front-end components of a compiler seemed truly daunting to me to work with. It's difficult at times teaching an old dog new tricks.
+\item \textbf{What was the most gratifying and perosonally satisfying part of the project?}\\
+This old dog learned a new trick. I didn't know how to write a lexical parser and scanner before. Now I do.
+\item \textbf{Which of the development methods or processes worked particularly well?}\\
+The pair programming Anuj and I undertook in developing the grammar. Over time we developed a comfortable working style that proved to be most productive. I was skeptical at first regarding this programming paradigm since nearly all of my industry experience has been working and coding in isolation, but engaging in pair progamming for the very first time was a truly eye-opening experience. Where before I would run into a dead-end in some coding dark alley, Anuj was often there to shine a flash light and lead the way out.
+\item \textbf{If you could wave a magic wand and change anything about the project, what would you change?}\\
+More time with my fellow \textbf{FLOOD}-ites. I was very blessed to have lucked into this group of highly motivated, extremely hard working, and very intelligent individuals. Sure, there were disagreements, some heated discussions, the occasional philosophical differences, but in the end we had a blast working together to give birth to \textbf{FLOOD}. I wish all of my future (and certainly several past) collaborative efforts will be as enjoyable and mutually beneficial as this one. I learned a great deal from my team and I hope I have reciprocated in kind---a true highlight of my academic career at Columbia.
+\end{enumerate}
+
 \subsection{Dillen}
 
-1.     	Choose your group members wisely
-Choosing the right people for a group is beyond the most important part of an assignment. Although it may seem unclear what everyone’s exact roles may be for a given project, be sure to pick people who are passionate and have deep interest in different components as well as the overall idea of a project. Nothing can be more detrimental to a group that to have members who are unenthusiastic or not willing to pull their own weight, not due to a lack of ability (because let’s be honest, no one knew how a compiler worked when we first started) but rather a lack of motivation. Our group functioned extremely well because we all split up the parts into relatively equal work loads and when one part “overflowed” due to unforeseen complexities, those with “easier” tasks jumped in to help. Another key part of our success was the general interest in our idea, which became my next lesson learned.
-
-2.     	Thoroughly develop your idea, and then do it again
-It is important to spend adequate time to thoroughly develop an idea and delve past the surface challenges and really research potential dead-ends. Unlike most groups (I believe), we met every week from the moment our group was formed until the end of the semester, even when we all lacked any detailed view of how to complete the task. The first several meeting were literally 4+ hour long discussions on potential programming languages where everyone would express interest, play devil’s advocate and expand on ideas. The most difficult part for us was to propose ideas feasible for a semester long project without simply creating a markup language. This was crucial in creating a thorough blueprint for our language and the writing of the White Paper/Language Tutorial/Reference Manual.
-
-3.     	Don’t reinvent the wheel
-One of the most valuable parts of any programming project is to utilize tools provided online to ease the pain. Development tools such as WindowBuilder Pro for the GUI, BYacc and JFlex for the grammar and parser, Github for the online repository and Google Docs for the written portions provided greater ease and efficiency during the entire process. USE THEM!
-
-4.     	Pick a good project manager who can bring everyone together
-It is easy to get lost in time when everyone is specializing on a specific part of a project and it’s the product manager’s job to keep bringing everyone together and making sure everything is running smoothly and no individual is lagging behind. Collaboration and communication are absolutely key in the software development world because otherwise, come submission time, everyone has a bunch of extremely well developed but independent portions of the project with integration being nearly impossible. I noticed that our group was exceptionally productive when we all worked in one long line in the CLIC lab, each with the Google Bug Report Document constantly asking questions, finding bugs and delegating work with various priority. I realize it is difficult for a bunch of college students to find time to all meet and work for a few hours but those hours spent working together are far more valuable than any work you will do by yourself.
+\begin{enumerate}
+\item \textbf{Choose your group members wisely.}\\
+Choosing the right people for a group is beyond the most important part of an assignment. Although it may seem unclear what everyone's exact roles may be for a given project, be sure to pick people who are passionate and have deep interest in different components as well as the overall idea of a project. Nothing can be more detrimental to a group that to have members who are unenthusiastic or not willing to pull their own weight, not due to a lack of ability (because let's be honest, no one knew how a compiler worked when we first started) but rather a lack of motivation. Our group functioned extremely well because we all split up the parts into relatively equal work loads and when one part ``overflowed" due to unforeseen complexities, those with ``easier" tasks jumped in to help. Another key part of our success was the general interest in our idea, which became my next lesson learned.
+\item \textbf{Thoroughly develop your idea, and then do it again.}\\
+It is important to spend adequate time to thoroughly develop an idea and delve past the surface challenges and really research potential dead-ends. Unlike most groups (I believe), we met every week from the moment our group was formed until the end of the semester, even when we all lacked any detailed view of how to complete the task. The first several meeting were literally $4+$ hour long discussions on potential programming languages where everyone would express interest, play devil's advocate and expand on ideas. The most difficult part for us was to propose ideas feasible for a semester long project without simply creating a markup language. This was crucial in creating a thorough blueprint for our language and the writing of the \textit{White Paper/Language Tutorial/Reference Manual}.
+\item \textbf{Don't reinvent the wheel.}\\
+One of the most valuable parts of any programming project is to utilize tools provided online to ease the pain. Development tools such as \textbf{WindowBuilder Pro} for the GUI, \textbf{BYACC/J} and \textbf{JFlex} for the grammar and parser, \textbf{GitHub} for the online repository and \textbf{Google Docs} for the written portions provided greater ease and efficiency during the entire process. \textit{USE THEM!}
+\item \textbf{Pick a good project manager who can bring everyone together.}\\
+It is easy to get lost in time when everyone is specializing on a specific part of a project and it's the product manager's job to keep bringing everyone together and making sure everything is running smoothly and no individual is lagging behind. Collaboration and communication are absolutely key in the software development world because otherwise, come submission time, everyone has a bunch of extremely well developed but independent portions of the project with integration being nearly impossible. I noticed that our group was exceptionally productive when we all worked in one long line in the CLIC lab, each with the \textit{Google Bug Report Document} constantly asking questions, finding bugs and delegating work with various priority. I realize it is difficult for a bunch of college students to find time to all meet and work for a few hours but those hours spent working together are far more valuable than any work you will do by yourself.
+\end{enumerate}
 
 \subsection{Anuj}
 
-Grammar design is not a walk in the park
-Designing the grammar for a language is not easy. Designing a small grammar for small units, like say, just arithmetic expressions, is easy. As the grammar evolves, the complexity increases linearly. It helps to have a clear idea of what the language will look like, and stub out a rough design of the grammar first. This exposes the potential shift/reduce and reduce/reduce errors right from the beginning. It also helps to understand fully how these errors occur, and how to eliminate them.
-
-Decide the scope of the language/project realistically
-One of the most important lessons I learnt from this project is to do a strong feasibility study, before proposing a project. A thorough study should be performed to roughly estimate what problem statement the project proposes to tackle. This should neither be too ambitious, nor too trivial. Getting the right balance is a tricky task, and it seems safer to project the latter, and extend the scope of the project if time permits. Another important lesson I learnt is never to commit any major feature in the name of the project, unless absolutely certain that the feature will be implemented.
-
-Working in a group
-To begin with, I had an interesting time working with my group. It not only made working on a project of this magnitude seem effortless, but I also learned a lot from my group on various fronts. This made me realise how important team members are, and the dynamics of the group, can make or break a project. While it may seem that more hands on deck means less work per person, I also realised that it requires good management on the part of the project manager to coordinate and integrate the project well; something I was witness to during the course of this project.
+\begin{enumerate}
+\item \textbf{Grammar design is not a walk in the park.}\\
+Designing the grammar for a language is not easy. Designing a small grammar for small units, like say, just arithmetic expressions, is easy. As the grammar evolves, the complexity increases linearly. It helps to have a clear idea of what the language will look like and stub out a rough design of the grammar first. This methodoloy exposes the potential shift/reduce and reduce/reduce errors right from the beginning. It also helps to understand fully how these errors occur and how to eliminate them.
+\item \textbf{Decide the scope of the language/project realistically.}\\
+One of the most important lessons I learned from this project is to do a strong feasibility study before proposing a project. A thorough study should be performed to roughly estimate what problem statement the project proposes to tackle. It should neither be too ambitious nor too trivial. Getting the right balance is a tricky task and it seems safer to project the latter and extend the scope of the project if time permits. Another important lesson I learned is never to commit any major feature in the name of the project unless absolutely certain that the feature will be implemented!
+\item \textbf{Working in a group.}\\
+To begin with, I had an interesting time working with my group. It not only made working on a project of this magnitude seem effortless, but I also learned a lot from my group on various fronts. This made me realise how important team members are and the dynamics of the group can make or break a project. While it may seem more hands on deck means less work per person, I also realised it requires good management on the part of the Project Manager to coordinate and integrate the project well; something I was privy to during the course of this project.
+\end{enumerate}
 
 \section{Advice for Future Teams}
 
 \begin{itemize}
-\item Never promise features of your programming language in its name. We tried very hard to come up with a “cool” name that described our language. The name is still “cool” but it doesn’t describe our language anymore.
+\item \textit{\textbf{Never}} promise features of your programming language in its name. We tried very hard to come up with a ``cool" name that described our language. The name is still ``cool" but it doesn't describe our language anymore.
 \item Start early and meet often. It may seem futile to meet when you have nothing to discuss but just by being in the same room you may start thinking of an idea that changes your project.
 \item Ask for help no matter how small of an issue. We utilized our TA, Hemanth, as much as possible and we are truly indebted to him for all his valuable advice.
-\item Don’t be scared of unfamiliar technology/Free software is your friend. Our entire project was written and shared in Google Docs, the code will forever be saved on GitHub and the documentation lives beautifully in Latex.
-\item Revisit your idea as much as possible. Our language has morphed from an Object-Oriented language with Java-like features into a smaller more compact version. If we had decided to go-ahead with our original idea we would not have finished our project or it would have been poorly implemented.
-\item Pair Programming may seem like a waste of time but it dramatically reduces net production time. Most of the code produced was written at one work station with two team members working at a time. Often code that seemed very difficult to one programmer was trivial to another. When a programmer was tired, they could switch and development continued.
+\item Don't be scared of unfamiliar technology; free software is your friend. Our entire project was written and shared in \textbf{Google Docs}, the code will forever be saved on \textbf{GitHub} and the documentation lives beautifully in \textbf{\LaTeX}.
+\item Revisit your idea as much as possible. Our language has morphed from an object-oriented language with Java-like features into a smaller, more compact version. If we had decided to go ahead with our original idea we would not have finished our project or it would have been poorly implemented.
+\item Pair programming may seem like a waste of time but it dramatically reduces net production time. Most of the code produced was written at one work station with two team members working at a time. Often code that seemed very difficult to one programmer was trivial to another. When a programmer was tired, they could switch and development continued.
 \item Pick a project that is interesting to you rather than trying to impress anyone. Every team member was truly interested in our project which made brainstorming more fun and productive. 
-\item A team that eats together works better. It’s better to work on a full stomach and it’s more fun to brainstorm over dinner. We personally recommend the Dominoes 7-7-7 deal.
+\item A team that eats together works better. It's better to work on a full stomach and it's more fun to brainstorm over dinner. We personally recommend the Dominoes 7-7-7 deal.
 \end{itemize}
 
 \section{Suggestions for Future Improvement}
 
-It’s very difficult to write this section as a team since each team member had different topics that they enjoyed. We all agree that the project was the highlight of the course and very much enjoyed working on it. Some of us feel that the classes were a little theory-heavy in what was originally expected to be a more applied course in compilers. Some of the theory, especially the later topics such as code-generation and optimization as well as data-flow analysis might have been better served with more homework and possibly programming exercises. The first homework gave everyone a taste of Flex and Yacc which helped both in understanding the theory and what was expected later in the project. Those of us who had taken Computer Science Theory enjoyed seeing how the theory we had previously learned applied in the “real-world”. We all feel that this was a difficult class but in the end very rewarding.
+It's very difficult to write this section as a team since each team member had different topics that they enjoyed. We all agree that the project was the highlight of the course and very much enjoyed working on it. Some of us feel that the classes were a little theory-heavy in what was originally expected to be a more applied course in compilers. Some of the theory, especially the later topics such as code-generation and optimization as well as data-flow analysis might have been better served with more homework and possibly programming exercises.
+
+The first homework gave everyone a taste of \textbf{Flex} and \textbf{Yacc} which helped both in understanding the theory and what was expected later in the project. Those of us who had taken \textit{Computer Science Theory} enjoyed seeing how the theory we had previously learned applied in the ``real-world." We all feel that this was a difficult class but in the end truly rewarding.
 
 \appendix
 \chapter{FLOOD Source Code}
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption={Action.java}]
+/*
+ * Action.java
+ * This class handles the various actions in the fantasy league
+ */
+
+public class Action {
+	private String action;
+	private float points;
+	
+	/**Constructor.
+	 * 
+	 * @param String action
+	 * @param float points
+	 */
+	public Action(String action,double points){
+		this.action=action;
+		this.points=(float)points;
+	}
+	
+	/**Returns the string representation of the action
+	 * 
+	 * @return String action
+	 */
+	public String getAction() {
+		return action;
+	}
+	
+	/**Sets the action
+	 * 
+	 * @param String action
+	 */
+	public void setAction(String action) {
+		this.action = action;
+	}
+	
+	/**Return the points gained for completing the action
+	 * 
+	 * @return float points
+	 */
+	public float getPoints() {
+		return points;
+	}
+	
+	/**Sets the points gained for completing the action
+	 * 
+	 * @param float points
+	 */
+	public void setPoints(int points) {
+		this.points = points;
+	}
+	
+	/**Determines if two actions are equal by comparing
+	 * the action and points received
+	 * 
+	 * @return boolean isEqual
+	 */
+	public boolean equals(Object obj){
+		if (this == obj)	//Reference to seld
+			return true;
+		if (obj == null)	//Null reference
+			return false;
+		if (getClass() != obj.getClass())	//Not the same class
+			return false;
+		final Action other = (Action) obj;
+		if (action.equals(other.action) && points==other.points)	//Equal action and points
+			return true;
+		return false;
+	}
+	
+	/**Returns a string representation of the action
+	 * 
+	 * @return String representation
+	 */
+	public String toString() {
+		return "Action [action=" + action + ", points=" + points + "]";
+	}
+	
+}
+\end{lstlisting}
+\end{singlespace}
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption={flood$\_$grammar.y}]
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*
+* flood_grammar.y
+* FLOOD
+* Syntactic/Semantic Analyzer
+*
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+%{
+  import java.lang.Math;
+  import java.io.*;
+  import java.util.Hashtable;
+  import java.util.ArrayList;
+  import java.util.Iterator;
+  import java.util.HashMap;
+  import java.util.*;
+%}
+
+/* YACC Declarations */
+%token PLUS                   /* + */
+%token OPEN_CURLY             /* { */ 
+%token CLOSE_CURLY            /* } */
+%token OPEN_PARAN             /* ( */
+%token CLOSE_PARAN            /* ) */
+%token OPEN_SQUARE            /* [ */
+%token CLOSE_SQUARE           /* ] */
+%token <dval> FLT             /* Float */
+%token <ival> INT             /* Integer */
+%token <sval> STRING_CONST    /* String literal onstants */
+%token COMMA                  /* , */
+%token DOT                    /* . */
+%token <sval> ID              /* Identifier */
+%token EQUAL                  /* = */
+%token NOTEQUAL               /* != */
+%token LESSEQUAL              /* <= */
+%token GREATEQUAL             /* >= */
+%token ISEQUAL                /* == */
+%token LESS                   /* < */
+%token GREAT                  /* > */
+%token PLUS                   /* + */
+%token MINUS                  /* - */
+%token MULT                   /* * */
+%token DIV                    /* / */
+%token NOT                    /* ! */
+%token AND                    /* && */
+%token OR                     /* || */
+%token MOD                    /* % */
+%token SEMICOLON              /* ; */
+
+/* Keywords */
+%token DefineLeague           /* Define the league */
+%token DefineFunctions        /* Define functions */
+%token LeagueName             /* Set league name */
+%token MaxUser                /* Set the max user */
+%token MinUser                /* Set the min user */
+%token MaxTeamSize            /* Set the max team size */
+%token MinTeamSize            /* Set the min team size */
+%token Set                    /* Set keyword */
+%token Add                    /* Add keyword */
+%token Action                 /* Action keyword */
+%token Alert		      /* Alert message*/
+%token Error		      /* Error message*/
+%token User                   /* User keyword */
+%token Player                 /* Player keyword */
+%token Void                   /* Void keyword */
+%token Str                    /* String keyword */
+%token Bool                   /* Boolean keyword */
+%token Flt                    /* Float keyword */
+%token Int                    /* Integer keyword */
+%token Return                 /* Return keyword */
+%token If                     /* If keyword */
+%token Else                   /* Else keyword */
+%token While                  /* While keyword */
+%token True                   /* True keyword */
+%token False                  /* False keyword */
+%token RemovePlayer           /* Remove Player function */
+%token AddPlayer              /* Add Player function */
+%token ArrayLength            /* Length of an array */
+%token GetUserName	      /* Gets the name of the user object*/
+%token GetNumPlayers          /* Gets the number of players of the user*/
+%token GetPlayerName          /* gets the name of the player object*/
+%token GetPlayerPosition      /* Gets the position of the player*/
+%token GetPlayerPoints        /* Gets the points of the player*/
+
+/* Associativity and Precedence */
+%left MINUS PLUS COMMA
+%left MULT DIV
+%right NOT NEG
+%nonassoc EQUAL NOTEQUAL LESSEQUAL GREATEQUAL ISEQUAL LESS GREAT AND OR MOD DOT
+
+/* Types */
+%type <sval> definitions
+%type <sval> definitionlist
+%type <sval> definitionproductions
+%type <sval> functions
+%type <sval> functionProductions
+%type <sval> returnType
+%type <sval> dataType
+%type <sval> functionName
+%type <sval> argumentLists
+%type <sval> argumentList
+%type <sval> empty;
+%type <sval> returnProduction
+%type <sval> returnProd
+%type <sval> statement
+%type <sval> statements
+%type <sval> conditionals
+%type <sval> loop
+%type <sval> declarations
+%type <sval> declaration
+%type <sval> relationalExp
+%type <sval> arithmeticExp
+%type <sval> booleanExp
+%type <sval> constOrVar
+%type <sval> leftSide
+%type <sval> rightSide
+%type <sval> assignment
+%type <sval> functionCall
+%type <sval> parameterList
+
+%%
+
+/***************************************************
+* program
+****************************************************/
+program: definitions functions
+{
+	if(semantics.validProgram)
+	{
+		generateFloodProgram($1, $2);
+		System.out.println("Total number of lines in the input: " + (yyline - 1));
+	}
+	else
+	{
+		System.out.println(semantics.printErrors());
+	}
+};
+
+definitions: DefineLeague definitionlist { $$ = $2; };
+           
+definitionlist: definitionlist definitionproductions { $$ = $1 + $2; }
+              | empty { $$ = $1; }
+              ;
+
+definitionproductions: Set LeagueName OPEN_PARAN STRING_CONST CLOSE_PARAN SEMICOLON { $$ = "myLeague = new League(" + $4 + ");\n"; }
+                     | Set MaxUser OPEN_PARAN INT CLOSE_PARAN SEMICOLON { $$ = "myLeague.setMaxUser(" + $4 + ");\n"; }
+                     | Set MinUser OPEN_PARAN INT CLOSE_PARAN SEMICOLON { $$ = "myLeague.setMinUser(" + $4 + ");\n"; }
+                     | Set MaxTeamSize OPEN_PARAN INT CLOSE_PARAN SEMICOLON { $$ = "myLeague.setMaxTeamSize(" + $4 + ");\n"; }
+                     | Set MinTeamSize OPEN_PARAN INT CLOSE_PARAN SEMICOLON { $$ = "myLeague.setMinTeamSize(" + $4 + ");\n"; }
+                     | Add User OPEN_PARAN STRING_CONST CLOSE_PARAN SEMICOLON { $$ = "myLeague.addUser(new User(" + $4 + "));\n"; semantics.addUser($4, yyline); }
+                     | Add Action OPEN_PARAN STRING_CONST COMMA FLT CLOSE_PARAN SEMICOLON { $$ = "myLeague.addAction(new Action(" + $4 + ", " + $6 + "));\n"; semantics.addAction($4, yyline); }
+		     | Add Action OPEN_PARAN STRING_CONST COMMA MINUS FLT CLOSE_PARAN SEMICOLON %prec NEG { $$ = "myLeague.addAction(new Action(" + $4 + ", -" + $7 + "));\n"; semantics.addAction($4, yyline); }
+                     | Add Player OPEN_PARAN STRING_CONST COMMA STRING_CONST CLOSE_PARAN SEMICOLON { $$ = "myLeague.addPlayer(new Player(" + $4 + ", " + $6 + "));\n"; semantics.addPlayer($4, yyline); }
+                     ;
+
+functions: DefineFunctions functionProductions { $$ = $2 + semantics.setFlags(); };
+
+functionProductions: functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  declarations statements returnProduction CLOSE_CURLY { $$ = $1 +"public static "+ $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; semantics.addToFunctionTable($3, $2, $5, yyline); semantics.checkReturnTypeMatch($2, yyline); }
+                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY {$$ = $1 +"public static "+ $2 + " " + $3 + "(" + $5 + ")\n{\n}\n"; this.scope = $3; semantics.addToFunctionTable($3, $2, $5, yyline); semantics.checkReturnTypeMatch($2, yyline); }
+                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  empty statements returnProduction CLOSE_CURLY {$$ = $1 +"public static "+ $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; semantics.addToFunctionTable($3, $2, $5, yyline); semantics.checkReturnTypeMatch($2, yyline); }
+                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY  declarations empty returnProduction CLOSE_CURLY {$$ = $1 +"public static "+ $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + $9 + $10 + "\n}\n"; this.scope = $3; semantics.addToFunctionTable($3, $2, $5, yyline); semantics.checkReturnTypeMatch($2, yyline); }
+                     | functionProductions returnType functionName OPEN_PARAN argumentLists CLOSE_PARAN OPEN_CURLY returnProd CLOSE_CURLY {$$ = $1 +"public static "+ $2 + " " + $3 + "(" + $5 + ")\n{\n" + $8 + "\n}\n"; this.scope = $3; semantics.addToFunctionTable($3, $2, $5, yyline); semantics.checkReturnTypeMatch($2, yyline); }
+                     | empty { $$ = $1; }
+                     ;
+
+dataType: Str { $$ = "String"; }
+        | Bool { $$ = "boolean"; }
+        | Int { $$ = "int"; }
+        | Flt { $$ = "float"; }
+        ;
+
+returnType: Void { $$ = "void"; }
+          | Str { $$ = "String"; }
+          | Bool { $$ = "boolean"; }
+          | Int { $$ = "int"; }
+          | Flt { $$ = "float"; }
+          ;
+          
+functionName: ID { $$ = $1; };
+
+argumentLists: argumentLists COMMA argumentList { $$ = $1 + ", " + $3; }
+              | argumentList { $$ = $1;}
+              | empty { $$ = $1; }
+              ;
+
+argumentList: dataType ID { $$ = $1 + " " + $2; semantics.addVar($2,$1,yyline); }
+            | User OPEN_SQUARE CLOSE_SQUARE ID { $$ = "User[] " + $4; semantics.addVar($4,"User[]",yyline); }
+            | Player OPEN_SQUARE CLOSE_SQUARE ID { $$ = "Player[] " + $4; semantics.addVar($4,"Player[]",yyline); }
+            | User ID { $$ = "User " + $2; semantics.addVar($2,"User",yyline); }
+            | Player ID { $$ = "Player " + $2; semantics.addVar($2,"Player",yyline); }
+            ;
+
+statements: statements statement SEMICOLON { $$ = $1 + $2; }
+          | statement SEMICOLON { $$ = $1; }
+          ;
+
+statement: conditionals { $$ = $1; }
+         | loop { $$ = $1; }
+         | relationalExp { $$ = $1; }
+         | assignment { $$ = $1; }
+         | functionCall { $$ = $1 + ";\n"; }
+         ;
+
+returnProduction: Return ID SEMICOLON { $$ = "return " + $2 + ";"; semantics.setReturnProdType(semantics.getType($2)); }
+                | Return STRING_CONST SEMICOLON { $$ = "return " + $2 + ";"; semantics.setReturnProdType("String"); }
+                | Return INT SEMICOLON { $$ = "return " + $2 + ";"; semantics.setReturnProdType("int"); }
+                | Return FLT SEMICOLON { $$ = "return " + $2 + ";"; semantics.setReturnProdType("float"); }
+                | Return True SEMICOLON { $$ = "return true;"; semantics.setReturnProdType("boolean"); }
+                | Return False SEMICOLON { $$ = "return false;"; semantics.setReturnProdType("boolean"); }
+                | empty { $$ = $1; semantics.setReturnProdType("void"); }
+                ;
+
+returnProd: Return ID SEMICOLON { $$ = "return " + $2 + ";"; semantics.setReturnProdType(semantics.getType($2)); }
+                | Return STRING_CONST SEMICOLON { $$ = "return " + $2 + ";"; semantics.setReturnProdType("String"); }
+                | Return INT SEMICOLON { $$ = "return " + $2 + ";"; semantics.setReturnProdType("int"); }
+                | Return FLT SEMICOLON { $$ = "return " + $2 + ";"; semantics.setReturnProdType("float"); }
+                | Return True SEMICOLON { $$ = "return true;"; semantics.setReturnProdType("boolean"); }
+                | Return False SEMICOLON { $$ = "return false;"; semantics.setReturnProdType("boolean"); }
+    ;
+
+conditionals: If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n" + $6 + "}\n"; }
+            | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY Else OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n" + $6 + "}\nelse\n{\n" + $10 + "}\n"; }
+            | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n}\n"; }
+            | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY Else OPEN_CURLY empty CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n}\nelse\n{\n}\n"; }
+            | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY Else OPEN_CURLY empty CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n" + $6 + "}\nelse\n{\n}\n"; }
+            | If OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY Else OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n}" + "\nelse\n{\n" + $10 + "}\n"; }
+            | If OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n" + $6 + "}\n"; }
+            | If OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY Else OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n" + $6 + "}\nelse\n{\n" + $10 + "}\n"; }
+            | If OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n}\n"; }
+            | If OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY Else OPEN_CURLY empty CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n}\nelse\n{\n}\n"; }
+            | If OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY Else OPEN_CURLY empty CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n" + $6 + "}\nelse\n{\n}\n"; }
+            | If OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY Else OPEN_CURLY statements CLOSE_CURLY { $$ = "if(" + $3 + ")\n{\n}" + "\nelse\n{\n" + $10 + "}\n"; }
+            ;
+
+loop: While OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY { $$ = "while(" + $3 + ")\n{\n" + $6 + "}\n"; }
+    | While OPEN_PARAN relationalExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY { $$ = "while(" + $3 + ")\n{\n}\n"; }
+    | While OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY statements CLOSE_CURLY { $$ = "while(" + $3 + ")\n{\n" + $6 + "}\n"; }
+    | While OPEN_PARAN booleanExp CLOSE_PARAN OPEN_CURLY empty CLOSE_CURLY { $$ = "while(" + $3 + ")\n{\n}\n"; }
+    ;
+
+declarations: declarations declaration SEMICOLON{ $$ = $1 + $2; }
+            | declaration SEMICOLON{ $$ = $1; }
+            ;
+
+declaration: Flt ID  { $$ = "float " + $2 + ";\n";  semantics.addVar($2, "float", yyline); }
+            | Int ID  { $$ = "int " + $2 + ";\n";  semantics.addVar($2, "int", yyline); }
+            | Bool ID  { $$ = "boolean " + $2 + ";\n";  semantics.addVar($2, "boolean", yyline); }
+            | Str ID  { $$ = "String " + $2 + " = new String();\n";  semantics.addVar($2, "String", yyline); }
+            | Flt ID EQUAL FLT { $$ = "float " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, "float", yyline); }
+            | Int ID EQUAL INT { $$ = "int " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, "int", yyline); }
+            | Bool ID EQUAL True { $$ = "boolean " + $2 + " = true;\n"; semantics.addVar($2, "boolean", yyline); }
+            | Bool ID EQUAL False { $$ = "boolean " + $2 + " = false;\n"; semantics.addVar($2, "boolean", yyline); }
+            | Str ID EQUAL STRING_CONST { $$ = "String " + $2 + " = " + $4 + ";\n"; semantics.addVar($2, "String", yyline); }
+            ;
+
+relationalExp: ID LESSEQUAL constOrVar { $$ = $1 + " <= " + $3; semantics.checkRelExp($1, $3, yyline); semantics.checkRelationNumber($1, yyline); }
+             | ID GREATEQUAL constOrVar { $$ = $1 + " >= " + $3; semantics.checkRelExp($1, $3, yyline); semantics.checkRelationNumber($1, yyline); }
+             | ID NOTEQUAL constOrVar { $$ = $1 + " != " + $3; semantics.checkRelExp($1, $3, yyline); semantics.checkRelationNotString($1, yyline); }
+             | ID LESS constOrVar { $$ = $1 + " < " + $3; semantics.checkRelExp($1, $3, yyline); semantics.checkRelationNumber($1, yyline); }
+             | ID GREAT constOrVar { $$ = $1 + " > " + $3; semantics.checkRelExp($1, $3, yyline); semantics.checkRelationNumber($1, yyline); }
+             | ID ISEQUAL constOrVar { 	if(semantics.isString($1, yyline)){$$ = $1 + ".equals(" + $3 + ")"; semantics.checkRelationString($1,yyline); }else{$$ = $1 + " == " + $3; semantics.checkRelationNotString($1, yyline); } semantics.checkRelExp($1, $3, yyline); }
+	     | OPEN_PARAN relationalExp CLOSE_PARAN { $$ = "(" + $2 + ")"; }
+             ;
+
+booleanExp: booleanExp AND booleanExp { $$ = $1 + " && " + $3; }
+          | booleanExp OR booleanExp { $$ = $1 + " || " + $3; }
+          | relationalExp AND relationalExp { $$ = $1 + " && " + $3; }
+          | relationalExp OR relationalExp { $$ = $1 + " || " + $3; }
+          | relationalExp AND booleanExp { $$ = $1 + " && " + $3; }
+          | relationalExp OR booleanExp { $$ = $1 + " || " + $3; }
+          | booleanExp AND relationalExp { $$ = $1 + " && " + $3; }
+          | booleanExp OR relationalExp { $$ = $1 + " || " + $3; }
+          | OPEN_PARAN booleanExp CLOSE_PARAN { $$ = "(" +  $2 + ")"; }
+          | NOT booleanExp { $$ = "!" + $2; }
+          | ID { $$ = $1; }
+          | True { $$ = "true"; }
+          | False { $$ = "false"; }
+          ;
+
+constOrVar: FLT { $$ = "" + $1; }
+          | INT { $$ = "" + $1; }
+          | ID  { $$ = "" + $1; }
+	  | STRING_CONST { $$ = $1; }
+          ;
+
+arithmeticExp: arithmeticExp PLUS arithmeticExp { $$ = $1 + " + " + $3 ; semantics.checkForBadAdditionType(yyline);}
+             | arithmeticExp MINUS arithmeticExp { $$ = $1 + " - " + $3; semantics.checkForBadArithmeticType(yyline);}
+             | arithmeticExp MULT arithmeticExp { $$ = $1 + " * " + $3; semantics.checkForBadArithmeticType(yyline);}
+             | arithmeticExp DIV arithmeticExp { $$ = $1 + " / " + $3; semantics.checkForBadArithmeticType(yyline);}
+             | arithmeticExp MOD arithmeticExp { $$ = $1 + " % " + $3; semantics.checkForBadArithmeticType(yyline);}
+             | OPEN_PARAN arithmeticExp CLOSE_PARAN { $$ = "(" + $2 + ")"; }
+             | ID  { $$ = $1; semantics.assignmentCheckVar($1, yyline); }
+             | FLT { $$ = "" + $1; semantics.assignmentCheckLeftIsOfType("float", yyline); }
+             | INT { $$ = "" + $1; semantics.assignmentCheckLeftIsOfType("int", yyline); }
+             ;
+
+assignment: leftSide EQUAL rightSide { $$ = $1 + " = " + $3; semantics.funcReturnFlag=false;}
+
+leftSide: ID { $$ = $1; semantics.assignmentCheckLeft($1, yyline); semantics.funcReturnFlag=true;}
+
+rightSide: arithmeticExp { $$ = $1 + ";\n"; }
+         | functionCall { $$ = $1 + ";\n"; }
+         | STRING_CONST { $$ = $1 + ";\n"; semantics.assignmentCheckLeftIsOfType("String", yyline); }
+         | True { $$ = "true" + ";\n"; semantics.assignmentCheckLeftIsOfType("boolean", yyline); }
+         | False { $$ = "false" + ";\n"; semantics.assignmentCheckLeftIsOfType("boolean", yyline); }
+         ;
+
+functionCall: functionName OPEN_PARAN parameterList CLOSE_PARAN { $$ = $1 + "(" + $3 + ")";  semantics.assignmentCheckFunction($1, yyline);}
+            | AddPlayer OPEN_PARAN ID COMMA ID CLOSE_PARAN { $$ = $3 + ".addPlayer(" + $5 + ")" ; semantics.checkIDagainstType($3,"User", yyline);semantics.checkIDagainstType($5,"Player", yyline);}
+            | RemovePlayer OPEN_PARAN ID COMMA ID CLOSE_PARAN { $$ = $3 + ".removePlayer(" + $5 + ")" ; semantics.checkIDagainstType($3,"User", yyline);semantics.checkIDagainstType($5,"Player", yyline); semantics.assignmentCheckLeftIsOfType("void", yyline); }
+            | ArrayLength OPEN_PARAN ID CLOSE_PARAN { $$ = $3 + ".length"; semantics.checkArrayType($3,yyline); semantics.assignmentCheckLeftIsOfType("int", yyline); }
+	    | GetUserName OPEN_PARAN ID CLOSE_PARAN { $$ = $3 + ".getName()"; semantics.checkIDagainstType($3,"User", yyline); semantics.assignmentCheckLeftIsOfType("String", yyline); }
+	    | GetNumPlayers OPEN_PARAN ID CLOSE_PARAN { $$ = $3 +".getNumPlayers()";semantics.checkIDagainstType($3,"User", yyline); semantics.assignmentCheckLeftIsOfType("int", yyline); }
+	    | GetPlayerName OPEN_PARAN ID CLOSE_PARAN { $$ = $3 + ".getName()";semantics.checkIDagainstType($3,"Player", yyline); semantics.assignmentCheckLeftIsOfType("String", yyline); }
+	    | GetPlayerPosition OPEN_PARAN ID CLOSE_PARAN { $$= $3 + ".getPosition()";semantics.checkIDagainstType($3,"Player", yyline); semantics.assignmentCheckLeftIsOfType("String", yyline); }
+	    | GetPlayerPoints OPEN_PARAN ID CLOSE_PARAN { $$ =$3 + ".getPoints()";semantics.checkIDagainstType($3,"Player", yyline); semantics.assignmentCheckLeftIsOfType("float", yyline); }
+	    | Alert OPEN_PARAN STRING_CONST COMMA STRING_CONST CLOSE_PARAN {$$ ="GUI.alert("+$3+","+$5+")"; semantics.assignmentCheckLeftIsOfType("void", yyline);}
+	    | Error OPEN_PARAN STRING_CONST COMMA STRING_CONST CLOSE_PARAN {$$ ="GUI.error("+$3+","+$5+")"; semantics.assignmentCheckLeftIsOfType("void", yyline);}
+            ;
+
+parameterList: parameterList COMMA parameterList { $$ = $1 + ", " + $3; }
+             | ID { $$ = $1; }
+             | INT { $$ = "" + $1; }
+             | FLT { $$ = "" + $1; }
+             | STRING_CONST { $$ = $1; }
+             | ID OPEN_SQUARE INT CLOSE_SQUARE { $$ = $1 + "[" + $3 + "]"; }
+             | ID OPEN_SQUARE ID CLOSE_SQUARE { $$ = $1 + "[" + $3 + "]"; semantics.checkIndex($3, yyline);}
+             | empty { $$ = $1; }
+             ;
+
+empty: ; { $$ = ""; }
+
+%%
+
+/***************************************************
+* Variables
+****************************************************/
+private Yylex lexer;
+public int yyline = 1;
+public int yycolumn = 0;
+public boolean createPositionFile = false;
+//Semantic Object
+Flood_Sem semantics = new Flood_Sem();
+String scope = "main";
+
+/***************************************************
+* generateFloodProgram()
+****************************************************/
+public void generateFloodProgram(String definitions, String functions)
+{
+  String classStart = "public class FloodProgram\n{\n";
+  String staticDeclarations = "public static League myLeague;\npublic static GUI run;\n";
+  String classEnd = "}\n";
+
+  String main_start = "public static void main(String[] args)\n{\n";
+  String main_preEndAutogenerate = "run = new GUI(myLeague);\nrun.drawBoard();\n";
+  String main_end = "}\n";
+
+  try
+  {
+    FileWriter writer = new FileWriter(new File("FloodProgram.java"));
+    String buffer = classStart + staticDeclarations + main_start + definitions + main_preEndAutogenerate + main_end + functions + classEnd;
+    writer.write(buffer);
+    writer.close();
+    System.out.println("Compilation successful.");
+  }
+  catch (IOException e)
+  {
+  }
+}
+
+/***************************************************
+* yylex()
+****************************************************/
+private int yylex()
+{  
+  int yyl_return = -1;
+  
+  try
+  {
+    yylval = new ParserVal(0);
+    yyl_return = lexer.yylex();
+  }
+  catch (IOException e)
+  {
+    System.err.println("IO error: " + e.getMessage());
+  }
+  
+  return yyl_return;
+}
+
+/***************************************************
+* Parser()
+****************************************************/
+public Parser(Reader r, boolean createFile)
+{
+  lexer = new Yylex(r, this);
+  this.createPositionFile = createFile;
+}
+
+/***************************************************
+* getErrorLocationInfo()
+****************************************************/
+public String getErrorLocationInfo(boolean justLine)
+{
+  if(justLine)
+    return "Error on line(" + yyline + "): ";
+  else
+    return "Error on line(" + yyline + ") and column(" + yycolumn + "): ";    
+}
+
+/***************************************************
+* yyerror()
+****************************************************/
+public void yyerror(String error)
+{
+    try{      
+      if(stateptr > 0) {
+        System.out.print("Syntax " + getErrorLocationInfo(true));
+        System.out.println(": Illegal token '" + lexer.yytext() + "'");
+      }
+    }
+    catch(Exception ex){      
+    }
+}
+
+/***************************************************
+* main()
+****************************************************/
+public static void main(String args[]) throws IOException
+{
+
+  Parser yyparser;
+  boolean createFile = false;
+
+  if (args.length < 1)
+  {
+    System.out.println("Usage: java Parser <flood_progam.txt>");
+    return;
+  }
+  else if (args.length == 2)
+  {
+    createFile = Boolean.parseBoolean(args[1]);
+  }
+
+  // parse a file
+  yyparser = new Parser(new FileReader(args[0]), createFile);
+
+  System.out.println("\nCompiling ...\n");
+  yyparser.yyparse();
+}
+\end{lstlisting}
+\end{singlespace}
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption={flood$\_$lex.flex}]
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*
+* flood_lex.flex
+* FLOOD
+* Lexical Analyzer
+*
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+%%
+
+%byaccj
+
+%{
+  private Parser yyparser;
+
+  public Yylex(java.io.Reader r, Parser yyparser)
+  {
+    this(r);
+    this.yyparser = yyparser;
+  }
+%}
+
+ID    = [a-zA-Z"_"]([a-zA-Z"_"] | [0-9])*
+NL    = \n | \r | \r\n
+WP    = " "
+INT   = [0-9]+ /*| "-"[0-9]+ */
+FLT   = [0-9]+ ("." [0-9]+)? /*| "-"[0-9]+ ("." [0-9]+)?*/
+HT    = \t
+COMMENTS = "/*" [^*] ~"*/" | "/*" "*" + "/"
+
+%%
+
+/* Keywords */
+DefineLeague      { yyparser.yycolumn += yytext().length(); return Parser.DefineLeague;     }
+DefineFunctions   { yyparser.yycolumn += yytext().length(); return Parser.DefineFunctions;  }
+LeagueName        { yyparser.yycolumn += yytext().length(); return Parser.LeagueName;       }
+MaxUser           { yyparser.yycolumn += yytext().length(); return Parser.MaxUser;          }
+MinUser           { yyparser.yycolumn += yytext().length(); return Parser.MinUser;          }
+MaxTeamSize       { yyparser.yycolumn += yytext().length(); return Parser.MaxTeamSize;      }
+MinTeamSize       { yyparser.yycolumn += yytext().length(); return Parser.MinTeamSize;      }
+Set               { yyparser.yycolumn += yytext().length(); return Parser.Set;              }
+Add               { yyparser.yycolumn += yytext().length(); return Parser.Add;              }
+Action            { yyparser.yycolumn += yytext().length(); return Parser.Action;           }
+User              { yyparser.yycolumn += yytext().length(); return Parser.User;             }
+Void              { yyparser.yycolumn += yytext().length(); return Parser.Void;             }
+Int               { yyparser.yycolumn += yytext().length(); return Parser.Int;              }
+Bool              { yyparser.yycolumn += yytext().length(); return Parser.Bool;             }
+Str               { yyparser.yycolumn += yytext().length(); return Parser.Str;              }
+Flt               { yyparser.yycolumn += yytext().length(); return Parser.Flt;              }
+Return            { yyparser.yycolumn += yytext().length(); return Parser.Return;           }
+If                { yyparser.yycolumn += yytext().length(); return Parser.If;               }
+Else              { yyparser.yycolumn += yytext().length(); return Parser.Else;             }
+While             { yyparser.yycolumn += yytext().length(); return Parser.While;            }
+Player            { yyparser.yycolumn += yytext().length(); return Parser.Player;           }
+True              { yyparser.yycolumn += yytext().length(); return Parser.True;             }
+False             { yyparser.yycolumn += yytext().length(); return Parser.False;            }
+RemovePlayer      { yyparser.yycolumn += yytext().length(); return Parser.RemovePlayer;     }
+AddPlayer         { yyparser.yycolumn += yytext().length(); return Parser.AddPlayer;        }
+ArrayLength       { yyparser.yycolumn += yytext().length(); return Parser.ArrayLength;      }
+Alert		  { yyparser.yycolumn += yytext().length(); return Parser.Alert;            }
+Error		  { yyparser.yycolumn += yytext().length(); return Parser.Error;            }
+GetUserName       { yyparser.yycolumn += yytext().length(); return Parser.GetUserName;      }
+GetNumPlayers     { yyparser.yycolumn += yytext().length(); return Parser.GetNumPlayers;    }
+GetPlayerName     { yyparser.yycolumn += yytext().length(); return Parser.GetPlayerName;    }
+GetPlayerPosition { yyparser.yycolumn += yytext().length(); return Parser.GetPlayerPosition;}
+GetPlayerPoints   { yyparser.yycolumn += yytext().length(); return Parser.GetPlayerPoints;  }
+
+
+
+/* Comments */
+{COMMENTS}        { /* ignore */ }
+
+/* Identifier */
+{ID}              {
+                    yyparser.yycolumn += yytext().length();
+                    yyparser.yylval = new ParserVal(yytext());
+                    return Parser.ID;
+                  }
+
+/* Newline */
+{NL}              {
+                    yyparser.yycolumn = 0;
+                    yyparser.yyline++;
+                  }
+
+{WP}              {
+                    yyparser.yycolumn++;
+                  }
+
+/* Integer */
+{INT}             {
+                    yyparser.yycolumn += yytext().length();
+                    yyparser.yylval = new ParserVal(Integer.parseInt(yytext()));
+                    return Parser.INT;
+                  }
+                  
+/* Float */
+{FLT}             {
+                    yyparser.yycolumn += yytext().length();
+                    yyparser.yylval = new ParserVal(Double.parseDouble(yytext()));
+                    return Parser.FLT;
+                  }
+
+
+[\t]+             { yyparser.yycolumn += yytext().length(); }
+
+"\""[^\"]*"\""    {
+                    yyparser.yycolumn += yytext().length();
+                    yyparser.yylval = new ParserVal(yytext());
+                    return Parser.STRING_CONST;   
+                  }
+
+,                 { yyparser.yycolumn++; return Parser.COMMA;          }
+
+"."               { yyparser.yycolumn++; return Parser.DOT;            }
+
+"+"               { yyparser.yycolumn++; return Parser.PLUS;           }
+
+"{"               { yyparser.yycolumn++; return Parser.OPEN_CURLY;     }
+
+"}"               { yyparser.yycolumn++; return Parser.CLOSE_CURLY;    }
+
+"("               { yyparser.yycolumn++;return Parser.OPEN_PARAN;      }
+
+")"               { yyparser.yycolumn++;return Parser.CLOSE_PARAN;     }
+
+"=="              { yyparser.yycolumn++; return Parser.ISEQUAL;        }
+
+"="               { yyparser.yycolumn++; return Parser.EQUAL;          }
+
+"!="              { yyparser.yycolumn++; return Parser.NOTEQUAL;       }
+
+"<="              { yyparser.yycolumn++; return Parser.LESSEQUAL;      }
+
+">="              { yyparser.yycolumn++; return Parser.GREATEQUAL;     }
+
+">"               { yyparser.yycolumn++; return Parser.GREAT;          }
+
+"<"               { yyparser.yycolumn++;return Parser.LESS;            }
+
+"+"               { yyparser.yycolumn++; return Parser.PLUS;           }
+
+"-"               { yyparser.yycolumn++; return Parser.MINUS;          }
+
+"*"               { yyparser.yycolumn++; return Parser.MULT;           }
+
+"/"               { yyparser.yycolumn++; return Parser.DIV;            }
+
+"!"               { yyparser.yycolumn++; return Parser.NOT;            }
+
+"&&"              { yyparser.yycolumn++; return Parser.AND;            }
+
+"||"              { yyparser.yycolumn++; return Parser.OR;             }
+
+"%"               { yyparser.yycolumn++; return Parser.MOD;            }
+
+[;]+              {
+                    yyparser.yycolumn += yytext().length();
+                    return Parser.SEMICOLON;      
+                  }
+                    
+"["               { yyparser.yycolumn++; return Parser.OPEN_SQUARE;    }
+
+"]"               { yyparser.yycolumn++; return Parser.CLOSE_SQUARE;    }
+
+/* Error Fallback */
+[^]               {
+                    System.err.println("Error: unexpected character '" + yytext() + "'");
+                    return -1; 
+                  }
+\end{lstlisting}
+\end{singlespace}
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption={Flood$\_$Sem.java}]
+/*
+ * Flood_Sem.java
+ * This class handles semantics of the FLOOD language
+ */
+
+import java.util.*;
+
+public class Flood_Sem {
+	
+	HashMap<String, Function> functionTable = new HashMap<String, Function>();
+	HashMap<String, String> varList = new HashMap<String, String>();
+	ArrayList<String> errorList=new ArrayList<String>();
+	String returnProductionType;
+	static boolean debugging = false,validProgram=true,funcReturnFlag=false;;
+	boolean draftFunFlag = false;
+	boolean draftPlayFlag = false;
+	boolean tradeFlag = false;
+	boolean dropPlayFlag = false;
+	
+
+	//Add Variables
+	LinkedList<String> actionNames = new LinkedList<String>();
+	LinkedList<String> playerNames = new LinkedList<String>();
+	LinkedList<String> userNames = new LinkedList<String>();
+	
+	//Assignment Variables
+	String leftSide = "";
+
+	public Flood_Sem(){
+		if(debugging)System.out.print("Starting Semantic Object Checker");
+	}
+	
+	public String printErrors(){
+		String errors="";
+		for(String s:errorList){
+			errors+=s+"\n";
+		}
+		return errors;
+	}
+	
+	/*Adds an Action */
+	public void addAction(String name, int line){
+		if (actionNames.contains(name)){
+			if (debugging){System.out.println(name + " already exists as an Action");}
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +name+" has already been defined.");
+			return;
+		}
+		actionNames.add(name);
+		if (debugging){System.out.println(name + " was added as an Action");}
+		return;
+	}
+
+	/* Add a User */
+	public void addUser(String name, int line){
+		if (userNames.contains(name)){
+			if (debugging){System.out.println(name + " already exists as a User");}
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +name+" has already been defined.");
+			return;
+		}
+		userNames.add(name);
+		if (debugging){System.out.println(name + " was added as a User");}
+	}
+
+	/* Add a Player */
+	public void addPlayer(String name, int line){
+		if (playerNames.contains(name)){
+			if (debugging){System.out.println(name + " already exists as a Player");}
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +name+" has already been defined.");
+			return;
+		}
+		playerNames.add(name);
+		if (debugging){System.out.println(name + " was added as a Player");}
+	}
+	
+	/* Adds a function to the function table. */
+	public void addToFunctionTable(String functionName, String returnType, String paramList, int line){
+		if (functionTable.containsKey(functionName)){
+			if (debugging){System.out.println(functionName + "already exists");}
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +functionName+" has already been defined.");
+			return;
+		}
+		functionTable.put(functionName, new Function(functionName, returnType, paramList, line));
+		this.varList = new HashMap<String, String>();
+		if (debugging){System.out.println("Reinitializing variable list");}
+	}
+
+	/* Checks whether a given value is boolean true or false (note: case specific) */
+	public void isBooleanValue(String bool, int line){
+		if (bool.equals("true") || bool.equals("false")){
+			return;
+		}
+		if (debugging){System.out.println(bool + " is not a boolean value");}
+		validProgram=false;
+		errorList.add("Error at Line " + line + ": " +bool+" is not of type Bool.");
+	}
+	
+	/* Adds a variable to the function's variable list. Checks if it exists first */
+	public void addVar(String varName, String varType, int line){
+		if (varExists(varName)){
+			if (debugging){System.out.println(varName + " already exists");}
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +varName+" has already been defined.");
+			return;
+		}
+		addVarToTable(varName, varType);
+	}
+
+	/* Check whether a variable used exists and is the same as its declared type */
+	public boolean varExists(String varName){
+		if(varList.containsKey(varName)){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	/* AddtoCurrentVarList */
+	public void addVarToTable(String varName, String varType){
+		varList.put(varName, varType);
+		if (debugging){System.out.println("Added varName: " + varName + ", type: " + varType);}
+	}
+
+	/* Checks the type of a variable against the left side of an expression */
+	public void assignmentCheckVar(String right, int line){
+		if (varExists(right)){
+			if (varList.get(right).equals(leftSide)){
+				if (debugging){System.out.println("Both are of type " + leftSide);}
+				return;
+			}
+			if (debugging){System.out.println(right + " isn't of type " + leftSide);}
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +right+" is not of type "+leftSide+".");
+			return;
+		}
+		if (debugging){System.out.println(right + " doesn't exist");}
+		validProgram=false;
+			errorList.add("Error at Line " + line + ": " +right+" has not been defined.");
+			return;
+	}
+
+	/* Preserves the type of the left side of an expression */
+	public void assignmentCheckLeft(String left, int line){
+		if (varExists(left)){
+			leftSide = varList.get(left);
+			if (debugging){System.out.println("Added " + left);}
+			return;
+		}
+		validProgram=false;
+		errorList.add("Error at Line " + line + ": " +left+" has not been defined.");
+	}
+	
+	/* Check whether an arithmetic expression can be used with the kind of ID */
+	public void checkForBadAdditionType(int line){
+		if (leftSide.equals("float") || leftSide.equals("int") || leftSide.equals("String")){
+			if (debugging){System.out.println(leftSide + " can be used with add");}
+			return;
+		}
+		if (debugging){System.out.println(leftSide + " cannot be used in addition");}
+		validProgram=false;
+		errorList.add("Error at Line " + line + ": " +leftSide+" cannot be used in addition.");
+		return;
+	}
+	
+	/* Check whether an arithmetic expression can be used with the kind of ID */
+	public void checkForBadArithmeticType(int line){
+		if (leftSide.equals("float") || leftSide.equals("int")){
+			if (debugging){System.out.println(leftSide + " can be used with add/sub/mul/div/mod");}
+			return;
+		}
+		if (debugging){System.out.println(leftSide + " cannot be used in an arithmetic expression");}
+		validProgram=false;
+		errorList.add("Error at Line " + line + ": " +leftSide+" cannot be used with arithmetic expressions.");
+		return;
+	}
+
+	/* Checks whether the left side of the expression is a TYPE */
+	public void assignmentCheckLeftIsOfType(String type, int line){
+		if(funcReturnFlag){
+			if (leftSide.equals(type)){
+				if (debugging){System.out.println(leftSide + " IS of type " + type);}
+				return;
+			}
+			if (debugging){System.out.println(leftSide + " is not of type " + type);}
+			validProgram=false;
+				errorList.add("Error at Line " + line + ": " +leftSide + " is not of type " + type + ".");
+				return;
+		}
+		else{
+			if (debugging){System.out.println("Function with no return assignment");}
+			return;
+		}
+	}
+	
+	/* Checks the Return Type of the Function Against the Left Side of an expression */
+	public void assignmentCheckFunction(String functionName, int line){
+		if (functionTable.containsKey(functionName)){
+			if(funcReturnFlag){
+				if (functionTable.get(functionName).getReturnType().equals(leftSide)){
+					if (debugging){System.out.println("Both are of type " + leftSide);}
+					return;
+				}
+				if (debugging){System.out.println(functionName + " doesn't return type " + leftSide);}
+				validProgram=false;
+				errorList.add("Error at Line " + line + ": " +functionName + " does not return a value of type " + leftSide + ".");
+				return;
+			}
+			else{
+				if (debugging){System.out.println("Function with no return assignment");}
+				return;
+			}
+		}
+		if (debugging){System.out.println(functionName + " has not been defined.");}
+		validProgram=false;
+		errorList.add("Error at Line " + line + ": " +functionName + " has not been defined.");
+		return;
+	}
+
+	public void checkArrayType(String varName, int line){
+		if(varExists(varName)){
+			if(varList.get(varName).equals("User[]") || varList.get(varName).equals("Player[]")){
+				if (debugging){System.out.println(varName+" is of type "+varList.get(varName));}
+				return;
+			}
+			if (debugging){System.out.println(varList.get(varName)+" is not a valid array type.");}
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +varList.get(varName)+" is not a valid array type.");
+			return;
+		}
+		if (debugging){System.out.println(varName+" has not been defined.");}
+		validProgram=false;
+		errorList.add("Error at Line " + line + ": " +varName+" has not been defined.");
+		return;
+	}
+	/* Check Divide by zero */
+	public void checkDivideByZero(String var, int line){
+		if (Double.parseDouble(var) == 0){
+			return;
+		}
+		validProgram=false;
+		errorList.add("Error at Line " + line + ": Cannot divide by zero.");
+		return;
+	}
+	
+	/* Checks against an int */
+	public void checkRelExp(String left, String right, int line){
+		if(right.matches("^-?\\d.*$")){
+			if(right.contains(".")){
+				checkRelationalExpAgainstType(left, "float", line);
+			}
+			else{
+				checkRelationalExpAgainstType(left, "int", line);
+			}
+		}
+		else if(right.matches("^\".*\"$")){
+			checkRelationalExpAgainstType(left, "String", line);
+		}
+		else{
+			checkRelationalExp(left, right, line);
+		}
+	}
+	
+	/* Checks against a declared variable */
+	private void checkRelationalExp(String left, String right, int line){
+		if (varExists(right)){
+			checkRelationalExpAgainstType(left, varList.get(right), line);
+			return;
+		}
+		if (debugging){System.out.println(right + " doesn't exist");}
+		validProgram=false;
+		errorList.add("Error at Line " + line + ": " +right+" has not been defined.");
+		return;
+	}
+
+	/* Checks to make sure that relational expression don't compare an invalid type */
+	public void checkRelationNumber(String left, int line){
+		if (varExists(left)){
+			String leftType = varList.get(left);
+			if (!leftType.equals("int") && !leftType.equals("float")){
+				if (debugging){System.out.println(left + " cannot be used because it is of type " + leftType);}
+				validProgram=false;
+				errorList.add("Error at Line " + line + ": " +left + " cannot be used because it is of type " + leftType + ".");
+				return;
+			}
+		}
+		else{
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +left+" has not been defined.");
+			return;
+		}
+	}
+
+	/* Checks to make sure that relational expression don't compare an invalid type */
+	public void checkRelationNotString(String left, int line){
+		if (varExists(left)){
+			String leftType = varList.get(left);
+			if (leftType.equals("String")){
+				if (debugging){System.out.println(left + " cannot be used because it is of type " + leftType);}
+				validProgram=false;
+				errorList.add("Error at Line " + line + ": " +left + " cannot be used because it is of type " + leftType + ".");
+				return;
+			}
+		}
+		else{
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +left+" has not been defined.");
+			return;
+		}
+	}
+
+	/* Checking known type of string */
+	public void checkRelationString(String left, int line){
+		if (varExists(left)){
+			String leftType = varList.get(left);
+			if (!leftType.equals("String")){
+				if (debugging){System.out.println(left + " cannot be used because it is of type " + leftType);}
+				validProgram=false;
+				errorList.add("Error at Line " + line + ": " +left + " cannot be used because it is of type " + leftType + ".");
+				return;
+			}
+		}
+		else{
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +left+" has not been defined.");
+			return;
+		}
+	}
+
+	public boolean isString(String left, int line){
+		if (varExists(left)){
+			String leftType = varList.get(left);
+			if (leftType.equals("String")){
+				return true;
+			}
+			return false;
+		}
+		else{
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +left+" has not been defined.");
+			return false;
+		}
+	}
+	
+	/* Private method for checking a variable against an unknown type */
+	private void checkRelationalExpAgainstType(String left, String rightType, int line){
+		if (varExists(left)){
+			String leftType = varList.get(left);
+			if (leftType.equals(rightType)){
+				if (debugging){System.out.println("Both are of type " + rightType);}
+				return;
+			}
+			if (debugging){System.out.println(rightType + " is not " + leftType);}
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +rightType + " is not of type " + leftType + ".");
+			return;
+		}
+		else{
+			if (debugging){System.out.println(left + " doesn't exist");}
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +left + " has not been defined.");
+			return;
+		}
+	}
+	
+	//check that array index is an int
+	public void checkIndex(String arrayIndex, int line){ 
+		//check if ID is a variable of type int
+		arrayIndex = arrayIndex.replaceAll(" ", "");
+		if(varList.containsKey(arrayIndex) && varList.get(arrayIndex).equals("int")){
+			if(debugging){System.out.println(arrayIndex +"\n"+ varList.get(arrayIndex));}
+			return;
+		}
+		else{
+			if (debugging){System.out.println("Fail, invalid type");}
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +arrayIndex+" is an invalid type for an array index.");
+			return;
+		}
+	}
+	
+	public String getType(String id){
+		if(varExists(id))
+			return varList.get(id);
+		if(debugging){System.out.println(id+" is a valid variable!");}
+		return null;
+	}
+	public void setReturnProdType(String type){
+		returnProductionType=type;
+	}
+	public void checkReturnTypeMatch(String returnType, int line){
+		if(returnProductionType!=null){
+			if(returnProductionType.equals(returnType)){
+				if (debugging){System.out.println(returnProductionType + " return type matches "+returnType);}
+				return;
+			}
+			if (debugging){System.out.println(returnProductionType + " return type doesn't match "+returnType);}
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +returnProductionType + " return type does not match "+returnType+".");
+			return;
+		}
+		if (debugging){System.out.println(returnProductionType + " is not a valid type");}
+		validProgram=false;
+		errorList.add("Error at Line " + line + ": " +returnProductionType + " is not a valid type.");
+		return;
+	}
+	
+	/* Check that an ID is of a certain type */
+	public void checkIDagainstType(String id, String type, int line){
+		if (varExists(id)){
+			String idType = varList.get(id);
+			if (idType.equals(type)){
+				if (debugging){System.out.println(id + " IS of type " + type);}
+				return;
+			}
+			if (debugging){System.out.println(id + " is not " + type);}
+			validProgram=false;
+			errorList.add("Error at Line " + line + ": " +id + " is not of type " + type + ".");
+			return;
+		}
+		if (debugging){System.out.println(id + " doesn't exist");}
+		validProgram=false;
+		errorList.add("Error at Line " + line + ": " +id + " has not been defined.");
+		return;
+	}
+	
+	//set flags for required functions
+	public String setFlags(){
+		//flag for draftFunction
+		Function fun;
+		if(functionTable.containsKey("draftFunction")){
+			fun = functionTable.get("draftFunction");
+			if(fun.returnType.equals("int")){
+				if(fun.paramTypeList.length == 1 && fun.paramTypeList[0].equals("int")){
+					if(debugging)System.out.print("Draft function found");
+					draftFunFlag = true;
+				}
+			}
+		}
+		if(functionTable.containsKey("draftPlayer")){
+			fun = functionTable.get("draftPlayer");
+			if(fun.returnType.equals("boolean")){
+				if(fun.paramTypeList.length==2 && fun.paramTypeList[0].equals("User")  && fun.paramTypeList[1].equals("Player")){
+					if(debugging)System.out.print("Draft player found");
+					draftPlayFlag = true;
+				}
+			}
+		}
+		if(functionTable.containsKey("trade")){
+			fun = functionTable.get("trade");
+			if(fun.returnType.equals("boolean")){
+				if(fun.paramTypeList.length==4 && fun.paramTypeList[0].equals("User")
+						&& fun.paramTypeList[1].equals("Player[]") && fun.paramTypeList[2].equals("User")
+						&& fun.paramTypeList[3].equals("Player[]")){
+					if(debugging)System.out.print("Trade found");
+					tradeFlag = true;
+				}
+			}
+		}
+		if(functionTable.containsKey("dropPlayer")){
+			fun = functionTable.get("dropPlayer");
+			if(fun.returnType.equals("boolean")){
+				if(fun.paramTypeList.length==2 && fun.paramTypeList[0].equals("User")
+						&& fun.paramTypeList[1].equals("Player")){
+					if(debugging)System.out.print("Drop player found");
+					dropPlayFlag = true;
+				}
+			}
+		}
+		return writeDefaultFuns();
+	}
+	
+	//write default functions if needed
+	public String writeDefaultFuns(){
+		String functions = "";
+		if(!draftFunFlag){
+			//write draft function
+			functions += "public static int draftFunction(int turn){\nreturn turn%myLeague.getCurrentNumUsers();\n}\n";
+		}
+		if(!draftPlayFlag){
+			//write draft player
+			functions += "public static boolean draftPlayer(User u, Player p){\nu.addPlayer(p);\nreturn true;\n}\n";
+		}
+		if(!tradeFlag){
+			//write trade
+			functions += "public static boolean trade(User u1, Player[] p1, User u2, Player[] p2){\n"+
+						"int i,j;\n"+
+						"boolean flag2=true;\n"+
+						"i=0;\n"+
+						"while(i<p1.length){\n"+
+							"flag2=dropPlayer(u1,p1[i]);\n"+
+							"if(!flag2){    //If the drop was unsuccessful\n"+
+								"j=i;\n"+
+								"while(j>=0){    //Add p1 back to u1\n"+
+								    "draftPlayer(u1,p1[j]);\n"+
+								    "j--;\n"+
+								"}\n"+
+								"return false;\n"+
+							"}\n"+
+							"i++;\n"+
+						"}\n"+
+						"i=0;\n"+
+						"while(i<p2.length){\n"+
+							"flag2=dropPlayer(u2,p2[i]);\n"+
+							"if(!flag2){    //If the drop was unsuccessful\n"+
+								"j=i;\n"+
+								"while(j>=0){    //Add p2 back to u2\n"+
+								    "draftPlayer(u2,p2[j]);\n"+
+								    "j--;\n"+
+								"}\n"+
+								"j=0;\n"+
+								"while(j<p1.length){    //Add p1 to u1\n"+
+								    "draftPlayer(u1,p1[j]);\n"+
+								    "j++;\n"+
+								"}\n"+
+								"return false;\n"+
+							"}\n"+
+							"i++;\n"+
+						"}\n"+
+						"i=0;\n"+
+						"while(i<p1.length){\n"+
+							"flag2=draftPlayer(u2,p1[i]);\n"+
+							"if(!flag2){    //If draft was unsuccessful\n"+
+								"j=i;\n"+
+								"while(j>=0){    //Remove p1 from u2\n"+
+								    "dropPlayer(u2,p1[j]);\n"+
+								    "j--;\n"+
+								"}\n"+
+								"j=0;\n"+
+								"while(j<p1.length){    //Add p1 to u1\n"+
+								    "draftPlayer(u1,p1[j]);\n"+
+								    "j++;\n"+
+								"}\n"+
+								"j=0;\n"+
+								"while(j<p2.length){    //Add p2 to u2\n"+
+								    "draftPlayer(u2,p2[j]);\n"+
+								    "j++;\n"+
+								"}\n"+
+								"return false;\n"+
+							"}\n"+
+							"i++;\n"+
+						"}\n"+
+						"i=0;\n"+
+						"while(i<p2.length){\n"+
+							"flag2=draftPlayer(u1,p2[i]);\n"+
+							"if(!flag2){    //If the drop was unsuccessful\n"+
+								"j=i;\n"+
+								"while(j>=0){    //Remove p2 from u1\n"+
+								    "dropPlayer(u1,p2[j]);\n"+
+								    "j--;\n"+
+								"}\n"+
+								"j=0;\n"+
+								"while(j<p1.length){    //Remove p1 from u2\n"+
+								    "dropPlayer(u2,p1[j]);\n"+
+								    "j++;\n"+
+								"}\n"+
+								"j=0;\n"+
+								"while(j<p1.length){    //Add p1 to u1\n"+
+								    "draftPlayer(u1,p1[j]);\n"+
+								    "j++;\n"+
+								"}\n"+
+								"j=0;\n"+
+								"while(j<p2.length){    //Add p2 to u2\n"+
+								    "draftPlayer(u2,p2[j]);\n"+
+								    "j++;\n"+
+								"}\n"+
+								"return false;\n"+
+							"}\n"+
+							"i++;\n"+
+						"}\n"+
+						"return true;\n"+
+					"}\n";
+		}
+		if(!dropPlayFlag){
+			//write drop player
+			functions += "public static boolean dropPlayer(User u, Player p){\nu.removePlayer(p);\nreturn true;\n}\n";
+		}
+		return functions;
+	}
+}
+\end{lstlisting}
+\end{singlespace}
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption={Function.java}]
+/*
+ * Function.java
+ * This class supports the FLOOD semantics on functions
+ */
+
+import java.util.HashMap;
+import java.util.Arrays;
+
+public class Function {
+
+	String functionName;
+	String[] paramTypeList;
+	HashMap<String, String> argsList = new HashMap<String, String>(); //name type
+	String returnType;
+	int lineNumber;
+	static boolean debugging = false;
+	
+	/* Constructor sets a function's name, returnType and parameters in the instance variables of the function */
+	public Function(String functionName, String returnType, String paramList, int lineNumber){
+		this.functionName = functionName;
+		if (debugging){System.out.println("**Initializing " + functionName + " function**");}
+		this.returnType = returnType;
+		if (debugging){System.out.println(functionName + "= returnType: " + returnType);}
+		this.lineNumber = lineNumber;
+		if (!paramList.trim().isEmpty()){
+			String[] params = paramList.trim().split("\\s*,\\s*");
+			paramTypeList = new String[params.length];
+			for(int i=0; i<params.length; i++){
+				//split
+				String[] temp = params[i].split("\\s+");
+				argsList.put(temp[1], temp[0]); //This is reversed in the argument list so reversing it back here
+				paramTypeList[i]=temp[0];
+				if (debugging) {System.out.println(functionName + "= argName: " + temp[1] + ", type: " + temp[0]);}
+			}
+		}
+		else{
+			paramTypeList = new String[0];
+		}
+	}
+		
+	public String getReturnType() {
+		return returnType;
+	}
+}
+\end{lstlisting}
+\end{singlespace}
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption={GUI.java}]
+/*
+ * GUI.java
+ * This class the GUI for the fantasy league
+ */
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.text.DecimalFormat;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JToolBar;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.JTabbedPane;
+import javax.swing.JComboBox;
+import javax.swing.JSplitPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.table.DefaultTableModel;
+
+
+public class GUI {
+	private League theLeague;
+	private static JFrame frmFloodFantasyLeague;
+	private MyTableModel homeTable,draftTable,tradeTable_1,tradeTable_2,dropTable,ruleTable;
+	private DefaultTableModel homeModel,draftModel,tradeModel_1,tradeModel_2,dropModel,ruleModel;
+	private JLabel draftLabel;
+	private int currentTurn,pick;
+	private DecimalFormat twoDForm;
+	private final String[] homeHeader={"Rank","Team","Points"},
+		playerInfoHeader={"Player","Position","Points All Season"},
+		ruleHeader={"Action","Point Value"};
+	
+	/**Constructor
+	 * 
+	 * @param League game
+	 */
+	public GUI(League game){
+		this.theLeague=game;
+		twoDForm = new DecimalFormat("0.00");
+		currentTurn=0;
+	}
+	
+	/**Populates the home table assuming it has already been initialized.
+	 * 
+	 */
+	private void populateHome(){
+		User[] rankedTeams= theLeague.getRankedUsers();	//Get all the teams in reverse ranked order
+		while(homeModel.getRowCount()>0)	//Remove all the rows from the home table
+			homeModel.removeRow(0);
+		String[] tempHome=new String[3];	//Initialize a temporary row
+		for(int i=rankedTeams.length-1,j=1;i>=0;i--,j++){	//Iterate through the teams
+			tempHome[0]=Integer.toString(j);	//Set the rank
+			tempHome[1]=rankedTeams[i].getName();	//Set the name
+			tempHome[2]=twoDForm.format(rankedTeams[i].getPoints());	//Set the points
+			homeModel.addRow(tempHome);	//Add the row
+		}
+	}
+	
+	/**Populates the add table assuming it has already been initialized.
+	 * 
+	 */
+	private void populateDraft(){
+		pick=FloodProgram.draftFunction(currentTurn);	//Determine who is picking next
+		draftLabel.setText(theLeague.getUser(pick).getName()+"'s turn!");	//Figure out which user is picking next
+		Player[] rankedPlayers=theLeague.getRankedAvailablePlayers();	//Get all the players in reverse ranked order
+		while(draftModel.getRowCount()>0)	//Remove all the rows from the add table
+			draftModel.removeRow(0);
+		String[] tempDraft=new String[3];	//Initialize a temporary row
+		for(int i=rankedPlayers.length-1;i>=0;i--){	//Iterate through the players
+			tempDraft[0]=rankedPlayers[i].getName();	//Set the name
+			tempDraft[1]=rankedPlayers[i].getPosition();	//Set the position
+			tempDraft[2]=twoDForm.format(rankedPlayers[i].getPoints());	//Set the points scored all season
+			draftModel.addRow(tempDraft);	//Add the row
+		}
+	}
+	
+	/**Populates the add table assuming it has already been initialized.
+	 * 
+	 */
+	private void populateRules(){
+		Action[] rules=theLeague.getActions();	//Get all the players in reverse ranked order
+		while(ruleModel.getRowCount()>0)	//Remove all the rows from the add table
+			ruleModel.removeRow(0);
+		String[] tempRule=new String[2];	//Initialize a temporary row
+		for(int i=rules.length-1;i>=0;i--){	//Iterate through the players
+			tempRule[0]=rules[i].getAction();	//Set the name
+			tempRule[1]=twoDForm.format(rules[i].getPoints());	//Set the points scored all season
+			ruleModel.addRow(tempRule);	//Add the row
+		}
+	}
+	
+	/**Display an error window with the title and message given
+	 * as parameters.
+	 * 
+	 * @param String title
+	 * @param String message
+	 */
+	public static void error(String title,String message){
+		JOptionPane.showMessageDialog(frmFloodFantasyLeague, message,title,JOptionPane.ERROR_MESSAGE);
+	}
+	
+	/**Show a warning window with the title and message given
+	 * as parameters
+	 * 
+	 * @param String title
+	 * @param String message
+	 */
+	public static void alert(String title, String message) {
+		JOptionPane.showMessageDialog(frmFloodFantasyLeague, message,title,JOptionPane.WARNING_MESSAGE);
+	}
+	
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	public void drawBoard() {
+		//Set up the frame
+		frmFloodFantasyLeague = new JFrame();
+		frmFloodFantasyLeague.setBackground(new Color(0, 0, 205));
+		frmFloodFantasyLeague.setTitle("FLOOD Fantasy League: "+theLeague.getName());
+		frmFloodFantasyLeague.setBounds(100, 100, 450, 300);
+		frmFloodFantasyLeague.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmFloodFantasyLeague.setSize(new Dimension(700, 400));
+		frmFloodFantasyLeague.setVisible(true);
+		
+		//Initialize and add the tabbed pane
+		final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		frmFloodFantasyLeague.getContentPane().add(tabbedPane, BorderLayout.CENTER);
+		
+		//Initialize the home tab
+		JSplitPane homeSplitPane = new JSplitPane();
+		homeSplitPane.setResizeWeight(0.99);
+		homeSplitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
+		
+		//Initialize the home tab toolbar
+		JToolBar homeToolBar = new JToolBar();
+		homeToolBar.setFloatable(false);
+		homeSplitPane.setRightComponent(homeToolBar);
+		
+		//Add the upload stats button to the toolbar
+		JButton uploadStatsButton = new JButton("Upload Stat File");
+		uploadStatsButton.setMaximumSize(new Dimension(32767, 32767));
+		homeToolBar.add(uploadStatsButton);
+		
+		//Add the create dump button to the toolbar
+		JButton createDumpButton = new JButton("Create Dump File");
+		createDumpButton.setMaximumSize(new Dimension(32767, 32767));
+		homeToolBar.add(createDumpButton);
+		
+		//Add the import dump button to the toolbar
+		JButton importDumpButton = new JButton("Import Dump File");
+		importDumpButton.setMaximumSize(new Dimension(32767, 32767));
+		homeToolBar.add(importDumpButton);
+		
+		//Initialize the home tab scrollpane
+		JScrollPane homePane = new JScrollPane();
+		homeSplitPane.setLeftComponent(homePane);
+		
+		//Add the home tab to the tabbed pane
+		tabbedPane.addTab("Home", null, homeSplitPane, null);
+		
+		//Initialize, format and add the home table
+		homeModel = new DefaultTableModel(homeHeader,0);	//Add the header but no rows
+		homeTable = new MyTableModel(homeModel);
+		homeTable.setEnabled(false);	//Make the rows unselectable
+		homeTable.setAutoCreateRowSorter(true);	//Allow sorting
+		homePane.setViewportView(homeTable);	//Put the table into the scroll pane
+		
+		populateHome();	//Populate the home table
+		
+		JSplitPane draftSplitPane = new JSplitPane();	//Add the draft split pane
+		draftSplitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);	//Split vertically
+		tabbedPane.addTab("Draft", null, draftSplitPane, null);	//Add the split pane to the tabbed pane
+		
+		//Initialize and add the draft scroll pane
+		JScrollPane draftScrollPane = new JScrollPane();
+		draftSplitPane.setRightComponent(draftScrollPane);
+		
+		//Initialize, format and add the draft table
+		draftModel = new DefaultTableModel(playerInfoHeader,0);	//Add the header but no rows
+		draftTable = new MyTableModel(draftModel);
+		draftTable.setRowSelectionAllowed(true);	//Allow row selection
+		draftTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);	//Allow only one row selection at a time
+		draftTable.setAutoCreateRowSorter(true);	//Allow sorting
+		draftScrollPane.setViewportView(draftTable);	//Put the table into the scroll pane
+		
+		//Initialize, format and add the draft tool bar
+		JToolBar draftToolBar = new JToolBar();
+		draftToolBar.setFloatable(false);
+		draftSplitPane.setLeftComponent(draftToolBar);
+		
+		//Initialize, format and add the draft label
+		draftLabel = new JLabel();
+		draftLabel.setMinimumSize(new Dimension(600, 15));
+		draftLabel.setMaximumSize(new Dimension(32767, 15));
+		draftToolBar.add(draftLabel);
+		
+		//Initialize,format and add the draft button
+		JButton btnDraft = new JButton("Draft");
+		btnDraft.setPreferredSize(new Dimension(100, 25));
+		btnDraft.setMaximumSize(new Dimension(100, 25));
+		btnDraft.setMinimumSize(new Dimension(100, 25));
+		draftToolBar.add(btnDraft);
+		
+		//Initialize, format and add the trade split pane
+		JSplitPane tradeSplitPane = new JSplitPane();
+		tradeSplitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);	//Split vertically
+		tabbedPane.addTab("Trade", null, tradeSplitPane, null);
+		
+		//Initialize, format and add the trade tool bar
+		JToolBar tradeToolBar = new JToolBar();
+		tradeToolBar.setFloatable(false);
+		tradeSplitPane.setLeftComponent(tradeToolBar);
+		
+		//Initialize, format and add the first trade combo box
+		final JComboBox tradeComboBox_1 = new JComboBox();
+		tradeToolBar.add(tradeComboBox_1);
+		
+		//Initialize, format and add the second trade combo bos
+		final JComboBox tradeComboBox_2 = new JComboBox();
+		tradeToolBar.add(tradeComboBox_2);
+		
+		//Initialize and add the trade button
+		JButton btnTrade = new JButton("Trade");
+		tradeToolBar.add(btnTrade);
+		
+		//Initialize, format and add the second trade split pane
+		JSplitPane tradeSplitPane_2 = new JSplitPane();
+		tradeSplitPane_2.setResizeWeight(0.5);
+		tradeSplitPane.setRightComponent(tradeSplitPane_2);
+		
+		//Initialize and add the left trade scroll pane
+		JScrollPane tradeScrollPane_1 = new JScrollPane();
+		tradeSplitPane_2.setLeftComponent(tradeScrollPane_1);
+		
+		//Initialize, format and add the left trade table
+		tradeModel_1 = new DefaultTableModel(playerInfoHeader,0);	//Add the header but no rows
+		tradeTable_1 = new MyTableModel(tradeModel_1);
+		tradeTable_1.setRowSelectionAllowed(true);	//Set selection of entire rows
+		tradeTable_1.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);	//Allow multiple row selection
+		tradeTable_1.setAutoCreateRowSorter(true);	//Allow sorting
+		tradeScrollPane_1.setViewportView(tradeTable_1);	//Add table to scroll pane
+		
+		//Initialize and add the right trade scroll pane
+		JScrollPane tradeScrollPane_2 = new JScrollPane();
+		tradeSplitPane_2.setRightComponent(tradeScrollPane_2);
+		
+		//Initialize, format and add the right trade table
+		tradeModel_2 = new DefaultTableModel(playerInfoHeader,0);	//Add the header but no rows
+		tradeTable_2 = new MyTableModel(tradeModel_2);
+		tradeTable_2.setRowSelectionAllowed(true);	//Set selection of entire rows
+		tradeTable_2.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);	//Allow multiple row selection
+		tradeTable_2.setAutoCreateRowSorter(true);	//Allow sorting
+		tradeScrollPane_2.setViewportView(tradeTable_2);	//Add table to scroll pane
+		
+		//Initialize, format and add the drop split pane
+		JSplitPane dropSplitPane = new JSplitPane();
+		dropSplitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);	//Split vertically
+		tabbedPane.addTab("Drop", null, dropSplitPane, null);
+		
+		//Initialize, format and add the drop toolbar
+		JToolBar dropToolBar = new JToolBar();
+		dropToolBar.setFloatable(false);
+		dropSplitPane.setLeftComponent(dropToolBar);
+		
+		//Initialize and add the drop combo box
+		final JComboBox dropComboBox = new JComboBox();
+		dropToolBar.add(dropComboBox);
+		
+		//Initialize and add the drop button
+		JButton btnDrop = new JButton("Drop");
+		dropToolBar.add(btnDrop);
+		
+		//Initialize and add the drop scroll pane
+		JScrollPane dropScrollPane = new JScrollPane();
+		dropSplitPane.setRightComponent(dropScrollPane);
+		
+		//Initialize, format and add the drop table
+		dropModel = new DefaultTableModel(playerInfoHeader,0);	//Add the header but no rows
+		dropTable = new MyTableModel(dropModel);
+		dropTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);	//Alow single selection
+		dropTable.setAutoCreateRowSorter(true);	//Allow sorting
+		dropScrollPane.setViewportView(dropTable);	//Add the table to the scroll pane
+		
+		//Initialize the home tab scrollpane
+		JScrollPane rulePane = new JScrollPane();
+		
+		//Add the home tab to the tabbed pane
+		tabbedPane.addTab("Rules", null, rulePane, null);
+		
+		//Initialize, format and add the home table
+		ruleModel = new DefaultTableModel(ruleHeader,0);	//Add the header but no rows
+		ruleTable = new MyTableModel(ruleModel);
+		ruleTable.setEnabled(false);	//Make the rows unselectable
+		ruleTable.setAutoCreateRowSorter(true);	//Allow sorting
+		rulePane.setViewportView(ruleTable);	//Put the table into the scroll pane
+		
+		populateRules();	//Populate the home table
+		
+		
+		//Initialize the file chooser
+		final JFileChooser chooser=new JFileChooser();
+		
+		//Populate both trade and the drop combo boxes
+		User[] rankedTeams= theLeague.getRankedUsers();
+		for(int i=0;i<rankedTeams.length;i++){
+			tradeComboBox_1.insertItemAt(rankedTeams[i].getName(),i);
+			tradeComboBox_2.insertItemAt(rankedTeams[i].getName(),i);
+			dropComboBox.insertItemAt(rankedTeams[i].getName(),i);
+		}
+		
+		//************************************************************************
+		//****************************Action Listeners****************************
+		//************************************************************************
+		
+		//Action listener for changing tabs
+		tabbedPane.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				int selection = tabbedPane.getSelectedIndex();	//Get selected tab
+				switch(selection){
+				case 0:	//Populate home table
+					populateHome();
+					break;
+				case 1:	//Populate draft table
+					populateDraft();
+					break;
+				case 4:
+					populateRules();
+					break;
+				}
+			}
+		});
+		
+		//Stats upload action listener
+		uploadStatsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int result = chooser.showOpenDialog(null);	//Determine what the user pressed
+				switch (result) {
+				case JFileChooser.APPROVE_OPTION:	//Opened file
+					File file=chooser.getSelectedFile();	//Get the chosen file
+					IOManager.uploadStats(theLeague,file.getAbsolutePath());	//Pass the file path to the parser method
+					populateHome();
+					break;
+				case JFileChooser.CANCEL_OPTION:	//Canceled
+					break;
+				case JFileChooser.ERROR_OPTION:	//Generated an error
+					GUI.error("Upload Error!","Sorry, there was an error opening the stat file.");
+					break;
+				}
+			}
+		});
+		
+		//Dump generator action listener
+		createDumpButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				chooser.setSelectedFile(new File("flooddmp.txt"));
+				int result = chooser.showSaveDialog(null);
+				switch (result) {
+				case JFileChooser.APPROVE_OPTION:	//Opened file
+					File file=chooser.getSelectedFile();	//Get the chosen file
+					if(file.exists()) {
+		                int overwrite = JOptionPane.showConfirmDialog(frmFloodFantasyLeague, "Do you want to overwrite " + file.getName());
+		                if(overwrite == JOptionPane.YES_OPTION) {
+		                	IOManager.writeState(theLeague,file.getAbsolutePath(),currentTurn);	//Pass the file path to the parser method
+		                	tabbedPane.setSelectedIndex(0);
+		                }
+					}
+					else{
+						IOManager.writeState(theLeague,file.getAbsolutePath(),currentTurn);	//Pass the file path to the parser method
+						tabbedPane.setSelectedIndex(0);
+					}
+					break;
+				case JFileChooser.CANCEL_OPTION:	//Canceled
+					break;
+				case JFileChooser.ERROR_OPTION:	//Generated an error
+					GUI.error("Upload Error!","Sorry, error creating the dump file.");
+					break;
+				}
+			}
+		});
+		
+		//Dump importer action listener
+		importDumpButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int result = chooser.showOpenDialog(null);	//Determine what the user pressed
+				switch (result) {
+				case JFileChooser.APPROVE_OPTION:	//Opened file
+					File file=chooser.getSelectedFile();	//Get the chosen file
+					int temp=IOManager.importState(theLeague,file.getAbsolutePath());	//Pass the file path to the parser method
+					if(temp!=-1){
+						currentTurn=temp;
+						populateDraft();
+					}
+					populateHome();
+					break;
+				case JFileChooser.CANCEL_OPTION:	//Canceled
+					break;
+				case JFileChooser.ERROR_OPTION:	//Generated an error
+					GUI.error("Upload Error!","Sorry, there was an error opening the stat file.");
+					break;
+				}
+			}
+		});
+		
+		//Determine which user is picking first
+		pick=FloodProgram.draftFunction(currentTurn);	//Gets the number representing the user's turn
+		draftLabel.setText(theLeague.getUser(pick).getName()+"'s turn!");	//Puts the user's name in the label 
+		
+		//Draft action listener
+		btnDraft.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				for(int i=0;i<draftModel.getRowCount();i++){	//Iterate through table entries
+					if(draftTable.isCellSelected(i,0)){	//If it's selected
+						if(!FloodProgram.draftPlayer(theLeague.getUser(pick),League.athletes.get(draftModel.getValueAt(i,0)))){	//If the draft isn't successful
+							GUI.error("Invalid draft!","Sorry, your draft violates rules of the league.");
+							return;
+						}
+						int overwrite = JOptionPane.showConfirmDialog(frmFloodFantasyLeague, "Are you sure you want to draft: " + League.athletes.get(draftModel.getValueAt(i,0)).getName());
+		                if(overwrite == JOptionPane.YES_OPTION) {
+							currentTurn++;	//Increment the turn
+							draftModel.removeRow(i);	//Remove that row from the draft table
+							populateDraft();
+							//Make all the combo boxes not select anything
+							tradeComboBox_1.setSelectedIndex(-1);
+							tradeComboBox_2.setSelectedIndex(-1);
+							dropComboBox.setSelectedIndex(-1);
+							//Remove the current tables in all the other tabs so that they are up to date
+							while(tradeModel_1.getRowCount()>0){
+					    		tradeModel_1.removeRow(0);
+					    	}
+							while(tradeModel_2.getRowCount()>0){
+					    		tradeModel_2.removeRow(0);
+					    	}
+							while(dropModel.getRowCount()>0){
+					    		dropModel.removeRow(0);
+					    	}
+							return;
+		                }
+		                return;
+					}
+				}
+				//If no selection is found
+				GUI.error("Add error!","Sorry, no player was selected!");
+			}
+		});
+		
+		//Action listener for left trade combo box
+		tradeComboBox_1.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	if(tradeComboBox_1.getSelectedIndex()!=-1){	//If a user is selected
+			    	Player[] teamPlayers=League.teams.get(tradeComboBox_1.getSelectedItem()).getPlayers();	//Get the players the user has
+			    	while(tradeModel_1.getRowCount()>0){	//Clear the current table
+			    		tradeModel_1.removeRow(0);
+			    	}
+			    	for(int i=0;i<teamPlayers.length;i++){	//Populate the table with the new data
+			    		String[] temp={teamPlayers[i].getName(),teamPlayers[i].getPosition(),Float.toString(teamPlayers[i].getPoints())};	//Initialize the row
+			    		tradeModel_1.addRow(temp);
+			    	}
+		    	}
+		    }
+		});
+		
+		//Action listener for the right trade combo box
+		tradeComboBox_2.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	if(tradeComboBox_2.getSelectedIndex()!=-1){	//If a user is selected
+			    	Player[] teamPlayers=League.teams.get(tradeComboBox_2.getSelectedItem()).getPlayers();	//Get the players the user has
+			    	while(tradeModel_2.getRowCount()>0){	//Clear the current table
+			    		tradeModel_2.removeRow(0);
+			    	}
+			    	for(int i=0;i<teamPlayers.length;i++){	//Populate the table with the new data
+			    		String[] temp={teamPlayers[i].getName(),teamPlayers[i].getPosition(),Float.toString(teamPlayers[i].getPoints())};	//Initialize the row
+			    		tradeModel_2.addRow(temp);
+			    	}
+		    	}
+		    }
+		});
+		
+		//Action listener for the trade button
+		btnTrade.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (tradeComboBox_1.getSelectedIndex()==-1 || tradeComboBox_2.getSelectedIndex()==-1) {	//If either combo box doesn't have a user selected
+					GUI.error("Trade error!","Must select two teams to trade between.");
+					return;
+				}
+				else if(tradeComboBox_1.getSelectedIndex()==tradeComboBox_2.getSelectedIndex()){	//If the same user is selected in each combo box
+					GUI.error("Trade error!","Must select two different teams to trade between.");
+					return;
+				}
+				int rows1[] = tradeTable_1.getSelectedRows();	//Get selected rows in the left table
+				int rows2[] = tradeTable_2.getSelectedRows();	//Get selected rows in the right table
+				if(rows1.length==0 && rows2.length==0){	//If no players are selected
+					GUI.error("Trade error!","Must select at least one player to trade.");
+					return;
+				}
+				int overwrite = JOptionPane.showConfirmDialog(frmFloodFantasyLeague, "Are you sure you want to trade?");
+                if(overwrite == JOptionPane.YES_OPTION) {
+					Player[] p1 = new Player[rows1.length];	//Initialize player array for the left table selection
+					Player[] p2 = new Player[rows2.length];	//Initialize player array for the right table selection
+					//Populate the player arrays
+					for (int i = 0; i < p1.length; i++) {
+						p1[i] = League.athletes.get(tradeModel_1.getValueAt(rows1[i],0));
+					}
+					for (int i = 0; i < p2.length; i++) {
+						p2[i] = League.athletes.get(tradeModel_2.getValueAt(rows2[i],0));
+					}
+					boolean success=FloodProgram.trade(League.teams.get(tradeComboBox_1	//Determine if it's a successful trade
+							.getSelectedItem()), p1, League.teams
+							.get(tradeComboBox_2.getSelectedItem()), p2);
+					if(!success){	//If unsuccessful
+						GUI.error("Invalid trade!","Sorry, your trade violates rules of the league.");
+						return;
+					}
+					//Repopulate the tables
+					Player[] teamPlayers = League.teams.get(tradeComboBox_1.getSelectedItem()).getPlayers();
+					while (tradeModel_1.getRowCount() > 0) {	//Clear the left trade table
+						tradeModel_1.removeRow(0);
+					}
+					for (int i = 0; i < teamPlayers.length; i++) {	//Repopulate the left trade table
+						String[] temp = { teamPlayers[i].getName(),
+								teamPlayers[i].getPosition(),
+								Float.toString(teamPlayers[i].getPoints()) };
+						tradeModel_1.addRow(temp);	//Add the row
+					}
+					teamPlayers = League.teams.get(tradeComboBox_2.getSelectedItem()).getPlayers();
+					while (tradeModel_2.getRowCount() > 0) {	//Clear the left trade table
+						tradeModel_2.removeRow(0);
+					}
+					for (int i = 0; i < teamPlayers.length; i++) {	//Repopulate the left trade table
+						String[] temp = { teamPlayers[i].getName(),
+								teamPlayers[i].getPosition(),
+								Float.toString(teamPlayers[i].getPoints()) };
+						tradeModel_2.addRow(temp);	//Add the row
+					}
+                }
+			}
+		});
+		
+		//Action listener for drop combo box
+		dropComboBox.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	if(dropComboBox.getSelectedIndex()!=-1){	//If a user is selected
+			    	Player[] teamPlayers=League.teams.get(dropComboBox.getSelectedItem()).getPlayers();	//Get the user's players
+			    	while(dropModel.getRowCount()>0){	//Clear the table
+			    		dropModel.removeRow(0);
+			    	}
+			    	for(int i=0;i<teamPlayers.length;i++){	//Repopulate the table
+			    		String[] temp={teamPlayers[i].getName(),teamPlayers[i].getPosition(),Float.toString(teamPlayers[i].getPoints())};
+			    		dropModel.addRow(temp);	//Add the row
+			    	}
+		    	}
+		    }
+		});
+		
+		//Action listener for drop button
+		btnDrop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int index=dropTable.getSelectedRow();
+				if(index==-1){	//If no player is selected to drop
+					GUI.error("Drop error!","Must select a team to drop a player from.");
+					return;
+				}
+				int overwrite = JOptionPane.showConfirmDialog(frmFloodFantasyLeague, "Are you sure you want to drop: " + League.athletes.get(dropModel.getValueAt(index,0)).getName());
+                if(overwrite == JOptionPane.YES_OPTION) {
+					Player drop=League.athletes.get(dropModel.getValueAt(index,0));	//Get player
+					boolean success=FloodProgram.dropPlayer(League.teams.get(dropComboBox.getSelectedItem()),drop);	//Determine if drop is successful
+					if(!success){
+						GUI.error("Invalid drop!","Sorry, your drop violates rules of the league.");
+						return;
+					}
+					dropModel.removeRow(index);	//Delete that row
+					//Make all the combo boxes not select anything
+					tradeComboBox_1.setSelectedIndex(-1);
+					tradeComboBox_2.setSelectedIndex(-1);
+					while(tradeModel_1.getRowCount()>0){
+						tradeModel_1.removeRow(0);
+					}
+					while(tradeModel_2.getRowCount()>0){
+						tradeModel_2.removeRow(0);
+					}
+                }
+			}
+		});
+		
+		tabbedPane.setSelectedIndex(0);
+	}
+}
+class MyTableModel extends JTable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public MyTableModel(){
+		super();
+	}
+	public MyTableModel(DefaultTableModel model){
+		super(model);
+	}
+	public MyTableModel(Object[][] data,Object[] columnNames){
+		super(data,columnNames);
+	}
+    public boolean isCellEditable(int row, int col) {
+    	return false;
+    }
+}
+\end{lstlisting}
+\end{singlespace}
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption={IOManager.java}]
+/*
+ * IOManager.java
+ * This class handles the input and output of the FLOOD GUI
+ */
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
+/*
+ * Stats Parser
+ */
+public class IOManager {
+	
+	/**Write the current state of the league to a text file so that the program
+	 * may be exited and resumes from the place it left off.
+	 * 
+	 * @param League myLeague
+	 * @param String filePath
+	 * @param int turn
+	 */
+	public static void writeState(League myLeague,String filePath,int turn){
+		try {
+			FileWriter fstream = new FileWriter(filePath);	//Create the file
+			BufferedWriter out = new BufferedWriter(fstream);	//Initialize the output stream
+			out.write(turn+","+myLeague.getMaxTeamSize()+","+myLeague.getMinTeamSize()+","+myLeague.getMaxUser()+","+myLeague.getMinUser()+"\n");	//Write the first line of the file
+			//Write the actions
+			out.write("ACTIONS:\n");
+			Action[] actions=myLeague.getActions();	//Get the actions
+			for(int i=0;i<actions.length;i++){	//Iterate through the actions
+				out.write(actions[i].getAction()+","+actions[i].getPoints()+"\n");	//Write each action
+			}
+			//Write the players
+			out.write("PLAYERS:\n");
+			Player[] players=myLeague.getPlayers();	//Get the players
+			for(int i=0;i<players.length;i++){	//Iterate through the players
+				out.write(players[i].getName()+","+players[i].getPosition()+","+players[i].getPoints()+"\n");	//Write each players
+			}
+			//Write the teams
+			out.write("TEAMS:\n");
+			User[] teams=myLeague.getUsers();	//Get the teams
+			for(int i=0;i<teams.length;i++){	//Iterate through the teams
+				Player[] teamPlayers=teams[i].getPlayers();	//Get the players of each team
+				out.write(","+teams[i].getName()+","+teams[i].getPoints()+"\n");	//Write each team
+				for(int j=0;j<teamPlayers.length;j++){	//Iterate through the players
+					out.write(teamPlayers[j].getName()+"\n");	//Write the player's name as a reference to the above players
+				}
+			}
+			//Write the free agent
+			out.write("FREE AGENT:\n");
+			User free=League.freeAgent;	//Get the free agen
+			Player[] freePlayers=free.getPlayers();	//Get the players of the free agent
+			for(int i=0;i<freePlayers.length;i++){	//Iterate through the players
+				out.write(freePlayers[i].getName()+"\n");	//Write the player's name as a reference to the above players
+			}
+			out.close();	//Close the output stream
+		} catch (IOException e) {
+			GUI.alert("Stat Dump Error!", "Error creating the dump file! Please try again.");
+		}
+	}
+	
+	/**Read a file representing the state of a program and restore that state
+	 * to the current program.
+	 * 
+	 * @param League myLeague
+	 * @param String filePath
+	 * @return int turn
+	 */
+	public static int importState(League myLeague,String filePath){
+		try {
+			myLeague.clear();	//Clear the current league
+			FileInputStream fstream = new FileInputStream(filePath);	//Open the file
+			DataInputStream in = new DataInputStream(fstream);//Get the object of DataInputStream
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));	//Initialize the buffered reader
+			//Initialize variables
+			String str="",team="";
+			int turn=-1;
+			str=br.readLine();	//Read the first line
+			String[] data=str.split(",\\s*");	//Split on commas
+			if(data.length!=5){
+				in.close();
+				myLeague.clear();
+				GUI.alert("Dump Import Error!", "Invalid dump file!");
+				return -1;
+			}
+			//Store the data
+			turn=Integer.parseInt(data[0]);
+			System.out.println("Parsed: "+data[0]+" to "+turn);
+			myLeague.setMaxTeamSize(Integer.parseInt(data[1]));
+			myLeague.setMinTeamSize(Integer.parseInt(data[2]));
+			myLeague.setMaxUser(Integer.parseInt(data[3]));
+			myLeague.setMinUser(Integer.parseInt(data[4]));
+			
+			boolean teamFlag=false,playerFlag=false,actionFlag=false,freeFlag=false;
+			while((str = br.readLine()) != null){	//Read File Line By Line
+				if(str.equalsIgnoreCase("ACTIONS:")){	//Actions reached
+					actionFlag=true;
+					playerFlag=false;
+					teamFlag=false;
+					freeFlag=false;
+				}
+				else if(str.equalsIgnoreCase("PLAYERS:")){	//Players reached
+					playerFlag=true;
+					actionFlag=false;
+					teamFlag=false;
+					freeFlag=false;
+				}
+				else if(str.equalsIgnoreCase("TEAMS:")){	//Teams reached
+					teamFlag=true;
+					actionFlag=false;
+					playerFlag=false;
+					freeFlag=false;
+				}
+				else if(str.equals("FREE AGENT:")){	//Free agent reached
+					teamFlag=false;
+					actionFlag=false;
+					playerFlag=false;
+					freeFlag=true;
+				}
+				else{	//Data
+					if(actionFlag){	//If currently looking at actions
+						String[] parts=str.split(",\\s*");	//Split on commas
+						if(parts.length!=2){	//Validate that it's an action
+							in.close();
+							myLeague.clear();
+							GUI.alert("Dump Import Error!", "Invalid dump file!");
+							return -1;
+						}
+						myLeague.addAction(new Action(parts[0].trim(),Float.parseFloat(parts[1].trim())));	//Add action to league
+					}
+					else if(playerFlag){	//If currently looking at players
+						String[] parts=str.split(",\\s*");	//Split on commas
+						if(parts.length!=3){	//Validate that it's a player
+							in.close();
+							myLeague.clear();
+							GUI.alert("Dump Import Error!", "Invalid dump file!");
+							return -1;
+						}
+						myLeague.addPlayer(new Player(parts[0].trim(),parts[1].trim(),Float.parseFloat(parts[2].trim())));	//Add player to league
+					}
+					else if(teamFlag){	//If currently looking at teams
+						String[] parts=str.split(",\\s*");	//Split on commas
+						if(str.charAt(0)==','){	//If it's a team name
+							if(parts.length!=3){	//Validate that it's a team name
+								in.close();
+								myLeague.clear();
+								GUI.alert("Dump Import Error!", "Invalid dump file!");
+								return -1;
+							}
+							team=parts[1].trim();	//Trim white space
+							myLeague.addUser(new User(team,Float.parseFloat(parts[2].trim())));	//Add team to league
+						}
+						else{	//If it's a team player
+							if(parts.length!=1){	//Validate that it's a player name
+								in.close();
+								myLeague.clear();
+								GUI.alert("Dump Import Error!", "Invalid dump file!");
+								return -1;
+							}
+							myLeague.getTeam(team).addPlayer(myLeague.getPlayer(parts[0].trim()));	//Get reference to player and add to team
+						}
+					}
+					else if(freeFlag){	//If currently looking at free agent
+						String[] parts=str.split(",\\s*");	//Split on commas
+						if(parts.length!=1){	//Validate that it's a player name
+							in.close();
+							myLeague.clear();
+							GUI.alert("Dump Import Error!", "Invalid dump file!");
+							return -1;
+						}
+						myLeague.getFreeAgent().addPlayer(myLeague.getPlayer(parts[0].trim()));	//Get reference to player and add player to free agent
+					}
+				}
+			}
+			in.close();	//Close input stream
+			if(!freeFlag){	//If the free agent was never reached
+				in.close();
+				myLeague.clear();
+				GUI.alert("Dump Import Error!", "Invalid dump file!");
+				return -1;
+			}
+			return turn;	//Return current turn
+		} catch (FileNotFoundException e) {
+			myLeague.clear();
+			GUI.alert("Dump Import Error!", "File not found!");
+			return -1;
+		} catch (IOException e) {
+			myLeague.clear();
+			GUI.alert("Dump Import Error!", "Error writing file!");
+			return -1;
+		} catch (IndexOutOfBoundsException e){
+			myLeague.clear();
+			GUI.alert("Dump Import Error!", "Invalid dump file!");
+			return -1;
+		}
+	}
+	
+	/**Upload the statistics from a file.
+	 * 
+	 * @param League myLeague
+	 * @param String fileName
+	 */
+	public static void uploadStats(League myLeague,String filePath){
+		try {
+			ArrayList<String[]> statsAL = new ArrayList<String[]>();
+			FileInputStream fstream = new FileInputStream(filePath);	//Open the file
+			DataInputStream in = new DataInputStream(fstream);	//Get the object of DataInputStream
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			String str;
+			String[] stats;
+			boolean valid=true;
+			while((str = br.readLine()) != null){	//Read File Line By Line
+				stats=str.split(",\\s*");
+				valid=valid && myLeague.getPlayer(stats[0])!=null;	//Check if the athlete exists
+				if(!valid){	//If the athlete doesn't exist
+					in.close();
+					GUI.error("Athelete doesn't exist! ",stats[0]+" is not a valid athlete.");
+					return;
+				}
+				valid=valid && myLeague.getAction(stats[1])!=null;	//Check if the action exists
+				if(!valid){	//If the athlete doesn't exist
+					in.close();
+					GUI.error("Action doesn't exist! ",stats[1]+" is not a valid action.");
+					return;
+				}
+				valid=valid && Integer.parseInt(stats[2])>0;	//Check if the quantity is greater than zero
+				if(!valid){	//If the quantity is less than or equal to zero
+					in.close();
+					GUI.error("Quantity must be positive! ",stats[2]+" is not a positive number greater than zero.");
+					return;
+				}
+				statsAL.add(stats);	//Split on commas
+			}
+			in.close();	//Close
+			for(int i=0;i<statsAL.size();i++){	//Iterate through the stats
+				float pts=myLeague.getAction(statsAL.get(i)[1]).getPoints() * Integer.parseInt(statsAL.get(i)[2]);	//Compute the points
+				Player temp=myLeague.getPlayer(statsAL.get(i)[0]);	//Get the player
+				temp.addPoints(pts);	//Add the points to the player and thereby the team they're one
+			}
+		} catch (FileNotFoundException e) {
+			GUI.alert("Stat Parsing Error!","File not found!");
+		} catch (IOException e) {
+			GUI.alert("Stat Parsing Error!","Error opening the file!");
+		} catch (IndexOutOfBoundsException e){
+			GUI.alert("Stat Parsing Error!","Invalid stat file!");
+		}
+	}
+}
+\end{lstlisting}
+\end{singlespace}
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption={League.java}]
+/*
+ * League.java
+ * This class handles the the League elements in the fantasy league
+ */
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+
+
+public class League {
+	private String name;
+	private int maxTeamSize,minTeamSize,maxUsers,minUsers;
+	public static HashMap<String,User> teams;
+	public static HashMap<Player,User> playerToTeam;
+	public static HashMap<String,Player> athletes;
+	public static HashMap<String,Action> ptsDist;
+	public static ArrayList<User> indexedTeams;
+	public static User freeAgent;
+	
+	/**Constructor for League.
+	 * 
+	 * @param String name
+	 */
+	public League(String name){
+		this.name=name;
+		//Initialize data structures
+		teams=new HashMap<String,User>();
+		indexedTeams=new ArrayList<User>();
+		athletes=new HashMap<String,Player>();
+		ptsDist=new HashMap<String,Action>();
+		playerToTeam= new HashMap<Player,User>();
+		freeAgent=new User("Free Agent");
+	}
+	
+	/**Add an action to the league.
+	 * 
+	 * @param Action a
+	 */
+	public void addAction(Action a){
+		ptsDist.put(a.getAction(),a);
+	}
+	
+	/**Add a user to the league.
+	 * 
+	 * @param User u
+	 */
+	public void addUser(User u){
+		teams.put(u.getName(),u);
+		indexedTeams.add(u);	//Store the indexed user
+	}
+	
+	/**Add a player to the league.
+	 * 
+	 * @param p
+	 */
+	public void addPlayer(Player p){
+		athletes.put(p.getName(),p);	//Add to the list of players
+		freeAgent.addPlayer(p);	//Add to the free agent
+	}
+	
+	/**Get a user based on an index.
+	 * 
+	 * @param int index
+	 * @return User u
+	 */
+	public User getUser(int index){
+		return indexedTeams.get(index);
+	}
+	
+	/**Get the max team size.
+	 * 
+	 * @return int maxTeamSize
+	 */
+	public int getMaxTeamSize() {
+		return maxTeamSize;
+	}
+	
+	/**Set the max team size.
+	 * 
+	 * @param int maxTeamSize
+	 */
+	public void setMaxTeamSize(int maxTeamSize) {
+		this.maxTeamSize = maxTeamSize;
+	}
+	
+	/**Get the min team size.
+	 * 
+	 * @return int minTeamSize
+	 */
+	public int getMinTeamSize() {
+		return minTeamSize;
+	}
+	
+	/**Set the min team size.
+	 * 
+	 * @param int minTeamSize
+	 */
+	public void setMinTeamSize(int minTeamSize) {
+		this.minTeamSize = minTeamSize;
+	}
+	
+	/**Get the max number of users
+	 * 
+	 * @return int maxUsers
+	 */
+	public int getMaxUser() {
+		return maxUsers;
+	}
+	
+	/**Set the max number of users
+	 * 
+	 * @param int maxUsers
+	 */
+	public void setMaxUser(int maxUsers) {
+		this.maxUsers = maxUsers;
+	}
+	
+	/**Get the min number of users
+	 * 
+	 * @return int minUsers
+	 */
+	public int getMinUser() {
+		return minUsers;
+	}
+	
+	/**Set the min number of users.
+	 * 
+	 * @param int minUsers
+	 */
+	public void setMinUser(int minUsers) {
+		this.minUsers = minUsers;
+	}
+	
+	/**Get the name of the league.
+	 * 
+	 * @return String name
+	 */
+	public String getName() {
+		return name;
+	}
+	
+	/**Get the current number of users in the league.
+	 * 
+	 * @return int numUsers
+	 */
+	public int getCurrentNumUsers(){
+		return teams.size();
+	}
+	
+	/**Get the current number of players in the league.
+	 * 
+	 * @return int numPlayers
+	 */
+	public int getCurrentNumPlayers(){
+		return teams.size();
+	}
+	
+	/**Get the current number of actions in the league.
+	 * 
+	 * @return int numActions
+	 */
+	public int getCurrentNumActions(){
+		return athletes.size();
+	}
+	
+	/**Get a user from their name.
+	 * 
+	 * @param String name
+	 * @return User u
+	 */
+	public User getTeam(String name){
+		return teams.get(name);
+	}
+	
+	/**Get a player from their name.
+	 * 
+	 * @param String name
+	 * @return Player p
+	 */
+	public Player getPlayer(String name){
+		return athletes.get(name);
+	}
+	
+	/**Get an action from the rule.
+	 * 
+	 * @param String action
+	 * @return Action a
+	 */
+	public Action getAction(String action){
+		return ptsDist.get(action);
+	}
+	
+	/**Get the free agent.
+	 * 
+	 * @return User freeAgent
+	 */
+	public User getFreeAgent(){
+		return freeAgent;
+	}
+	
+	/**Get the users in reverse ranked order based on
+	 * the number of points they have.
+	 * 
+	 * @return Users[] rankedTeams
+	 */
+	public User[] getRankedUsers(){
+		User[] ranked=teams.values().toArray(new User[teams.size()]);
+		Arrays.sort(ranked);
+		return ranked;
+	}
+	
+	/**Get the players that are still in the draft in reverse
+	 * ranked order.
+	 * 
+	 * @return Player[] availablePlayers
+	 */
+	public Player[] getRankedAvailablePlayers(){
+		return freeAgent.getPlayers();
+	}
+	
+	/**Get all the players in the league.
+	 * 
+	 * @return Player[] allPlayers
+	 */
+	public Player[] getPlayers(){
+		return athletes.values().toArray(new Player[athletes.size()]);
+	}
+	
+	/**Get all the actions in the league.
+	 * 
+	 * @return Action[] allActions
+	 */
+	public Action[] getActions(){
+		return ptsDist.values().toArray(new Action[ptsDist.size()]);
+	}
+	
+	/**Get all the users in the correct indexed order.
+	 * 
+	 * @return User[] users
+	 */
+	public User[] getUsers(){
+		return indexedTeams.toArray(new User[indexedTeams.size()]);
+	}
+	/**Clear all the data structures.
+	 * 
+	 */
+	public void clear(){
+		teams.clear();
+		playerToTeam.clear();
+		athletes.clear();
+		ptsDist.clear();
+		indexedTeams.clear();
+		freeAgent.clear();
+	}
+	
+	/**Get a string representation of the league's statistics.
+	 * 
+	 * @return String league
+	 */
+	public String toString() {
+		return "League [name=" + name + ", maxTeamSize=" + maxTeamSize
+				+ ", minTeamSize=" + minTeamSize + ", maxUser=" + maxUsers
+				+ ", minUser=" + minUsers + "]";
+	}
+	
+}
+\end{lstlisting}
+\end{singlespace}
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption={makefile}]
+# makefile to generate the FLOOD compiler frontend
+
+JFLEX      = jflex 
+JAVAC      = javac
+JAR        = jar -cf
+DELETE = rm -rf
+BYACCJ = byaccj -J
+
+# targets:
+
+all: flood_frontend.jar
+
+run: flood_frontend.jar
+	java Parser
+
+build: clean flood_frontend.jar
+
+clean:
+	$(DELETE) *.*~ *.class
+	$(DELETE) ParserVal.java
+	$(DELETE) Parser.java
+	$(DELETE) Yylex.java
+	$(DELETE) flood_front.jar
+	$(DELETE) FloodProgram.java
+
+flood_frontend.jar: Parser.class
+	$(JAR) flood_front.jar *.class
+
+Parser.class: Yylex.java Parser.java
+	$(JAVAC) Parser.java
+
+Yylex.java: flood_lex.flex
+	$(JFLEX) flood_lex.flex
+
+Parser.java: flood_grammar.y
+	$(BYACCJ) flood_grammar.y
+\end{lstlisting}
+\end{singlespace}
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption={Player.java}]
+/*
+ * Player.java
+ * This class handles an individual player in the league
+ */
+
+public class Player implements Comparable<Player>{
+	private String name, position;
+	private float totalPoints;
+	
+	/**Constructor with just the name and position.
+     * 
+     * @param String name
+     * @param String position
+     */
+	public Player(String name, String position){
+		this.name=name;
+		this.position=position;
+		totalPoints=0;
+	}
+	
+	/**Constructor with the name and points. Used for importing
+     * dump files.
+     * 
+     * @param String name
+     * @param String position
+     * @param float totalPoints
+     */
+	public Player(String name, String position,float totalPoints){
+		this.name=name;
+		this.position=position;
+		this.totalPoints=totalPoints;
+	}
+	
+	/**Get the player's name.
+	 * 
+	 * @return
+	 */
+	public String getName() {
+		return name;
+	}
+	
+	/**Return a string representation of the player.
+	 * 
+	 * @return String player
+	 */
+	public String toString() {
+		return "Player [name=" + name + ", position=" + position
+				+ ", totalPoints=" + totalPoints + "]";
+	}
+	
+	/**Get the player's position.
+	 * 
+	 * @return String position
+	 */
+	public String getPosition() {
+		return position;
+	}
+	
+	/**Add points to the player and the team they are on.
+	 * 
+	 * @param float pts
+	 */
+	public void addPoints(float pts){
+		totalPoints+=pts;	//Add pts to players points
+		User temp=League.playerToTeam.get(this);	//Get team they are on
+		if(temp!=null)	//Free agent
+			temp.addPoints(pts);	//Add the points to the team
+	}
+	
+	/**Get the player's total points.
+	 * 
+	 * @return float totalPoints
+	 */
+	public float getPoints(){
+		return totalPoints;
+	}
+	
+	/**Determine if two players are equal.
+	 * 
+	 * @return boolean areEqual
+	 */
+	public boolean equals(Object obj){
+		if (this == obj)	//Same reference
+			return true;
+		if (obj == null)	//Other is null
+			return false;
+		if (getClass() != obj.getClass())	//Not the same class
+			return false;
+		final Player other = (Player) obj;	//Cast other object
+		if (name.equals(other.name) && position.equals(other.position))	//Same name and position
+			return true;
+		return false;
+	}
+	
+	/**Compare two players based on their total points scored.
+	 * 
+	 * @return int compared
+	 */
+	public int compareTo(Player o) {
+		if(totalPoints>o.getPoints())
+			return 1;
+		else if(totalPoints==o.getPoints())
+			return 0;
+		return -1;
+	}
+	
+}
+\end{lstlisting}
+\end{singlespace}
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption={run.sh}]
+#!/bin/bash
+java Parser $1
+javac FloodProgram.java
+java FloodProgram
+\end{lstlisting}
+\end{singlespace}
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption={User.java}]
+/*
+ * User.java
+ * This class handles the users in the league
+ */
+
+import java.util.Arrays;
+import java.util.HashMap;
+
+
+public class User implements Comparable<User>{
+    private float totalPoints;
+    private String name;
+    private HashMap<String,Player> teamAthletes;
+    
+    /**Constructor with just the name.
+     * 
+     * @param String name
+     */
+    public User(String name){
+    	this.name=name;
+    	totalPoints=0;
+    	teamAthletes=new HashMap<String,Player>();
+    }
+    
+    /**Constructor with the name and points. Used for importing
+     * dump files.
+     * 
+     * @param String name
+     * @param float totalPoints
+     */
+    public User(String name,float totalPoints){
+    	this.name=name;
+    	this.totalPoints=totalPoints;
+    	teamAthletes=new HashMap<String,Player>();
+    }
+    
+    /**Add a player to the team and if the team is not the free agent,
+     * remove the player from the free agent.
+     * 
+     * @param Player athlete
+     */
+    public void addPlayer(Player athlete){
+    	teamAthletes.put(athlete.getName(),athlete);	//Add player to this team
+    	if(!name.equals("Free Agent")){	//If it's not the free agent team
+    		League.playerToTeam.put(athlete,this);	//Add the association of player to team mapping
+    		League.freeAgent.removePlayer(athlete);	//Remove this player from the free agent
+    	}
+    }
+    
+    /**Remove a player from a team and if the team is not the free agent,
+     * add the player to the free agent.
+     * 
+     * @param Player athlete
+     */
+    public void removePlayer(Player athlete){
+    	teamAthletes.remove(athlete.getName());	//Remove athlete from this team
+    	if(!name.equals("Free Agent")){	//If it's not the free agent
+    		League.playerToTeam.remove(athlete);	//Remove the association of player to team
+    		League.freeAgent.addPlayer(athlete);	//Add the player to the free agent
+    	}
+    }
+    
+    /**Add points to the team.
+     * 
+     * @param float points
+     */
+    public void addPoints(float points){
+    	totalPoints+=points;
+    }
+    
+    /**Get the user's points.
+     * 
+     * @return float totalPoints
+     */
+	public float getPoints() {
+		return totalPoints;
+	}
+	
+	/**Get the name of the user.
+	 * 
+	 * @return String name
+	 */
+	public String getName() {
+		return name;
+	}
+	
+	/**Get the number of players on the user's team.
+	 * 
+	 * @return int numPlayers
+	 */
+	public int getNumPlayers(){
+		return teamAthletes.size();
+	}
+	
+	/**Get the player on the user's team in reverse ranked
+	 * order.
+	 * 
+	 * @return Player[] rankedPlayers
+	 */
+	public Player[] getPlayers(){
+		Player[] ranked=teamAthletes.values().toArray(new Player[teamAthletes.size()]);
+		Arrays.sort(ranked);
+		return ranked;
+	}
+	
+	/**Determine if two users are the same.
+	 * 
+	 * @return boolean areEqual
+	 */
+	public boolean equals(Object obj){
+		if (this == obj)	//Same reference
+			return true;
+		if (obj == null)	//Other is null
+			return false;
+		if (getClass() != obj.getClass())	//Not the same class
+			return false;
+		final User other = (User) obj;	//Cast object
+		if (name.equals(other.name))	//If the names are equal
+			return true;
+		return false;
+	}
+	
+	/**Compare one user to another based on their number of points.
+	 * 
+	 * @return int compared
+	 */
+	public int compareTo(User o) {
+		if(totalPoints>o.getPoints())
+			return 1;
+		else if(totalPoints==o.getPoints())
+			return 0;
+		return -1;
+	}
+	
+	/**Return a string representation of the user.
+	 * 
+	 * @return String user
+	 */
+	public String toString() {
+		return "User [name=" + name + ", points=" + totalPoints + "]";
+	}
+	
+	/**Clear the data structures.
+	 * 
+	 */
+	public void clear(){
+		teamAthletes.clear();
+	}
+}
+\end{lstlisting}
+\end{singlespace}
 
 \end{document}
