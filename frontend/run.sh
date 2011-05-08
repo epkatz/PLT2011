@@ -1,5 +1,5 @@
 #!/bin/bash
 java Parser $1
-javac FloodProgram.java
-java FloodProgram
+javac Test.java
+java Test
 
