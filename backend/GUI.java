@@ -27,12 +27,13 @@ import javax.swing.table.DefaultTableModel;
 public class GUI {
 	private League theLeague;
 	private static JFrame frmFloodFantasyLeague;
-	private MyTableModel homeTable,draftTable,tradeTable_1,tradeTable_2,dropTable;
-	private DefaultTableModel homeModel,draftModel,tradeModel_1,tradeModel_2,dropModel;
+	private MyTableModel homeTable,draftTable,tradeTable_1,tradeTable_2,dropTable,ruleTable;
+	private DefaultTableModel homeModel,draftModel,tradeModel_1,tradeModel_2,dropModel,ruleModel;
 	private int currentTurn,pick;
 	private DecimalFormat twoDForm;
 	private final String[] homeHeader={"Rank","Team","Points"},
-		playerInfoHeader={"Player","Position","Points All Season"};
+		playerInfoHeader={"Player","Position","Points All Season"},
+		ruleHeader={"Action","Point Value"};
 	
 	/**Constructor
 	 * 
@@ -76,6 +77,21 @@ public class GUI {
 		}
 	}
 	
+	/**Populates the add table assuming it has already been initialized.
+	 * 
+	 */
+	private void populateRules(){
+		Action[] rules=theLeague.getActions();	//Get all the players in reverse ranked order
+		while(ruleModel.getRowCount()>0)	//Remove all the rows from the add table
+			ruleModel.removeRow(0);
+		String[] tempRule=new String[2];	//Initialize a temporary row
+		for(int i=rules.length-1;i>=0;i--){	//Iterate through the players
+			tempRule[0]=rules[i].getAction();	//Set the name
+			tempRule[1]=twoDForm.format(rules[i].getPoints());	//Set the points scored all season
+			ruleModel.addRow(tempRule);	//Add the row
+		}
+	}
+	
 	/**Display an error window with the title and message given
 	 * as parameters.
 	 * 
@@ -103,7 +119,7 @@ public class GUI {
 		//Set up the frame
 		frmFloodFantasyLeague = new JFrame();
 		frmFloodFantasyLeague.setBackground(new Color(0, 0, 205));
-		frmFloodFantasyLeague.setTitle("FLOOD Fantasy League");
+		frmFloodFantasyLeague.setTitle("FLOOD Fantasy League: "+theLeague.getName());
 		frmFloodFantasyLeague.setBounds(100, 100, 450, 300);
 		frmFloodFantasyLeague.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmFloodFantasyLeague.setSize(new Dimension(700, 400));
@@ -267,6 +283,22 @@ public class GUI {
 		dropTable.setAutoCreateRowSorter(true);	//Allow sorting
 		dropScrollPane.setViewportView(dropTable);	//Add the table to the scroll pane
 		
+		//Initialize the home tab scrollpane
+		JScrollPane rulePane = new JScrollPane();
+		
+		//Add the home tab to the tabbed pane
+		tabbedPane.addTab("Rules", null, rulePane, null);
+		
+		//Initialize, format and add the home table
+		ruleModel = new DefaultTableModel(ruleHeader,0);	//Add the header but no rows
+		ruleTable = new MyTableModel(ruleModel);
+		ruleTable.setEnabled(false);	//Make the rows unselectable
+		ruleTable.setAutoCreateRowSorter(true);	//Allow sorting
+		rulePane.setViewportView(ruleTable);	//Put the table into the scroll pane
+		
+		populateRules();	//Populate the home table
+		
+		
 		//Initialize the file chooser
 		final JFileChooser chooser=new JFileChooser();
 		
@@ -292,6 +324,9 @@ public class GUI {
 					break;
 				case 1:	//Populate draft table
 					populateDraft();
+					break;
+				case 4:
+					populateRules();
 					break;
 				}
 			}
@@ -353,6 +388,7 @@ public class GUI {
 					File file=chooser.getSelectedFile();	//Get the chosen file
 					int temp=IOManager.importState(theLeague,file.getAbsolutePath());	//Pass the file path to the parser method
 					if(temp!=-1){
+						System.out.println("Saving turn: "+temp);
 						currentTurn=temp;
 						//Determine which user is picking
 						pick=Test.draftFunction(currentTurn);	//Gets the number representing the user's turn
@@ -417,7 +453,7 @@ public class GUI {
 			    		tradeModel_1.removeRow(0);
 			    	}
 			    	for(int i=0;i<teamPlayers.length;i++){	//Populate the table with the new data
-			    		String[] temp={teamPlayers[i].getName(),teamPlayers[i].getPosition(),Double.toString(teamPlayers[i].getPoints())};	//Initialize the row
+			    		String[] temp={teamPlayers[i].getName(),teamPlayers[i].getPosition(),Float.toString(teamPlayers[i].getPoints())};	//Initialize the row
 			    		tradeModel_1.addRow(temp);
 			    	}
 		    	}
@@ -433,7 +469,7 @@ public class GUI {
 			    		tradeModel_2.removeRow(0);
 			    	}
 			    	for(int i=0;i<teamPlayers.length;i++){	//Populate the table with the new data
-			    		String[] temp={teamPlayers[i].getName(),teamPlayers[i].getPosition(),Double.toString(teamPlayers[i].getPoints())};	//Initialize the row
+			    		String[] temp={teamPlayers[i].getName(),teamPlayers[i].getPosition(),Float.toString(teamPlayers[i].getPoints())};	//Initialize the row
 			    		tradeModel_2.addRow(temp);
 			    	}
 		    	}
@@ -481,7 +517,7 @@ public class GUI {
 				for (int i = 0; i < teamPlayers.length; i++) {	//Repopulate the left trade table
 					String[] temp = { teamPlayers[i].getName(),
 							teamPlayers[i].getPosition(),
-							Double.toString(teamPlayers[i].getPoints()) };
+							Float.toString(teamPlayers[i].getPoints()) };
 					tradeModel_1.addRow(temp);	//Add the row
 				}
 				teamPlayers = League.teams.get(tradeComboBox_2.getSelectedItem()).getPlayers();
@@ -491,7 +527,7 @@ public class GUI {
 				for (int i = 0; i < teamPlayers.length; i++) {	//Repopulate the left trade table
 					String[] temp = { teamPlayers[i].getName(),
 							teamPlayers[i].getPosition(),
-							Double.toString(teamPlayers[i].getPoints()) };
+							Float.toString(teamPlayers[i].getPoints()) };
 					tradeModel_2.addRow(temp);	//Add the row
 				}
 			}
@@ -506,7 +542,7 @@ public class GUI {
 			    		dropModel.removeRow(0);
 			    	}
 			    	for(int i=0;i<teamPlayers.length;i++){	//Repopulate the table
-			    		String[] temp={teamPlayers[i].getName(),teamPlayers[i].getPosition(),Double.toString(teamPlayers[i].getPoints())};
+			    		String[] temp={teamPlayers[i].getName(),teamPlayers[i].getPosition(),Float.toString(teamPlayers[i].getPoints())};
 			    		dropModel.addRow(temp);	//Add the row
 			    	}
 		    	}

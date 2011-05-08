@@ -100,7 +100,7 @@ public class League {
 	 * 
 	 * @return int maxUsers
 	 */
-	public int getMaxUsers() {
+	public int getMaxUser() {
 		return maxUsers;
 	}
 	
@@ -108,7 +108,7 @@ public class League {
 	 * 
 	 * @param int maxUsers
 	 */
-	public void setMaxUsers(int maxUsers) {
+	public void setMaxUser(int maxUsers) {
 		this.maxUsers = maxUsers;
 	}
 	
@@ -116,7 +116,7 @@ public class League {
 	 * 
 	 * @return int minUsers
 	 */
-	public int getMinUsers() {
+	public int getMinUser() {
 		return minUsers;
 	}
 	
@@ -124,7 +124,7 @@ public class League {
 	 * 
 	 * @param int minUsers
 	 */
-	public void setMinUsers(int minUsers) {
+	public void setMinUser(int minUsers) {
 		this.minUsers = minUsers;
 	}
 	

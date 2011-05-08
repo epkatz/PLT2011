@@ -2,16 +2,16 @@ package backend;
 
 public class Action {
 	private String action;
-	private double points;
+	private float points;
 	
 	/**Constructor.
 	 * 
 	 * @param String action
-	 * @param double points
+	 * @param float points
 	 */
 	public Action(String action,double points){
 		this.action=action;
-		this.points=points;
+		this.points=(float)points;
 	}
 	
 	/**Returns the string representation of the action
@@ -32,15 +32,15 @@ public class Action {
 	
 	/**Return the points gained for completing the action
 	 * 
-	 * @return double points
+	 * @return float points
 	 */
-	public double getPoints() {
+	public float getPoints() {
 		return points;
 	}
 	
 	/**Sets the points gained for completing the action
 	 * 
-	 * @param double points
+	 * @param float points
 	 */
 	public void setPoints(int points) {
 		this.points = points;
