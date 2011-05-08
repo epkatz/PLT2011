@@ -57,6 +57,8 @@
 %token Set                    /* Set keyword */
 %token Add                    /* Add keyword */
 %token Action                 /* Action keyword */
+%token Alert		      /* Alert message*/
+%token Error		      /* Error message*/
 %token User                   /* User keyword */
 %token Player                 /* Player keyword */
 %token Void                   /* Void keyword */
@@ -311,6 +313,8 @@ functionCall: functionName OPEN_PARAN parameterList CLOSE_PARAN { $$ = $1 + "(" 
 	    | GetPlayerName OPEN_PARAN ID CLOSE_PARAN { $$ = $3 + ".getName()";semantics.checkIDagainstType($3,"Player", yyline); semantics.assignmentCheckLeftIsOfType("String", yyline); }
 	    | GetPlayerPosition OPEN_PARAN ID CLOSE_PARAN { $$= $3 + ".getPosition()";semantics.checkIDagainstType($3,"Player", yyline); semantics.assignmentCheckLeftIsOfType("String", yyline); }
 	    | GetPlayerPoints OPEN_PARAN ID CLOSE_PARAN { $$ =$3 + ".getPoints()";semantics.checkIDagainstType($3,"Player", yyline); semantics.assignmentCheckLeftIsOfType("float", yyline); }
+	    | Alert OPEN_PARAN STRING_CONST COMMA STRING_CONST CLOSE_PARAN {$$ ="GUI.alert("+$3+","+$5+")"; semantics.assignmentCheckLeftIsOfType("void", yyline);}
+	    | Error OPEN_PARAN STRING_CONST COMMA STRING_CONST CLOSE_PARAN {$$ ="GUI.error("+$3+","+$5+")"; semantics.assignmentCheckLeftIsOfType("void", yyline);}
             ;
 
 parameterList: parameterList COMMA parameterList { $$ = $1 + ", " + $3; }
