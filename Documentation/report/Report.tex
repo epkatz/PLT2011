@@ -101,7 +101,7 @@ Thus, the \textbf{FLOOD} programming language is targeted to address a specific 
 
 In this sense, \textbf{FLOOD} is very much a ``high-level" and ``domain-specific" language. Such as \textbf{R} and \textbf{S} are languages designed specifically to perform statistics calculations, \textbf{SQL} for relational database queries, and \textbf{Mathematica} and \textbf{Maxima} for symbolic mathematics, \textbf{FLOOD} is dedicated to solving the particular problem of fantasy gaming. Given the ubiquity of fantasy sports as a recreational hobby for millions of people, the creation of a domain-specific language to attack this problem in a clear and concise native programming etymology, as opposed to the application of a general purpose language such as \textbf{C} and \textbf{Java}, is a challenging and worthwhile undertaking.
 
-\chapter{A Tutorial for Getting Started Quickly}
+\chapter{A Quick Tutorial}
 
 The goal of this tutorial is to jump into the \textbf{FLOOD} language by creating a simple fantasy league. We won't concern ourselves with implementation details just yet. The language is meant to be simple yet sufficiently extensible but the tutorial will not delve into the various features that make this possible. 
 
@@ -149,7 +149,7 @@ DefineFunctions
 \end{lstlisting}
 \end{singlespace}
 
-Let's now review the notable differences between Python, Java and \textbf{FLOOD}. First,  the convention in \textbf{FLOOD} is to name each file with the \textit{.fld} extension. In addition, each file is a self-contained program and unlike Java, there is no ability to add separate classes. And finally, the first letter of any keyword in \textbf{FLOOD} is capitalized.
+Let's now review the notable differences between Python, Java and \textbf{FLOOD}. First,  the convention in \textbf{FLOOD} is to name each file with the \textit{.fld} extension. In addition, each file is a self-contained program and unlike Java, there is no ability to add separate classes. And the first letter of any keyword in \textbf{FLOOD} is capitalized.
 
 The language was originally intended to be object-oriented in order to facilitate modularity and extensibility of code. However, due to the restricted time constraints imposed by the course loads of various team members, it was decided to reduce the scope of the language without losing the basic functionalities as originally promised. Therefore, the abilities to add classes and inherit from pre-existing libraries were left for a possible future iteration of the language. 
 
@@ -463,7 +463,7 @@ draft(b[i]);
 \end{lstlisting}
 \end{singlespace}
 
-\textbf{FLOOD} has a few built-in functions that give the programmer more flexibility in writing functions. The functions are associated with \texttt{Users} and \texttt{Players} and as such are included in this section. The first function \texttt{ArrayLength} simply returns the length of the array that is passed to it. Note that Python similarly uses this kind of syntax to find the length of a list. The other two functions \texttt{AddPlayer()} and \texttt{RemovePlayer()} are functions that alert the GUI to the addition or removal of a \texttt{Player} from a \texttt{User}. The syntax is as follows:
+\textbf{FLOOD} has a few built-in functions that give the programmer more flexibility in writing functions. The functions are associated with \texttt{Users} and \texttt{Players} and as such are included in this section. The first function \texttt{ArrayLength} simply returns the length of the array that is passed to it. Note that Python similarly uses this kind of syntax to find the length of a list. The other two functions \texttt{AddPlayer()} and \texttt{RemovePlayer()} are functions that alert the GUI to the addition or removal of a \texttt{Player} from a \texttt{User}. For the full list of functions, see the \textit{Reference Manual} section \textit{Function Calls}. The syntax is as follows:
 
 \begin{singlespace}
 \begin{lstlisting}[language=Java,label=some-code,caption=Some FLOOD utility functions and usage]
@@ -491,109 +491,594 @@ Both message boxes have the same structure. The keyword \texttt{Alert} or \textt
 
 \section{Introduction}
 
+The following is a brief Reference Manual for the \textbf{FLOOD} language. The reference manual is based on the K \& R C manual which has for the most part inspired Java, the language \textbf{FLOOD} is based on. In certain instances, where there was no distinction between \textbf{FLOOD} and C, the C reference manual definition was used. Additionally, certain explanations were adapted from the Oracle (formerly Sun) online collection of tutorials.
+
+Many parts of the manual should be familiar to the seasoned programmer. We were able to use \textbf{FLOOD} to experiment with ideas that have been born from our collective programming experience. 
+
+We begin with a high level view of the structure of a \textbf{FLOOD} program. It is divided into two logical blocks. The program begins with the very first block which sets the attributes of the \textit{League}. This block needs to be present and is specified as follows:
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption=DefineLeague]
+/*
+* Define the League and configure various settings
+*/
+DefineLeague
+	/* Set League parameters */
+	Set LeagueName("The League Name");
+	...
+	...
+	Set MinTeamSize(5);
+\end{lstlisting}
+\end{singlespace}
+
+In this block, various attributes and properties of the \textit{League} are set such as the name of the \textit{League}, the list of \textit{Users}, the list of \textit{Players}, etc. We enumerate the list of possible statements allowed in this block below:
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption=Setting league name]
+Set LeagueName("The League Name");
+\end{lstlisting}
+\end{singlespace}
+
+The above statement sets the name of the \textit{League}.
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption=Setting maximun number of Users]
+Set MaxUser(10);
+\end{lstlisting}
+\end{singlespace}
+
+Sets the a limit on the maximum number of \textit{Users} of the \textit{League}.
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption=Setting minimum number of Users]
+Set MinUser(2);
+\end{lstlisting}
+\end{singlespace}
+
+Sets the a limit on the minimum number of \textit{Users} of the \textit{League}.
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption=Setting maximum size of each team]
+Set MaxTeamSize(10);
+\end{lstlisting}
+\end{singlespace}
+
+Places a limit on the size of each \textit{User's} team.
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption=Setting minimum size of each team]
+Set MinTeamSize(2);
+\end{lstlisting}
+\end{singlespace}
+
+The minimum number of players that need to be in a \textit{User's} team.
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption=Adding a User]
+Add User("Name of User");
+\end{lstlisting}
+\end{singlespace}
+
+Adds a \texttt{User} to the \textit{League}.
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption=Adding an Action]
+Add Action("Name of Action", 10);
+\end{lstlisting}
+\end{singlespace}
+
+Adds an \texttt{Action} to the \textit{League} and the number of points associated with it.
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption=Adding a Player]
+Add Player("Name of Player", "Position");	
+\end{lstlisting}
+\end{singlespace}
+
+Adds the \texttt{Player} to the \textit{League} object, along with the position of that \texttt{Player}.
+
+The next logical block comprises of defining functions and invoking functions within them if needed. This segment needs to begin with the \texttt{DefineFunctions} keyword as follows:
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption=Defining functions]
+DefineFunctions
+	Void myFunction1(Str param1, Int param2)
+	{
+		...
+		...
+	}
+
+	...
+
+	Flt myFunction2(Bool param1, Flt param2)
+	{
+		...
+		...
+	}
+\end{lstlisting}
+\end{singlespace}
+
+The variables in a function have to be defined at the start of the function and a function needs to be defined before it can be invoked. 
+
 \section{Lexical Conventions}
+
+The first phase in the interpretation of the source files is to do a low-level lexical transformation transforming every line to a series of tokens to be compiled in a later stage.
 
 \subsection{Tokens}
 
+There are 5 different types of tokens that exist: identifiers, keywords, string literals, operators and separators. White space and new line are inherently ignored and are merely used as a means of making code legible.
+
 \subsection{Comments}
+
+The sequence of characters initially starting with $/*$ and ending with $*/$ disqualify any of the surrounded characters from the lexical tokenization. Comments do not nest or occur within literals. There are no single-line comments however a single-line comment can be simulated using the above sequence on a single-line.
 
 \subsection{Identifiers}
 
+An identifier is a sequence of characters and digits beginning with a character. Underscore is also considered a letter. Additionally, the language is case sensitive.
+
 \subsection{Keywords}
 
-\subsection{Function Generation}
+The following words are reserved as keywords and may not be used as identifiers:
+
+\begin{center}
+\begin{tabular}{ | l | l | l | l | l | }
+\hline
+\texttt{DefineLeague} & \texttt{DefineFunctions} & \texttt{LeagueName} & \texttt{Set} & \texttt{Add}\\
+\hline
+\texttt{MaxTeamSize} & \texttt{MinTeamSize} & \texttt{Action} & \texttt{Return} & \texttt{Str}\\
+\hline
+\texttt{MaxUser} & \texttt{MinUser} & \texttt{User} & \texttt{True} & \texttt{False} \\
+\hline
+\texttt{AddPlayer} & \texttt{RemovePlayer} & \texttt{Player} & \texttt{Void} & \texttt{While} \\
+\hline
+\texttt{GetUserName} & \texttt{GetNumPlayers} & \texttt{GetPlayerName} & \texttt{If} & \texttt{Else} \\
+\hline
+\texttt{GetPlayerPosition} & \texttt{GetPlayerPoints} & \texttt{ArrayLength} & \texttt{Int} & \texttt{Flt}\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{String Literals}
+
+A character constant is a sequence of one or more characters enclosed in double quotes, as in ``$\ldots$" Character constants do not contain the ` character or newlines in order to represent them but rather use different escape characters. They are the following:
+
+\begin{center}
+\begin{tabular}{ l l l l l l }
+newline & NL & \textbackslash{n} & backslash & \textbackslash & \textbackslash\textbackslash \\
+horizontal tab & HT & \textbackslash{t} & double quote & `` & \textbackslash"
+\end{tabular}
+\end{center}
+
+\section{Type Specifiers}
+
+\textbf{FLOOD} supports the following datatypes:
+\begin{itemize}
+\item \texttt{Void}
+\item \texttt{Flt}: A number with decimal values precise up to 6 decimal places.
+\item \texttt{Int}: An integer number.
+\item \texttt{Str}: A String of characters.
+\item \texttt{Bool}: True/ False values.
+\end{itemize}
+\begin{alltt}\begin{singlespace}
+         \textit{type-specifier:}
+              \textit{\textbf{Void}}
+              \textit{\textbf{Flt}}
+              \textit{\textbf{Int}}
+              \textit{\textbf{Str}}
+              \textit{\textbf{Bool}}\end{singlespace}
+\end{alltt}
 
 \section{Syntax Notation}
 
+\subsection{Variable Declaration}
+
+Variables can be declared at the start of each function and must be declared before any statement. Variables can be either simply declared, or can be set to a value during definition as follows:
+
+\begin{alltt}\begin{singlespace}
+         \textit{variable-declaration:}
+              \textit{type-specifier variable}
+              \textit{type-specifier variable = value}\end{singlespace}
+\end{alltt}
+
 \subsection{Expressions}
 
-\subsubsection{Primary Expression}
+\subsubsection{Primary Expressions}
 
-\subsubsection{Postfix Expressions}
+Identifiers, constants, strings, or expressions in parentheses.
 
-\subsubsection{Unary Expression}
+\begin{alltt}\begin{singlespace}
+         \textit{primary-expression:}
+            \textit{identifier}
+            \textit{constant}
+            \textit{string}
+            \textit{( expression )}\end{singlespace}
+\end{alltt}
 
-\subsubsection{Multiplicative Expression}
+\subsubsection{Arithmetic Expressions}
 
-\subsubsection{Additive Expression}
+\textbf{FLOOD} supports the arithmetic expressions of addition, subtraction, multiplication, division and modulus.
 
-\subsubsection{Relational Expression}
+The addition ($+$) ,subtraction ($-$), multiplication ($*$) and division ($/$) operators are left associative. The modulus ($\%$) operator is non-associative.
 
-\subsubsection{Equality Expression}
+The result of the $+$ operator is the sum of the operands. A string may also be added to another string. In this manner, concatenation is performed where the result is a string containing the first operand and then the second beginning at the end of the first.
 
-\subsubsection{Logical \textit{and} Expression}
+The result of the $-$ operator is the difference of the operands. A string may not be subtracted from another string.
 
-\subsubsection{Logical \textit{or} Expression}
+Multiplication and division can be performed only on \texttt{Int} and \texttt{Flt} types. Additionally, \textbf{FLOOD} does not enforce coercion of operand types. This means that any of the above operations can be performed only on operands of the same type. For example, an \texttt{Int} var added to an \texttt{Int} var.
 
-\subsubsection{Assignment Expression}
+\subsubsection{Relational Expressions}
 
-\subsubsection{Comma Expression}
+The relational operators group left-to-right. The relational expression returns a boolean value.
 
-\subsection{Declarations}
+\begin{alltt}\begin{singlespace}
+         \textit{relational-expression:}
+            \textit{variable < variable or constant}
+            \textit{variable > variable or constant}
+            \textit{variable <= variable or constant}
+            \textit{variable >= variable or constant}
+            \textit{variable == variable or constant}
+            \textit{variable != variable or constant}
+            (relational-expression)\end{singlespace}
+\end{alltt}
 
-\subsubsection{Type Specifiers}
+The operators ($==$) and ($!$$=$) have lower precedence than the operators ($<$), ($>$), ($<=$), ($>=$).
 
-\subsubsection{Object Specifiers}
+\subsubsection{Boolean Expressions}
 
-\subsubsection{Declarators}
+The three basic operators involved in boolean expressions are boolean \textit{AND} ($\&\&$), boolean \textit{OR} ($||$) and boolean \textit{NOT} ($!$). The \textit{AND} and \textit{OR} operators group left-to-right. The \textit{NOT} operator is right associative. The \textit{AND} operator returns true if both operands compared are true, and false otherwise. The \textit{OR} operator returns true if atleast one operand is true, and false otherwise. The \textit{NOT} operator returns true if the operand evaluates to false, and false otherwise.
 
-\subsubsection{Initialization}
+\begin{alltt}\begin{singlespace}
+         \textit{boolean-expression:}
+            \textit{boolean-expression && boolean-expression}
+            \textit{boolean-expression || boolean-expression}
+            \textit{relational-expression && relational-expression}
+            \textit{relational-expression || relational-expression}
+            \textit{relational-expression && boolean-expression}
+            \textit{relational-expression || boolean-expression}
+            \textit{boolean-expression && relational-expression}
+            \textit{boolean-expression || relational-expression}
+            \textit{! boolean-expression}
+            (boolean-expression)\end{singlespace}
+\end{alltt}
+
+\subsection{Function Declaration}
+
+\textbf{FLOOD} allows the user to declare their own functions in addition to the default functions provided as follows:
+
+\begin{alltt}\begin{singlespace}
+         \textit{function-declaration:}
+            \textit{returnType functionName (argumentList)
+            \{
+                statements
+            \}}\end{singlespace}
+\end{alltt}
+
+Now the function \texttt{\textit{functionName}} can be invoked by any other function succeeding it in the program. It is important to note that the user needs to declare the function before invoking it.
+Another point worth noting is that all variables need to be declared at the start of the function declaration before they can be used. 
 
 \subsection{Statements}
 
-\subsubsection{Expression Statement}
+Statements in \textbf{FLOOD} encompass conditionals, loops, assignments and function calls. Every statement needs to be succeeded by a semicolon.
 
-\subsubsection{Compound Statement}
+\subsubsection{Conditionals}
 
-\subsubsection{Selection Statement}
+A conditional statement in \textbf{FLOOD} is an statement which checks for a certain condition and processes the succeeding statements depending on the boolean value of the condition evaluated. The syntax is as follows:
 
-\subsubsection{Iteration Statement}
+\begin{alltt}\begin{singlespace}
+            \textit{If (expression)
+            \{
+                statements
+            \};}
 
-\subsubsection{Jump Statement}
+            \textit{If (expression)
+            \{
+                statements
+            \}
+            Else
+            \{
+                statements
+            \};}\end{singlespace}
+\end{alltt}
 
-\subsection{Scope and Linkage}
-t
-\section{Object Orientated Programming}
+Here, \textit{\texttt{expression}} can be a boolean expression or relational expression. If the value of the expression evaluates to \texttt{True}, then the statement is evaluated, otherwise control is passed to the next statement.
 
-\subsection{Abstraction}
+\subsubsection{Loops}
 
-\subsection{Encapsulation}
+\textbf{FLOOD} provides the user with a looping structure in the form of the \textit{while} loop. The syntax is as follows:
 
-\subsection{Polymorphism}
+\begin{alltt}\begin{singlespace}
+            \textit{While (expression)
+            \{
+                statements
+            \};}\end{singlespace}
+\end{alltt}
+
+Here, \textit{\texttt{expression}} can be either a relational expression or boolean expression. In the \textit{while} body, \textit{\texttt{statements}} is executed repeatedly as long as value of \textit{\texttt{expression}} remains true. The \textit{\texttt{expression}} must have boolean type.
+
+\subsubsection{Function Calls}
+
+The programmer can invoke functions at any point in the \texttt{DefineFunctions} scope as long as the function has been declared before the function call. 
+
+\begin{alltt}\begin{singlespace}
+            \textit{functionName(parameterList);}\end{singlespace}
+\end{alltt}
+
+There are additionally a number of built-in functions the users can invoke without needing to define them:
+
+\begin{alltt}\begin{singlespace}
+            \textit{AddPlayer(user, player);}\end{singlespace}
+\end{alltt}
+
+This function adds the \texttt{Player} object \textit{\texttt{player}} to the \texttt{User} object \textit{\texttt{user}}.
+
+\begin{alltt}\begin{singlespace}
+            \textit{RemovePlayer(user, player);}\end{singlespace}
+\end{alltt}
+
+This function removes the \texttt{Player} object \textit{\texttt{player}} to the \texttt{User} object \textit{\texttt{user}}.
+
+\begin{alltt}\begin{singlespace}
+            \textit{Int ArrayLength(user, player);}\end{singlespace}
+\end{alltt}
+
+This function takes as an argument either a \texttt{User} or \texttt{Player} \textit{\texttt{array}} object as the parameter and returns the length of the array.
+
+\begin{alltt}\begin{singlespace}
+            \textit{Str GetUserName(user);}\end{singlespace}
+\end{alltt}
+
+Retuns the name of the \texttt{User} object \textit{\texttt{user}}.
+
+\begin{alltt}\begin{singlespace}
+            \textit{Int GetNumPlayers(user);}\end{singlespace}
+\end{alltt}
+     
+Returns the number of players of the \texttt{User} object \textit{\texttt{user}}.
+
+\begin{alltt}\begin{singlespace}
+            \textit{Str GetPlayerName(player);}\end{singlespace}
+\end{alltt}
+
+Returns the name of the \texttt{Player} object \textit{\texttt{player}}.
+
+\begin{alltt}\begin{singlespace}
+            \textit{Str GetPlayerPosition(player);}\end{singlespace}
+\end{alltt}
+
+Returns the postion of the \texttt{Player} object \textit{\texttt{player}}.
+
+\begin{alltt}\begin{singlespace}
+            \textit{Flt GetPlayerPoints(player);}\end{singlespace}
+\end{alltt}
+
+Returns the points of the \texttt{Player} object \textit{\texttt{player}}.
+
+\subsubsection{Assignments}
+
+Values can be assigned to variables depending on their type. For example,  a \texttt{Bool} variable can be assigned a value of either \texttt{True} or \texttt{False}. Similarly, an \texttt{Int} variable can be assigned any integer value. 
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption=Assignments]
+var1 = True; /* if var1 is of type Bool */
+var2 = 1; /* if var2 is of type Int */
+var3 = 1.0; /* if var3 is of type Flt */
+var4 = "string"; /* f var4 is of type Str */
+\end{lstlisting}
+\end{singlespace}
+
+Additionally, the return value of an invoked function can be assigned to a variable.
+
+\begin{singlespace}
+\begin{lstlisting}[language=Java,label=some-code,caption=Function assignment]
+var5 = function(); /* if the return type of the function matches the data type of var5 */
+\end{lstlisting}
+\end{singlespace}
+
+\section{Scope}
+
+The scope to be considered while programming in \textbf{FLOOD} is lexical scope of a variable. Variables can only exist within a function, and need to be defined at the start of the function body. Therefore, the scope of a variable is limited to the function in which it is defined.
 
 \section{Grammar}
 
-\chapter{Project Plan}
+Below is a recapitulation of the grammar that was given throughout the earlier parts of this \textit{Reference Manual}.
 
-\chapter{Language Evolution}
+\begin{alltt}\begin{singlespace}
+     \textit{program: definitions functions}
 
-\chapter{Language Architecture}
+     \textit{definitions: DefineLeague definitionlist}
 
-\chapter{Development Enviornment}
+     \textit{definitionlist: definitionlist definitionproductions}
+          \textit{empty}
+          
+     \textit{definitionproductions:}
+          \textit{Set LeagueName ( string-constant )}
+          \textit{Set MaxUser ( int )}
+          \textit{Set MinUser ( int )}
+          \textit{Set MaxTeamSize ( int )}
+          \textit{Set MinteamSize ( int )}
+          \textit{Add User ( string-constant )}
+          \textit{Add Action ( string-constant, float )}
+          \textit{Add Action ( string-constant, -float )}
+          \textit{Add Player ( string-constant, string-constant )}
 
-\chapter{Testing}
+     \textit{functions: DefineFunctions functionProductions}
 
-\chapter{Conclusions}
+     \textit{functionProductions: functionProductions returnType
+                          functionName ( argumentLists )
+                          \{ declarations statements returnProduction \}}
+          \textit{functionProductions returnType functionName ( argumentLists )
+                              \{ empty \}}
+          \textit{functionProductions returnType functionName ( argumentLists )
+                              \{ empty statements returnProduction \}}
+          \textit{functionProductions returnType functionName ( argumentLists )
+                              \{ declarations empty returnProduction \}}
+          \textit{empty}
 
-\section{Lessons Learned as a Team}
+     \textit{returnType:}
+          \textit{\textbf{Void}}
+          \textit{\textbf{Str}}
+          \textit{\textbf{Bool}}
+          \textit{\textbf{Int}}
+          \textit{\textbf{Flt}}
+          
+     \textit{functionName: identifier}
 
-\section{Lessons Learned by Team Members}
+     \textit{argumentLists: argumentLists , argumentList}
+          \textit{argumentList}
+          \textit{empty}
+          
+     \textit{argumentList: returnType identifier}
+          \textit{User [ ] identifier}
+          \textit{Player [ ] identifier}
+          \textit{User identifier}
+          \textit{Player identifier}
 
-\subsection{Stephanie Aligbe}
+     \textit{statements: statements statement}
+          \textit{statement}
 
-\subsection{Elliot Katz}
+     \textit{statement: conditionals}
+          \textit{loop}
+          \textit{relational-expression}
+          \textit{assignment}
+          \textit{functionCall}
 
-\subsection{Tam Le}
+     \textit{returnProduction: Return identifier}
+          \textit{Return string-constant}
+          \textit{Return int}
+          \textit{Return float}
+          \textit{empty}
 
-\subsection{Dillen Roggensinger}
+     \textit{conditionals: If ( relational-expression ) \{ statements \}}
+          \textit{If ( relational-expression ) \{ statements \} Else \{ statements \}}
+          \textit{If ( relational-expression ) \{ empty \}}
+          \textit{If ( relational-expression ) \{ empty \} Else \{ empty \}}
+          \textit{If ( relational-expression ) \{ statements \} Else \{ empty \}}
+          \textit{If ( relational-expression ) \{ empty \} Else \{ statements \}}
+          \textit{If ( boolean-expression ) \{ statements \}}
+          \textit{If ( boolean-expression ) \{ statements \} Else \{ statements \}}
+          \textit{If ( boolean-expression ) \{ empty \}}
+          \textit{If ( boolean-expression ) \{ empty \} Else \{ empty \}}
+          \textit{If ( boolean-expression ) \{ statements \} Else \{ empty \}}
+          \textit{If ( boolean-expression ) \{ empty \} Else \{ statements \}}
 
-\subsection{Anuj Sampathkumaran}
+     \textit{loop: While ( relational-expression ) \{ statements \}}
+          \textit{While ( relational-expression ) \{ empty \}}
+          \textit{While ( boolean-expression ) \{ statements \}}
+          \textit{While ( boolean-expression ) \{ empty \}}
 
-\section{Advice for Future Teams}
+     \textit{declarations: declarations declaration}
+          \textit{declaration}
 
-\section{Suggestions for Future Improvement}
+     \textit{declaration: Flt identifier}
+          \textit{Int identifier}
+          \textit{Bool identifier}
+          \textit{Str identifier}
+          \textit{Flt identifier = float}
+          \textit{Int identifier = integer}
+          \textit{Bool identifier = True}
+          \textit{Bool identifier = False}
+          \textit{Str identifier = string-constant}
 
-\appendix
-\chapter{FLOOD Source Code}
+     \textit{relational-expression: identifier <= constant-or-variable}
+          \textit{identifier >= constant-or-variable}
+          \textit{identifier != constant-or-variable}
+          \textit{identifier < constant-or-variable}
+          \textit{identifier > constant-or-variable}
+          \textit{identifier == constant-or-variable}
+          \textit{( relational-expression )}
+
+     \textit{boolean-expression: boolean-expression AND boolean-expression}
+          \textit{boolean-expression OR boolean-expression}
+          \textit{relational-expression AND relational-expression}
+          \textit{relational-expression OR relational-expression}
+          \textit{relational-expression AND boolean-expression}
+          \textit{relational-expression OR boolean-expression}
+          \textit{boolean-expression AND relational-expression}
+          \textit{boolean-expression OR relational-expression}
+          \textit{( boolean-expression )}
+          \textit{! boolean-expression}
+          \textit{identifier}
+          \textit{True}
+          \textit{False}
+
+     \textit{constant-or-variable: float}
+          \textit{integer}
+          \textit{identifier}
+          
+     \textit{arithmetic-expression: arithmetic-expression PLUS
+                            arithmetic-expression}
+          \textit{arithmetic-expression MINUS arithmetic-expression}
+          \textit{arithmetic-expression MULT arithmetic-expression}
+          \textit{arithmetic-expression DIV arithmetic-expression}
+          \textit{arithmetic-expression MOD arithmetic-expression}
+          \textit{( arithmetic-expression )}
+          \textit{identifier}
+          \textit{float}
+          \textit{integer}
+
+     \textit{assignment: leftSide = rightSide}
+
+     \textit{leftSide: identifier}
+
+     \textit{rightSide: arithmetic-expression}
+          \textit{functionCall}
+          \textit{string-constant}
+          \textit{True}
+          \textit{False}
+
+     \textit{functionCall: functionName ( parameterList )}
+          \textit{AddPlayer ( identifier , identifier )}
+          \textit{RemovePlayer ( identifier , identifier )}
+          \textit{ArrayLength ( identifier )}
+          \textit{GetUserName (identifier)}
+          \textit{GetNumPlayers (identifier)}
+          \textit{GetPlayerName (identifier)}
+          \textit{GetPlayerPosition (identifier)}
+          \textit{GetPlayerPoints (identifier)}
+
+     \textit{parameterList: parameterList , parameterList}
+          \textit{identifier}
+          \textit{integer}
+          \textit{float}
+          \textit{string-constant}
+          \textit{identifier [ integer ]}
+          \textit{identifier [ identifier ]}
+
+     \textit{empty:}
+\end{singlespace}
+\end{alltt}
+
+%\chapter{Project Plan}
+%
+%\chapter{Language Evolution}
+%
+%\chapter{Language Architecture}
+%
+%\chapter{Development Enviornment}
+%
+%\chapter{Testing}
+%
+%\chapter{Conclusions}
+%
+%\section{Lessons Learned as a Team}
+%
+%\section{Lessons Learned by Team Members}
+%
+%\subsection{Stephanie Aligbe}
+%
+%\subsection{Elliot Katz}
+%
+%\subsection{Tam Le}
+%
+%\subsection{Dillen Roggensinger}
+%
+%\subsection{Anuj Sampathkumaran}
+%
+%\section{Advice for Future Teams}
+%
+%\section{Suggestions for Future Improvement}
+%
+%\appendix
+%\chapter{FLOOD Source Code}
 
 \end{document}
