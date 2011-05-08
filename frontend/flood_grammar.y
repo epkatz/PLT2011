@@ -256,8 +256,8 @@ relationalExp: ID LESSEQUAL constOrVar { $$ = $1 + " <= " + $3; semantics.checkR
              | ID NOTEQUAL constOrVar { $$ = $1 + " != " + $3; semantics.checkRelExp($1, $3, yyline); }
              | ID LESS constOrVar { $$ = $1 + " < " + $3; semantics.checkRelExp($1, $3, yyline); semantics.checkRelationForInvalidType($1, yyline); }
              | ID GREAT constOrVar { $$ = $1 + " > " + $3; semantics.checkRelExp($1, $3, yyline); semantics.checkRelationForInvalidType($1, yyline); }
-             | ID ISEQUAL constOrVar { $$ = $1 + " == " + $3; semantics.checkRelExp($1, $3, yyline); }
-             | OPEN_PARAN relationalExp CLOSE_PARAN { $$ = "(" + $2 + ")"; }
+             | ID ISEQUAL constOrVar { $$ = $1 + " == " + $3; semantics.checkRelExp($1, $3, yyline); }//semantics needs to change "==" to ".equals()"
+	     | OPEN_PARAN relationalExp CLOSE_PARAN { $$ = "(" + $2 + ")"; }
              //FLOODException Here
              ;
 
@@ -278,7 +278,8 @@ booleanExp: booleanExp AND booleanExp { $$ = $1 + " && " + $3; }
 
 constOrVar: FLT { $$ = "" + $1; }
           | INT { $$ = "" + $1; }
-          | ID { $$ = "" + $1; }
+          | ID  { $$ = "" + $1; }
+	  | STRING_CONST { $$ = $1;     	}
           ;
 
 arithmeticExp: arithmeticExp PLUS arithmeticExp { $$ = $1 + " + " + $3 ; semantics.checkForBadAdditionType(yyline);}
