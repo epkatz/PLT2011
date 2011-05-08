@@ -303,15 +303,15 @@ rightSide: arithmeticExp { $$ = $1 + ";\n"; }
          | False { $$ = "false" + ";\n"; semantics.assignmentCheckLeftIsOfType("boolean", yyline); }
          ;
 
-functionCall: functionName OPEN_PARAN parameterList CLOSE_PARAN { $$ = $1 + "(" + $3 + ")";  if(semantics.funcReturnFlag)semantics.assignmentCheckFunction($1, yyline);}
+functionCall: functionName OPEN_PARAN parameterList CLOSE_PARAN { $$ = $1 + "(" + $3 + ")";  semantics.assignmentCheckFunction($1, yyline);}
             | AddPlayer OPEN_PARAN ID COMMA ID CLOSE_PARAN { $$ = $3 + ".addPlayer(" + $5 + ")" ; semantics.checkIDagainstType($3,"User", yyline);semantics.checkIDagainstType($5,"Player", yyline);}
-            | RemovePlayer OPEN_PARAN ID COMMA ID CLOSE_PARAN { $$ = $3 + ".removePlayer(" + $5 + ")" ; semantics.checkIDagainstType($3,"User", yyline);semantics.checkIDagainstType($5,"Player", yyline);}
-            | ArrayLength OPEN_PARAN ID CLOSE_PARAN { $$ = $3 + ".length"; semantics.checkArrayType($3,yyline); }
-	    | GetUserName OPEN_PARAN ID CLOSE_PARAN { $$ = $3 + ".getName()";} //Semantic check to be added
-	    | GetNumPlayers OPEN_PARAN ID CLOSE_PARAN { $$ = $3 +".getNumPlayers()";} //Semantic check needed
-	    | GetPlayerName OPEN_PARAN ID CLOSE_PARAN { $$ = $3 + ".getName()";} //Semantic check needed
-	    | GetPlayerPosition OPEN_PARAN ID CLOSE_PARAN { $$= $3 + ".getPosition()";}//Semantic check needed
-	    | GetPlayerPoints OPEN_PARAN ID CLOSE_PARAN { $$ =$3 + ".getPoints()";}//Semantic check needed
+            | RemovePlayer OPEN_PARAN ID COMMA ID CLOSE_PARAN { $$ = $3 + ".removePlayer(" + $5 + ")" ; semantics.checkIDagainstType($3,"User", yyline);semantics.checkIDagainstType($5,"Player", yyline); semantics.assignmentCheckLeftIsOfType("void", yyline); }
+            | ArrayLength OPEN_PARAN ID CLOSE_PARAN { $$ = $3 + ".length"; semantics.checkArrayType($3,yyline); semantics.assignmentCheckLeftIsOfType("int", yyline); }
+	    | GetUserName OPEN_PARAN ID CLOSE_PARAN { $$ = $3 + ".getName()"; semantics.checkIDagainstType($3,"User", yyline); semantics.assignmentCheckLeftIsOfType("String", yyline); }
+	    | GetNumPlayers OPEN_PARAN ID CLOSE_PARAN { $$ = $3 +".getNumPlayers()";semantics.checkIDagainstType($3,"User", yyline); semantics.assignmentCheckLeftIsOfType("int", yyline); }
+	    | GetPlayerName OPEN_PARAN ID CLOSE_PARAN { $$ = $3 + ".getName()";semantics.checkIDagainstType($3,"Player", yyline); semantics.assignmentCheckLeftIsOfType("String", yyline); }
+	    | GetPlayerPosition OPEN_PARAN ID CLOSE_PARAN { $$= $3 + ".getPosition()";semantics.checkIDagainstType($3,"Player", yyline); semantics.assignmentCheckLeftIsOfType("String", yyline); }
+	    | GetPlayerPoints OPEN_PARAN ID CLOSE_PARAN { $$ =$3 + ".getPoints()";semantics.checkIDagainstType($3,"Player", yyline); semantics.assignmentCheckLeftIsOfType("float", yyline); }
             ;
 
 parameterList: parameterList COMMA parameterList { $$ = $1 + ", " + $3; }
@@ -354,10 +354,11 @@ public void generateFloodProgram(String definitions, String functions)
 
   try
   {
-    FileWriter writer = new FileWriter(new File("FloodProgram.java"));
+    FileWriter writer = new FileWriter(new File("Test.java"));
     String buffer = classStart + staticDeclarations + main_start + definitions + main_preEndAutogenerate + main_end + functions + classEnd;
     writer.write(buffer);
     writer.close();
+    System.out.println("Compilation successful.");
   }
   catch (IOException e)
   {
