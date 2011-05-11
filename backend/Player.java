@@ -1,4 +1,3 @@
-package backend;
 
 public class Player implements Comparable<Player>{
 	private String name, position;

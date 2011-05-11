@@ -86,7 +86,6 @@ public class IOManager {
 			}
 			//Store the data
 			turn=Integer.parseInt(data[0]);
-			System.out.println("Parsed: "+data[0]+" to "+turn);
 			myLeague.setMaxTeamSize(Integer.parseInt(data[1]));
 			myLeague.setMinTeamSize(Integer.parseInt(data[2]));
 			myLeague.setMaxUser(Integer.parseInt(data[3]));

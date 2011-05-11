@@ -26,8 +26,8 @@ import javax.swing.table.DefaultTableModel;
 public class GUI {
 	private League theLeague;
 	private static JFrame frmFloodFantasyLeague;
-	private MyTableModel homeTable,draftTable,tradeTable_1,tradeTable_2,dropTable,ruleTable;
-	private DefaultTableModel homeModel,draftModel,tradeModel_1,tradeModel_2,dropModel,ruleModel;
+	private MyTableModel homeTable,draftTable,tradeTable_1,tradeTable_2,dropTable,actionTable;
+	private DefaultTableModel homeModel,draftModel,tradeModel_1,tradeModel_2,dropModel,actionModel;
 	private JLabel draftLabel;
 	private int currentTurn,pick;
 	private DecimalFormat twoDForm;
@@ -82,15 +82,15 @@ public class GUI {
 	/**Populates the add table assuming it has already been initialized.
 	 * 
 	 */
-	private void populateRules(){
-		Action[] rules=theLeague.getActions();	//Get all the players in reverse ranked order
-		while(ruleModel.getRowCount()>0)	//Remove all the rows from the add table
-			ruleModel.removeRow(0);
-		String[] tempRule=new String[2];	//Initialize a temporary row
-		for(int i=rules.length-1;i>=0;i--){	//Iterate through the players
-			tempRule[0]=rules[i].getAction();	//Set the name
-			tempRule[1]=twoDForm.format(rules[i].getPoints());	//Set the points scored all season
-			ruleModel.addRow(tempRule);	//Add the row
+	private void populateActions(){
+		Action[] actions=theLeague.getActions();	//Get all the players in reverse ranked order
+		while(actionModel.getRowCount()>0)	//Remove all the rows from the add table
+			actionModel.removeRow(0);
+		String[] tempAction=new String[2];	//Initialize a temporary row
+		for(int i=actions.length-1;i>=0;i--){	//Iterate through the players
+			tempAction[0]=actions[i].getAction();	//Set the name
+			tempAction[1]=twoDForm.format(actions[i].getPoints());	//Set the points scored all season
+			actionModel.addRow(tempAction);	//Add the row
 		}
 	}
 	
@@ -287,19 +287,19 @@ public class GUI {
 		dropScrollPane.setViewportView(dropTable);	//Add the table to the scroll pane
 		
 		//Initialize the home tab scrollpane
-		JScrollPane rulePane = new JScrollPane();
+		JScrollPane actionPane = new JScrollPane();
 		
 		//Add the home tab to the tabbed pane
-		tabbedPane.addTab("Rules", null, rulePane, null);
+		tabbedPane.addTab("Actions", null, actionPane, null);
 		
 		//Initialize, format and add the home table
-		ruleModel = new DefaultTableModel(ruleHeader,0);	//Add the header but no rows
-		ruleTable = new MyTableModel(ruleModel);
-		ruleTable.setEnabled(false);	//Make the rows unselectable
-		ruleTable.setAutoCreateRowSorter(true);	//Allow sorting
-		rulePane.setViewportView(ruleTable);	//Put the table into the scroll pane
+		actionModel = new DefaultTableModel(ruleHeader,0);	//Add the header but no rows
+		actionTable = new MyTableModel(actionModel);
+		actionTable.setEnabled(false);	//Make the rows unselectable
+		actionTable.setAutoCreateRowSorter(true);	//Allow sorting
+		actionPane.setViewportView(actionTable);	//Put the table into the scroll pane
 		
-		populateRules();	//Populate the home table
+		populateActions();	//Populate the home table
 		
 		
 		//Initialize the file chooser
@@ -329,7 +329,7 @@ public class GUI {
 					populateDraft();
 					break;
 				case 4:
-					populateRules();
+					populateActions();
 					break;
 				}
 			}
@@ -415,12 +415,12 @@ public class GUI {
 			public void actionPerformed(ActionEvent arg0) {
 				for(int i=0;i<draftModel.getRowCount();i++){	//Iterate through table entries
 					if(draftTable.isCellSelected(i,0)){	//If it's selected
-						if(!FloodProgram.draftPlayer(theLeague.getUser(pick),League.athletes.get(draftModel.getValueAt(i,0)))){	//If the draft isn't successful
-							GUI.error("Invalid draft!","Sorry, your draft violates rules of the league.");
-							return;
-						}
 						int overwrite = JOptionPane.showConfirmDialog(frmFloodFantasyLeague, "Are you sure you want to draft: " + League.athletes.get(draftModel.getValueAt(i,0)).getName());
 		                if(overwrite == JOptionPane.YES_OPTION) {
+							if(!FloodProgram.draftPlayer(theLeague.getUser(pick),League.athletes.get(draftModel.getValueAt(i,0)))){	//If the draft isn't successful
+								GUI.error("Invalid draft!","Sorry, your draft violates rules of the league.");
+								return;
+							}
 							currentTurn++;	//Increment the turn
 							draftModel.removeRow(i);	//Remove that row from the draft table
 							populateDraft();

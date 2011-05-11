@@ -254,7 +254,7 @@ declaration: Flt ID  { $$ = "float " + $2 + ";\n";  semantics.addVar($2, "float"
 
 relationalExp: ID LESSEQUAL constOrVar { $$ = $1 + " <= " + $3; semantics.checkRelExp($1, $3, yyline); semantics.checkRelationNumber($1, yyline); }
              | ID GREATEQUAL constOrVar { $$ = $1 + " >= " + $3; semantics.checkRelExp($1, $3, yyline); semantics.checkRelationNumber($1, yyline); }
-             | ID NOTEQUAL constOrVar { $$ = $1 + " != " + $3; semantics.checkRelExp($1, $3, yyline); semantics.checkRelationNotString($1, yyline); }
+             | ID NOTEQUAL constOrVar { if(semantics.isString($1, yyline)){$$ = "!" + $1 + ".equals(" + $3 + ")"; semantics.checkRelationString($1,yyline); }else{$$ = $1 + " != " + $3; semantics.checkRelationNotString($1, yyline); } semantics.checkRelExp($1, $3, yyline); }
              | ID LESS constOrVar { $$ = $1 + " < " + $3; semantics.checkRelExp($1, $3, yyline); semantics.checkRelationNumber($1, yyline); }
              | ID GREAT constOrVar { $$ = $1 + " > " + $3; semantics.checkRelExp($1, $3, yyline); semantics.checkRelationNumber($1, yyline); }
              | ID ISEQUAL constOrVar { 	if(semantics.isString($1, yyline)){$$ = $1 + ".equals(" + $3 + ")"; semantics.checkRelationString($1,yyline); }else{$$ = $1 + " == " + $3; semantics.checkRelationNotString($1, yyline); } semantics.checkRelExp($1, $3, yyline); }
@@ -347,7 +347,7 @@ String scope = "main";
 ****************************************************/
 public void generateFloodProgram(String definitions, String functions)
 {
-  String classStart = "public class Test\n{\n";
+  String classStart = "public class FloodProgram\n{\n";
   String staticDeclarations = "public static League myLeague;\npublic static GUI run;\n";
   String classEnd = "}\n";
 
@@ -357,7 +357,7 @@ public void generateFloodProgram(String definitions, String functions)
 
   try
   {
-    FileWriter writer = new FileWriter(new File("Test.java"));
+    FileWriter writer = new FileWriter(new File("FloodProgram.java"));
     String buffer = classStart + staticDeclarations + main_start + definitions + main_preEndAutogenerate + main_end + functions + classEnd;
     writer.write(buffer);
     writer.close();

@@ -1,4 +1,3 @@
-package backend;
 
 public class Action {
 	private String action;
